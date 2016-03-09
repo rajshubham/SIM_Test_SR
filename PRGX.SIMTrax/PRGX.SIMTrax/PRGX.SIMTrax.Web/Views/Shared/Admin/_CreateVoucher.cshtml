@@ -1,0 +1,321 @@
+﻿@model PRGX.SIMTrax.ViewModel.Voucher
+@using PRGX.SIMTrax.Domain.Util
+@{
+    var userCulture = (Session[Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+    ViewBag.Title = ReadResource.GetResourceForGlobalization(Constants.VOUCHER, userCulture).ToString();
+}
+
+<div id="VoucherCreation" class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="bread-crumb" style="display:block;" id="breacrumbCreateVoucher">
+            <a id="breadcrumbcreatevoucher" href="/Admin/BuyerOrganisation">@ReadResource.GetResourceForGlobalization(Constants.BACK_TO_ALL_BUYER_ORG, userCulture).ToString()</a>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6 padding-bottom-header padding-left-zero padding-right-zero">
+            <h3 id="headingcreateVoucher">@ReadResource.GetResourceForGlobalization(Constants.CREATE_VOUCHER, userCulture).ToString()</h3>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6 padding-responsive padding-left-zero padding-right-zero">
+            <button class="btn btn-color  float-right" onclick="SaveVoucher()">@ReadResource.GetResourceForGlobalization(Constants.SAVE, userCulture).ToString()</button>
+            <div class="float-right" style="height: 10px; width: 14px;"></div>
+            <button class="btn cancelVoucherCreate btn-normal  float-right" onclick="location.href='/Admin/BuyerOrganisation'">@ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()</button>
+        </div>
+    </div>
+    <div id="voucher-create-edit" class="col-md-12 col-sm-12 col-xs-12">
+        <div class="container-white-backgound">
+            <form id="voucher-create-edit-form">
+                @Html.HiddenFor(m => m.VoucherId)
+                <div class="padding-top-question">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        @Html.LabelFor(m => m.PromotionalCode)
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-10">
+                        @Html.TextBoxFor(m => m.PromotionalCode, new { @class = " form-control" })
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-10" id="VoucherError">
+                        <span id="VoucherErrorText"></span>
+                        @Html.ValidationMessageFor(m => m.PromotionalCode)
+                    </div>
+                </div>
+                <div class="padding-top-question">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        @Html.LabelFor(m => m.DiscountPercent)
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-10">
+                        @Html.TextBoxFor(m => m.DiscountPercent, new { @class = " form-control" })
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-10">
+                        @Html.ValidationMessageFor(m => m.DiscountPercent)
+                    </div>
+                </div>
+                <div class="padding-top-question">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        @Html.LabelFor(m => m.PromotionStartDate)
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-10">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.PromotionStartDate, "{0:MM/dd/yyyy}", new { @class = " form-control datetime" })
+                            <span class="input-group-addon" onclick="$('#PromotionStartDate').datepicker('show')"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-10">
+                        @Html.ValidationMessageFor(m => m.PromotionStartDate)
+                    </div>
+                </div>
+                <div class="padding-top-question">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        @Html.LabelFor(m => m.PromotionEndDate)
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-10">
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.PromotionEndDate, "{0:MM/dd/yyyy}", new { @class = " form-control datetime" })
+                            <span class="input-group-addon" onclick="$('#PromotionEndDate').datepicker('show')"><i class="fa fa-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-10">
+                        @Html.ValidationMessageFor(m => m.PromotionEndDate)
+                    </div>
+                </div>
+                <div class="padding-top-question">
+                    <div class="col-md-12">
+                        @Html.LabelFor(m => m.MapBuyer)
+                    </div>
+                    <div class="padding-top">
+                        <div class="col-md-2 col-sm-4">
+                            @Html.RadioButtonFor(m => m.MapBuyer, true, new { @onclick = "ChangeBuyerList()" }) Yes
+                        </div>
+                        <div class="col-md-2 col-sm-4">
+                            @Html.RadioButtonFor(m => m.MapBuyer, false, new { @checked = "checked", @onclick = "ChangeBuyerList()" }) No
+                        </div>
+                    </div>
+                </div>
+                <div class="padding-top-question" id="voucher-buyer-list" style="display:none;">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        @Html.LabelFor(m => m.BuyerPartyId)
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-10" style="padding-top:20px;">
+                        @Html.DropDownListFor(m => m.BuyerPartyId, Model.BuyerList, new { @class = "form-control autocomplete" })
+                    </div>
+                    <div class="col-md-4 col-sm-5 col-xs-10" style="padding-top:20px;">
+                        <span id="voucher-buyer-error" class="error-text display-none">@ReadResource.GetResourceForGlobalization(Constants.SELECT_BUYER_ERROR, userCulture).ToString()</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="create-voucher-footer" class="col-md-3  col-sm-3 col-xs-10  padding-responsive padding-top-question" style="padding-top: 40px">
+        <button class="btn cancelVoucherCreate btn-normal float-left" onclick="location.href='/Admin/BuyerOrganisations'">@ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()</button>
+        <div class="float-left" style="height: 10px; width: 14px;"></div>
+        <button class="btn btn-color float-left" onclick="SaveVoucher()">@ReadResource.GetResourceForGlobalization(Constants.SAVE, userCulture).ToString()</button>
+    </div>
+</div>
+
+<script>
+    var voucherText = '@ReadResource.GetResourceForGlobalization(Constants.VOUCHERS, userCulture).ToString()';
+    var backToText = '@ReadResource.GetResourceForGlobalization(Constants.BACK_TO, userCulture).ToString()';
+    var dashboardText = '@ReadResource.GetResourceForGlobalization(Constants.DASHBOARD, userCulture).ToString()';
+    var promotionDateValidation = '@ReadResource.GetResourceForGlobalization(Constants.PROMOTION_DATE_VALIDATION, userCulture).ToString()';
+    var voucherCreationSuccess = '@ReadResource.GetResourceForGlobalization(Constants.VOUCHER_CREATION_SUCCESS, userCulture).ToString()';
+    var voucherUpdationSuccess = '@ReadResource.GetResourceForGlobalization(Constants.VOUCHER_UPDATE_SUCCESS, userCulture).ToString()';
+    var errorMessage = '@ReadResource.GetResourceForGlobalization(Constants.ERROR_MESSAGE, userCulture).ToString()';
+    var promotionalCodeExists = '@ReadResource.GetResourceForGlobalization(Constants.PROMOTIONAL_CODE_EXISTS, userCulture).ToString()';
+    var updateVoucher = '@ReadResource.GetResourceForGlobalization(Constants.UPDATE_VOUCHER, userCulture).ToString()';
+</script>
+
+<script>
+    $(document).ready(function () {
+        ScrollToTop();
+        if ("@Model.BuyerPartyId" == 0) {
+            $('input[name="MapBuyer"][value="False"]').prop("checked", true);
+            $('#voucher-buyer-list').hide();
+        }
+        else {
+            $('input[name="MapBuyer"][value="True"]').prop("checked", true);
+            $("#voucher-create-edit-form #BuyerPartyId").val("@Model.BuyerPartyId");
+            $('#voucher-create-edit-form #BuyerPartyId').attr('readonly', true);
+            $('#voucher-create-edit-form #BuyerPartyId').attr('disabled', true);
+            //$('#voucher-create-edit-form #BuyerPartyId option:not(:selected)').attr('disabled', true);
+            $('#voucher-buyer-list').show();
+        }
+        if ("@Model.VoucherId" != 0) {
+            $('#voucher-create-edit-form #PromotionalCode').attr('disabled', true);
+            $("#headingcreateVoucher").html(updateVoucher);
+        }
+        else {
+            $('#voucher-create-edit-form #PromotionalCode').attr('disabled', false);
+        }
+
+        var BreadCrumb = "@ViewBag.BreadCrumb";
+        if (BreadCrumb == "DashBoard") {
+            $("#breadcrumbcreatevoucher").removeAttr("href");
+            $("#breadcrumbcreatevoucher").attr("onclick", "GoToDashBoard()");
+            $("#breadcrumbcreatevoucher").html("< " + backToText + " " + localStorage.getItem("companyName") + " " + dashboardText);
+            $(".cancelVoucherCreate").attr("onclick", "GoToDashBoard()");
+        }
+        if (BreadCrumb == "Vouchers") {
+            $("#breadcrumbcreatevoucher").removeAttr("onclick");
+            $("#breadcrumbcreatevoucher").attr("href", "/Admin/Voucher");
+            $("#breadcrumbcreatevoucher").html("< " + backToText + " " + voucherText);
+            $(".cancelVoucherCreate").attr("onclick", "location.href='/Admin/Voucher'");
+        }
+    });
+    function GoToDashBoard() {
+        $("#CreateVoucher").hide();
+        var buyerPartyId = "@Model.BuyerPartyId";
+        if (buyerPartyId != "") {
+            $.ajax({
+                type: 'post',
+                url: '/Admin/GetBuyerDashboard',
+                data: { buyerPartyId: buyerPartyId },
+                async: false,
+                success: function (response) {
+                    if (typeof (response) != "undefined") {
+                        $("#BuyerDashboard").html(response);
+                        $("#BuyerDashboard").show();
+                        ScrollToTop();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        }
+        return false;
+    }
+
+    function VoucherValidation() {
+        var result = true;
+        $.validator.unobtrusive.parse($('#voucher-create-edit-form'))
+        if (!$('#voucher-create-edit-form').valid()) {
+            result = false;
+        }
+        if ($('input[name=MapBuyer]:Checked').val() == "True") {
+            if (!$('#voucher-create-edit-form #BuyerName').val() == "") {
+                $('#voucher-buyer-error').show();
+                result = false;
+            }
+            else {
+                $('#voucher-buyer-error').hide();
+            }
+        }
+        return result;
+    }
+
+
+    function ChangeBuyerList() {
+        if ($('input[name=MapBuyer]:Checked').val() == "True") {
+            if ("@Model.BuyerPartyId" != 0)
+                $("#voucher-create-edit-form #BuyerPartyId").val("@Model.BuyerPartyId");
+            $('#voucher-buyer-list').show();
+
+        }
+        else {
+            $("#voucher-create-edit-form #BuyerPartyId").val(0);
+            $('#voucher-buyer-list').hide();
+        }
+    }
+
+
+    function SaveVoucher() {
+        if (!VoucherValidation()) {
+            return false;
+        }
+        var startdate = new Date($('#PromotionStartDate').val());
+        var endDate = new Date($('#PromotionEndDate').val());
+        if (startdate > endDate) {
+            showErrorMessage(promotionDateValidation);
+            return false;
+        }
+        var VoucherId = parseInt($('#VoucherId').val());
+        var PromotionalStartDateFormat = new Date($('#PromotionStartDate').val());
+        var PromotionalEndDateFormat = new Date($('#PromotionEndDate').val());
+        var PromotionalStartDate = ((PromotionalStartDateFormat.getDate() <= 9) ? "0" + PromotionalStartDateFormat.getDate() : PromotionalStartDateFormat.getDate()) + "" + ((PromotionalStartDateFormat.getMonth() <= 8) ? "0" + (PromotionalStartDateFormat.getMonth() + 1) : (PromotionalStartDateFormat.getMonth() + 1)) + "" + PromotionalStartDateFormat.getFullYear();
+        var PromotionalEndDate = ((PromotionalEndDateFormat.getDate() <= 9) ? "0" + PromotionalEndDateFormat.getDate() : PromotionalEndDateFormat.getDate()) + "" + ((PromotionalEndDateFormat.getMonth() <= 8) ? "0" + (PromotionalEndDateFormat.getMonth() + 1) : (PromotionalEndDateFormat.getMonth() + 1)) + "" + PromotionalEndDateFormat.getFullYear();
+        var PromotionalCode = $('#PromotionalCode').val();
+        var DiscountPercent = $('#DiscountPercent').val();
+        var BuyerPartyId = $('#BuyerPartyId').val();
+        $.ajax({
+            type: 'post',
+            url: '/Admin/AddorUpdateVoucher',
+            async: false,
+            data: { VoucherId: VoucherId, PromotionalCode: PromotionalCode, DiscountPercent: DiscountPercent, PromotionalStartDate: PromotionalStartDate, PromotionalEndDate: PromotionalEndDate, BuyerPartyId: BuyerPartyId },
+            success: function (response) {
+                if (response) {
+                    if ($('#VoucherId').val() == 0) {
+                        showSuccessMessage(voucherCreationSuccess);
+                    }
+                    else {
+                        showSuccessMessage(voucherUpdationSuccess);
+                    }
+
+                    if ("@ViewBag.BreadCrumb" == "DashBoard")
+                    {
+                        GoToDashBoard();
+                    }
+
+                    else if ("@ViewBag.BreadCrumb" == "Vouchers") {
+                        location.href = '/Admin/Voucher';
+                    }
+                    else {
+                        location.href = '/Admin/BuyerOrganisation';
+                    }
+                }
+                else {
+                    showErrorMessage(errorMessage);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+
+    }
+    $(function () {
+        $("#PromotionStartDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            constrainInput: false
+        });
+        $("#PromotionEndDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            constrainInput: false
+        });
+    });
+    $('#PromotionalCode').blur(function () {
+        Common.IsLoadingNeeded = false;
+        var code = $('#PromotionalCode').val();
+        if (code == "") {
+            $('#VoucherError').removeClass('available');
+            $('#VoucherError').removeClass('error-text');
+            $('#VoucherErrorText').html('');
+            return false;
+        }
+        if (code != "") {
+            $.ajax({
+                type: 'post',
+                url: '/Admin/IsVoucherAlreadyExists',
+                async: false,
+                data: { code: code },
+                success: function (response) {
+                    if (typeof (response) != "undefined") {
+                        if (response) {
+                            isVoucherExists = true;
+                            $('#VoucherError').removeClass('available');
+                            $('#VoucherError').addClass('error-text');
+                            $('#VoucherErrorText').html(promotionalCodeExists);
+                            $('#PromotionalCode').focus();
+
+                        }
+                        else {
+                            isVoucherExists = false;
+                            $('#VoucherError').removeClass('error-text');
+                            $('#VoucherError').addClass('available');
+                            $('#VoucherErrorText').html('');
+                        }
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        }
+    });
+
+</script>
+

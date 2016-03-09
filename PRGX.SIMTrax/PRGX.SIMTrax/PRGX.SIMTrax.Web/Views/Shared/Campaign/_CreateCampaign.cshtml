@@ -1,0 +1,477 @@
+﻿@model PRGX.SIMTrax.ViewModel.Campaign
+@using PRGX.SIMTrax.Domain.Util
+@{
+    var userCulture = (Session[Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+
+}
+<div id="CreateCampaignbody" class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="bread-crumb" style="display:block;">
+            <a id="breadcrumbcreatecampaign" href="/Admin/BuyerOrganisation">
+                @ReadResource.GetResourceForGlobalization(Constants.BACK_TO_ALL_BUYER_ORG, userCulture).ToString()
+            </a>
+        </div>
+
+        <div class="col-md-4 col-sm-12 col-xs-12 padding-bottom-header padding-left-zero padding-right-zero">
+            <h3 id="headingCampaign">@ReadResource.GetResourceForGlobalization(Constants.CREATE_CAMPAIGN, userCulture).ToString()</h3>
+        </div>
+        <form id="createCampaignForm" name="createCampaignForm" enctype="multipart/form-data" method="post" action="/Campaign/AddOrUpdateCampaign">
+            <div id="campaignDetails" class="col-md-12 col-sm-12 col-xs-12 padding-left-zero padding-right-zero">
+                <div class="container-white-backgound">
+                    @Html.HiddenFor(m => m.CampaignId)
+                    @Html.HiddenFor(m => m.CampaignStatus)
+                    @Html.HiddenFor(m => m.AuditorId)
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.CampaignName)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.CampaignName, new { @class = " form-control", data_bind = "value: CampaignName" })
+                        </div>
+                        <div class="col-md-5 paddingError ">
+                            @Html.ValidationMessageFor(m => m.CampaignName)
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.CampaignType)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(m => m.CampaignType, Model.CampaignTypeList, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.CampaignType)
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.BuyerId)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(m => m.BuyerId, Model.BuyerList, new { @class = "form-control", @id = "ddlBuyerList" })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.BuyerId)
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.TemplateType)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(m => m.TemplateType, Model.PageTemplateTypeList, new { @class = "form-control", @id = "ddlTemplateType" })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.TemplateType)
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.VoucherId)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(m => m.VoucherId, Model.VoucherList, new { @class = "form-control", @id = "ddlVoucherList" })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.VoucherId)
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.SupplierCount)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.SupplierCount, new { @class = " form-control" })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.SupplierCount)
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.MasterVendor)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.MasterVendor, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.MasterVendor)
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.CampaignUrl)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="input-group">
+                                @{var url = CommonMethods.GetBaseUrl(); }
+                                <span class="input-group-addon" id="homeUrl">@url</span>
+                                @Html.TextBoxFor(m => m.CampaignUrl, new { @class = "form-control", @id = "campaignUrl", data_bind = "value: CampaignUrl" })
+                            </div>
+
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.CampaignUrl)
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.EmailContent)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.TextAreaFor(m => m.EmailContent, new { @class = "form-control" })
+                            @Html.HiddenFor(m => m.EmailTemplateId)
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.EmailContent)
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.WelcomeMessage)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.TextAreaFor(m => m.WelcomeMessage, new { @class = "form-control" })
+                            @Html.HiddenFor(m => m.CampaignMessageId)
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.WelcomeMessage)
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.Notes)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.TextAreaFor(m => m.Notes, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.Notes)
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.DataSource)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.DataSource, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.DataSource)
+                        </div>
+                    </div>
+                    <div class="col-md-12 padding-top">
+                        <div class="col-md-5">
+                            @Html.LabelFor(m => m.CampaignLogo)
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.CampaignLogo, new { type = "file", onchange = "PreviewImage()", accept = "image/jpg,image/jpeg,image/png" })
+                        </div>
+                    </div>
+                    @Html.HiddenFor(m => m.CampaignLogoDocumentId)
+                    @Html.HiddenFor(m => m.CampaignLogoFileName)
+                    @Html.HiddenFor(m => m.CampaignLogoFilePath)
+                    <div class="col-md-12" id="imagePreview" style="display:none;">
+                        <div class="padding-top col-md-7">
+                            <img src="" id="imgCampaignLogo" height="100">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3  col-sm-3 col-xs-10  padding-responsive padding-top-question padding-left-zero" style="padding-top: 40px; display: block;">
+                    <button type="button" id="btnCnclCreate" class="btn btn-normal float-left" onclick="location.href='/Admin/BuyerOrganisations'">
+                        @ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()
+                    </button>
+                    <div class="float-left" style="height: 10px; width: 14px;"></div>
+                    <input type="submit" value="@ReadResource.GetResourceForGlobalization(Constants.CREATE, userCulture).ToString() " id="btnCreateCampaign" class="btn btn-color float-left" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    var backToHomeBreadCrumb = '@ReadResource.GetResourceForGlobalization(Constants.BREAD_CRUMB_BACK_TO_HOME, userCulture).ToString()';
+    var backToText = '@ReadResource.GetResourceForGlobalization(Constants.BACK_TO, userCulture).ToString()';
+    var dashboardText = '@ReadResource.GetResourceForGlobalization(Constants.DASHBOARD, userCulture).ToString()';
+</script>
+<script>
+    $('#createCampaignForm :input[name=CampaignType]').change(function () {
+        if ($(this).val() == 3) {
+            $('#createCampaignForm :input[name=TemplateType]').val("0").prop('disabled', true);
+            $('#createCampaignForm :input[name=MasterVendor]').prop('disabled', true);
+            $('#createCampaignForm :input[name=VoucherId]').html("").prop('disabled', true);
+            $('#createCampaignForm :input[name=VoucherId]').val("0").prop('disabled', true);
+            $('#createCampaignForm :input[name=CampaignUrl]').val("").prop('disabled', true);
+            $('#createCampaignForm :input[name=EmailContent]').val("").prop('disabled', true);
+            $('#createCampaignForm :input[name=WelcomeMessage]').val("").prop('disabled', true);
+        }
+        else {
+            $('#createCampaignForm :input[name=BuyerId]').prop('disabled', false);
+            $('#createCampaignForm :input[name=TemplateType]').prop('disabled', false);
+            $('#createCampaignForm :input[name=MasterVendor]').prop('disabled', false);
+            $('#createCampaignForm :input[name=VoucherId]').prop('disabled', false);
+            $('#createCampaignForm :input[name=CampaignUrl]').prop('disabled', false);
+            $('#createCampaignForm :input[name=EmailContent]').prop('disabled', false);
+            $('#createCampaignForm :input[name=WelcomeMessage]').prop('disabled', false);
+            $('#ddlBuyerList').prop('disabled', false);
+        }
+    });
+
+    $('#btnCreateCampaign').click(function () {
+        $.validator.unobtrusive.parse("#createCampaignForm")
+        if ($("#createCampaignForm").valid()) {
+            if ($('#createCampaignForm :input[name=CampaignType]').val() == 3) {
+                if ($('#createCampaignForm :input[name=Notes]').val() == "") {
+                    $('#createCampaignForm :input[name=Notes]').focus().css('border', '1px solid red');
+                    showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.NOTES_ERROR, userCulture).ToString()');
+                    return false;
+                }
+                else if ($('#createCampaignForm :input[name=DataSource]').val() == "") {
+                    $('#createCampaignForm :input[name=DataSource]').focus().css('border', '1px solid red');
+                    showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.DATA_SOURCE_ERROR, userCulture).ToString()');
+                    return false;
+                }
+                else if ($('#createCampaignForm :input[name=Notes]').val() == "" && $('#createCampaignForm :input[name=DataSource]').val() == "") {
+                    $('#createCampaignForm :input[name=Notes]').focus().css('border', '1px solid red');
+                    $('#createCampaignForm :input[name=DataSource]').css('border', '1px solid red');
+                    showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.NOTES_AND_DATA_SOURCE_ERROR, userCulture).ToString()');
+                    return false;
+                }
+                else if ($('#createCampaignForm :input[name=BuyerId]').val() != "") {
+                    if (parseInt($('#createCampaignForm :input[name=MasterVendor]').val()) == 0) {
+                        $('#createCampaignForm :input[name=MasterVendor]').focus().css('border', '1px solid red');
+                        showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.MASTER_VENDOR_ERROR, userCulture).ToString()');
+                        return false;
+                    }
+                    else if (parseInt($('#createCampaignForm :input[name=SupplierCount]').val()) == 0) {
+                        $('#createCampaignForm :input[name=SupplierCount]').focus().css('border', '1px solid red');
+                        showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_COUNT_ERROR, userCulture).ToString()');
+                        return false;
+                    }
+                    else if (parseInt($('#createCampaignForm :input[name=MasterVendor]').val()) < parseInt($('#createCampaignForm :input[name=SupplierCount]').val())) {
+                        $('#createCampaignForm :input[name=MasterVendor]').focus().css('border', '1px solid red');
+                        showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.COMPARE_MASTER_VENDOR_AND_SUPP_COUNT, userCulture).ToString()');
+                        return false;
+                    }
+                }
+            }
+            else {
+                if ($('#createCampaignForm :input[name=BuyerId]').val() == "") {
+                    $('#createCampaignForm :input[name=BuyerId]').focus().css('border', '1px solid red');
+                    showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.BUYER_ORG_ERROR, userCulture).ToString()');
+                    return false;
+                }
+                else if (parseInt($('#createCampaignForm :input[name=MasterVendor]').val()) == 0) {
+                    $('#createCampaignForm :input[name=MasterVendor]').focus().css('border', '1px solid red');
+                    showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.MASTER_VENDOR_ERROR, userCulture).ToString()');
+                    return false;
+                }
+                else if (parseInt($('#createCampaignForm :input[name=SupplierCount]').val()) == 0) {
+                    $('#createCampaignForm :input[name=SupplierCount]').focus().css('border', '1px solid red');
+                    showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_COUNT_ERROR, userCulture).ToString()');
+                    return false;
+                }
+                else if (parseInt($('#createCampaignForm :input[name=MasterVendor]').val()) < parseInt($('#createCampaignForm :input[name=SupplierCount]').val())) {
+                    $('#createCampaignForm :input[name=MasterVendor]').focus().css('border', '1px solid red');
+                    showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.COMPARE_MASTER_VENDOR_AND_SUPP_COUNT, userCulture).ToString()');
+                    return false;
+                }
+                else if ($('#createCampaignForm :input[name=TemplateType]').val() == "0") {
+                    $('#createCampaignForm :input[name=TemplateType]').focus().css('border', '1px solid red');
+                    showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_TEMPLATE_ERROR, userCulture).ToString()');
+                    return false;
+                }
+                else if ($('#createCampaignForm :input[name=campaignUrl]').val() == "") {
+                    $('#createCampaignForm :input[name=campaignUrl]').focus().css('border', '1px solid red');
+                    showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_URL_ERROR, userCulture).ToString()');
+                    return false;
+                }
+                return true;
+            }
+        }
+    });
+
+    var validFilesTypes = ["png", "jpg", "jpeg"];
+    function ValidateFileCampaign() {
+        var fileValue = document.getElementById('CampaignLogo').value;
+        if (fileValue.length < 1) {
+            showWarningMessage('@ReadResource.GetResourceForGlobalization(Constants.UPLOAD_IMAGE_VALIDATION, userCulture).ToString()');
+            return false;
+        }
+        var file = document.getElementById("CampaignLogo");
+        var path = file.value;
+        var ext = path.substring(path.lastIndexOf(".") + 1, path.length).toLowerCase();
+        var isValidFile = false;
+        for (var i = 0; i < validFilesTypes.length; i++) {
+            if (ext == validFilesTypes[i]) {
+                isValidFile = true;
+                break;
+            }
+        }
+        if (!isValidFile) {
+            showWarningMessage('@ReadResource.GetResourceForGlobalization(Constants.FILE_EXTENSIONS_VALIDATION, userCulture).ToString()', ext);
+        }
+        return isValidFile;
+    }
+
+    $("#ddlBuyerList").change(function () {
+        var buyerId = $("#ddlBuyerList").val();
+        if (buyerId != "") {
+            $.ajax({
+                type: 'post',
+                url: '/Campaign/GetVoucherList',
+                data: { buyerId: parseInt(buyerId) },
+                async: true,
+                success: function (response) {
+                    var optionList = "";
+                    for (var i = 0; i < response.result.length; i++) {
+                        optionList += "<option value='" + response.result[i].Value + "'>" + response.result[i].Text + "</option>";
+                    }
+                    $("#ddlVoucherList").html(optionList);
+                    $('#createCampaignForm :input[name=MasterVendor]').val(response.masterVendor);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        }
+    });
+
+    $("#CampaignName").blur(function () {
+        var campaignName = $("#CampaignName").val().split(' ').join('_');
+        $("#campaignUrl").val(campaignName);
+    });
+
+    $(document).ready(function () {
+        ScrollToTop();
+        var breadCrumb = "@ViewBag.BreadCrumb";
+        if (breadCrumb == "Dashboard") {
+            $("#breadcrumbcreatecampaign").removeAttr("href");
+            $("#breadcrumbcreatecampaign").attr("onclick", "GoToDashBoard()");
+            $("#breadcrumbcreatecampaign").html("< " + backToText + " " + localStorage.getItem("companyName") + " " + dashboardText);
+            $("#btnCnclCreate").attr("onclick", "GoToDashBoard()");
+        }
+        else if (breadCrumb == "Home") {
+            $("#breadcrumbcreatecampaign").removeAttr("href");
+            $("#breadcrumbcreatecampaign").attr("onclick", "GoToHome()");
+            $("#breadcrumbcreatecampaign").html("< " + backToHomeBreadCrumb);
+            $("#btnCnclCreate").attr("onclick", "GoToHome()");
+        }
+        if ("@ViewBag.Objective" == "Edit") {
+            $("#headingCampaign").html('@ReadResource.GetResourceForGlobalization(Constants.EDIT_CAMPAIGN,userCulture).ToString()');
+            $("#btnCreateCampaign").val('@ReadResource.GetResourceForGlobalization(Constants.UPDATE,userCulture).ToString()');
+            @*$("#CampaignType").val("@Model.CampaignTypeInt");*@
+            @*$("#ddlTemplateType").val("@Model.TemplateTypeInt");*@
+            $("#ddlBuyerList").val('@Model.BuyerId');
+            if ('@Model.CampaignLogoFilePath' != null && '@Model.CampaignLogoFilePath' != '') {
+                document.getElementById("imgCampaignLogo").src = '@Model.CampaignLogoFilePath';
+                $('#imagePreview').show();
+            }
+            else {
+                document.getElementById("imgCampaignLogo").src = "";
+                $('#imagePreview').hide();
+            }
+            if ($("#CampaignType").val() == 3) {
+                $('#createCampaignForm :input[name=TemplateType]').val("0").prop('disabled', true);
+                $('#createCampaignForm :input[name=MasterVendor]').prop('disabled', true);
+                $('#createCampaignForm :input[name=VoucherId]').html("").prop('disabled', true);
+                $('#createCampaignForm :input[name=VoucherId]').val("0").prop('disabled', true);
+                $('#createCampaignForm :input[name=CampaignUrl]').val("").prop('disabled', true);
+                $('#createCampaignForm :input[name=EmailContent]').val("").prop('disabled', true);
+                $('#createCampaignForm :input[name=WelcomeMessage]').val("").prop('disabled', true);
+            }
+        }
+        else if ("@ViewBag.Objective" == "View") {
+            $("#headingCampaign").html('@ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_DETAILS,userCulture).ToString()');
+            $("#btnCreateCampaign").hide();
+            $("#ddlBuyerList").val('@Model.BuyerId');
+            @*$("#CampaignType").val("@Model.CampaignTypeInt");*@
+            @*$("#ddlTemplateType").val("@Model.TemplateTypeInt");*@
+            $('#createCampaignForm :input').prop('disabled', true);
+            $('#btnCnclCreate').prop('disabled', false);
+        }
+    });
+
+    function GoToDashBoard() {
+        $("#CreateCampaign").hide();
+        var buyerPartyId = "";
+        if ("@ViewBag.Objective" == "Create") {
+            buyerPartyId = "@Model.BuyerId";
+        }
+        else if ("@ViewBag.Objective" == "Edit") {
+            buyerPartyId = "@Model.BuyerId";
+        }
+        else if ("@ViewBag.Objective" == "View") {
+            buyerPartyId = "@Model.BuyerId";
+        }
+        if (buyerPartyId != "") {
+            $.ajax({
+                type: 'post',
+                url: '/Admin/GetBuyerDashboard',
+                data: { buyerPartyId: buyerPartyId },
+                async: false,
+                success: function (response) {
+                    if (typeof (response) != "undefined") {
+                        $("#BuyerDashboard").empty();
+                        $("#BuyerDashboard").html(response);
+                        $("#BuyerDashboard").show();
+                        ScrollToTop();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        }
+        return false;
+    }
+
+    function PreviewImage() {
+        if (ValidateFileCampaign()) {
+            var oFReader = new FileReader();
+            oFReader.readAsDataURL(document.getElementById("CampaignLogo").files[0]);
+            oFReader.onload = function (oFREvent) {
+                document.getElementById("imgCampaignLogo").src = oFREvent.target.result;
+            };
+            $('#imagePreview').show();
+            return false;
+        }
+        else {
+            document.getElementById("imgCampaignLogo").src = "";
+            $('#imagePreview').hide();
+            $("#CampaignLogo").val("");
+        }
+    }
+
+    function GoToHome() {
+        $("#CreateCampaign").html("");
+        $("#CreateCampaign").hide();
+        $("#Home").show();
+        window.location.href = "/Admin/Home";
+        return false;
+    }
+</script>
+

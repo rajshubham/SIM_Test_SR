@@ -1,0 +1,132 @@
+﻿@model PRGX.SIMTrax.ViewModel.Campaign
+@using PRGX.SIMTrax.Domain.Util
+@{
+    var userCulture = (Session[Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+    ViewBag.Title = ReadResource.GetResourceForGlobalization(Constants.VERIFY_CAMPAIGN, userCulture).ToString();
+}
+<div id="verifyCampaign" class="row">
+    <div class="col-md-12">
+        <div class="bread-crumb">
+            <a href="@Url.Action("Home", "Admin")">@ReadResource.GetResourceForGlobalization(Constants.HOME, userCulture).ToString()</a> > @ReadResource.GetResourceForGlobalization(Constants.VERIFY_CAMPAIGN_LIST, userCulture).ToString()
+        </div>
+        <div class="row">
+            <div class="col-md-6 padding-bottom-header">
+                <h2>@ReadResource.GetResourceForGlobalization(Constants.VERIFY_LIST, userCulture).ToString()</h2>
+            </div>
+        </div>
+        <div id="divCampaign" class="row">
+            <div class="row col-md-8">
+                <form id="verifyCampaignForm" name="verifyCampaignForm" enctype="multipart/form-data" method="post" action="/Campaign/VerifyCampaign">
+                    <div>
+                        @Html.HiddenFor(m => m.CampaignId)
+                        @Html.HiddenFor(m => m.CampaignType)
+                        <div class="row form-group col-md-12">
+                            <div class="col-md-4">
+                                @Html.LabelFor(m => m.BuyerOrganisation)
+                            </div>
+                            <div class="col-md-8" id="BuyerOrganisation">
+                                @Html.DisplayFor(m => m.BuyerOrganisation)
+                            </div>
+                        </div>
+                        <div class="row form-group col-md-12">
+                            <div class="col-md-4">
+                                @Html.LabelFor(m => m.CampaignName)
+                            </div>
+                            <div class="col-md-8" id="CampaignNameVerify">
+                                @Html.DisplayFor(m => m.CampaignName)
+                            </div>
+                        </div>
+                        <div class="row form-group col-md-12">
+                            <div class="col-md-4">
+                                @Html.LabelFor(m => m.PreRegFile)
+                            </div>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(m => m.PreRegFile, new { type = "file", accept = "application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" })
+                            </div>
+                        </div>
+                        <div class="row form-group col-md-12">
+                            <div class="col-md-12">
+                                @Html.ActionLink("Download Template", "DownloadTemplate", null, new { @class = "btn btn-normal", @id = "lnkDownloadSampleFile" })
+                                <input type="submit" id="btnUpload" value="@ReadResource.GetResourceForGlobalization(Constants.UPLOAD, userCulture).ToString()" class="btn btn-color" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="divPreRegSupplier" class="row">
+            <div class="col-md-12 panel panel-default no-border">
+                <div class="container-white-backgound padding-bottom-0px">
+                    <div class="col-md-12 panel-heading">
+                        <span class="pull-left clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                        <span class="page-sub-heading">@ReadResource.GetResourceForGlobalization(Constants.SUPPLIERS_IN_CAMPAIGN, userCulture).ToString()</span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12"> <hr class="border-style" /></div>
+                    <div class="col-md-12 panel-body">
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label for="ddlDisplayCriteria">@ReadResource.GetResourceForGlobalization(Constants.SELECTION_CRITERIA, userCulture).ToString():</label>
+                                <select id="ddlDisplayCriteria" class="form-control">
+                                    <option value="">@ReadResource.GetResourceForGlobalization(Constants.ALL, userCulture).ToString()</option>
+                                    <option value="False">@ReadResource.GetResourceForGlobalization(Constants.INVALID, userCulture).ToString()</option>
+                                    <option value="True">@ReadResource.GetResourceForGlobalization(Constants.VALID, userCulture).ToString()</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="divVendorMasterWorksheet" class="col-md-9">
+                            <table id="tblVendorMasterWorksheet" class="tableGrid">
+                                <thead>
+                                    <tr>
+                                        <th class="tableGrid-header">@ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_NAME, userCulture).ToString()</th>
+                                        <th class="tableGrid-header">@ReadResource.GetResourceForGlobalization(Constants.LOGIN_ID, userCulture).ToString()</th>
+                                        <th class="tableGrid-header">@ReadResource.GetResourceForGlobalization(Constants.INVALID_COMMENTS, userCulture).ToString()</th>
+                                        <th class="tableGrid-header">@ReadResource.GetResourceForGlobalization(Constants.ACTIONS, userCulture).ToString()</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblVendorMasterBody"></tbody>
+                            </table>
+                            <div id="preRegSupplierPaginator"></div>
+                            <div class="row col-md-12" id="divOptions">
+                                <input type="button" class="btn btn-normal" value="Edit Suppliers/Export" id="btnEditSuppliers" />
+                                <input type="button" class="btn btn-color" value="Submit" id="btnShowMessage" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <input type="hidden" id="hdnCurrentPage" value="1" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="dialogMessage" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <h4 class="modal-title">@ReadResource.GetResourceForGlobalization(Constants.SUBMIT_CAMPAIGN, userCulture).ToString()</h4>
+                </div>
+                <div class="modal-body">
+                    <p>@ReadResource.GetResourceForGlobalization(Constants.SUBMITTING_OF_CAMPAIGNS_WOULD_DELETE_ALL_THE_INVALID_ENTRIES, userCulture).ToString()</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnSubmitCampaign" class="btn btn-color">@ReadResource.GetResourceForGlobalization(Constants.SUBMIT, userCulture).ToString()</button>
+                    <button type="button" class="btn btn-normal" data-dismiss="modal">@ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/VerifyCampaign")
+</div>
+<script>
+    var delet = '@ReadResource.GetResourceForGlobalization(Constants.DELETE, userCulture).ToString()';
+    var preRegSupplierDeletedSuccessfully = '@ReadResource.GetResourceForGlobalization(Constants.PRE_REG_SUPPLIER_DELETED_SUCCESSFULLY, userCulture).ToString()';
+    var unableToDeletePreRegSupplier = '@ReadResource.GetResourceForGlobalization(Constants.UNABLE_TO_DELETE_PRE_REG_SUPPLIER, userCulture).ToString()';
+    var noRecordsFound = '@ReadResource.GetResourceForGlobalization(Constants.NO_RECORDS_FOUND, userCulture).ToString()';
+    var defaultErrorMessage = '@ReadResource.GetResourceForGlobalization(Constants.DEFAULT_ERROR_MESSAGE, userCulture).ToString()';
+    var unableToSubmitCampaign = '@ReadResource.GetResourceForGlobalization(Constants.UNABLE_TO_SUBMIT_CAMPAIGN, userCulture).ToString()';
+    var campaignSubmittedSuccessfully = '@ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_SUBMITTED_SUCCESSFULLY, userCulture).ToString()';
+    var fileToUploadError = '@ReadResource.GetResourceForGlobalization(Constants.PLEASE_SELECT_A_FILE_TO_UPLOAD, userCulture).ToString()';
+    var fileExtensionValidation = '@ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_VERIFY_FILE_VALIDATION, userCulture).ToString()';
+</script>

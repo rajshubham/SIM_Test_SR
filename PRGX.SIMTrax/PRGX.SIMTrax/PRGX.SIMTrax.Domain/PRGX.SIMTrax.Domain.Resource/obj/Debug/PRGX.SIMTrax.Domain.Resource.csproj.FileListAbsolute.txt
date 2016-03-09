@@ -1,0 +1,9 @@
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Resource\bin\Debug\PRGX.SIMTrax.Domain.Resource.dll
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Resource\bin\Debug\PRGX.SIMTrax.Domain.Resource.pdb
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Resource\obj\Debug\PRGX.SIMTrax.Domain.Resource.csprojResolveAssemblyReference.cache
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Resource\obj\Debug\PRGX.SIMTrax.Domain.Resource.ApplicationLanguage.PRGXResource.resources
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Resource\obj\Debug\PRGX.SIMTrax.Domain.Resource.EmailConstants.resources
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Resource\obj\Debug\PRGX.SIMTrax.Domain.Resource.SimTraxConstants.resources
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Resource\obj\Debug\PRGX.SIMTrax.Domain.Resource.csproj.GenerateResource.Cache
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Resource\obj\Debug\PRGX.SIMTrax.Domain.Resource.dll
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Resource\obj\Debug\PRGX.SIMTrax.Domain.Resource.pdb

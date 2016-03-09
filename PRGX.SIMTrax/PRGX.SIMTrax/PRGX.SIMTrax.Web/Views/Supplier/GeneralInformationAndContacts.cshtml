@@ -1,0 +1,2103 @@
+﻿@model PRGX.SIMTrax.ViewModel.SellerRegister
+
+
+
+<style>
+    div.fileinputs {
+        position: relative;
+    }
+
+    div.fakefile {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        z-index: 1;
+    }
+
+        div.fakefile input[type=button] {
+            /* enough width to completely overlap the real hidden file control */
+            cursor: pointer;
+            width: 148px;
+        }
+
+    div.fileinputs input.file {
+        position: relative;
+        text-align: right;
+        -moz-opacity: 0;
+        filter: alpha(opacity: 0);
+        opacity: 0;
+        z-index: 2;
+        height: 34px;
+        cursor: pointer;
+        left: -100px;
+    }
+
+    .disabled {
+        opacity: 0.4;
+        filter: alpha(opacity=40);
+    }
+
+    .progress-bar-success {
+        filter: none;
+    }
+
+    #demoTree li {
+        margin-top: 10px !important;
+    }
+
+    .padding-left-44 {
+        padding-left: 44px;
+    }
+
+    .padding-left-42 {
+        padding-left: 42px;
+    }
+
+    .font-size-22 {
+        font-size: 22px;
+    }
+
+
+    .body-no-scroll {
+        overflow: hidden !important;
+    }
+
+    .SICCodeLink {
+        color: #449d44;
+    }
+
+    a.SICCodeLink:hover {
+        text-decoration: underline !important;
+        color: #449d44 !important;
+    }
+
+
+    .next-previous-icons {
+        height: 60px;
+        font-size: 20px;
+        padding-top: 20px;
+        cursor: pointer;
+    }
+
+    .padding-top-8 {
+        padding-top: 8px;
+    }
+
+    .edit-delete-icons {
+        padding-left: 8px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    #countOfCompleted {
+        padding-left: 29px;
+    }
+
+    .padding-left-0 {
+        padding-left: 0px;
+    }
+
+    .buttons-outside-container {
+        position: absolute;
+        top: -94px;
+    }
+
+    @@media (max-width: 430px) {
+        #contacts-list-table {
+            overflow-x: scroll;
+        }
+    }
+
+    @@media (max-width: 990px) {
+        .padding-left-right-0px {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+    }
+</style>
+@{
+
+    var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+
+    ViewBag.Title = PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT_PROFILE, userCulture).ToString();
+}
+@Styles.Render("~/bundles/ChartsCss")
+<div class="row" id="editProfile">
+    <div class="col-md-2 hidden-sm hidden-xs leftpanel-margins sticky-side-nav-bar" id="profileSideBar">
+        <div class="container-white-backgound leftpanel-height " id="profile-tab-div" style="padding-top: 9px;">
+
+
+            <div class="col-md-12 col-sm-10 col-xs-9 leftpanel-text profile-tab tab-selected sidebar-tab-height  padding-left-29 profile-tab-1" id="profileSummaryTab" onclick="GetProfileSummary()">
+                <span class="side-bar-nav-cnt float-left" style="margin-right: 10px;">
+                    <i class="fa fa-check-circle font-size-22 font-awesome-circle-background float-left"></i>
+                </span>
+                <span class="side-bar-nav-cnt">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUMMARY, userCulture).ToString()</span>
+            </div>
+            <div class="clear-both-left hidden-xs">
+                <span class="sticky-side-nav-bar-divider" style="background-color: rgb(242,242,242); width: 100%"></span>
+            </div>
+            <div class="col-md-12 col-sm-10 col-xs-9  profile-tab leftpanel-text   sidebar-tab-height padding-left-29 profile-tab-2" id="profileGeneralInformationTab" onclick="GetOrganisationDetails()">
+                <span class="side-bar-nav-cnt float-left"> <i class="fa fa-circle font-awesome-circle-background float-left"></i></span><span class="float-left circleBackgroundDigit">1</span><span class="side-bar-nav-cnt">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPANY_DETAILS, userCulture).ToString() </span>
+            </div>
+            <div class="clear-both-left hidden-xs">
+                <span class="sticky-side-nav-bar-divider"></span>
+            </div>
+            <div class="col-md-12 col-sm-10 col-xs-9 leftpanel-text profile-tab  sidebar-tab-height padding-left-29 profile-tab-3" id="profileContactTab" onclick="GetContactDetails()">
+                <span class="side-bar-nav-cnt float-left">  <i class="fa fa-circle font-awesome-circle-background float-left"></i></span><span class="float-left circleBackgroundDigit">2</span><span class="side-bar-nav-cnt">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACTS, userCulture).ToString()</span>
+            </div>
+            <div class="clear-both-left hidden-xs">
+                <span class="sticky-side-nav-bar-divider"></span>
+            </div>
+            <div class="col-md-12 col-sm-10 col-xs-9 leftpanel-text profile-tab   sidebar-tab-height padding-left-29 profile-tab-4" id="profileAddressTab" onclick="GetAddressDetails()">
+                <span class="side-bar-nav-cnt float-left">    <i class="fa fa-circle font-awesome-circle-background float-left float-left"></i></span><span class="float-left circleBackgroundDigit">3</span><span class="side-bar-nav-cnt">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESSES, userCulture).ToString()</span>
+            </div>
+            <div class="clear-both-left hidden-xs">
+                <span class="sticky-side-nav-bar-divider"></span>
+            </div>
+            <div class="col-md-12 col-sm-10 col-xs-9 leftpanel-text profile-tab  sidebar-tab-height padding-left-29 profile-tab-5" id="profileMarketingTab" onclick="GetMarketingDetails()">
+                <span class="side-bar-nav-cnt float-left"> <i class="fa fa-circle font-awesome-circle-background float-left"></i></span><span class="float-left circleBackgroundDigit">4</span><span class="side-bar-nav-cnt">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MARKETING, userCulture).ToString()</span>
+            </div>
+            <div class="clear-both-left hidden-xs">
+                <span class="sticky-side-nav-bar-divider"></span>
+            </div>
+            <div class="col-md-12 col-sm-10 col-xs-9 leftpanel-text profile-tab   sidebar-tab-height padding-left-29 profile-tab-6" id="profileCapabilityTab" onclick="GetCapabilityDetails()">
+                <span class="side-bar-nav-cnt float-left">      <i class="fa fa-circle font-awesome-circle-background float-left"></i></span><span class="float-left circleBackgroundDigit">5</span><span class="side-bar-nav-cnt">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CAPABILITIES, userCulture).ToString()</span>
+            </div>
+            <div class="clear-both-left hidden-xs">
+                <span class="sticky-side-nav-bar-divider"></span>
+            </div>
+            <div class="col-md-12 col-sm-10 col-xs-9 leftpanel-text profile-tab  sidebar-tab-height padding-left-29 profile-tab-7" id="profileBankTab" onclick="GetBankDetails()">
+                <span class="side-bar-nav-cnt float-left">   <i class="fa fa-circle font-awesome-circle-background float-left"></i></span><span class="float-left circleBackgroundDigit">6</span><span class="side-bar-nav-cnt">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BANK_DETAILS, userCulture).ToString()</span>
+            </div>
+            <div class="clear-both-left hidden-xs">
+                <span class="sticky-side-nav-bar-divider"></span>
+            </div>
+            <div class="col-md-12 col-sm-10 col-xs-9 leftpanel-text profile-tab  sidebar-tab-height padding-left-29 profile-tab-8" id="profileReferenceTab" onclick="GetReferenceDetails()">
+                <span class="side-bar-nav-cnt float-left">  <i class="fa fa-circle font-awesome-circle-background float-left"></i></span><span class="float-left circleBackgroundDigit">7</span><span class="side-bar-nav-cnt">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REFERENCES, userCulture).ToString()</span>
+            </div>
+        </div>
+    </div>
+    <div class="hidden-md hidden-lg col-sm-12  col-xs-12">
+        <div class="col-sm-12  col-xs-12 padding-left-right-0px">
+            <div class="container-white-backgound " style="padding-top: 0px; padding-bottom: 0px;">
+                <select class="form-control" id="profile-tab-drop-down">
+                    <option value="1">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUMMARY, userCulture).ToString()</option>
+                    <option value="2">1. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPANY_DETAILS, userCulture).ToString()</option>
+                    <option value="3">2. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACTS, userCulture).ToString()</option>
+                    <option value="4">3. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESSES, userCulture).ToString()</option>
+                    <option value="5">4. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MARKETING, userCulture).ToString()</option>
+                    <option value="6">5. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CAPABILITIES, userCulture).ToString()</option>
+                    <option value="7">6. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BANK_DETAILS, userCulture).ToString()</option>
+                    <option value="8">7. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REFERENCES, userCulture).ToString()</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10 col-sm-12 col-xs-12 padding-responsive content-for-sticky-side-nav-bar" id="summary-details-div" data-value="1">
+        <div class="col-md-12 padding-left-right-0px">
+            <div class="bread-crumb responsive-margin" id="defaultProfileBreadCrumb">
+                <a  href="/supplier-home" >@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString()</a> > @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONNAIRE, userCulture).ToString() :  @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFORMATION_AND_CONTACTS, userCulture).ToString()
+            </div>
+        </div>
+        <div class="col-md-12 padding-bottom-header padding-left-right-0px">
+            <h3>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONNAIRE_SUMMARY, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFORMATION_AND_CONTACTS, userCulture).ToString()</h3>
+        </div>
+        <div class="page-container padding-left-right-0px col-md-12 col-sm-12 col-xs-12 padding-responsive">
+            <div class="container-white-backgound">
+                <div class="div-container" style="margin-top: 0px;">
+                    <div tabindex="-1">
+                        <div class="col-md-4 col-sm-12 col-xs-12">
+                            <div class="col-md-10 col-md-offset-2 col-xs-10 col-xs-offset-2 padding-top-header padding-bottom-header" style="display: none;">
+                                <img id="imgSummaryLogoPreview" height="100" src="" />
+                            </div>
+                            <div class="col-md-10 col-md-offset-2 col-xs-12">
+                                <div id="profileSummaryChart" style="width: 200px; position: relative;margin:auto;"></div>
+                            </div>
+                            <div class="col-md-10 col-md-offset-2 col-xs-12 padding-top-header" style="padding-right:0px;padding-left:0px;text-align:center" id="countOfCompleted">
+
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-sm-12 col-xs-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+                                <div class="col-md-8 col-sm-12 col-sm-12">
+                                    <h4><b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTION, userCulture).ToString() 1: @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPANY_DETAILS, userCulture).ToString()</b></h4>
+                                </div>
+                                <div class="col-md-8 col-sm-12 col-sm-12 margin-top-10px summarySection padding-bottom">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFORMATION_AND_CONTACTS_MESSAGE, userCulture).ToString()
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 margin-top-10px">
+                                    <div class="row col-md-3 col-sm-3 col-xs-4 padding-bottom width-95" style="font-size: 12px;"><span id="divCompanyProfilePercentage" class="col-md-12 col-sm-12 col-xs-12">0%</span> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWERED, userCulture).ToString()</div>
+                                    <div class="col-md-4 col-sm-4 col-xs-8">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-success" id="divCompanyProfilePercentageBar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-12" align="center">
+                                        <button type="button" class="btn btn-color" onclick="GetOrganisationDetails()" tabindex="13">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWER_THIS_SECTION, userCulture).ToString()</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-left: 15px">
+                                <div class="col-md-12 col-sm-12 col-xs-12" style="border-bottom: 4px solid #D2D2D2"></div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-header  padding-bottom-header">
+                                <div class="col-md-8  col-sm-12 col-xs-12 margin-top-10px">
+                                    <h4><b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTION, userCulture).ToString() 2: @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACTS, userCulture).ToString()</b></h4>
+                                </div>
+                                <div class="col-md-8 col-sm-12 col-xs-12 margin-top-10px summarySection padding-bottom">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACTS_MESSAGE, userCulture).ToString()
+
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 margin-top-10px">
+                                    <div class="row col-md-3 col-sm-3 col-xs-4  padding-bottom width-95" style="font-size: 12px;"><span class="col-md-12 col-sm-12 col-xs-12" id="divContactPercentage">0%</span>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWERED, userCulture).ToString()</div>
+                                    <div class="col-md-4 col-sm-4 col-xs-8">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-success" id="divContactPercentageBar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-12" align="center">
+                                        <button type="button" class="btn btn-color" onclick="GetContactDetails()" tabindex="14">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWER_THIS_SECTION, userCulture).ToString()</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-left: 15px">
+                                <div class="col-md-12 col-sm-12 col-xs-12" style="border-bottom: 4px solid #D2D2D2"></div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-header  padding-bottom-header">
+                                <div class="col-md-8 col-sm-12 col-xs-12 margin-top-10px">
+                                    <h4><b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTION, userCulture).ToString() 3: @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESSES, userCulture).ToString()</b></h4>
+                                </div>
+                                <div class="col-md-8  col-sm-12 col-xs-12 margin-top-10px summarySection padding-bottom">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESSES_MESSAGE, userCulture).ToString()
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 margin-top-10px">
+                                    <div class="row col-md-3 col-sm-3 col-xs-4 padding-bottom width-95" style="font-size: 12px;"><span class="col-md-12 col-sm-12 col-xs-12" id="divAddressPercentage">0%</span>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWERED, userCulture).ToString()</div>
+                                    <div class="col-md-4 col-sm-4 col-xs-8">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-success" id="divAddressPercentageBar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-12" align="center">
+                                        <button type="button" class="btn btn-color" onclick="GetAddressDetails()" tabindex="15">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWER_THIS_SECTION, userCulture).ToString()</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-left: 15px">
+                                <div class="col-md-12 col-sm-12 col-xs-12" style="border-bottom: 4px solid #D2D2D2"></div>
+                            </div>
+                            <div class="col-md-12  col-sm-12 col-xs-12 padding-top-header  padding-bottom-header">
+                                <div class="col-md-8  col-sm-12 col-xs-12 margin-top-10px">
+                                    <h4><b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTION, userCulture).ToString() 4: @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MARKETING, userCulture).ToString()</b></h4>
+                                </div>
+                                <div class="col-md-8 col-sm-12 col-xs-12 margin-top-10px summarySection padding-bottom">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MARKETING_MESSAGE, userCulture).ToString()
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 margin-top-10px">
+                                    <div class="row col-md-3 col-sm-3 col-xs-4 padding-bottom width-95" style="font-size: 12px;"><span class="col-md-12 col-sm-12 col-xs-12" id="divMarketingPercentage">0%</span>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWERED, userCulture).ToString()</div>
+                                    <div class="col-md-4 col-sm-4 col-xs-8">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-success" id="divMarketingPercentageBar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-12" align="center">
+                                        <button type="button" class="btn btn-color" onclick="GetMarketingDetails()" tabindex="16">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWER_THIS_SECTION, userCulture).ToString()</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-left: 15px">
+                                <div class="col-md-12 col-sm-12 col-xs-12" style="border-bottom: 4px solid #D2D2D2"></div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-header  padding-bottom-header">
+                                <div class="col-md-8 col-sm-12 col-xs-12 margin-top-10px">
+                                    <h4><b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTION, userCulture).ToString() 5: @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CAPABILITIES, userCulture).ToString()</b></h4>
+                                </div>
+                                <div class="col-md-8 col-sm-12 col-xs-12 margin-top-10px summarySection padding-bottom">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CAPABILITIES_MESSAGE, userCulture).ToString()
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 margin-top-10px">
+                                    <div class="row col-md-3 col-sm-3 col-xs-4 padding-bottom width-95" style="font-size: 12px;"><span class="col-md-12 col-sm-12 col-xs-12" id="divCapabilityPercentage">0%</span>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWERED, userCulture).ToString()</div>
+                                    <div class="col-md-4 col-sm-4 col-xs-8">
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-success" id="divCapabilityPercentageBar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-12" align="center">
+                                        <button type="button" class="btn btn-color" onclick="GetCapabilityDetails()" tabindex="17">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWER_THIS_SECTION, userCulture).ToString()</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-left: 15px">
+                                <div class="col-md-12 col-sm-12 col-xs-12" style="border-bottom: 4px solid #D2D2D2"></div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-header  padding-bottom-header">
+                                <div class="col-md-8  col-sm-12 col-xs-12 margin-top-10px">
+                                    <h4><b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTION, userCulture).ToString() 6: @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BANK_DETAILS, userCulture).ToString()</b></h4>
+                                </div>
+                                <div class="col-md-8 col-sm-12 col-xs-12 margin-top-10px summarySection padding-bottom">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BANK_DETAILS_MESSAGE, userCulture).ToString()
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 margin-top-10px">
+                                    <div class="row col-md-3 col-sm-3 col-xs-6 width-95 padding-bottom" style="font-size: 12px;"></div>
+                                    <div class="col-md-4 col-sm-4 col-xs-6">
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-12" align="center">
+                                        <button type="button" class="btn btn-color" onclick="GetBankDetails()" tabindex="18">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWER_THIS_SECTION, userCulture).ToString()</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-left: 15px">
+                                <div class="col-md-12 col-sm-12 col-xs-12" style="border-bottom: 4px solid #D2D2D2"></div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-header  padding-bottom-header">
+                                <div class="col-md-8 col-sm-12 col-xs-12 margin-top-10px">
+                                    <h4><b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTION, userCulture).ToString() 7: @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REFERENCES, userCulture).ToString()</b></h4>
+                                </div>
+                                <div class="col-md-8 col-sm-12 col-xs-12 margin-top-10px summarySection padding-bottom">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REFERENCES_MESSAGE, userCulture).ToString()
+
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12 margin-top-10px">
+                                    <div class="row col-md-3 col-sm-3 col-xs-6 width-95 padding-bottom" style="font-size: 12px;"></div>
+                                    <div class="col-md-4 col-sm-4 col-xs-6">
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 col-xs-12" align="center">
+                                        <button type="button" class="btn btn-color" onclick="GetReferenceDetails()" tabindex="19">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWER_THIS_SECTION, userCulture).ToString()</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10 col-sm-12 col-xs-12 padding-responsive content-for-sticky-side-nav-bar display-none" id="company-details-div" data-value="2">
+        <div class="col-md-12 padding-left-right-0px">
+            <div class="bread-crumb responsive-margin">
+                <a onclick="GetProfileSummary()">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_QUESTIONNAIRE_SUMMARY, userCulture).ToString()</a>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+                <h3>1. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPANY_DETAILS, userCulture).ToString()</h3>
+            </div>
+            <div class="col-lg-3 col-md-3  col-sm-4 col-xs-4 responsive-resize ">
+                <button class="btn btn-color float-reverse float-right submitCompanyDetails" style="width: 130px">
+                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE_ANSWERS, userCulture).ToString()
+                </button>
+            </div>
+        </div>
+
+        <div class="page-container padding-left-right-0px col-md-12 col-sm-12 col-xs-12 padding-responsive">
+            <div class="container-white-backgound">
+                <div class="div-container" style="margin-top: 10px; width: 100%;">
+                    <div class="col-md-12 parent-question-section Company-Details">
+                        <form id="CompanyDetailsForm" name="CompanyDetailsForm" enctype="multipart/form-data">
+                            @for (int i = 0; i < Model.IdentifierTypeList.Count; i++)
+                            {
+                                @Html.HiddenFor(model => Model.IdentifierTypeList[i].Value)
+                                @Html.HiddenFor(model => Model.IdentifierTypeList[i].Text)
+
+                            }
+
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="padding-top-question">
+                                            <div class="col-md-12 col-xs-12">
+                                                @Html.LabelFor(m => m.OrganisationName, new { @style = "display:initial;" })
+                                                <a class="profile-tooltip-remove">
+                                                    <i class="fa fa-info-circle"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-5 col-sm-7 col-xs-12">
+                                                @Html.TextBoxFor(m => m.OrganisationName, new { @class = " form-control" })
+                                            </div>
+
+                                        </div>
+
+                                        <div class="padding-top-question">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                @Html.LabelFor(m => m.Trading)
+                                                <a class="profile-tooltip-remove">
+                                                    <i class="fa fa-info-circle"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-5 col-sm-7 col-xs-12">
+                                                @Html.TextBoxFor(m => m.Trading, new { @class = " form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="padding-top-question">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                @Html.LabelFor(m => m.TypeOfCompany)
+                                                <a class="profile-tooltip-remove">
+                                                    <i class="fa fa-info-circle"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-5 col-sm-7 col-xs-12">
+                                                @Html.DropDownListFor(m => m.TypeOfCompany, Model.CompanyTypeList, new { @class = " form-control" })
+                                            </div>
+                                            <div class="col-md-5 col-sm-7 col-xs-12 paddingError">
+                                                @Html.ValidationMessageFor(m => m.TypeOfCompany)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                        <div class="padding-top-question">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                @Html.LabelFor(m => m.IsSubsidaryStatus)
+                                            </div>
+                                            <div class="col-md-2 col-sm-4 col-xs-8">
+                                                @Html.RadioButtonFor(m => m.IsSubsidaryStatus, false, new { Checked = "checked" }) <span id="IsSubsidaryStatusParent">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PARENT, userCulture).ToString()</span>
+                                            </div>
+                                            <div class="col-md-2 col-sm-4 col-xs-8">
+                                                @Html.RadioButtonFor(m => m.IsSubsidaryStatus, true) <span id="IsSubsidaryStatusSubsidary">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUBSIDIARY, userCulture).ToString()</span>
+                                            </div>
+                                        </div>
+                                        <div id="ifSubsidary" style="display: none;" class="padding-Left">
+                                            <div class="padding-top-question">
+                                                <div class="col-md-12 col-sm-12 col-xs-11">
+                                                    @Html.LabelFor(m => m.UltimateParent, new { @class = "required" })
+                                                </div>
+
+                                                <div class="col-md-5 col-sm-7 col-xs-11">
+                                                    @Html.TextBoxFor(m => m.UltimateParent, new { @class = " form-control" })
+                                                </div>
+                                                <div class="col-md-5 col-sm-7 col-xs-11 paddingError error-text" id="UltimateParentError" style="display: none;">
+                                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ULTIMATE_PARENT_ERROR, userCulture).ToString()
+                                                </div>
+                                            </div>
+                                            <div class="padding-top-question">
+                                                <div class="col-md-12 col-sm-12 col-xs-11">
+                                                    @Html.LabelFor(m => m.ParentDunsNumber, new { @class = "required" })
+                                                </div>
+                                                <div class="col-md-5 col-sm-7 col-xs-11">
+                                                    @Html.TextBoxFor(m => m.ParentDunsNumber, new { @class = " form-control" })
+                                                </div>
+                                                <div class="col-md-5 col-sm-7 col-xs-11 paddingError">
+                                                    @Html.ValidationMessageFor(m => m.ParentDunsNumber)
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="padding-top-question">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                @Html.LabelFor(m => m.CompanyRegistrationNumber)
+                                                <a class="profile-tooltip-remove">
+                                                    <i class="fa fa-info-circle"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-5 col-sm-7 col-xs-12">
+                                                @Html.TextBoxFor(m => m.CompanyRegistrationNumber, new { @class = " form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="padding-top-question">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                @Html.LabelFor(m => m.CompanyYear)
+
+                                            </div>
+                                            <div class="col-md-5 col-sm-7 col-xs-12">
+                                                <select id="CompanyYear" name="CompanyYear" class="form-control"></select>
+                                            </div>
+                                        </div>
+                                        <div class="padding-top-question">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                @Html.LabelFor(m => m.IsVAT)
+                                                <a class="profile-tooltip-remove" data-width="380">
+                                                    <i class="fa fa-info-circle"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-2 col-sm-4 col-xs-8">
+                                                @Html.RadioButtonFor(m => m.IsVAT, true) <span id="IsVATTrue">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.YES, userCulture).ToString()</span>
+                                            </div>
+                                            <div class="col-md-2 col-sm-4 col-xs-8">
+                                                @Html.RadioButtonFor(m => m.IsVAT, false, new { Checked = "checked" }) <span id="IsVATFalse">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO, userCulture).ToString()</span>
+                                            </div>
+                                        </div>
+                                        <div id="HaveVAT" style="display: none;" class="padding-Left">
+                                            <div class="padding-top-question">
+                                                <div class="col-md-12 col-sm-12 col-xs-11">
+                                                    @Html.LabelFor(m => m.VATNumber)
+                                                </div>
+                                                <div class="col-md-5 col-sm-7 col-xs-11">
+                                                    @Html.TextBoxFor(m => m.VATNumber, new { @class = " form-control" })
+                                                </div>
+                                                <div class="col-md-5 col-sm-7 col-xs-11  paddingError error-text " id="VATNumberError" style="display: none;">
+                                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VAT_NUMBER_ERROR, userCulture).ToString()
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="padding-top-question">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                @Html.LabelFor(m => m.HaveDuns)
+                                                <a class="profile-tooltip-remove">
+                                                    <i class="fa fa-info-circle"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-2 col-sm-4 col-xs-8">
+                                                @Html.RadioButtonFor(m => m.HaveDuns, true) <span id="IsVATTrue">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.YES, userCulture).ToString()</span>
+                                            </div>
+                                            <div class="col-md-2 col-sm-4 col-xs-8">
+                                                @Html.RadioButtonFor(m => m.HaveDuns, false, new { Checked = "checked" }) <span id="IsVATFalse">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO, userCulture).ToString()</span>
+                                            </div>
+                                        </div>
+                                        <div id="HaveDUNS" style="display: none;" class="padding-Left">
+                                            <div class="padding-top-question">
+                                                <div class="col-md-12 col-sm-12 col-xs-11">
+                                                    @Html.LabelFor(m => m.DUNSNumber)
+                                                </div>
+                                                <div class="col-md-5 col-sm-7 col-xs-11">
+                                                    @Html.TextBoxFor(m => m.DUNSNumber, new { @class = " form-control" })
+                                                </div>
+                                                <div class="col-md-5 col-sm-7 col-xs-11 paddingError error-text" id="DUNSNumberError" style="display: none;">
+                                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DUNS_NUMBER_ERROR, userCulture).ToString()
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.HiddenFor(m => m.RefRegionId)
+                            @Html.HiddenFor(m => m.SellerPartyId)
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-2  col-sm-3 col-xs-5 padding-responsive padding-top-question" style="padding-top: 40px">
+                <input type="submit" class="submitCompanyDetails btn btn-color" value="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE_ANSWERS, userCulture).ToString() " />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10 col-sm-12 col-xs-12 padding-responsive content-for-sticky-side-nav-bar display-none" id="contact-details-div" data-value="3">
+        <div class="col-md-12 padding-left-right-0px">
+            <div class="bread-crumb responsive-margin">
+                <a onclick="GetProfileSummary()"> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_QUESTIONNAIRE_SUMMARY, userCulture).ToString() </a>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+                <h3>2. Contacts</h3>
+            </div>
+            <div class="col-lg-3 col-md-3  col-sm-4 col-xs-4 responsive-resize display-none save-cancel-contacts">
+                <button class="btn btn-color save-to-contacts-list float-right float-reverse">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE, userCulture).ToString()</button>
+                <div class="float-right float-reverse" style="height: 10px; width: 14px;"></div>
+                <button class="btn btn-normal back-to-contacts-list float-right float-reverse">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+            </div>
+            <div class="col-lg-3 col-md-3  col-sm-4 col-xs-4 responsive-resize add-contacts-button">
+                <button class="btn btn-color float-reverse float-right add-contact-to-list" style="width: 150px">
+                    <i class="fa fa-plus" style="padding-right: 8px;"></i>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_CONTACT, userCulture).ToString()
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-10  padding-responsive  display-none back-to-contacts">
+                <button class="btn btn-color back-to-contacts-list float-right">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK, userCulture).ToString()</button>
+            </div>
+        </div>
+        <div class="page-container padding-left-right-0px col-md-12 col-sm-12 col-xs-12 padding-responsive">
+            <div class="container-white-backgound">
+                <div class="div-container" style="margin-top: 0px; width: 100%; padding-left: 15px;">
+                    <div class="col-md-12 col-sm-12 col-xs-12 min-height-responsive  Contact-Details" style="margin-top: 0px;" data-value="3">
+                        <div id="contacts-list-table">
+                            <table class="tableGrid footable table toggle-arrow" id="contacts-list-table-data">
+                                <thead class="cursor-default">
+                                    <tr>
+                                        <th class="tableGrid-header" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NAME, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TITLE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MAILING_ADDRESS, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PHONE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAX, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.RELATIONSHIP_ROLE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone" style="width: 68px">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGNED_CLIENTS, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tabletPortrait,phone" style="width: 50px">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGN_TO_CLIENTS, userCulture).ToString()</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="contacts-list-table-rows"></ tbody >
+                            </table>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12" id="contact-create-edit-form" style="display: none;">
+                            <div class="col-md-10 col-sm-10 col-xs-12 page-sub-heading page-sub-heading-container padding-left-0" id="create-edit-contacts-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_CONTACT, userCulture).ToString()</div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FIRST_NAME, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="contact-first-name" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="contact-first-name-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FIRST_NAME_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-7 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LAST_NAME, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="contact-last-name" />
+                                </div>
+                                <div class="col-md-7  col-sm-6 col-xs-12 paddingError  error-text" id="contact-last-name-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LAST_NAME_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-7 col-sm-12 col-xs-12">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.JOB_TITLE, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="contact-title" />
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8  col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="contact-email" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="contact-email-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL_VALIDATION, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MAILING_ADDRESS, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <select class="form-control" id="contact-address"></select>
+                                </div>
+                            </div>
+                            <div class="display-none" id="contact-address-div">
+                                <div class="row padding-top-question">
+                                    <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                        <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_LINE_1, userCulture).ToString()</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control readonly-fields" id="contact-address-line-1" />
+                                    </div>
+                                    <div class="col-md-7  col-sm-6 col-xs-12 paddingError  error-text" id="contact-address-line-1-error" style="display: none">
+                                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_LINE_1_ERROR, userCulture).ToString()
+                                    </div>
+                                </div>
+                                <div class="row padding-top-question">
+                                    <div class="col-md-7 col-sm-12 col-xs-12">
+                                        <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_LINE_2, userCulture).ToString()</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control readonly-fields" id="contact-address-line-2" />
+                                    </div>
+
+                                </div>
+                                <div class="row padding-top-question">
+                                    <div class="col-md-7 col-sm-12 col-xs-12 required">
+                                        <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CITY, userCulture).ToString()</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control readonly-fields" id="contact-address-city" />
+                                    </div>
+                                    <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="contact-address-city-error" style="display: none">
+                                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CITY_ERROR, userCulture).ToString()
+                                    </div>
+                                </div>
+                                <div class="row padding-top-question">
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY_OR_STATE, userCulture).ToString()</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control readonly-fields" id="contact-address-state" />
+                                    </div>
+                                </div>
+                                <div class="row padding-top-question">
+                                    <div class="col-md-8 col-sm-8 col-xs-12 required">
+                                        <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.POSTAL_ZIPCODE, userCulture).ToString()</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        <input type="text" class="form-control readonly-fields" id="contact-address-postal" />
+                                    </div>
+                                    <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="contact-address-postal-error" style="display: none">
+                                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.POSTAL_ZIPCODE_ERROR, userCulture).ToString()
+                                    </div>
+                                </div>
+                                <div class="row padding-top-question">
+                                    <div class="col-md-8 col-sm-8 col-xs-12 required">
+                                        <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY, userCulture).ToString()</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        <select class="form-control readonly-fields" id="contact-address-country"></select>
+                                    </div>
+                                    <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="contact-address-country-error" style="display: none">
+                                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY_ERROR, userCulture).ToString()
+                                    </div>
+                                </div>
+                                <div class="row padding-top-question">
+                                    <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                        <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_TYPE, userCulture).ToString()</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-6 col-xs-12">
+                                        <select class="form-control readonly-fields" id="contact-address-types">
+                                            <option value="0">
+                                                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_ADDRESS_TYPE, userCulture).ToString() </option>
+                                                <option id="contact-address-types-1" value="509" class="display-none">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MAILING, userCulture).ToString()
+                                            </option>
+                                            <option id="contact-address-types-2" value="510" class="display-none">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTERED, userCulture).ToString()</option>
+                                            <option id="contact-address-types-3" value="511" class="display-none">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HEADQUARTERS, userCulture).ToString()</option>
+                                            <option value="512">
+                                                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REMITTANCE, userCulture).ToString() </option>
+                                                <option value="513">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BRANCH, userCulture).ToString()
+                                            </option>
+                                            <option value="514"> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.THIRD_PARTY, userCulture).ToString() </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="address-types-error" style="display: none">
+                                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_TYPE_ERROR, userCulture).ToString()
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TELEPHONE, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="contact-phone" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="contact-phone-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TEL_NUMBER_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAX, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="contact-fax" />
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.RELATIONSHIP_ROLE, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <select class="form-control" id="contact-relationship">
+                                        <option value="0">
+                                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_ROLE, userCulture).ToString() </option>
+                                            <option value="515">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SALES, userCulture).ToString()
+                                        </option>
+                                        <option value="516">
+                                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACC_FIN_REMITTANCE, userCulture).ToString() </option>
+                                            <option value="517">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUSTAINABILITY, userCulture).ToString()
+                                        </option>
+                                        <option value="519">
+                                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HEALTH_SAFETY, userCulture).ToString() </option>
+                                            <option value="518">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PROCUREMENT, userCulture).ToString()
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="contact-relationship-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_RELATIONSHIP, userCulture).ToString()
+                                </div>
+                            </div>
+                            <input type="hidden" id="contact-row-id" value="0" />
+                            <input type="hidden" id="contact-id" value="0" />
+                            <input type="hidden" id="contact-party-id" value="0" />
+
+                        </div>
+                        <div id="assign-contacts-list-table" style="display: none;">
+                            <div class="col-md-12 col-sm-12 col-xs-12 page-sub-heading page-sub-heading-container" id="assign-contacts-header">
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+                                <div class="col-md-6 col-sm-7 col-xs-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="buyer-name-for-contacts" placeholder="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH_FOR_BUYER, userCulture).ToString()" id="buyer-name-for-contacts" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-normal" type="submit" id="btn-assign-contacts-search"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="col-md-12 col-sm-12 col-xs-12 tableGrid footable table toggle-arrow" id="assign-contacts-table">
+                                <thead class="cursor-default">
+                                    <tr>
+                                        <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BUYER, userCulture).ToString()</th>
+                                        <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.RELATIONSHIP_ROLE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT_ASSIGNMENT, userCulture).ToString()</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="assign-contacts-list-table-rows"></ tbody >
+                            </table>
+                            <input type="hidden" id="hdn-contacts-buyer-current-page" value="1" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3  col-sm-3 col-xs-10  padding-responsive padding-top-question" style="padding-top: 40px">
+                <div class="add-contacts-button">
+                    <button class="btn btn-color add-contact-to-list" style="width: 150px">
+                        <i class="fa fa-plus" style="padding-right: 8px;"></i>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_CONTACT, userCulture).ToString()
+                    </button>
+                </div>
+                <div class="display-none save-cancel-contacts">
+                    <button class="btn btn-normal back-to-contacts-list float-left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+                    <div class="float-left" style="height: 10px; width: 14px;"></div>
+                    <button class="btn btn-color save-to-contacts-list float-left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE, userCulture).ToString()</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10 col-sm-12 col-xs-12 padding-responsive display-none content-for-sticky-side-nav-bar" id="address-details-div" data-value="4">
+        <div class="col-md-12 padding-left-right-0px">
+            <div class="bread-crumb responsive-margin" id="backToSummaryBreadCrumb">
+                <a onclick="GetProfileSummary()"> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_QUESTIONNAIRE_SUMMARY, userCulture).ToString() </a>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+                <h3>3. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESSES, userCulture).ToString()</h3>
+            </div>
+            <div class="col-lg-3 col-md-3  col-sm-4 col-xs-4 responsive-resize  display-none save-cancel-address">
+                <button class="btn btn-color save-to-address-list float-right float-reverse">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE, userCulture).ToString()</button>
+                <div class="float-right float-reverse" style="height: 10px; width: 14px;"></div>
+                <button class="btn btn-normal back-to-address-list float-right float-reverse">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+            </div>
+            <div class="col-lg-3 col-md-3  col-sm-4 col-xs-4 responsive-resize add-address-button">
+                <button class="btn btn-color float-reverse float-right add-address-to-list" style="width: 150px">
+                    <i class="fa fa-plus" style="padding-right: 8px;"></i>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_ADDRESS, userCulture).ToString()
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-10  padding-responsive  display-none back-to-address">
+                <button class="btn btn-color back-to-address-list float-right">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK, userCulture).ToString()</button>
+            </div>
+        </div>
+        <div class="page-container padding-left-right-0px col-md-12 col-sm-12 col-xs-12 padding-responsive">
+            <div class="container-white-backgound">
+
+                <div class="div-container" style="margin-top: 0px; width: 100%; padding-left: 15px;">
+                    <div class="col-md-12 col-sm-12 col-xs-12  min-height-responsive Address-Details" style="margin-top: 0px;">
+                        <div id="address-list-table">
+                            <table class="tableGrid footable table toggle-arrow" id="address-list-table-data">
+                                <thead>
+                                    <tr>
+                                        <th class="tableGrid-header" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_TYPE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_LINE_1, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_LINE_2, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CITY, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY_OR_STATE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.POSTAL_ZIPCODE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGN_TO_CLIENTS, userCulture).ToString()</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody id="address-list-table-rows"></ tbody >
+                            </table>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12" id="address-create-edit-form" style="display: none;">
+                            <div class="col-md-10 col-sm-10 col-xs-12 page-sub-heading page-sub-heading-container padding-left-0" id="create-edit-address-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_ADDRESS, userCulture).ToString()</div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_LINE_1, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="address-line-1" />
+                                </div>
+                                <div class="col-md-7  col-sm-6 col-xs-12 paddingError  error-text" id="address-line-1-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_LINE_1_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-7 col-sm-12 col-xs-12">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_LINE_2, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="address-line-2" />
+                                </div>
+
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-7 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CITY, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="address-city" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="address-city-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CITY_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY_OR_STATE, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="address-state" />
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-8 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.POSTAL_ZIPCODE, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="address-postal" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="address-postal-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.POSTAL_ZIPCODE_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-8 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <select class="form-control" id="address-country"></select>
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="address-country-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div id="address-types-div">
+                                <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_TYPE, userCulture).ToString()</label>
+                                </div>
+                               
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <select class="form-control" id="address-types">
+                                        <option value="0">
+                                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_ADDRESS_TYPE, userCulture).ToString() </option>
+                                            <option value="@((Int16)PRGX.SIMTrax.Domain.Util.AddressType.Remittance)">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REMITTANCE, userCulture).ToString()
+                                        </option>
+                                        <option value="@((Int16)PRGX.SIMTrax.Domain.Util.AddressType.Branch)">
+                                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BRANCH, userCulture).ToString() </option>
+                                            <option value="@((Int16)PRGX.SIMTrax.Domain.Util.AddressType.ThirdParty)">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.THIRD_PARTY, userCulture).ToString()
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="address-types-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_TYPE_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="address-row-id" value="0" />
+                        <input type="hidden" id="address-id" value="0" />
+                    </div>
+                    <div id="assign-address-list-table" style="display: none;">
+                        <div class="col-md-12 col-sm-12 col-xs-12 page-sub-heading page-sub-heading-container" id="assign-address-header">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGN_ADDRESS, userCulture).ToString()
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+                            <div class="col-md-6 col-sm-7 col-xs-12">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="buyer-name-for-address" placeholder="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH_FOR_BUYER, userCulture).ToString()" id="buyer-name-for-address" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-normal" type="submit" id="btn-assign-address-search"><i class="fa fa-search"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="col-md-12 col-sm-12 col-xs-12 tableGrid footable table toggle-arrow" id="assign-address-table">
+                            <thead>
+                                <tr>
+                                    <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BUYER, userCulture).ToString()</th>
+                                    <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGNED, userCulture).ToString()</th>
+                                </tr>
+                            </thead>
+                            <tbody id="assign-address-list-table-rows"></ tbody >
+                        </table>
+                        <input type="hidden" id="hdn-address-buyer-current-page" value="1" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3  col-sm-3 col-xs-10  padding-responsive padding-top-question" style="padding-top: 40px">
+            <div class="add-address-button">
+                <button class="btn btn-color add-address-to-list" style="width: 150px">
+                    <i class="fa fa-plus" style="padding-right: 8px;"></i>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_ADDRESS, userCulture).ToString()
+                </button>
+            </div>
+            <div class="display-none save-cancel-address">
+                <button class="btn btn-normal back-to-address-list float-left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+                <div class="float-left" style="height: 10px; width: 14px;"></div>
+                <button class="btn btn-color save-to-address-list float-left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE, userCulture).ToString()</button>
+
+            </div>
+        </div>
+    </div>
+        </div>
+    <div class="col-md-10 col-sm-12 col-xs-12 padding-responsive display-none content-for-sticky-side-nav-bar" id="marketing-details-div"  data-value="5">
+        <div class="col-md-12 padding-left-right-0px">
+
+            <div class="bread-crumb responsive-margin">
+                <a onclick="GetProfileSummary()"> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_QUESTIONNAIRE_SUMMARY, userCulture).ToString() </a>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+                <h3>4. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MARKETING, userCulture).ToString()</h3>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4 responsive-resize">
+                <button class="btn btn-color float-right float-reverse submitMarketingdetails" style="width: 130px" tabindex="13">
+                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE_ANSWERS, userCulture).ToString()
+                </button>
+            </div>
+        </div>
+        <div class="page-container padding-left-right-0px col-md-12 col-sm-12 col-xs-12 padding-responsive">
+            <div class="container-white-backgound">
+                <div class="div-container" style="margin-top: 0px; width: 100%; padding-left: 15px;">
+                    <div class="col-md-12 col-sm-12 col-xs-12 Marketing-Details" style="margin-top: 0px;">
+                        <form id="MarketingDetailsForm" name="MarketingDetailsForm" enctype="multipart/form-data" method="post" action="/Supplier/SaveMarketingDetails">
+                           @Html.HiddenFor(m => m.SellerPartyId)
+                             <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.BusinessDescription)
+                                    <a class="profile-tooltip-remove" data-description="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResource("BusinessDescription", PRGX.SIMTrax.Domain.Util.ResourceType.HelpText).ToString()">
+                                        <i class="fa fa-info-circle"></i>
+                                    </a>
+                                    <span class="padding-left-12" id="lblCharCountBD"></span>
+                                </div>
+
+                                <div class="col-md-10 col-sm-10 col-xs-10">
+                                    @Html.TextAreaFor(m => m.BusinessDescription, new { @class = "form-control", style = "resize:none;min-height:120px;", maxlength = "1200", @tabindex = "14" })
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-xs-12">
+                                    <div class="row padding-top-question">
+                                        <div class="col-md-12 col-xs-12">
+                                            @Html.LabelFor(m => m.logo)
+
+                                            <a class="profile-tooltip-remove" data-description="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResource("CompanyLogo", PRGX.SIMTrax.Domain.Util.ResourceType.HelpText).ToString()">
+                                                <i class="fa fa-info-circle"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-7 col-sm-7 col-xs-12">
+                                            <div class="fileinputs">
+                                                @Html.TextBoxFor(m => m.logo, new { type = "file", onchange = "PreviewImage()", accept = "image/jpg,image/jpeg,image/png", @class = "file" })
+                                                <div class="fakefile">
+                                                    <input type="button" value="Select file to upload" class="btn btn-normal" tabindex="15" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="padding-top-question" id="imagePreview" style="display: none;">
+                                        <div class="col-md-7 col-xs-12">
+                                            <img src="" id="imgLogoPreview" height="100">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.WebsiteLink)
+                                </div>
+                                <div class="col-md-5 col-sm-7 col-xs-12">
+                                    @Html.TextBoxFor(m => m.WebsiteLink, new { @class = " form-control", @tabindex = "16" })
+                                </div>
+                                <div class="col-md-5 col-sm-7 col-xs-12paddingError ">
+                                    @Html.ValidationMessageFor(m => m.WebsiteLink)
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.OrganisationFacebookaccount)
+                                </div>
+                                <div class="col-md-5 col-sm-7 col-xs-12">
+                                    @Html.TextBoxFor(m => m.OrganisationFacebookaccount, new { @class = " form-control", @tabindex = "17" })
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.OrganisationLinkedInaccount)
+                                </div>
+                                <div class="col-md-5 col-sm-7 col-xs-12">
+                                    @Html.TextBoxFor(m => m.OrganisationLinkedInaccount, new { @class = " form-control", @tabindex = "18" })
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.OrganisationTwitteraccount)
+                                </div>
+                                <div class="col-md-5 col-sm-7 col-xs-12">
+                                    @Html.TextBoxFor(m => m.OrganisationTwitteraccount, new { @class = " form-control", @tabindex = "19" })
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-2  col-sm-3 col-xs-5 padding-responsive padding-top-question" style="padding-top: 40px">
+                <input type="submit" class="submitMarketingdetails btn btn-color" tabindex="20" value="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE_ANSWERS, userCulture).ToString() " />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10 col-sm-12 col-xs-12 padding-responsive display-none content-for-sticky-side-nav-bar" id="capability-details-div" data-value="6">
+        <div class="col-md-12 padding-left-right-0px">
+
+            <div class="bread-crumb responsive-margin">
+                <a onclick="GetProfileSummary()">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_QUESTIONNAIRE_SUMMARY, userCulture).ToString()</a>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-10">
+                <h3>5. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CAPABILITIES, userCulture).ToString()</h3>
+            </div>
+            <div class="col-lg-3 col-md-3  col-sm-4 col-xs-2 responsive-resize">
+                <button class="btn btn-color float-reverse float-right submitCapabilitydetails" style="width: 130px" tabindex="13">
+                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE_ANSWERS, userCulture).ToString()
+                </button>
+            </div>
+        </div>
+        <div class="page-container padding-left-right-0px col-md-12 col-sm-12 col-xs-12 padding-responsive">
+            <div class="container-white-backgound">
+
+                <div class="div-container" style="margin-top: 0px; width: 100%;">
+                    <div class="col-md-12 col-sm-12 col-xs-12 Capability-Details" style="margin-top: 0px;" >
+                        <form id="CapabilityDetailsForm" name="CapabilityDetailsForm" enctype="multipart/form-data" method="post" action="/Supplier/SaveMarketingDetails">
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.NumberOfEmployees)
+
+                                </div>
+                                <div class="col-md-5 col-sm-7 col-xs-12">
+                                    @Html.DropDownListFor(m => m.NumberOfEmployees, Model.NoOfEmployeesList, new { @class = " form-control", @tabindex = "14" })
+                                </div>
+                                <div class="col-md-5 col-sm-7 col-xs-12 paddingError">
+                                    @Html.ValidationMessageFor(m => m.NumberOfEmployees)
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.TurnOver)
+                                    <a class="profile-tooltip-remove">
+                                        <i class="fa fa-info-circle"></i>
+                                    </a>
+                                </div>
+                                <div class="col-md-5 col-sm-7 col-xs-12">
+                                    @Html.DropDownListFor(m => m.TurnOver, Model.TurnOverList, new { @class = " form-control", @tabindex = "15" })
+                                </div>
+                                <div class="col-md-5  col-sm-7 col-xs-12 paddingError">
+                                    @Html.ValidationMessageFor(m => m.TurnOver)
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.sector)
+                                    <a class="profile-tooltip-remove">
+                                        <i class="fa fa-info-circle"></i>
+                                    </a>
+                                    <div>
+                                        @Html.ValidationMessageFor(m => m.sector)
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding: 0px">
+                                        @for (int i = 1; i <= Model.BusinessSectorList.Count / 2; i++)
+                                    {
+                                            <div class="col-md-6 col-sm-6 col-xs-12"></div>
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                @Html.RadioButtonFor(p => Model.sector, Model.BusinessSectorList[i - 1].Value, new { @onclick = "ShowHidePDescription('hide')" })
+                                                @Html.DisplayFor(p => Model.BusinessSectorList[i - 1].Text)
+                                                <a class="tooltip-remove" data-description="@Model.BusinessSectorList[i - 1].Description" @*onmouseover="ShowDescriptionToolTip(this,'@Model.BusinessSectorList[i - 1].Description')" onmouseout="HideToolTip(this)"*@><i class="fa fa-info-circle"></i></a>
+                                            </div>
+                                    }
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12" style="padding: 0px">
+                                        @for (int i = (Model.BusinessSectorList.Count / 2 + 1); i <= Model.BusinessSectorList.Count; i++)
+                                    {
+                                            <div class="col-md-6 col-sm-6 col-xs-12"></div>
+                                        if (Model.BusinessSectorList[i - 1].Text != "Not Sure")
+                                        {
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    @Html.RadioButtonFor(p => Model.sector, Model.BusinessSectorList[i - 1].Value, new { @onclick = "ShowHidePDescription('hide')" })
+                                                    @Html.DisplayFor(p => Model.BusinessSectorList[i - 1].Text)
+                                                    <a class="tooltip-remove" data-description="@Model.BusinessSectorList[i - 1].Description" @*onmouseover="ShowDescriptionToolTip(this,'@Model.BusinessSectorList[i - 1].Description')" onmouseout="HideToolTip(this)"*@><i class="fa fa-info-circle"></i></a>
+                                                </div>
+                                        }
+                                    }
+                                    </div>
+                                    @for (int i = 1; i <= Model.BusinessSectorList.Count; i++)
+                                {
+                                    if (Model.BusinessSectorList[i - 1].Text == "Not Sure")
+                                    {
+                                            <div class="col-md-12">
+                                                @Html.RadioButtonFor(p => Model.sector, Model.BusinessSectorList[i - 1].Value, new { @onclick = "ShowHidePDescription('show')", @id = "rdoSupplierPNotSure" })
+                                                @Html.DisplayFor(p => Model.BusinessSectorList[i - 1].Text)
+                                                <a class="tooltip-remove" data-description="@Model.BusinessSectorList[i - 1].Description" @*onmouseover="ShowDescriptionToolTip(this,'@Model.BusinessSectorList[i - 1].Description')" onmouseout="HideToolTip(this)"*@><i class="fa fa-info-circle"></i></a>
+                                            </div>
+                                            <div class="col-md-12 padding-top-10px" style="display: none" id="divPSupplerSectorDescription">
+                                                <div class="col-md-12">
+                                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DESCRIPTION, userCulture).ToString()</label>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <div class="col-md-5">
+                                                        @Html.TextBoxFor(elem => Model.BusinessSectorDescription, new { @class = "form-control", @id = "txtPSupplierSectorDescription", @tabindex = "16" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    }
+                                }
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.CustomerSectorList, new { @class = "required" })
+                                    <a class="profile-tooltip-remove">
+                                        <i class="fa fa-info-circle"></i>
+                                    </a>
+                                    <div class="paddingError error-text" id="CustomerSectorListError" style="display: none;">
+                                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CUSTOMER_SECTOR_VALIDATION, userCulture).ToString()
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        1.
+                                        <label id="lblSIC1"></label>
+                                        <a id="lnkTree1" onclick="SelectSicCode(1)" class="SICCodeLink">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_SIC_CODE, userCulture).ToString()</a>
+                                        <a id="lnkSIC1" style="display: none" onclick="EditSicCode(1)" tabindex="17">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT, userCulture).ToString()</a>
+                                        @Html.HiddenFor(m => m.SIC1)
+                                    </div>
+                                    <div class="col-md-12 col-xs-12">
+                                        2.
+                                        <label id="lblSIC2"></label>
+                                        <a id="lnkTree2" onclick="SelectSicCode(2)" class="SICCodeLink">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_SIC_CODE, userCulture).ToString()</a>
+                                        <a id="lnkSIC2" style="display: none" onclick="EditSicCode(2)" tabindex="18">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT, userCulture).ToString()</a>
+                                        @Html.HiddenFor(m => m.SIC2)
+                                    </div>
+                                    <div class="col-md-12 col-xs-12">
+                                        3.
+                                        <label id="lblSIC3"></label>
+                                        <a id="lnkTree3" onclick="SelectSicCode(3)" class="SICCodeLink">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_SIC_CODE, userCulture).ToString()</a>
+                                        <a id="lnkSIC3" style="display: none" onclick="EditSicCode(3)" tabindex="19">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT, userCulture).ToString()</a>
+                                        @Html.HiddenFor(m => m.SIC3)
+                                    </div>
+                                    <div class="col-md-12 col-xs-12">
+                                        4.
+                                        <label id="lblSIC4"></label>
+                                        <a id="lnkTree4" onclick="SelectSicCode(4)" class="SICCodeLink">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_SIC_CODE, userCulture).ToString()</a>
+                                        <a id="lnkSIC4" style="display: none" onclick="EditSicCode(4)" tabindex="20">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT, userCulture).ToString()</a>
+                                        @Html.HiddenFor(m => m.SIC4)
+                                    </div>
+                                    <div class="col-md-12 col-xs-12">
+                                        5.
+                                        <label id="lblSIC5"></label>
+                                        <a id="lnkTree5" onclick="SelectSicCode(5)" class="SICCodeLink">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_SIC_CODE, userCulture).ToString()</a>
+                                        <a id="lnkSIC5" style="display: none" onclick="EditSicCode(5)" tabindex="22">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT, userCulture).ToString()</a>
+                                        @Html.HiddenFor(m => m.SIC5)
+                                    </div>
+                                    <input type="hidden" id="hdnCurrentSIC" value="" />
+                                </div>
+                            </div>
+
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.GeoGraphicSalesList, new { @class = "required" })
+                                    <a class="profile-tooltip-remove" data-description="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResource("GeoRegionSales", PRGX.SIMTrax.Domain.Util.ResourceType.HelpText).ToString()">
+                                        <i class="fa fa-info-circle"></i>
+                                    </a>
+                                    <div class="paddingError error-text" id="geoGraphicSaleListError" style="display: none;">
+                                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GEOGRAPHIC_VALIDATION, userCulture).ToString()
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @for (int i = 1; i <= Model.GeoGraphicSalesList.Count; i++)
+                                {
+                                    if ((i - 1) == 0)
+                                    {
+
+                                            <div class="col-md-12 GeoGraphicSalesListValidate No-geo-sales" style="padding-bottom: 10px">
+                                                @Html.CheckBoxFor(p => Model.GeoGraphicSalesList[i - 1].Selected, Model.GeoGraphicSalesList[i - 1].Value)
+                                                @Html.DisplayFor(p => Model.GeoGraphicSalesList[i - 1].Text)
+                                                @Html.HiddenFor(p => Model.GeoGraphicSalesList[i - 1].Value)
+                                            </div>
+                                    }
+                                    else {
+                                            <div class="col-md-6 GeoGraphicSalesListValidate Other-geo-sales" style="padding-left: 30px">
+                                                @Html.CheckBoxFor(p => Model.GeoGraphicSalesList[i - 1].Selected, Model.GeoGraphicSalesList[i - 1].Value)
+                                                @Html.DisplayFor(p => Model.GeoGraphicSalesList[i - 1].Text)
+                                                @Html.HiddenFor(p => Model.GeoGraphicSalesList[i - 1].Value)
+                                            </div>}
+                                }
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.GeoGraphicSuppList, new { @class = "required" })
+                                    <a class="profile-tooltip-remove" data-description="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResource("GeoRegionSubsidary", PRGX.SIMTrax.Domain.Util.ResourceType.HelpText).ToString()">
+                                        <i class="fa fa-info-circle"></i>
+                                    </a>
+                                    <div class="paddingError error-text" id="geoGraphicSuppListError" style="display: none;">
+                                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GEOGRAPHIC_VALIDATION, userCulture).ToString()
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @for (int i = 1; i <= Model.GeoGraphicSuppList.Count; i++)
+                                {
+                                    if ((i-1) == 0)
+                                    {
+
+                                            <div class="col-md-12 GeoGraphicSuppListValidate No-geo-supp" style="padding-bottom: 10px">
+                                                @Html.CheckBoxFor(p => Model.GeoGraphicSuppList[i - 1].Selected, Model.GeoGraphicSuppList[i - 1].Value)
+                                                @Html.DisplayFor(p => Model.GeoGraphicSuppList[i - 1].Text)
+                                                @Html.HiddenFor(p => Model.GeoGraphicSuppList[i - 1].Value)
+                                            </div>
+                                    }
+                                    else
+                                    {
+                                            <div class="col-md-6 GeoGraphicSuppListValidate Other-geo-supp" style="padding-left: 30px">
+                                                @Html.CheckBoxFor(p => Model.GeoGraphicSuppList[i - 1].Selected, Model.GeoGraphicSuppList[i - 1].Value)
+                                                @Html.DisplayFor(p => Model.GeoGraphicSuppList[i - 1].Text)
+                                                @Html.HiddenFor(p => Model.GeoGraphicSuppList[i - 1].Value)
+                                            </div>
+                                    }
+                                }
+
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.MaxContractValue)
+                                </div>
+                                <div class="col-md-5 col-sm-7 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">&pound;</span>
+                                        @Html.TextBoxFor(m => m.MaxContractValue, new { @class = " form-control currency", @tabindex = "23" })
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-sm-7 col-xs-10 paddingError ">
+                                    @Html.ValidationMessageFor(m => m.MaxContractValue)
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.MinContractValue)
+                                </div>
+                                <div class="col-md-5 col-sm-7 col-xs-12">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">&pound;</span>
+                                        @Html.TextBoxFor(m => m.MinContractValue, new { @class = " form-control currency", @tabindex = "24" })
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-sm-7 col-xs-12 paddingError ">
+                                    @Html.ValidationMessageFor(m => m.MinContractValue)
+                                </div>
+                            </div>
+                            @Html.HiddenFor(m => m.RefRegionId)
+                            @Html.HiddenFor(m => m.SellerPartyId)
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2  col-sm-3 col-xs-5 padding-responsive padding-top-question" style="padding-top: 40px">
+                <input type="submit" class="submitCapabilitydetails btn btn-color" value="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE_ANSWERS, userCulture).ToString() " />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-10 col-sm-12 col-xs-12 padding-responsive content-for-sticky-side-nav-bar display-none" id="bank-details-div" data-value="7">
+        <div class="col-md-12 padding-left-right-0px">
+            <div class="bread-crumb responsive-margin">
+                <a onclick="GetProfileSummary()">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_QUESTIONNAIRE_SUMMARY, userCulture).ToString()</a>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+                <h3>6. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BANK_DETAILS, userCulture).ToString()</h3>
+            </div>
+            <div class="col-lg-3 col-md-3  col-sm-4 col-xs-4 responsive-resize display-none save-cancel-bankdetails">
+                <button class="btn btn-color save-to-bankdetails-list float-right float-reverse">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE, userCulture).ToString()</button>
+                <div class="float-right float-reverse" style="height: 10px; width: 14px;"></div>
+                <button class="btn btn-normal back-to-bankdetails-list float-right float-reverse">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+            </div>
+            <div class="col-lg-3 col-md-3  col-sm-4 col-xs-4 responsive-resize add-bankdetails-button">
+                <button class="btn btn-color float-reverse float-right add-bankdetails-to-list" style="width: 150px">
+                    <i class="fa fa-plus" style="padding-right: 8px;"></i>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_BANK_DETAILS, userCulture).ToString()
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-10  padding-responsive  display-none back-to-bankdetails">
+                <button class="btn btn-color back-to-bankdetails-list float-right">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK, userCulture).ToString()</button>
+            </div>
+        </div>
+        <div class="page-container padding-left-right-0px col-md-12 col-sm-12 col-xs-12 padding-responsive">
+            <div class="container-white-backgound">
+
+                <div class="div-container " style="margin-top: 0px; width: 100%; padding-left: 15px;">
+                    <div class="col-md-12 col-sm-12 col-xs-12  min-height-responsive parent-question-section" >
+                        <div id="bankdetails-list-table">
+                            <table class="tableGrid footable table toggle-arrow" id="bankdetails-list-table-data">
+                                <thead>
+                                    <tr>
+                                        <th class="tableGrid-header" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCOUNT_NAME, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCOUNT_NO, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SORT_CODE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SWIFT_CODE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.IBAN, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BANK_NAME, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PREFERRED_MODE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGNED_CLIENTS, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tabletPortrait,phone" style="width: 50px">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGN_TO_CLIENTS, userCulture).ToString()</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bankdetails-list-table-rows"></tbody>
+                            </table>
+                        </div>
+                        <div id="assign-bankdetails-list-table" style="display: none;">
+                            <div class="col-md-12 col-sm-12 col-xs-12 page-sub-heading page-sub-heading-container" id="assign-bankdetails-header">
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+                                <div class="col-md-6 col-sm-7 col-xs-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="buyer-name-for-bank" placeholder="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH_FOR_BUYER, userCulture).ToString()" id="buyer-name-for-bank" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-normal" type="submit" id="btn-assign-bank-search"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="col-md-12 col-sm-12 col-xs-12 tableGrid footable table toggle-arrow" id="assign-bankdetails-table">
+                                <thead>
+                                    <tr>
+                                        <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BUYER, userCulture).ToString()</th>
+                                        <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGNED, userCulture).ToString()</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="assign-bankdetails-list-table-rows"></tbody>
+                            </table>
+                            <input type="hidden" id="hdn-bank-buyer-current-page" value="1" />
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12" id="bankdetails-create-edit-form" style="display: none;">
+                            <div class="col-md-10 col-sm-10 col-xs-12 page-sub-heading page-sub-heading-container padding-left-0" id="create-edit-bankdetails-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_BANK_DETAILS, userCulture).ToString()</div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCOUNT_NAME, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="bankdetails-account-name" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="bankdetails-account-name-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCOUNT_NAME_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-7 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCOUNT_NO, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="bankdetails-account-no" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="bankdetails-account-no-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCOUNT_NO_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SORT_CODE, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="bankdetails-sort-code" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="bankdetails-sort-code-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SORT_CODE_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SWIFT_CODE, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="bankdetails-swift-code" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="bankdetails-swift-code-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SWIFT_CODE_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.IBAN, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="bankdetails-bic-code" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="bankdetails-bic-code-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.IBAN_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BANK_NAME, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="bankdetails-bank-name" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="bankdetails-bank-name-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BANK_NAME_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BANK_ADDRESS, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <textarea class="form-control" id="bankdetails-address" style="resize: none; min-height: 82px;"></textarea>
+                                </div>
+                                <div class="col-md-7  col-sm-6 col-xs-12 paddingError  error-text" id="bankdetails-address-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BANK_ADDRESS_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <select class="form-control" id="bankdetails-country"></select>
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="bankdetails-country-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PREFERRED_PAYMENT_METHOD, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="bankdetails-preferred" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="bankdetails-preferred-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PREFERRED_PAYMENT_METHOD_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <input type="hidden" id="bankdetails-row-id" value="0" />
+                            <input type="hidden" id="bankdetails-id" value="0" />
+                            <input type="hidden" id="bankdetails-legal" value="0" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3  col-sm-3 col-xs-10  padding-responsive padding-top-question" style="padding-top: 40px">
+                <div class="add-bankdetails-button">
+                    <button class="btn btn-color add-bankdetails-to-list" style="width: 150px">
+                        <i class="fa fa-plus" style="padding-right: 8px;"></i>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_BANK_DETAILS, userCulture).ToString()
+                    </button>
+                </div>
+                <div class="display-none save-cancel-bankdetails">
+                    <button class="btn btn-normal back-to-bankdetails-list float-left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+                    <div class="float-left" style="height: 10px; width: 14px;"></div>
+                    <button class="btn btn-color save-to-bankdetails-list float-left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE, userCulture).ToString()</button>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-10 col-sm-12 col-xs-12 padding-responsive content-for-sticky-side-nav-bar display-none" id="reference-details-div" data-value="8">
+        <div class="col-md-12 padding-left-right-0px">
+
+            <div class="bread-crumb responsive-margin">
+                <a onclick="GetProfileSummary()">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_QUESTIONNAIRE_SUMMARY, userCulture).ToString()</a>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+            <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+                <h3>7. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REFERENCE_DETAILS, userCulture).ToString()</h3>
+            </div>
+            <div class="col-lg-3 col-md-3  col-sm-4 col-xs-4 responsive-resize  display-none save-cancel-reference">
+                <button class="btn btn-color save-to-reference-list float-right float-reverse">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE, userCulture).ToString()</button>
+                <div class="float-right float-reverse" style="height: 10px; width: 14px;"></div>
+                <button class="btn btn-normal back-to-reference-list float-right float-reverse">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+            </div>
+            <div class="col-lg-3 col-md-3  col-sm-4 col-xs-4 responsive-resize add-reference-button">
+                <button class="btn btn-color float-reverse float-right add-reference-to-list" style="width: 150px">
+                    <i class="fa fa-plus" style="padding-right: 8px;"></i>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_REFERENCES, userCulture).ToString()
+                </button>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-10  padding-responsive  display-none back-to-reference">
+                <button class="btn btn-color back-to-reference-list float-right">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK, userCulture).ToString()</button>
+            </div>
+        </div>
+        <div class="page-container padding-left-right-0px col-md-12 col-sm-12 col-xs-12 padding-responsive">
+            <div class="container-white-backgound">
+
+                <div class="div-container" style="margin-top: 0px; width: 100%; padding-left: 15px;">
+                    <div class="col-md-12 col-sm-12 col-xs-12  min-height-responsive parent-question-section" >
+                        <div id="reference-list-table">
+                            <table class="tableGrid footable table toggle-arrow" id="reference-list-table-data">
+                                <thead>
+                                    <tr>
+                                        <th class="tableGrid-header" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLIENT_NAME, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACT_NAME, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.JOB_TITLE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone" style="text-align:right">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PHONE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MAILING_ADDRESS, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAX, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLIENT_ROLE, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CAN_WE_CONTACT, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGNED_CLIENTS, userCulture).ToString()</th>
+                                        <th class="tableGrid-header" data-hide="tabletPortrait,phone" style="width: 50px;text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGN_TO_CLIENTS, userCulture).ToString()</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reference-list-table-rows"></tbody>
+                            </table>
+
+                        </div>
+                        <div id="assign-reference-list-table" style="display: none;">
+                            <div class="col-md-12 col-sm-12 col-xs-12 page-sub-heading page-sub-heading-container" id="assign-reference-header">
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+                                <div class="col-md-6 col-sm-7 col-xs-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="buyer-name-for-bank" placeholder="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH_FOR_BUYER, userCulture).ToString()" id="buyer-name-for-reference" />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-normal" type="submit" id="btn-assign-reference-search"><i class="fa fa-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="col-md-12 col-sm-12 col-xs-12 tableGrid footable table toggle-arrow" id="assign-reference-table">
+                                <thead>
+                                    <tr>
+                                        <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BUYER, userCulture).ToString()</th>
+                                        <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGNED, userCulture).ToString()</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="assign-reference-list-table-rows"></tbody>
+                            </table>
+                            <input type="hidden" id="hdn-reference-buyer-current-page" value="1" />
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12" id="reference-create-edit-form" style="display: none;">
+                            <div class="col-md-10 col-sm-10 col-xs-12 page-sub-heading page-sub-heading-container padding-left-0" id="create-edit-reference-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_REFERENCE_DETAILS, userCulture).ToString()</div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLIENT_NAME, userCulture).ToString():</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="reference-client-name" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="reference-client-name-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLIENT_NAME_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-7  col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACT_NAME, userCulture).ToString():</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="reference-contact-name" />
+                                </div>
+                                <div class="col-md-7  col-sm-6 col-xs-12 paddingError  error-text" id="reference-contact-name-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACT_NAME_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.JOB_TITLE, userCulture).ToString():</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="reference-job-title" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="reference-job-title-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.JOB_TITLE_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL, userCulture).ToString():</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="reference-email" />
+                                </div>
+                                <div class="col-md-7  col-sm-6 col-xs-12 paddingError  error-text" id="reference-email-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PHONE, userCulture).ToString():</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="reference-phone" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="reference-phone-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TEL_NUMBER_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MAILING_ADDRESS, userCulture).ToString():</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <textarea class="form-control" id="reference-address" style="resize: none; min-height: 82px;"></textarea>
+                                </div>
+                                <div class="col-md-7  col-sm-6 col-xs-12 paddingError  error-text" id="reference-address-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAX, userCulture).ToString():</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="reference-fax" />
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="reference-fax-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAX_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-12 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLIENT_ROLE, userCulture).ToString():</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control" id="reference-client-role" />
+                                </div>
+                                <div class="col-md-7  col-sm-6 col-xs-12 paddingError  error-text" id="reference-client-role-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLIENT_ROLE_ERROR, userCulture).ToString()
+                                </div>
+                            </div>
+                            <div class="row padding-top-question">
+                                <div class="col-md-8 col-sm-6 col-xs-12 required">
+                                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CAN_WE_CONTACT, userCulture).ToString()</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <div class="col-md-3 col-sm-3 col-xs-6">
+                                        <input type="radio" name="reference-can-we-contact" value="true"><span style="padding-left: 6px;">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.YES, userCulture).ToString()</span>
+                                    </div>
+                                    <div class="col-md-3 col-sm-3 col-xs-6">
+                                        <input type="radio" name="reference-can-we-contact" value="false"><span style="padding-left: 6px;">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO, userCulture).ToString()</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-7 col-sm-6 col-xs-12 paddingError  error-text" id="reference-can-we-contact-error" style="display: none">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_TO_CONTACT_OR_NOT, userCulture).ToString()
+                                </div>
+                            </div>
+                            <input type="hidden" id="reference-row-id" value="0" />
+                            <input type="hidden" id="reference-id" value="0" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3  col-sm-3 col-xs-10  padding-responsive padding-top-question" style="padding-top: 40px">
+                <div class="add-reference-button">
+                    <button class="btn btn-color add-reference-to-list" style="width: 150px">
+                        <i class="fa fa-plus" style="padding-right: 8px;"></i>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_REFERENCES, userCulture).ToString()
+                    </button>
+                </div>
+                <div class="display-none save-cancel-reference">
+                    <button class="btn btn-normal back-to-reference-list float-left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+                    <div class="float-left" style="height: 10px; width: 14px;"></div>
+                    <button class="btn btn-color save-to-reference-list float-left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE, userCulture).ToString()</button>
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="modal fade bs-example-modal-lg" id="SicCodeModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header SIC-modal-header-margin">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_SIC_CODE, userCulture).ToString()</h4>
+                </div>
+                <div class="modal-body" style="height: 480px; overflow-y: auto; overflow-x: hidden;">
+                    <div class="row col-md-6">
+                        <input type="text" id="txtSearchSector" placeholder="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH_CATEGORY_PLACEHOLDER, userCulture).ToString()" class="form-control" />
+                    </div>
+                    <div class="row col-md-1">
+                        <i class="fa fa-search" style="vertical-align: bottom; padding-left: 10px;"></i>
+                    </div>
+                    <div class="row col-md-5 padding-top-small">
+                        <img id="imgProcessing" alt="searching" style="display: none" height="20" src="../../Content/Images/ajax-loader.gif" />
+                    </div>
+                    <div id="demoTree" class="row col-md-12">
+                    </div>
+                    <input type="hidden" id="hdnSicId" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-sm" data-backdrop="static" id="mapped-contact-pop-up" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content col-md-9 center-modal-help">
+                <div class="modal-header">
+                    <div class="bootstrap-dialog-header">
+                        <div class="bootstrap-dialog-title">
+                            <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INFO, userCulture).ToString()</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="mapped-contact-pop-up-content">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-normal" data-dismiss="modal">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+                    <button type="button" class="btn btn-color" id="automatic-contacts-map">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.OK, userCulture).ToString()</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-sm" data-backdrop="static" id="delete-contact-pop-up" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content col-md-9 center-modal-help">
+                <div class="modal-header">
+                    <div class="bootstrap-dialog-header">
+                        <div class="bootstrap-dialog-title">
+                            <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INFO, userCulture).ToString()</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="delete-contact-pop-up-content">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-normal" data-dismiss="modal">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+                    <button type="button" class="btn btn-color" id="delete-contact-map">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.OK, userCulture).ToString()</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-sm" data-backdrop="static" id="delete-address-pop-up" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content col-md-9 center-modal-help">
+                <div class="modal-header">
+                    <div class="bootstrap-dialog-header">
+                        <div class="bootstrap-dialog-title">
+                            <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INFO, userCulture).ToString()</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="delete-address-pop-up-content">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-normal" data-dismiss="modal">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+                    <button type="button" class="btn btn-color" id="delete-address-map">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.OK, userCulture).ToString()</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-sm" data-backdrop="static" id="delete-bank-pop-up" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content col-md-9 center-modal-help">
+                <div class="modal-header">
+                    <div class="bootstrap-dialog-header">
+                        <div class="bootstrap-dialog-title">
+                            <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INFO, userCulture).ToString()</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="delete-bank-pop-up-content">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-normal" data-dismiss="modal">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+                    <button type="button" class="btn btn-color" id="delete-bank-map">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.OK, userCulture).ToString()</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-sm" data-backdrop="static" id="delete-reference-pop-up" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content col-md-9 center-modal-help">
+                <div class="modal-header">
+                    <div class="bootstrap-dialog-header">
+                        <div class="bootstrap-dialog-title">
+                            <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INFO, userCulture).ToString()</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="delete-reference-pop-up-content">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-normal" data-dismiss="modal">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+                    <button type="button" class="btn btn-color" id="delete-reference-map">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.OK, userCulture).ToString()</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<script>
+    var geoGraphicSalesCount = parseInt('@Model.GeoGraphicSalesList.Count');
+    var geoGraphicSuppCount = parseInt('@Model.GeoGraphicSuppList.Count');
+    @*var firmStatusCount = parseInt('@Model.USFirmsStatusList.Count');*@
+    var checked_ids = [], parent_Ids = [], isOpenEvent = false;
+
+
+    var questionnaireText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONNAIRE_LOWER_CASE, userCulture).ToString()';
+    var answeredText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWERED, userCulture).ToString()';
+    var requiredSectionMessage = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO_REQUIRED_SECTIONS_NEEDING_ACTION, userCulture).ToString()';
+    var selectYearText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_STARTED_YEAR, userCulture).ToString()';
+    var salesText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SALES, userCulture).ToString()';
+    var accFinRemitText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACC_FIN_REMITTANCE, userCulture).ToString()';
+    var sustainabilityText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUSTAINABILITY, userCulture).ToString()';
+    var healthSafetyText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HEALTH_SAFETY, userCulture).ToString()';
+    var procurementText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PROCUREMENT, userCulture).ToString()';
+    var assignButton = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGN, userCulture).ToString()';
+    var isAssignedToText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.IS_ASSIGNED_TO, userCulture).ToString()';
+    var deleteContactText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DELETE_CONTACT_CONFIRMATION, userCulture).ToString()';
+    var errorMessage = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ERROR_MESSAGE, userCulture).ToString()';
+    var assignToClientsText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ASSIGN_TO_CLIENTS, userCulture).ToString()';
+    var noRecordsFound = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO_RECORDS_FOUND, userCulture).ToString()';
+    var noRoleText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO_ROLE, userCulture).ToString()';
+    var editContactText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT_CONTACT, userCulture).ToString()';
+    var selectAddressText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_ADDRESS, userCulture).ToString()';
+    var addNewAddressText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_NEW_ADDRESS, userCulture).ToString()';
+    var addContactText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_CONTACT, userCulture).ToString()';
+    var alreadyMappedText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ALREADY_MAPPED_FOR, userCulture).ToString()';
+    var mappedContactText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MAPPED_CONTACT_TEXT, userCulture).ToString()';
+    var mapAndUnmapText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MAP_AND_UNMAP, userCulture).ToString()';
+    var emailError = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL_VALIDATION, userCulture).ToString()';
+    var validEmail = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ENTER_VALID_EMAIL, userCulture).ToString()';
+    var telephoneError = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TEL_NUMBER_ERROR, userCulture).ToString()';
+    var validPhoneNumber = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ENTER_VALID_PHONE_NO, userCulture).ToString()';
+    var firmDiversityError = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANNOT_SELECT_FIRM_DIVERSITY, userCulture).ToString()';
+    var mailingText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MAILING, userCulture).ToString()';
+    var naText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NA, userCulture).ToString()';
+    var registeredText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTERED, userCulture).ToString()';
+    var headQuartersText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HEADQUARTERS, userCulture).ToString()';
+    var editAddressText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT_ADDRESS, userCulture).ToString()';
+    var addText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD, userCulture).ToString()';
+    var addressText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS, userCulture).ToString()';
+    var selectCountryText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_COUNTRY, userCulture).ToString()';
+    var editText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT, userCulture).ToString()';
+       var deleteAddressText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DELETE_ADDRESS_CONFIRMATION, userCulture).ToString()';
+    var fileExtensionValidation = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FILE_EXTENSIONS_VALIDATION, userCulture).ToString()';
+    var addBankDetailsText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_BANK_DETAILS, userCulture).ToString()';
+     var editBankDetailsText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT_BANK_DETAILS, userCulture).ToString()';
+
+    var deleteAccountMessage = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DELETE_ACCOUNT_CONFIRMATION, userCulture).ToString()';
+    var addReferenceDetailsText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_REFERENCE_DETAILS, userCulture).ToString()';
+    var editReferenceDetailsText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EDIT_REFERENCE_DETAILS, userCulture).ToString()';
+    var deleteReferenceMessage = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DELETE_REFERENCE_CONFIRMATION, userCulture).ToString()';
+     var charLimitText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BUSINESS_DESC_CHAR_LIMIT, userCulture).ToString()';
+    var businessDescriptionValidation = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BUSINESS_DESC_VALIDATION, userCulture).ToString()';
+    var industrySectorError = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INDUSTRY_SECTOR_ERROR, userCulture).ToString()';
+    var uploadImageValidation = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.UPLOAD_IMAGE_VALIDATION, userCulture).ToString()';
+    var addAddressText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADD_ADDRESS, userCulture).ToString()';
+</script>
+<script src="~/Content/Scripts/jquery.jstree.js"></script>
+
+@Scripts.Render("~/bundles/Charts")
+@Scripts.Render("~/bundles/EditGeneralInformationAndContacts")

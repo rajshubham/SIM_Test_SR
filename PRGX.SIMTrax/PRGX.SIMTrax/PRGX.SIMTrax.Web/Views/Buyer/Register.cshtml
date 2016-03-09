@@ -1,0 +1,462 @@
+﻿@model PRGX.SIMTrax.ViewModel.BuyerRegister
+
+@{
+    var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) 
+        ? (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+    ViewBag.Title = @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTER, userCulture).ToString();
+}
+@Styles.Render("~/bundles/TipsoCss")
+<div class="row">
+    <div class="col-md-12">
+        <div class="bread-crumb">
+            <a href="/">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LOGIN, userCulture).ToString()</a>
+             > @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTER_A_BUYER, userCulture).ToString()
+        </div>
+    </div>
+    <div class="col-md-12 padding-bottom-header">
+        <h3>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTER_INTEREST, userCulture).ToString()</h3>
+    </div>
+    <div>
+        <form id="BuyerRegisterForm" name="BuyerRegisterForm" enctype="multipart/form-data" method="post">
+            <div class="col-md-8  col-sm-12 col-xs-12">
+                <div class="container-white-backgound">
+                    <div class="paddingDivisionHeader col-md-12 padding-bottom" style="padding-top: 0px;">
+                        <span class="page-sub-heading">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ABOUT_YOU, userCulture).ToString()
+                        </span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <hr class="border-style" />
+                    </div>
+                    <div class="padding-top-question">
+                        <div class="col-md-12 required" style="font-weight: bold; margin-bottom: 5px;">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NAME, userCulture).ToString():
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-5">
+                                    @Html.TextBoxFor(m => m.BuyerFirstName, new { @class = " form-control", placeholder = @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FIRST_NAME_PLACEHOLDER, userCulture).ToString(), id = "UserFirstName", maxlength = 40 })
+                                </div>
+                                <div class="col-md-6 col-sm-3">
+                                    @Html.TextBoxFor(m => m.BuyerLastName, new { @class = " form-control", placeholder = @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LAST_NAME_PLACEHOLDER, userCulture).ToString(), id = "UserLastName", maxlength = 40 })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerEmail)
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(m => m.BuyerEmail, new { @class = " form-control", maxlength = 50 })
+                        </div>
+                        <div class="col-md-5 paddingError " id="BuyerEmailError">
+                            <div class="col-md-1" id="BuyerEmailValidationLoading" style="display: none">
+                                <img id="loading-image" src="~/Content/Images/loading-small.gif" alt="Loading..." />
+                            </div>
+                            <span id="BuyerEmailErrortext"></span>
+                            @Html.ValidationMessageFor(m => m.BuyerEmail)
+                        </div>
+                    </div>
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerTelephone)
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(m => m.BuyerTelephone, new { @class = " form-control", maxlength = 12 })
+                        </div>
+                        <div class="col-md-5 paddingError ">
+                            @Html.ValidationMessageFor(m => m.BuyerTelephone)
+                        </div>
+                    </div>
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerJobTitle)
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(m => m.BuyerJobTitle, new { @class = " form-control", maxlength = 45 })
+                        </div>
+                        <div class="col-md-5 paddingError ">
+                            @Html.ValidationMessageFor(m => m.BuyerJobTitle)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 hidden-sm hidden-xs">
+                <div class="container-white-backgound">
+                    <div class="cnt-us-mar-btm">
+                        <div class="col-md-12 padding-bottom">
+                            <span class="page-sub-heading">
+                                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACT_US, userCulture).ToString()
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <hr class="border-style" />
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <br />
+                        <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3 fa fa-envelope fa-opacity fa-3x  col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                        </div>
+                        <div class="col-md-8 col-sm-7 col-xs-7">
+
+                            <div class="contact-panel-text-color">
+                                <b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL_US, userCulture).ToString()</b>
+                            </div>
+                            <a href="mailto:@HttpContext.Current.Application["ContactEmail"]" target="_blank">
+                                <span>@HttpContext.Current.Application["ContactEmail"]</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3  fa fa-phone fa-3x padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity">
+                        </div>
+                        <div class="col-md-8 col-sm-7 col-xs-7 padding-top">
+                            <div class="contact-panel-text-color">
+                                <b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CALL_US, userCulture).ToString()</b>
+                            </div>
+                            <span>@HttpContext.Current.Application["ContactNo"]</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3  padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity">
+                            <img style="width:42px" src="~/Content/Images/FAQ.png" />
+                        </div>
+                        <div class="col-md-8 col-sm-7 col-xs-7" style="padding-top:18px;">
+                            <b>
+                                <a class="contact-panel-text-color hoverLink" style="cursor: pointer;" target="FAQ" href="/FAQ">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.READ_OUR_FAQS, userCulture).ToString()
+                                </a>
+                            </b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 col-msm-12 col-xs-12 container-separtor">
+                <div class="container-white-backgound">
+                    <div class="paddingDivisionHeader col-md-12 padding-bottom">
+                        <span class="page-sub-heading">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ABOUT_YOUR_ORGANISATION, userCulture).ToString()
+                        </span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <hr class="border-style" />
+                    </div>
+
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerOrganisationName)
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(m => m.BuyerOrganisationName, new { @class = " form-control", maxlength = 100 })
+                        </div>
+                        <div class="col-md-5 paddingError " id="BuyerOrganisationError">
+                            <div class="col-md-1" id="BuyerOrganisationValidationLoading" style="display: none">
+                                <img id="loading-image" src="~/Content/Images/loading-small.gif" alt="Loading..." />
+                            </div>
+                            <span id="BuyerOrganisationErrorText"></span>
+                            @Html.ValidationMessageFor(m => m.BuyerOrganisationName)
+                        </div>
+                    </div>
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerFirstAddressLine1)
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(m => m.BuyerFirstAddressLine1, new { @class = " form-control", maxlength = 100 })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.BuyerFirstAddressLine1)
+                        </div>
+                    </div>
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerFirstAddressLine2)
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(m => m.BuyerFirstAddressLine2, new { @class = " form-control", maxlength = 100 })
+                        </div>
+                    </div>
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerFirstAddressCity)
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(m => m.BuyerFirstAddressCity, new { @class = " form-control", maxlength = 50 })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.BuyerFirstAddressCity)
+                        </div>
+                    </div>
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerFirstAddressState)
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(m => m.BuyerFirstAddressState, new { @class = " form-control", maxlength = 50 })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.BuyerFirstAddressState)
+                        </div>
+                    </div>
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerFirstAddressCountry)
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            @Html.DropDownListFor(m => m.BuyerFirstAddressCountry, Model.BuyerCountryList, new { @class = " form-control" })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.BuyerFirstAddressCountry)
+                        </div>
+                    </div>
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerFirstAddressPostalCode)
+                        </div>
+                        <div class="col-md-7 col-sm-7">
+                            @Html.TextBoxFor(m => m.BuyerFirstAddressPostalCode, new { @class = " form-control", maxlength = 15 })
+                        </div>
+                        <div class="col-md-5 paddingError">
+                            @Html.ValidationMessageFor(m => m.BuyerFirstAddressPostalCode)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 container-separtor">
+                <div class="container-white-backgound">
+                    <div class="paddingDivisionHeader col-md-12 padding-bottom">
+                        <span class="page-sub-heading">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ABOUT_YOUR_ORGANISATION_PROFILE, userCulture).ToString()
+                        </span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <hr class="border-style" />
+                    </div>
+
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerNumberOfEmployees)
+                            <div>@Html.ValidationMessageFor(m => m.BuyerNumberOfEmployees)</div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            @for (int i = 1, j = 1; i <= Model.BuyerNoOfEmployeesList.Count; i++, j++)
+                            {
+                                if (j == 3)
+                                {
+                                    <div class="col-md-12"></div>
+                                    j = 1;
+                                }
+                                <div class="col-md-3">
+                                    @Html.RadioButtonFor(p => Model.BuyerNumberOfEmployees, Model.BuyerNoOfEmployeesList[i - 1].Value)
+                                    @Html.DisplayFor(p => Model.BuyerNoOfEmployeesList[i - 1].Text)
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerTurnOver)
+                            <div>@Html.ValidationMessageFor(m => m.BuyerTurnOver)</div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            @for (int i = 1, j = 1; i <= Model.BuyerTurnOverList.Count; i++, j++)
+                            {
+                                if (j == 3)
+                                {
+                                    <div class="col-md-12"></div>
+                                    j = 1;
+                                }
+                                <div class="col-md-5" id='TurnOver-@i'>
+                                    @Html.RadioButtonFor(p => Model.BuyerTurnOver, Model.BuyerTurnOverList[i - 1].Value)
+                                    @Html.DisplayFor(p => Model.BuyerTurnOverList[i - 1].Text)
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="padding-top-question">
+                        <div class="col-md-12">
+                            @Html.LabelFor(m => m.BuyerSector)
+                            <div>
+                                @Html.ValidationMessageFor(m => m.BuyerSector)
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px">
+                                @for (int i = 1; i <= Model.BuyerBusinessSectorList.Count / 2; i++)
+                                {
+                                    <div class="col-md-6 col-sm-6 col-xs-12"></div>
+                                    <div class="col-md-12">
+                                        @Html.RadioButtonFor(p => Model.BuyerSector, Model.BuyerBusinessSectorList[i - 1].Value, new { @onclick = "ShowHideBNSDescription('hide')" })
+                                        @Html.DisplayFor(p => Model.BuyerBusinessSectorList[i - 1].Text)
+                                        <a class="tooltip-remove" data-description="@Model.BuyerBusinessSectorList[i - 1].Description"><i class="fa fa-info-circle"></i></a>
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px">
+                                @for (int i = (Model.BuyerBusinessSectorList.Count / 2 + 1); i <= Model.BuyerBusinessSectorList.Count; i++)
+                                {
+                                    <div class="col-md-6 col-sm-6 col-xs-12"></div>
+                                    if (Model.BuyerBusinessSectorList[i - 1].Text != "Not Sure")
+                                    {
+                                        <div class="col-md-12">
+                                            @Html.RadioButtonFor(p => Model.BuyerSector, Model.BuyerBusinessSectorList[i - 1].Value, new { @onclick = "ShowHideBNSDescription('hide')" })
+                                            @Html.DisplayFor(p => Model.BuyerBusinessSectorList[i - 1].Text)
+                                            <a class="tooltip-remove" data-description="@Model.BuyerBusinessSectorList[i - 1].Description"><i class="fa fa-info-circle"></i></a>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            @for (int i = 1; i <= Model.BuyerBusinessSectorList.Count; i++)
+                            {
+                                if (Model.BuyerBusinessSectorList[i - 1].Text == "Not Sure")
+                                {
+                                    <div class="col-md-12">
+                                        @Html.RadioButtonFor(p => Model.BuyerSector, Model.BuyerBusinessSectorList[i - 1].Value, new { @onclick = "ShowHideBNSDescription('show')", @id = "rdoBSNotSure" })
+                                        @Html.DisplayFor(p => Model.BuyerBusinessSectorList[i - 1].Text)
+                                        <a class="tooltip-remove" data-description="@Model.BuyerBusinessSectorList[i - 1].Description"><i class="fa fa-info-circle"></i></a>
+                                    </div>
+                                    <div class="col-md-12 padding-top-10px" style="display:none" id="divsectorDescriptionBNS">
+                                        <div class="col-md-12">
+                                            <label>Description</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="col-md-5">
+                                                @Html.TextBoxFor(elem => Model.BusinessSectorDescription, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+
+            <div class="padding-top-question margin-before-footer">
+                <div class="col-md-3  col-sm-3 col-xs-5" style="padding-top:25px">
+                    <button id="submitBuyerDetails" class="col-md-7 btn btn-color">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUBMIT, userCulture).ToString()
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4 hidden-md hidden-lg">
+        <div class="container-white-backgound">
+            <div class="cnt-us-mar-btm">
+                <div class="col-md-12 padding-bottom">
+                    <span class="page-sub-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACT_US, userCulture).ToString()</span>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <hr class="border-style" />
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <br />
+                <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3 fa fa-envelope fa-opacity fa-3x  col-md-offset-1">
+                </div>
+                <div class="col-md-8 col-sm-7 col-xs-7">
+
+                    <div class="contact-panel-text-color">
+                        <b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL_US, userCulture).ToString()</b>
+                    </div>
+                    <span>@HttpContext.Current.Application["ContactEmail"]</span>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3  fa fa-phone fa-3x padding-top col-md-offset-1 fa-opacity">
+                </div>
+                <div class="col-md-8 col-sm-7 col-xs-7 padding-top">
+                    <div class="contact-panel-text-color">
+                        <b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CALL_US, userCulture).ToString()</b>
+                    </div>
+                    <span class="col-xs-12 col-md-12 col-sm-12">@HttpContext.Current.Application["ContactNo"]</span>
+                </div>
+
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3  padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity">
+                    <img style="width:42px" src="~/Content/Images/FAQ.png" />
+
+                </div>
+                <div class="col-md-8 col-sm-7 col-xs-7" style="padding-top:18px;">
+                    <b>
+                        <a class="contact-panel-text-color hoverLink" style="cursor: pointer;" target="FAQ" href="/FAQ">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.READ_OUR_FAQS, userCulture).ToString()
+                        </a>
+                    </b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade bs-example-modal-sm" data-backdrop="static" id="buyer-registration-alert" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content col-md-9 center-modal-help">
+                <div class="modal-header">
+                    <div class="bootstrap-dialog-header">
+                        <div class="bootstrap-dialog-title">
+                            <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUBMISSION_SUCCESSFUL, userCulture).ToString()</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-md-12">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.YOUR_DETAILS_HAVE_BEEN_SUBMITTED_FOR_VERIFICATION, userCulture).ToString()
+                    </div>
+                </div>
+                <div class="modal-footer no-border-top">
+                    <button type="button" class="btn btn-color" id="buyer-registration-alert-ok">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.OK, userCulture).ToString()
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var TurnOverListCount = parseInt('@Model.BuyerTurnOverList.Count');
+    var defaultErrorMessage = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DEFAULT_ERROR_MESSAGE, userCulture).ToString()';
+    var industrySectorError = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INDUSTRY_SECTOR_ERROR, userCulture).ToString()';
+
+    function ShowDescriptionToolTip(e, description) {
+        $(e).tipso('update', 'content', description);
+        $(e).tipso('update', 'background', 'rgb(248, 248, 248)');
+        $(e).tipso('update', 'color', 'rgb(0, 0, 0)');
+        $(e).tipso('show');
+    }
+
+    function HideToolTip(e) {
+    }
+
+    function ShowHideBNSDescription(command) {
+        if (command == "show") {
+            $("#divsectorDescriptionBNS").show();
+        }
+        else {
+            $("#divsectorDescriptionBNS").hide();
+        }
+    }
+
+    $(".tooltip-remove").hover(function () {
+        var desc = $(this).attr("data-description");
+        $(this).tipso('update', 'content', desc);
+        $(this).tipso('update', 'background', '#FF9933');
+        $(this).tipso('show');
+    }, function () {
+        $(this).tipso('hide');
+        $(this).tipso('remove');
+        $(this).tipso('destroy');
+    }
+  );
+</script>
+@Scripts.Render("~/bundles/BuyerRegister")
+@Scripts.Render("~/bundles/Tipso")

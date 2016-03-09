@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <GetCampaignInfoTestData>
+    <testCase id="1">
+      <input campaignId="1" campaignUrl="">      
+      </input>
+      <output Id="1" campaignName="Charan Campaign"  ></output>
+    </testCase>
+    <testCase id="2">
+      <input campaignId="3">
+      </input>
+      <output Id="" campaignName=""  ></output>
+    </testCase>
+  </GetCampaignInfoTestData>
+
+  <GetAssignedCampaignsTestData>
+    <testCase id="1">
+      <input auditorId="10030" index="1" total="5">
+      </input>
+      <output count="1">
+        <campaignList Id="2" campaignName="Alekhya Buyer Campaign"/>
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input auditorId="12345" index="1" total="0">
+      </input>
+      <output count="0">        
+      </output>
+    </testCase>
+  </GetAssignedCampaignsTestData>
+
+  <GetCampaignsAwaitingActionTestData>
+    <testCase id="1">
+      <input auditorId="10030" pageNo="1" total="5">
+      </input>
+      <output count="0">
+      
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input auditorId="10032" pageNo="1" total="0">
+      </input>
+      <output count="0">    
+      </output>
+    </testCase>
+  </GetCampaignsAwaitingActionTestData>
+
+  <GetSubmittedOrApprovedCampaignsTestData>
+    <testCase id="1">
+      <input campaignStatus="527" index="1" total="5">
+      </input>
+      <output count="1">
+        <campaignList Id="1" campaignName="Charan Campaign"/>
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input campaignStatus="528" index="1" total="0">
+      </input>
+      <output count="0">
+      </output>
+    </testCase>
+  </GetSubmittedOrApprovedCampaignsTestData>
+
+  <GetSupplierReferrerBuyerCampaignDetailsTestData>
+    <testCase id="1">
+      <input pageNo="1" buyerName="" campaignName="" supplierId=""  total="1">
+      </input>
+      <output count="1">
+        <referrerList campaignId="3" campaignName="Alekhya LandingPage Campaign" buyerOrgId="10043"/>
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input pageNo="1" buyerName="ch" campaignName="" supplierId=""  total="0">
+      </input>
+      <output count="0">
+       
+      </output>
+    </testCase>
+  </GetSupplierReferrerBuyerCampaignDetailsTestData>
+</test>

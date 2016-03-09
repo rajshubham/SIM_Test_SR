@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <GetAllAccessTypesTestData>
+    <testCase id="1">
+      <input accessType="0" pageSize="20" index="1" totalRecords="5">
+      </input>
+      <output count="3">
+        <List Id="1"/>
+        <List Id="2"/>
+        <List Id="3"/>
+      </output>
+    </testCase>
+  </GetAllAccessTypesTestData>
+</test>

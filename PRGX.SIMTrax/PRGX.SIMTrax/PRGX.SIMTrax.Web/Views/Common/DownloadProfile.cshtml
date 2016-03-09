@@ -1,0 +1,187 @@
+﻿@model PRGX.SIMTrax.Domain.Model.DownloadProfile
+@using System.Linq
+<style>
+    #download-main-container {
+        width: 90%;
+        /*margin: 0 auto;*/
+        margin-right: 50px;
+    }
+
+    #dwnl-invoice-prgx-logo-center {
+        margin-bottom: 20px;
+    }
+</style>
+@{
+    Layout = null;
+    var profileItem = Model.Charts.FirstOrDefault(u => u.Category == (Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.Profile);
+    var FITItem = Model.Charts.FirstOrDefault(u => u.Category == (Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.FinanceInsuranceTax);
+    var DSItem = Model.Charts.FirstOrDefault(u => u.Category == (Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.DataSecurity);
+    var HSItem = Model.Charts.FirstOrDefault(u => u.Category == (Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.HealthSafety);
+   var buyerPermissionList = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_BUYER_ACCESS_PERMISSIONS] != null) ? ((List<PRGX.SIMTrax.Domain.Util.ItemList>)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_BUYER_ACCESS_PERMISSIONS]) : new List<PRGX.SIMTrax.Domain.Util.ItemList>();
+    var IsComplianceStatusNeeded = (buyerPermissionList.Find(a => a.Value == (long)PRGX.SIMTrax.Domain.Util.BuyerPermissions.ComplianceStatus) != null) ? true : false;
+
+    var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+}
+<style>
+    body {
+        background-color: white !important;
+        background: none !important;
+    }
+
+    .breakhere {
+        page-break-after: always;
+    }
+
+    .breakBefore {
+        page-break-before: always;
+    }
+</style>
+<body style="width: 90%; margin: auto;margin-right: 64px;font-family:Arial">
+    <section style="width:100%;padding:0px 10px">
+        <div class="breakhere" style="width: 100%;">
+            @if ((!String.Equals(Model.GeneralInformation.LogoBaseString, "data:;base64,")) && (!String.IsNullOrWhiteSpace(Model.GeneralInformation.BusinessDescription)))
+            {
+                <div style="width: 100%; position: relative; padding: 20px 15px">
+                    @if (!String.Equals(Model.GeneralInformation.LogoBaseString, "data:;base64,"))
+                    {
+                        <div style="margin: auto; max-width: 153px; float: left; padding-left: 15px; padding-right: 15px">
+                            <img id="profileImgLogo" src="@Model.GeneralInformation.LogoBaseString" height="100" style="border:1px solid #F8F8F8; max-width: 153px; margin-left: auto;  margin-right: auto;" />
+                        </div>
+                    }
+                    @if (!String.IsNullOrWhiteSpace(Model.GeneralInformation.BusinessDescription))
+                    {
+                        <div style="padding: 15px 20px; width: 80%; float: left">
+                            @*<strong style="font-size: 20px">@Model.GeneralInformation.CompanyName</strong>*@
+                            <div>@Model.GeneralInformation.BusinessDescription</div>
+                        </div>
+                    }
+                    <div style="clear:both"></div>
+                </div>
+            }
+            @if (IsComplianceStatusNeeded)
+            {
+                <div style="width:100%;padding:10px 10px;font-size:20px">
+                    Compliance Status
+                </div>
+                <div style="width:100%;padding:0px 0px"><hr style="border-top: 2px solid #54b948;" /></div>
+                <div style="width:100%;padding:0px 10px;margin-bottom:30px">
+                    <div style="width:215px;float:left;padding-top:20px">
+                        <div style="text-align:center;font-size:16px">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTRATION, userCulture).ToString()</div>
+                        <div style="width:150px;margin:auto">
+                            <img src="@profileItem.ChartBaseString" />
+                        </div>
+                        <div style="padding-top: 20px">
+                            @Html.Raw(profileItem.DivHtml)
+                        </div>
+                    </div>
+                    <div style="width: 215px; float: left; padding-top: 20px">
+                        <div style="text-align:center;font-size:16px">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FINANCE_INSURANCE_AND_TAX, userCulture).ToString()</div>
+                        <div style="width: 150px; margin: auto">
+                            <img src="@FITItem.ChartBaseString" />
+                        </div>
+                        <div style="padding-top: 20px">
+                            @Html.Raw(FITItem.DivHtml)
+                        </div>
+                    </div>
+                    <div style="width: 215px; float: left; padding-top: 20px">
+                        <div style="text-align:center;font-size:16px">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HEALTH_SAFETY, userCulture).ToString()</div>
+                        <div style="width: 150px; margin: auto">
+                            <img src="@HSItem.ChartBaseString" />
+                        </div>
+                        <div style="padding-top: 20px">
+                            @Html.Raw(HSItem.DivHtml)
+                        </div>
+                    </div>
+                    <div style="width: 215px; float: left; padding-top: 20px">
+                        <div style="text-align:center;font-size:16px">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DATA_SECURITY, userCulture).ToString()</div>
+                        <div style="width: 150px; margin: auto">
+                            <img src="@DSItem.ChartBaseString" />
+                        </div>
+                        <div style="padding-top: 20px">
+                            @Html.Raw(DSItem.DivHtml)
+                        </div>
+                    </div>
+                    <div style="clear:both"></div>
+                </div>
+            }
+            <div style="width:100%;padding:10px 10px;font-size:20px">
+                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFORMATION, userCulture).ToString()
+            </div>
+
+            <div style="width:100%;padding:0px 0px"><hr style="border-top: 2px solid #54b948;" /></div>
+
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIER_ID, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Model.GeneralInformation.SIMId</div>
+            </div>
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BUSINESS_SECTOR, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Model.GeneralInformation.BusinessSector</div>
+            </div>
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO_OF_EMPLOYEES, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Model.GeneralInformation.NoOfEmployess</div>
+            </div>
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPANY_TURNOVER, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Html.Raw(Model.GeneralInformation.TurnOver)</div>
+            </div>
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CUSTOMER_SECTOR, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Model.GeneralInformation.CustomerSector</div>
+            </div>
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SERVICE_IN, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Model.GeneralInformation.ServiceIn</div>
+            </div>
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUBSIDIARIES_IN, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Model.GeneralInformation.Subsidiaries</div>
+            </div>
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TRADING_NAME, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Model.GeneralInformation.TradingName</div>
+            </div>
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FACEBOOK_ACCOUNT, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Model.GeneralInformation.FacebookAccount</div>
+            </div>
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TWITTER_ACCOUNT, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Model.GeneralInformation.TwitterAccount</div>
+            </div>
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LINKEDIN_ACCOUNT, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Model.GeneralInformation.LinkeldinAccount</div>
+            </div>
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.WEBSITE_LINK_DISPLAY, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Model.GeneralInformation.WebsiteLink</div>
+            </div>
+        
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MAX_CONTRACT, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Html.Raw(Model.GeneralInformation.MaxContract)</div>
+            </div>
+            <div style="width: 100%; padding: 20px 10px; ">
+                <div style="width:40%;float:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MIN_CONTRACT, userCulture).ToString()</div>
+                <div style="width:10%;float:left;text-align:center">:</div>
+                <div style="width:50%;float:left">@Html.Raw(Model.GeneralInformation.MinContract)</div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </section>
+</body>

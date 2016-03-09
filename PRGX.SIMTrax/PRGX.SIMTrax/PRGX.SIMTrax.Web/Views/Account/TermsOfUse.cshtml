@@ -1,0 +1,213 @@
+﻿@{
+    ViewBag.Title = "Terms of Use";
+    Layout = "~/Views/Shared/_layout-container.cshtml";
+}
+
+@{
+    var reasonMessage = TempData["TermsAcceptMessage"] != null ? TempData["TermsAcceptMessage"].ToString() : "";
+    var displayMessage = "none";
+    long userId = 0;
+    long latestTermsOfUseId = !string.IsNullOrWhiteSpace(TempData["TermsOfUseId"].ToString()) ? Convert.ToInt64(TempData["TermsOfUseId"].ToString()) : 0;
+    if (String.IsNullOrWhiteSpace(reasonMessage))
+    {
+        displayMessage = "none";
+    }
+    else
+    {
+        var user = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER] != null) ? (PRGX.SIMTrax.Domain.Model.UserDetails)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER] : null;
+        if (user != null)
+        {
+            userId = user.UserId;
+            displayMessage = "block";
+        }
+    }
+}
+    
+<div class="row">
+    <div class="col-md-12 padding-bottom-header">
+        <h3>Terms of Use</h3>
+    </div>
+
+    <div class="clearfix container-full-browser-width margin-bottom-header" id="reasontoAccept" style="display: @displayMessage; margin-bottom:20px;">
+        <div class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 20px; padding-top: 20px;">
+            <div style="color: white; margin-left: 30px; font-size: 17px; text-align: center;">
+                @reasonMessage
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+        <div class="container-white-backgound">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="page-sub-heading-container page-sub-heading">PRGX Supplier Information Management ("SIM") Website and Services Terms and Conditions  </div>
+                <div class="page-sub-heading-container">
+                    <span class="page-sub-heading">Last Updated: </span>January 5th, 2016
+                </div>
+                <p class="padding-bottom">
+
+                    Please read these terms and conditions of service before using this site.  The following terms and conditions, together with our Privacy Policy found at <a class="SICCodeLink" target="_blank" href="http://www.prgx.com/privacy-policy">http://www.prgx.com/privacy-policy</a> (the "Privacy Policy") and any other documents expressly incorporated by reference (collectively, these "Terms"), as may be amended from time to time (as described below), govern your access to and use of the PRGX SIM website <a class="SICCodeLink" target="_blank" href="https://sim.prgx.com"> https://sim.prgx.com</a>  (the "Website"), including any content, functionality and services offered on or through the Website. References in these Terms to "you" and "your" are referring to you, the User, and to any Buyer or Supplier (each as defined below), or both, that you register, as more specifically provided below.
+                </p>
+                <p class="padding-bottom">
+                    Please read these Terms carefully and make sure that you understand them before using the Website. You should print a copy of these Terms or save them to your computer for future reference. The Website is offered and available to users who are 18 years of age or older.  By using the Website, you represent and warrant that you are of legal age to form a binding contract with PRGX and that you will be legally bound by these Terms.  If you are unable to make these representations, you must not access or use the Website.  These Terms constitute a legal agreement between you and PRGX. By accessing and using the Website, you agree to be legally bound to these Terms. If you do not agree to be legally bound by these Terms, do not access or use the Website.  Please note that the Website is for business customers only, not consumers, and these Terms apply only to business customers. If you are a consumer, please contact us prior to using the Website.
+                </p>
+                <p class="padding-bottom">
+                    If you register on the Website as a Buyer or Supplier (both as defined below), you will be asked to agree to these Terms by checking the box on the Website indicating your agreement to the Terms and clicking the "Next" button where indicated.  By checking the box on the Website indicating your agreement to the Terms and clicking on the "Next" button, you represent and warrant that you have the authority to legally bind any Buyer or Supplier that you register and these Terms become a legally binding agreement between PRGX and such Buyer or Supplier. Buyers and Suppliers registered on the Website agree to be jointly and severally liable with their respective User(s) for any violation or breach of these Terms by such User(s). If you do not check the box on the Website indicating your agreement to the Terms and click on the "Next" button where indicated, you will not be able to register a Buyer or Supplier on the Website.  If you register both a Buyer and a Supplier on the Website, the terms applicable to each will apply to you and to your access and use of the Website.
+                </p>
+                <p class="padding-bottom">
+                    If you wish to contact us at any time in connection with these Terms, please see our Contact Us page  <a class="SICCodeLink" target="_blank" href="/contact-us">https://sim.prgx.com/contactus </a>.
+                </p>
+                <div class="page-sub-heading-container page-sub-heading">1.	Definitions</div>
+                <p class="padding-bottom">"Account" means the personal information and Credentials of the User who has registered a Buyer or Supplier, together with Payment Information, all of which collectively may be used to access and use the Services through the Website. </p>
+                <p class="padding-bottom">"Buyer" means any person or entity registered as a Buyer on the Website for the purpose of obtaining SIM Data and for other purposes set forth in these Terms.</p>
+                <p class="padding-bottom">"Buyer Account" means any Account registered by or on behalf of a Buyer. </p>
+                <p class="padding-bottom">"Content" means any text, graphics, audio, video, data, software and any other form of information capable of being stored in a computer that appears on or forms part of the Website, including, without limitation, SIM Data, Supplier Data and other material made available to Buyers or Suppliers via the Website, and all customizations, enhancements, improvements or other modifications to any of the foregoing developed in the course of providing the Services (regardless of whether such customizations, enhancements, improvements or other modifications are the result of requests, suggestions or requirements of a Buyer or Supplier or otherwise).</p>
+                <p class="padding-bottom">"Content Delivery Date" means the date PRGX delivers, to Buyer or Supplier, as appropriate, the SIM Data for which a specific set of Supplier Data was provided by Supplier, which delivery PRGX may accomplish by presentation of such materials as part of the Content on the Website.</p>
+                <p class="padding-bottom">"Credentials" means the user name and password used, in connection with an Account, to access the Services through the Website.</p>
+                <p class="padding-bottom">"Fees" means the fees payable by a Supplier or a Buyer, as applicable, for Services as set out on the Website or otherwise communicated by PRGX. </p>
+                <p class="padding-bottom">"Intellectual Property Rights" means trademarks, service marks, logos, goodwill, copyright, rights in software, registered designs, unregistered design rights, patents, know-how, confidential information and all and any other intellectual property rights subsisting anywhere in the world, whether or not registered and including all applications for the same.</p>
+                <p class="padding-bottom">"Payment Information" means any data or information required for payment of Fees, including but not limited to credit or debit card numbers, credit or debit card expiration dates, CVV codes, bank account numbers and sort codes. </p>
+                <p class="padding-bottom">"Services" means the following services provided by PRGX:</p>
+                <div class="padding-bottom">
+                    <ul>
+                        <li>
+                            in respect of a Buyer, evaluation of Supplier Data submitted to PRGX by or on behalf of Suppliers designated by Buyer, creation of SIM Data regarding each of such Suppliers, and access to the SIM Data and Supplier Data associated with such Suppliers, which access may be provided as part of Content made available to Buyers on the Website if determined by PRGX in its sole discretion to be beneficial to do so; and
+                        </li>
+                        <li>
+                            in respect of a Supplier, the evaluation and transformation of Supplier Data into SIM Data as requested by the Buyer for whom the evaluation of Supplier is being performed.
+                        </li>
+                    </ul>
+                </div>
+                <p class="padding-bottom">"SIM Data" means data, opinions, evaluations and other information generated by PRGX or its Third Party Data Providers based on Supplier Data.</p>
+                <p class="padding-bottom">
+                    "Supplier" means any person or entity registered as a Supplier on the Website who may access and use the Website as expressly provided herein.
+                </p>
+                <p class="padding-bottom">
+                    "Supplier Account" means any Account registered by or on behalf of a Supplier.
+                </p>
+                <p class="padding-bottom">
+                    "Supplier Data" means all data and information specific to a Supplier that is provided by a Buyer or a Supplier, or on such party’s behalf, to PRGX through the Website or by other means (including email or physical delivery) to enable PRGX to provide the Services.  For clarity, Supplier Data does not include data or information provided by Third Party Data Providers.
+                </p>
+                <p class="padding-bottom">
+                    "Third Party Data Providers" means independent third party providers of data, opinions, evaluations and other information provided to PRGX to enable the delivery of the Services.
+                </p>
+                <p class="padding-bottom">
+                    "User" means any person accessing and using the Website.
+                </p>
+                <div class="page-sub-heading-container page-sub-heading">2.	Content</div>
+                <p class="padding-bottom">
+                    All of the Content (with the exception of any Supplier Data) and the Intellectual Property Rights subsisting in the same is owned by PRGX, its affiliates or third party licensors and is protected by worldwide copyright and other intellectual property laws. All branding, trademarks, service marks and logos contained in the Website are the exclusive property of PRGX, its affiliates or third party licensors. You agree you will not commit or permit any act, or fail to commit or permit any act, that would impair or prejudice the Intellectual Property Rights of PRGX, its affiliates or third party licensors.
+                </p>
+                <div class="page-sub-heading-container page-sub-heading">3.	Use of the Website, Content and Limited License</div>
+                <p class="padding-bottom">
+                    If you are a User accessing the Website but have not established an Account to register a Supplier or a Buyer, PRGX grants you a limited license to access and use the Website and the Content solely for your use, subject to the terms and conditions of these Terms.
+                </p>
+                <p class="padding-bottom">
+                    If you are a User accessing the Website through a Supplier Account, PRGX grants you a limited license to access and use, solely for the internal business purposes of Supplier, the Website to (i) provide applicable Supplier Data to PRGX; and (ii) if PRGX elects to present such materials on the Website, view on the Website, following the applicable Content Delivery Date, the applicable SIM Data or other Content, provided that PRGX may discontinue your access to and ability to view such SIM Data or other Content at any time after such SIM Data or other Content has been available to Supplier on the Website for at least thirty (30) days.
+                </p>
+                <p class="padding-bottom">If you are a User accessing the Website through a Buyer Account, PRGX grants you a limited license to access and use the Website and Content solely for the applicable Buyer’s use in evaluating its Suppliers.</p>
+                <p class="padding-bottom">PRGX may change, withdraw, or discontinue access to any Content and terminate any license granted hereunder in its sole discretion at any time. </p>
+                <p class="padding-bottom">No license in these Terms grants any license to make, and no User, Supplier or Buyer shall make, any commercial use (except as expressly contemplated herein) or any derivative use of the Website or of any Content, including without limitation any resale or sublicensing of the Website or any Content.   Nothing in these Terms limits Supplier’s rights in Supplier Data.</p>
+                <p class="padding-bottom">You may not reproduce, modify, or distribute the SIM Data, the Website or any Content in any form or manner without the prior written consent of PRGX; except that, if you are a User accessing the Website through a Buyer Account or a Supplier Account, no such permission shall be necessary to print and download extracts from the Website for the internal business purposes of your Buyer or Supplier, provided that you do not modify any of such SIM Data or Content, you do not use any graphics or photographs separately from their accompanying text and you do not remove any copyright, trademark notification or other proprietary notices from such extracts. </p>
+                <p class="padding-bottom">You may not through any automated process (including by means of "bots" or "spiders") harvest, scrape, extract, copy, access or collect any Content; provided, however, that operators of publicly available search engines may use spiders solely for the purpose of creating indices for the normal and customary operation of the search engines.</p>
+                <p class="padding-bottom">You may not use the Website or the Content for any purpose or in any manner prohibited by law. You may not use the Website or the Content for any immoral or unethical purpose, as determined in our sole discretion.  </p>
+                <p class="padding-bottom">You may not circumvent, disable or otherwise interfere with any security features of the Website.</p>
+                <p class="padding-bottom">If you print, copy or download any part of our Website or its Content in breach of these Terms, your right to use the Website will cease immediately and you must, at our option, return or destroy any copies of the Content you have made.  </p>
+                <div class="page-sub-heading-container page-sub-heading">4.	Buyer Information </div>
+                <p class="padding-bottom">By registering as a Buyer, you grant to PRGX and its affiliates a perpetual, non-exclusive, transferable, irrevocable, sub-licensable, royalty-free, worldwide right and license to use, host, store, share, reproduce, exploit, display and disclose the name, address, email address and other contact information of the Buyer to Suppliers registered on the Website and to other Users and commercial parties.  </p>
+                <div class="page-sub-heading-container page-sub-heading">5.	Supplier Data  </div>
+                <p class="padding-bottom">By registering as a Supplier, you grant to PRGX and its affiliates a perpetual, non-exclusive, transferable, irrevocable, sub-licensable, royalty-free, worldwide license to use, host, store, share, reproduce, modify, exploit, display, and create derivative works of Supplier Data for any purpose, including the creation of SIM Data and making available and displaying such SIM Data and the Supplier Data on the Website.</p>
+                <p class="padding-bottom">By supplying Supplier Data to PRGX, you confirm and warrant that: (a) you have all necessary consents and authorizations to supply such Supplier Data to PRGX and to grant the license contained herein; and (b) all such Supplier Data is complete, accurate and not misleading in any way.</p>
+                <div class="page-sub-heading-container page-sub-heading">6.	Access to the Website </div>
+                <p class="padding-bottom">PRGX will use its commercially reasonable efforts to provide Buyers and Suppliers access to the Website. However, PRGX has no control over computer networks external to PRGX’s system. In addition, access to and availability of the Website is subject to scheduled and unscheduled periods of maintenance and repair. PRGX will not be liable to you, Buyer, Supplier or any third party if for any reason the Website is unavailable at any time or for any period.</p>
+                <p class="padding-bottom">If you are registered as a Supplier or Buyer, you agree to maintain the confidentiality of your Credentials. You are solely responsible for all Website activity occurring under or using your Credentials. In addition, you agree to notify PRGX immediately if you know or suspect any misuse of, or breach of confidentiality relating to, the Credentials or any other Account information. PRGX will not be liable for any loss or damage that you may incur as a result of someone else using your Credentials, either with or without your knowledge.</p>
+                <div class="page-sub-heading-container page-sub-heading">7.	Payments </div>
+                <p class="padding-bottom">Supplier acknowledges and agrees that the Fees payable are solely in consideration for the Services.  The applicable Fees payable by Supplier will be the Fees as set out on the Website at the time of submission of Supplier Data.</p>
+                <p class="padding-bottom">Buyer acknowledges and agrees that the Fees payable, if applicable, upon the creation of a Buyer Account or thereafter are in consideration for the Services. The applicable Fees payable by Buyer will be the Fees as set out on the Website at the time Supplier Data or SIM Data is delivered or made available to Buyer or as otherwise communicated in writing to Buyer from PRGX.</p>
+                <p class="padding-bottom">You acknowledge and agree that (a) payments made for Services using a credit, debit or check card are processed by a third-party payment processor (the "Payment Processor"), and that use of the Payment Processor’s website and related services is governed by the Payment Processor’s terms and conditions, not by these Terms; (b) PRGX is in no way responsible or liable for the Payment Processor’s services or responsible for the Payment Processor’s terms and conditions; and (c) all payments for Services are final and there will be no refunds of Fees paid.  You represent and warrant that you have the right and are authorized to use any credit, debit or check card used to purchase Services and that the billing and related information you provide is accurate and truthful. If for any reason you have not authorized charges to be made to your credit, debit or check card, or your credit, debit or check card issuer does not pay PRGX the applicable Fees charged to your card, PRGX reserves the right to immediately suspend your access to the Website and discontinue Services.  Acceptance of payment by any means other than credit, debit or check card is subject to PRGX’s sole discretion and you agree to make any such payments in accordance with the payment terms communicated in writing by PRGX to you.</p>
+                <div class="page-sub-heading-container page-sub-heading">8.	Delivery</div>
+                <p class="padding-bottom">The Services will be deemed to be delivered, completed and accepted as of the Content Delivery Date.</p>
+                <div class="page-sub-heading-container page-sub-heading">9.	Account Termination and Suspension </div>
+                <p class="padding-bottom">PRGX may terminate or suspend any Account immediately without liability upon the occurrence of any of the following: (a) the Buyer or Supplier or any User associated with the registration of such Buyer or Supplier commits a material breach of any of these Terms; (b) the Buyer or Supplier fails to pay the relevant Fees; (c) at least 30 days have passed since the Account was last accessed by the User associated with the registration of such Buyer or Supplier; or (d) in the case of a Supplier, upon the expiration of 30 days following the latest Content Delivery Date associated with such Supplier.</p>
+                <p class="padding-bottom">Upon termination or suspension of an Account, the right of Buyer or Supplier, as applicable, and the User associated with the registration of such Buyer or Supplier, to access the Content associated with such Buyer or Supplier, as the case may be, shall immediately cease and, in the case of termination or suspension of a Supplier’s Account, PRGX reserves the right to delete any SIM Data or other Content relating to such Supplier from the Website. </p>
+                <div class="page-sub-heading-container page-sub-heading">10.	Third Party Sites </div>
+                <p class="padding-bottom">The Website may contain links to a third party’s websites or advertisements of third parties. The fact that such links and advertisements are posted and presented on the Website is not an endorsement or representation of any kind of those websites or their policies and practices. Such websites are not operated or monitored by PRGX, and PRGX is not responsible in any way for the policies, accuracy, usefulness, safety and practices of any such third party or the content of such third party websites or advertisements. PRGX takes no responsibility for any goods or services provided by any third parties. Use of such websites is subject to the terms and conditions applicable to and displayed on such websites.</p>
+                <div class="page-sub-heading-container page-sub-heading">11.	Linking to this Site</div>
+                <p class="padding-bottom">Unless specifically authorized by us, you may not create links to the Website that bypass the home page or other parts of the Website. You may not mirror or frame the home page or any other pages of the Website on any other website or web page.</p>
+                <div class="page-sub-heading-container page-sub-heading">12.	Disclaimer of Warranties</div>
+                <p class="padding-bottom">You acknowledge and agree that use of the SIM Data, the Website and the Content is at your sole risk and is provided by PRGX on an "as-is" and "as-available" basis and without any warranty or endorsement made. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW AND UNLESS EXPRESSLY PROVIDED TO THE CONTRARY UNDER THESE TERMS, PRGX AND ITS AFFILIATES DISCLAIM ANY AND ALL WARRANTIES, EXPRESS OR IMPLIED (INCLUDING ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT), IN CONNECTION WITH THE SIM DATA, THE WEBSITE OR THE CONTENT (INCLUDING ALL INFORMATION PROVIDED BY ANY THIRD PARTY DATA PROVIDER OR OTHER LICENSOR) AND YOUR USE THEREOF. </p>
+                <p class="padding-bottom">Although PRGX intends that the SIM Data and any Content presented on the Website is accurate and timely, PRGX makes no warranty regarding the SIM Data, the Content and the Website and gives no assurance that the access to the Website or the Content will be uninterrupted, timely, secure or error-free. The security of communications sent over the internet (including by email) is subject to many factors outside of PRGX’s control. PRGX does not guarantee the security or confidentiality of any electronic communications and shall not be responsible to you for any loss or damage incurred as a result of the transmission of any such communications.  </p>
+                <div class="page-sub-heading-container page-sub-heading">13.	Limitations of Liability</div>
+                <p class="padding-bottom">Nothing in these Terms will: (a) limit the liability of a party for death or personal injury resulting from negligence; (b) limit the liability of a party for fraud or fraudulent misrepresentation by that party; or (c) limit any liability of a party in any way that is not permitted under applicable law. </p>
+                <p class="padding-bottom">The limitations of liability set out in these Terms: (a) are subject to the preceding paragraph; and (b) govern all liabilities arising under these Terms or in relation to the subject matter of these Terms (including, without limitation, access to or use of the SIM Data, the Website or any Content), including liabilities arising in contract, in tort (including negligence) and for breach of statutory duty. </p>
+                <p class="padding-bottom">In no event will PRGX be liable to any User, Supplier or Buyer in respect of any losses arising out of a force majeure event or other event outside the reasonable control of PRGX. </p>
+                <p class="padding-bottom">Buyer acknowledges that the SIM Data is provided for informational purposes only. PRGX and its affiliates shall have no liability to any User, Buyer or Supplier, or to anyone who may be informed of the SIM Data, as a result of any reliance placed on, or actions taken and attributed in whole or in part to, any SIM Data, or for the content or accuracy of the SIM Data, including any ratings, evaluations or opinions reflected therein (whether provided by PRGX or a Third Party Data Provider), and Supplier acknowledges and agrees that the SIM Data, including any ratings, evaluations and opinions reflected therein may differ from Supplier’s expectations. PRGX and its affiliates shall have no liability whatsoever in relation to any errors or omissions in the SIM Data, including without limitation any errors or omissions in the SIM Data resulting from any error or omission in the Supplier Data or from any errors or omissions in data or other information provided by Third Party Data Providers. PRGX and its affiliates will not be liable to any User, Supplier or Buyer in respect of any business losses, such as loss of or damage to profits, income, revenue, use, production, anticipated savings, business, contracts, commercial opportunities or goodwill.</p>
+                <p class="padding-bottom">To the extent permitted by law, PRGX and its affiliates shall have no liability for: (a) any indirect, special, incidental, consequential or punitive loss, damage or costs suffered or incurred by any User, Supplier or Buyer in connection with the Services, the SIM Data, or the use or inability to use the Website, including but not limited to any loss of or damage to hardware, data or information; and (b) any websites linked to the Website.</p>
+                <p class="padding-bottom">In no event shall the liability of PRGX and its affiliates to any User, Supplier or Buyer exceed the greater of fifty U.S. dollars ($50.00) or the Fees paid to PRGX by such User, Supplier or Buyer during the 12 months prior to the events giving rise to such liability. </p>
+                <div class="page-sub-heading-container page-sub-heading">14.	Privacy </div>
+                <p class="padding-bottom">Use of the Website is governed by PRGX’s Privacy Policy, which is incorporated into these Terms by reference.</p>
+                <div class="page-sub-heading-container page-sub-heading">15.	Indemnity</div>
+                <p class="padding-bottom">You agree, and if you are accessing this on behalf of any Supplier or Buyer, such Supplier or Buyer agrees, to defend, indemnify and hold harmless PRGX, its affiliates, and their respective officers, directors, employees, agents, licensors and partners from and against any and all claims, demands, damages, obligations, losses, liabilities, costs or debt, and expenses including, without limitation, legal fees and disbursements resulting, directly or indirectly, or arising from: (a) any violation of these Terms by you or such Supplier or Buyer; (b) your (or such Supplier’s or Buyer’s) access, use or inability to access or use the Website or any Content; or (c) your (or such Supplier’s or Buyer’s) violation of any law or regulation. These defense and indemnification obligations will survive these Terms and any discontinuation of your use of the Website and any Content. </p>
+                <div class="page-sub-heading-container page-sub-heading">16.	Viruses, hacking and other offenses</div>
+                <p class="padding-bottom">You are prohibited from introducing to the Website viruses, Trojans, worms, logic bombs or other material which is malicious or technologically harmful. You must not attempt to gain unauthorized access to the Website, the server on which the Website is stored or any server, computer or database connected to the Website. You must not attack the Website via a denial-of-service attack or a distributed denial-of-service attack.</p>
+                <p class="padding-bottom">By breaching the above provision, you would commit a criminal offense under local and international laws. PRGX will report any such breach to the relevant law enforcement authorities and will cooperate with those authorities by disclosing your identity to them. In the event of any such breach, your right to use the Website will cease immediately.</p>
+                <p class="padding-bottom">PRGX and its affiliates will not be liable for any loss or damage caused by a distributed denial-of-service attack, viruses or other technologically harmful material that may infect or affect your computer equipment, computer programs, data or other proprietary material due to your use of the Website or to your downloading of any material posted or otherwise made available on it, or any website linked to it.</p>
+                <div class="page-sub-heading-container page-sub-heading">17.	Changes to the Terms</div>
+                <p class="padding-bottom">PRGX may revise these Terms (including our Privacy Policy), at any time without providing notice to its Users by posting the revised Terms on the Website. Every time you use the Website, please check these Terms to ensure you understand the terms which will apply at that time. Your continued use of the Website following the posting of revised Terms means you accept and agree to the changes.</p>
+                <div class="page-sub-heading-container page-sub-heading">18.	PRGX Party, Governing Law and Dispute Resolution</div>
+                <p class="padding-bottom">References herein to "PRGX", "we" and "our" shall be deemed to refer to the PRGX entity set forth below based on your location you provide us, or if not provided by you, as reasonably determined by us based on available information. </p>
+                <p class="padding-bottom">United Kingdom: If you are located in the United Kingdom, the PRGX entity party hereto is PRGX UK Ltd, 731 Capability Green, Luton, LU1 3LU United Kingdom, and these Terms, and any dispute or claim arising therefrom or related thereto (including non-contractual disputes or claims), shall be governed by and in accordance with the laws of England and Wales without giving effect to any choice or conflict of law provision or rule. If you are located in the United Kingdom, then the following dispute resolution procedures apply: all disputes arising out of or relating to these Terms or the use of the Website shall be resolved by a sole arbitrator in an arbitration administered by the London Court of International Arbitration in accordance with its Arbitration 2014 Rules as a documents-only arbitration, unless the arbitrator determines that an oral hearing is necessary. The place of the arbitration shall be London, the United Kingdom. The arbitration shall be conducted in the English language. The appointed arbitrator shall be selected by mutual agreement of the parties, and if the parties cannot agree within 60 days of either party’s request of such appointment, then the London Court of International Arbitration shall select the arbitrator under the LCIA Arbitration 2014 Rules.  The parties to these Terms do not intend that any term of these Terms shall be enforceable by virtue of the Contracts (Rights of Third Parties) Act 1999 by any person that is not a party to it. </p>
+                <p class="padding-bottom">United States and other locations outside the United Kingdom: If you are located anywhere outside of the United Kingdom, including but not limited to the United States, the PRGX entity party hereto is PRGX USA, Inc., 600 Galleria Parkway, Suite 100, Atlanta, Georgia, United States of America, and these Terms, and any dispute or claim arising therefrom or related thereto (including non-contractual disputes or claims), shall be governed by and in accordance with the laws of the State of Georgia, United States of America without giving effect to any choice or conflict of law provision or rule.  If you are located outside of the United Kingdom, then the following dispute resolution procedures apply: all disputes arising out of or relating to these Terms or the use of the Website shall be resolved by binding arbitration held in Atlanta, Georgia, United States of America pursuant to the commercial rules of the American Arbitration Association ("AAA") using expedited procedures, unless otherwise agreed by the parties.  The arbitration shall be conducted in the English language.  The arbitrations shall be conducted by one arbitrator agreed upon by the parties, which agreement shall not be unreasonably withheld, and if the parties cannot agree within 60 days of either party’s request of such appointment, the AAA shall select an arbitrator who is knowledgeable about the dispute subject matter.  Each party shall pay its own expenses arising from the arbitration, and the parties will share equally the expense of the arbitrator and the AAA.</p>
+                <p class="padding-bottom">Regardless of your location, the prevailing party in any arbitration proceeding pursuant to these Terms shall be entitled to recover reasonable attorneys’ fees and expenses incurred in connection with such proceeding, in addition to any other relief to which such prevailing party may be entitled. Any arbitration award shall be final, and judgment thereon may be entered, in any court of competent jurisdiction.  </p>
+                <p class="padding-bottom">Notwithstanding the foregoing dispute resolution procedures, you agree that the ascertainment of damages in the event of your infringement or misappropriation of PRGX’s Intellectual Property Rights or any breach by you of Sections 2 (Content) or 3 (Use of the Website, Content and Limited License) would be difficult, that PRGX would suffer irreparable harm as a result thereof, and that money damages alone would be an inadequate remedy for the injuries and damages which would be suffered by PRGX in any of such circumstances.  Therefore, you agree: (i) that, in the event of any alleged infringement or misappropriation of PRGX’s Intellectual Property Rights or breach of Sections 2 or 3 hereof, in addition to and without limiting any of the remedies or rights which PRGX may have to pursue arbitration in accordance with the foregoing provisions, PRGX shall have the right to seek injunctive relief or other similar remedy in a court as more particularly described below; and (ii) to waive and not to (A) assert any defense to the effect that PRGX has an adequate remedy at law, (B) require that PRGX submit proof of the economic value of any Intellectual Property Rights, or (C) require that PRGX post a bond or any other security. If you are located in the United Kingdom, you hereby consent to personal jurisdiction and venue within the courts of England and Wales with respect to any such action, and if you are located in the United States or in any other location outside the United Kingdom, you hereby consent to personal jurisdiction and venue within the United States District Court for the Northern District of Georgia or the Superior Court of Fulton County, Georgia, U.S.A., or, at the sole option of PRGX, in a court of competent jurisdiction in your country of residence or, if applicable, the country of the principal place of business of Supplier or Buyer, as applicable. You hereby waive all possible objections to any action brought by PRGX in any such forums, including any objection to personal jurisdiction and venue. You further waive any defense to enforcement of the provisions of these Terms by injunction or otherwise based on claims you have or allege to have against PRGX.</p>
+                <div class="page-sub-heading-container page-sub-heading">19.	General </div>
+                <p class="padding-bottom">These Terms and any rights, obligations and licenses granted hereunder may not be transferred or assigned by you, but may be assigned by PRGX without restriction. Notwithstanding the PRGX entity party identified in these Terms, the performance of any of the obligations of such party hereunder may be delegated or subcontracted by such party to a third party, including any wholly-owned subsidiary of PRGX Global, Inc., or any branch of any such subsidiary.</p>
+                <p class="padding-bottom">Subject to the rights of Suppliers and Buyer to Supplier Data and SIM Data as herein provided, all right, title and interest in and to any and all reports, documentation, deliverables, processes and other work product created by PRGX as part of or in connection with the delivery of the Services, including all customizations, enhancements, improvements and other modifications thereof, and all Intellectual Property Rights in all of the foregoing, are and will remain with PRGX.  </p>
+                <p class="padding-bottom">Each right or remedy of under these Terms is without prejudice to any other right or remedy whether under these Terms or not.  </p>
+                <p class="padding-bottom">If any provision of these Terms is found by any court, tribunal or administrative body of competent jurisdiction to be wholly or partly illegal, invalid, void, voidable, unenforceable or unreasonable, such provision shall (to the extent of such illegality, invalidity, voidness, voidability, unenforceability or unreasonableness) be deemed severable and the remaining provisions of these Terms and the remainder of such provision shall continue in full force and effect. </p>
+                <p class="padding-bottom">No waiver of any term of this these Terms shall be deemed a further or continuing waiver of such term or any other term, and a party’s failure to assert any right or provision under these Terms shall not constitute a waiver of such right or provision.</p>
+                <p class="padding-bottom">EXCEPT AS EXPRESSLY PROHIBITED BY APPLICABLE LAW, ANY CAUSE OF ACTION OR CLAIM YOU MAY HAVE ARISING OUT OF OR RELATING TO THE SERVICES, THESE TERMS OR THE WEBSITE MUST BE COMMENCED WITHIN TWO (2) YEARS AFTER THE CAUSE OF ACTION ACCRUES; OTHERWISE, SUCH CAUSE OF ACTION OR CLAIM IS PERMANENTLY BARRED.</p>
+                <p class="padding-bottom">These Terms and, if applicable, any written agreements relating to the Services by and between PRGX and any Supplier or Buyer ("Related Agreements"), constitute the entire agreement with respect to the Services and the Website and supersede all prior and contemporaneous understandings, agreements, representations and warranties, both written and oral, with respect to the Services and the Website.  To the extent the terms of any Related Agreement conflict with these Terms, these Terms shall control, provided that, if any such Related Agreement specifically provides that the terms of such Related Agreement shall supersede these Terms or control in the event of a conflict, the terms of such Related Agreement shall control.  Without limiting the generality of the foregoing, the terms of any prior applicable non-disclosure or confidentiality agreement between PRGX and any Supplier or Buyer shall in no way limit PRGX’s rights to Supplier Data and SIM Data as provided herein, provided that PRGX shall not disclose a Supplier’s relationship with a Buyer to any other party except as reasonably appropriate to provide the Services.</p>
+                <p class="padding-bottom">Access to the Website may not be legal by certain persons or in certain countries. If you access the Website, you do so on your own initiative and you are responsible for compliance with all applicable local laws.</p>
+            </div>
+        </div>
+    </div>
+</div>
+  
+<div id="acceptButtonDialog" style="display: @displayMessage">
+    <div>            
+        <button class="btn btn-default" type="button" id="btnCancelTerms" onclick="CancelAcceptTerms()" style="margin-right: 10px">Cancel</button>
+        <button class="btn btn-color" type="button" id="btnAcceptTerms" onclick="AcceptTerms()">Accept Terms</button>
+    </div>
+</div>
+<script>
+  
+    function AcceptTerms() {
+        var obj = { userId: "@userId", latestTermsOfUseId: "@latestTermsOfUseId" };
+        $.ajax({
+            type: 'post',
+            url: '/Account/AcceptTerms',
+            data: JSON.stringify(obj),
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (response) {
+                if (typeof (response) != "undefined") {
+                    window.location.href = response.redirectUrl;
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    }
+
+    function CancelAcceptTerms() {
+        window.location = "/Account/Logout";
+    }
+</script>
+
+
+
+
+
+
+
+

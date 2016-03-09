@@ -1,0 +1,485 @@
+﻿@{
+    var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+    ViewBag.Title = PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString();
+    //var url = string.Empty;
+    //if (true == PRGX.SIMTrax.Domain.Util.Configuration.EnableSSO)
+    //{
+    //    var webConfig = PRGX.SIMTrax.Domain.Util.Configuration.CSIUrl;
+    //    var singleSignOn = Request.Cookies["SIMTraxSSO"] != null ? FormsAuthentication.Decrypt(Request.Cookies["SIMTraxSSO"].Value).Name : string.Empty;
+    //    var encryptedToken = PRGX.SIMTrax.Domain.Util.CommonMethods.Encrypt(singleSignOn);
+    //    url = webConfig + "?ssoToken=" + HttpPRGX.SIMTrax.Domain.Utility.UrlEncode(encryptedToken);
+    //}
+}
+
+
+<style>
+    .head {
+        height: 40px;
+        padding-top: 10px;
+        font-size: 18px;
+        font-family: Arial;
+        text-align: center;
+    }
+
+    .foot {
+        padding: 10px;
+    }
+
+    .content {
+        height: 140px;
+        padding-top: 10px;
+    }
+
+    .statusBox {
+        border: 1px solid rgb(203, 203, 203);
+        border-radius: 4px;
+        height: 357px;
+        behavior: url("/Content/Css/PIE.htc");
+        position: relative;
+        zoom: 1;
+    }
+
+    .action {
+        padding: 7px;
+        /*font-size: large;*/
+        min-height: 35px;
+        border-radius: 4px;
+        /*background-color: #2E7924;*/
+        /*color: white;*/
+        text-align: center;
+        behavior: url("/Content/Css/PIE.htc");
+    }
+
+    .statusWrapper {
+        padding-right: 10px;
+        padding-left: 0px;
+    }
+
+    .summarySection {
+        height: 8% !important;
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+
+    .float-right {
+        float: right;
+    }
+
+    .color-white {
+        color: white !important;
+    }
+
+    .center-element {
+        margin: 0 auto;
+        width: 160px !important;
+        height: 160px;
+        position: relative;
+    }
+
+    .supplierIndexChart {
+        height: 252px;
+        padding-top: 10px;
+    }
+
+    .btn-responsive {
+        position: relative;
+        top: -10px;
+    }
+
+    .clear-both {
+        clear: both;
+        position: relative;
+        height: 153px;
+        top: -36px;
+    }
+
+    .chart-text {
+        font-size: 16px;
+    }
+
+    .chart-per {
+        font-size: 16px;
+    }
+
+    .margin-top-39 {
+    }
+
+    .submission-status {
+        font-weight: normal;
+        line-height: 25px;
+        margin-bottom: 0px;
+    }
+
+    .submission-status-container {
+        background-color: #f2f2f2;
+        text-align: center;
+        min-height: 25px;
+        margin-bottom: 30px;
+    }
+
+    .color-red {
+        color: red;
+    }
+
+    .statusBoxHeaders {
+        height: 39px;
+    }
+
+    @@media (max-width: 992px) {
+        .summarySection {
+            font-size: 16px;
+        }
+    }
+
+    @@media (min-width: 362px) and (max-width: 475px) {
+        .summarySection {
+            height: 15% !important;
+        }
+    }
+
+    @@media (min-width: 476px) and (max-width: 768px) {
+        .summarySection {
+            height: 14% !important;
+            font-size: 16px !important;
+        }
+    }
+
+    @@media (min-width: 1024px) and (max-width: 1225px) {
+        .summarySection {
+            height: 12% !important;
+        }
+
+        .statusBox {
+            height: 380px !important;
+        }
+    }
+
+    @@media (min-width: 1025px) and (max-width: 1107px) {
+        .statusBox {
+            height: 396px !important;
+        }
+    }
+
+    @@media (min-width: 992px) and (max-width: 1107px) {
+        .statusBoxHeaders {
+            height: 60px;
+        }
+    }
+
+    @@media (min-width: 769px) and (max-width: 1024px) {
+        .summarySection {
+            height: 11% !important;
+        }
+
+        .statusBox {
+            height: 398px !important;
+        }
+    }
+
+    @@media (min-width: 476px) and (max-width: 768px) {
+        /*.margin-top-39 {
+            margin-top: 32px !important;
+        }*/
+        .statusBox {
+            height: 398px !important;
+        }
+    }
+
+    @@media (max-width: 475px) {
+        /*.summarySection {
+            height: 30% !important;
+        }*/
+        .statusBox {
+            height: 390px !important;
+        }
+
+        .margin-top-39 {
+            margin-top: -10px !important;
+        }
+    }
+
+    @@media (max-width: 361px) {
+        .summarySection {
+            height: 23% !important;
+        }
+
+        .statusBox {
+            height: 455px !important;
+        }
+    }
+
+    .margin-bottom-header {
+        margin-bottom: 24px;
+    }
+
+    @@media (max-width: 475px) {
+        .responsive-margin {
+            margin-bottom: 47px !important;
+        }
+    }
+</style>
+@Styles.Render("~/bundles/ChartsCss")
+
+
+<div id="supplierHome" class="row">
+    <div class="col-md-12 padding-bottom-header">
+        <h3>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIER_HOME, userCulture).ToString()</h3>
+    </div>
+    @{
+        //    var company = (Domain.Company)Session[PRGX.SIMTrax.Domain.Util.Constants.UserCompanyDetails];
+        //   var IsMappedWithBuyer = (company != null) ? company.IsMappedWithBuyer : false;
+        var IsMappedWithBuyer  = false;
+        var displayVerificationMessage = "none";
+        var displaymetric = false;
+
+//        var displaymetric = true;
+        //if (company.Status < (short)PRGX.SIMTrax.Domain.Util.CompanyStatus.BusinessVerified)
+        //{
+        //    displayVerificationMessage = "block";
+        //    displaymetric = false;
+        //}
+    }
+    <div class="clearfix container-full-browser-width margin-bottom-header" id="verificationMessage" style="display: @displayVerificationMessage">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <span style="float: right"><i class="fa fa-close" style="cursor: pointer; color: white;" id="btnCloseVerificationMessage"></i></span>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12" style="padding-bottom: 20px;">
+            <div style="color: white; text-align: center; margin-right: 30px; font-size: 17px">
+                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIER_HOME_BANNER_1, userCulture).ToString()<br />
+                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIER_HOME_BANNER_2, userCulture).ToString()
+            </div>
+        </div>
+    </div>
+
+    @if (displaymetric)
+    {
+        <div class="col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+            <div class="container-white-backgound" style="background-color: #FAA634;">
+                <div class="col-md-12 col-sm-12 col-xs-12" style="min-height:100px">
+                    <div class="col-md-offset-1 col-md-2 col-sm-offset-0 col-sm-6 col-xs-offset-1 col-xs-10 text-align-center border-right-end banner-div">
+                        <div class="banner-font" id="required-sections-supplier-banner">0</div>
+                        <div id="required-sections-supplier-banner-text"> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUIRED_SECTIONS, userCulture).ToString()<br />@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NEEDING_ACTION, userCulture).ToString()</div>
+                    </div>
+                    <div class="col-md-offset-0 col-md-2 col-sm-offset-0 col-sm-6 col-xs-offset-1 col-xs-10 text-align-center border-right-middle banner-div">
+                        <div class="banner-font" id="awaiting-payment-supplier-banner">0</div>
+                        <div><span id="awaiting-payment-supplier-banner-text">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTIONS, userCulture).ToString()</span> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUBMITTED, userCulture).ToString()<br /> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BUT, userCulture).ToString() <a class="banner-link Navigate" data-viewname="Index" data-action="/payments/awaiting-payment" data-title="Payment">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.AWAITING_PAYMENT, userCulture).ToString()</a></div>
+                    </div>
+                    <div class="col-md-offset-0 col-md-2 col-sm-offset-0 col-sm-6 col-xs-offset-1 col-xs-10 text-align-center border-right-end banner-div">
+                        <div class="banner-font" id="awaiting-verify-supplier-banner">0</div>
+                        <div><span id="awaiting-verify-supplier-banner-text">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTIONS, userCulture).ToString()</span> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUBMITTED_AND_BEING_AUDITED, userCulture).ToString()</div>
+                    </div>
+                    <div class="col-md-offset-0 col-md-2 col-sm-offset-0 col-sm-6 col-xs-offset-1 col-xs-10 text-align-center  border-right-middle banner-div">
+                        <div class="banner-font" id="flagged-answers-supplier-banner">0</div>
+                        <div class=" banner-link show-flagged-answers" id="flagged-answers-supplier-banner-text">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FLAGGED_ANSWERS, userCulture).ToString()</div>
+                    </div>
+                    <div class="col-md-offset-0 col-md-2 col-sm-offset-0 col-sm-6 col-xs-offset-1 col-xs-10 text-align-center banner-div">
+                        <div class="banner-font" id="inbox-unread-supplier-banner">0</div>
+                        <div><span id="inbox-unread-supplier-banner-text">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.UNREAD_MESSAGES, userCulture).ToString()</span> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.IN_YOUR, userCulture).ToString() <a class="banner-link Navigate" data-viewname="inbox" data-action="/Supplier/Inbox" data-title="Inbox">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INBOX, userCulture).ToString() </a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="col-md-12 panel-default panel no-border">
+        <div class="container-white-backgound padding-bottom-0px">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-9 col-sm-9 panel-heading page-sub-heading-container">
+                    <span class="pull-left clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                    <span class="page-sub-heading" style="cursor: pointer">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONNARIES, userCulture).ToString()</span>
+                </div>
+                @{
+                  var sellerPartyId = ((PRGX.SIMTrax.Domain.Model.OrganizationDetail)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_ORGANIZATION]).RefPartyId;
+                }
+                <div class="col-md-3 col-sm-3 hidden-xs  action " style="padding-right:15px">
+                    <div class="btn btn-normal float-right" onclick="location.href='@Url.Content(String.Format("/Profile/{0}", sellerPartyId))'"  tabindex="13"  style="width:180px;">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VIEW_YOUR_PROFILE, userCulture).ToString()
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <hr class="border-style" />
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 panel-body" id="divProduct">
+                <div class="col-md-4 padding-top-header">
+                    <div class="statusBox">
+                        <div class="col-md-12 margin-top-10px statusBoxHeaders" align="center">
+                            <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFORMATION_AND_CONTACTS, userCulture).ToString()</h4>
+                        </div>
+                        <div class="col-md-12 col-xs-12 margin-top-10px summarySection" align="center">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFORMATION_AND_CONTACTS_MESSAGE, userCulture).ToString()
+                        </div>
+                        <div id="generalInfoAboveDonut" class="col-md-12 col-xs-12 submission-status-container">
+                            <label class="submission-status">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO_REQUIRED_SECTIONS_NEEDING_ACTION, userCulture).ToString()</label>
+                        </div>
+                        <div class="supplierIndexChart clear-both">
+                            <div id="GeneralInfoProgressChart" class="center-element"></div>
+                        </div>
+                        <div class="col-md-12 margin-top-10px btn-responsive " align="center">
+                            <a class="clearfix" href="/supplier/questionnaire/general-info" data-title="General Info. & Contacts" tabindex="14">
+                                <div class="col-md-12 action btn-color">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GO_TO_QUESTIONNAIRE, userCulture).ToString()
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-md-4 padding-top-header">
+                    <div class="statusBox">
+                        <div class="col-md-12 margin-top-10px statusBoxHeaders" align="center">
+                            <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPLIANCE_CHECKS, userCulture).ToString()</h4>
+                        </div>
+                        <div class="col-md-12 margin-top-10px summarySection" align="center">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPLIANCE_CHECKS_MESSAGE, userCulture).ToString()
+                        </div>
+                        <div id="complianceInfoAboveDonut" class="col-md-12 submission-status-container">
+                        </div>
+                        <div id="divEmpty" class="col-md-12" style="margin-bottom: 30px; height: 25px; display: none">
+                        </div>
+                        <div class="supplierIndexChart clear-both">
+                            <div id="HomeRiskChart" class="center-element"></div>
+                        </div>
+                        <div id="complianceInfoBelowDonut" class="col-md-12 submission-status-container" style="display: none">
+                        </div>
+                        <div class="col-md-12 margin-top-10px btn-responsive " align="center">
+                            <a class="Navigate clearfix" data-viewname="questionnaire" data-action="/supplier/questionnaire/compliance-checks" data-title="Compliance Checks" tabindex="15">
+                                <div id="RiskQuestionarrieButton" class="col-md-12 action btn-color">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GO_TO_QUESTIONNAIRE, userCulture).ToString()
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>*@
+                @*@if (IsMappedWithBuyer)
+                {
+                    var buyerSupplierMappingService = new Services.BuyerSupplierMappingService();
+                    var BuyersMappedToSupplier = buyerSupplierMappingService.GetBuyerSupplierMappingForClientChecks(company.CompanyId)
+                        .Where(elem => elem.BuyerCompany.BuyerQuestionSetMappings != null && elem.BuyerCompany.BuyerQuestionSetMappings.Count > 0).ToList();
+
+                    foreach (var client in BuyersMappedToSupplier)
+                    {
+                        <div class="col-md-4 padding-top-header">
+                            <div class="statusBox">
+                                <div class="col-md-12 statusBoxHeaders" align="center" style="margin-bottom: 10px;">
+                                    @if (client.BuyerCompany.Logo != null)
+                                    {
+                                        <img src="data:;base64,@Convert.ToBase64String(client.BuyerCompany.Logo)" style="width: 120px; padding: 10px 0px;" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Content/Images/siteLogo.jpg" style="width: 120px; padding: 10px 0px;" />
+                                    }
+                                </div>
+                                <div class="col-md-12  margin-top-10px summarySection" align="center">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONS_RELATING_TO_AND_ONLY_VIEWED_BY, userCulture).ToString() @client.BuyerCompany.CompanyName. @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCEPT_ETHICAL_BUSINESS_POLICY_HERE, userCulture).ToString()
+                                </div>
+                                <div id="clientInfoAboveDonut-@client.BuyerId" class="col-md-12 submission-status-container">
+                                </div>
+                                <div class="supplierIndexChart clear-both">
+                                    <div id="ClientComplianceProgressChart-@client.BuyerId" class="center-element"></div>
+                                </div>
+                                <div class="col-md-12 margin-top-10px btn-responsive" align="center">
+                                    <a class="clearfix" data-viewname="clientQuestions" href="@Url.Content(String.Format("/supplier/questionnaire/client-checks/?buyerId={0}", client.BuyerId))" data-title="Client Checks" tabindex="16">
+                                        <div id="ClientQuestionarrieButton" class="col-md-12 action btn-color">
+                                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GO_TO_QUESTIONNAIRE, userCulture).ToString()
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }*@
+                @*<div class="col-md-4 padding-top-header">
+                    <div class="statusBox">
+                        <div class="col-md-12 margin-top-10px statusBoxHeaders" align="center">
+                            <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CIPS_SUSTAINABILITY_INDEX, userCulture).ToString()</h4>
+                        </div>
+                        <div class="col-md-12 margin-top-10px summarySection" align="center">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CIPS_SUSTAINABILITY_INDEX_MESSAGE, userCulture).ToString()
+                        </div>
+
+                        <div class="col-md-12 responsive-margin" style="margin-bottom: 30px; height: 25px">
+                        </div>
+                        <div class="supplierIndexChart clear-both" align="center">
+                            <img src="~/Content/Images/logo/logo-cips.png" style="width: 180px;" />
+                        </div>
+                        <div class="col-md-12  margin-top-10px btn-responsive margin-top-39" align="center">
+                            <a href="https://cips-sustainabilityindex.com/" target="_blank" tabindex="17" class="clearfix">
+                                <div class="col-md-12 action btn-color">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LINK_TO_CIPS_SUSTAINABILITY_INDEX, userCulture).ToString()
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+        </div>
+    </div>
+
+</div>
+@*<div id="flagged-answers" class="row display-none">
+    <div class="col-md-12">
+        <div class="bread-crumb">
+            <a class="back-to-supplier-home"> < @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_HOME, userCulture).ToString()</a>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-7 padding-left-zero padding-right-zero headingText">
+            <h3>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FLAGGED_ANSWERS, userCulture).ToString()</h3>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5 padding-left-zero  text-align-right">
+            <a id="export-supplier-flagged-answers" style=" font-size 18px !important; color rgb(51, 51, 51) !important;"><i class=" fa fa-download"></i> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EXPORT, userCulture).ToString()</a>
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="container-white-backgound">
+            <div class="col-md-12 padding-top">
+                <table class="tableGrid footable table toggle-arrow" id="flagged-answer-table">
+                    <thead>
+                        <tr>
+                            <th class="tableGrid-header " style="text-align:left;">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONNAIRE_NAME, userCulture).ToString()</th>
+                            <th class="tableGrid-header " data-hide="phone" style="text-align:left;">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTION_NAME, userCulture).ToString()</th>
+                            <th class="tableGrid-header " style="text-align:left;">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTION, userCulture).ToString()</th>
+                            <th class="tableGrid-header" data-hide="phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACTION, userCulture).ToString()</th>
+                        </tr>
+                    </thead>
+                    <tbody id="flagged-answer-table-body"></tbody>
+                </table>
+                <input type="hidden" id="hdn-flagged-answer-page" value="1" />
+            </div>
+        </div>
+    </div>
+</div>*@
+<div style="clear: both;"></div>
+@*@if (true == PRGX.SIMTrax.Domain.Util.Configuration.EnableSSO)
+{
+    <div class="col-md-12" style="display: none">
+        <iframe src="@url"></iframe>
+    </div>
+}*@
+<script>
+    var registerMessage = "@TempData["SubmitMessage"]" != null ? "@TempData["SubmitMessage"]" : "";
+    var passwordChangedSuccessfully = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PASSWORD_CHANGED_SUCCESSFULLY, userCulture).ToString()';
+    var reqdSection = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUIRED_SECTION, userCulture).ToString()';
+    var reqdSections = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUIRED_SECTIONS, userCulture).ToString()';
+    var needingAction = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NEEDING_ACTION, userCulture).ToString()';
+    var section = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTION, userCulture).ToString()';
+    var sections = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTIONS, userCulture).ToString()';
+    var flaggedAnswer = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FLAGGED_ANSWER, userCulture).ToString()';
+    var flaggedAnswers = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FLAGGED_ANSWERS, userCulture).ToString()';
+    var unreadMessage = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.UNREAD_MESSAGE, userCulture).ToString()';
+    var unreadMessages = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.UNREAD_MESSAGES, userCulture).ToString()';
+    var noReqdSectionsNeedingAction = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO_REQUIRED_SECTIONS_NEEDING_ACTION, userCulture).ToString()';
+    var goToQuestionnaire = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GO_TO_QUESTIONNAIRE, userCulture).ToString()';
+   var required = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUIRED, userCulture).ToString()';
+    var viewAnswerInNewTab = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VIEW_ANSWER_IN_NEW_TAB, userCulture).ToString()';
+    var noRecordsFound = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO_RECORDS_FOUND, userCulture).ToString()';
+    var complianceChecks = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPLIANCE_CHECKS, userCulture).ToString()';
+    var generalInfoAndContacts = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFO_AND_CONTACTS, userCulture).ToString()';
+    var questionnaireComplete = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFO_AND_CONTACTS, userCulture).ToString()';
+    var questionnairePending = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFO_AND_CONTACTS, userCulture).ToString()';
+    var answered = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWERED, userCulture).ToString()';
+
+</script>
+@Scripts.Render("~/bundles/Charts")
+@Scripts.Render("~/bundles/SupplierHome")

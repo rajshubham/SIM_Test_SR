@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <GetRoleDetailsTestData>
+    <testCase id="1">
+      <input roleId="5"></input>
+      <output desc="Auditor Role"></output>
+    </testCase>
+    <testCase id="2">
+      <input roleId="10"></input>
+      <output desc=""></output>
+    </testCase>
+  </GetRoleDetailsTestData>
+
+  <GetUserPermissionBasedOnUserIdTestData>
+    <testCase id="1">
+      <input userId="10032"></input>
+      <output count="5">
+        <list text="" value="16"/>
+        <list text="" value="17"/>
+        <list text="" value="18"/>
+        <list text="" value="19"/>
+        <list text="" value="20"/>
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input userId="5"></input>
+      <output count="0">
+      </output>
+    </testCase>
+  </GetUserPermissionBasedOnUserIdTestData>
+  
+  <GetUserListByPermissionTestData>
+    <testCase id="1">
+      <input permission="16"></input>
+      <output count="1">
+        <list text="Alekhya Auditor" value="10032"/>
+      </output>
+    </testCase>
+  </GetUserListByPermissionTestData>
+</test> 

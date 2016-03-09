@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<test>
+  <GetInviteeDetailsBySellerIdTestData>
+    <testCase id="1">
+      <input  sellerId="2">     
+      </input>
+      <output count="1">
+        <inviteeList  Id="1"/>
+      </output>
+    </testCase>
+    <testCase id="1">
+      <input  sellerId="8">
+      </input>
+      <output count="0">
+        
+      </output>
+    </testCase>
+  </GetInviteeDetailsBySellerIdTestData>
+
+  <BuyerSupplierReferenceListTestData>
+    <testcase id="1">
+      <input pageNo="1" sortParameter="" sortDirection="" buyerName="" sellerId="" referenceId="1" totalRecords="5">
+      </input>
+      <output total="1">
+        <referenceList buyerId="6"> </referenceList>
+      </output>
+    </testcase>
+    <testcase id="2">
+      <input pageNo="1" sortParameter="" sortDirection="" buyerName="" sellerId="" referenceId="2" totalRecords="5">
+      </input>
+      <output total="0">
+
+      </output>
+    </testcase>
+  </BuyerSupplierReferenceListTestData>
+</test>

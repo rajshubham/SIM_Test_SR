@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+@{
+    var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+
+}
+@{
+    Layout = null;
+}
+<body style="width: 100%; margin: auto;font-family:Arial;background-color:black;color:white">
+    <section class="header-shadow">
+        <div style="width: 100%;height:30px;">
+            <div style="width:100%;padding:10px 50px">
+                &copy; @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PRGX_GLOBAL_RIGHTS, userCulture).ToString()
+
+
+            </div>
+        </div>
+
+    </section>
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <UpdateOrganizationDetailsTestData>
+    <testCase id="1">
+      <input  businessSectorDescription="" businessSectorId="375" employeeSize="109" status="504" turnOverSize="100" partyId="9">
+      </input>
+      <output outObj="false">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input  businessSectorDescription="" businessSectorId="375" employeeSize="109" status="504" turnOverSize="100" partyId="10026">
+      </input>
+      <output outObj="true">
+      </output>
+    </testCase>
+  </UpdateOrganizationDetailsTestData>
+
+  <UpdateOrganizationStatusTestData>
+    <testCase id="1">
+      <input  organizationStatus="505" partyId="10026" userPartyId="10025">
+      </input>
+      <output outObj="true">
+      </output>
+    </testCase>
+    <testCase id="1">
+      <input  organizationStatus="505" partyId="9" userPartyId="8">
+      </input>
+      <output outObj="false">
+      </output>
+    </testCase>
+  </UpdateOrganizationStatusTestData>
+
+  <GetOrganizationDetailTestData>
+    <testCase id="1">
+      <input organizationPartyId="10026">
+      </input>
+      <output orgName="Alekhya Org">
+      </output>
+    </testCase>
+    <testCase id="1">
+      <input organizationPartyId="9">
+      </input>
+      <output orgName="">
+      </output>
+    </testCase>
+  </GetOrganizationDetailTestData>
+</test>

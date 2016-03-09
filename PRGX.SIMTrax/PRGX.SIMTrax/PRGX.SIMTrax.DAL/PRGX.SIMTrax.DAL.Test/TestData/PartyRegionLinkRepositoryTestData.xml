@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <AddUpdatePartyRegionsTestData>
+    <testCase id="1">
+      <input partyId="10026">
+        <partyRegionLink Id="7" refParty="" refRegion="6" linkType="SALES_REGION"/>
+        <partyRegionLink Id="" refParty="10026" refRegion="5" linkType="SERVICE_REGION"/>
+      </input>
+      <output outObj="true">
+      </output>
+    </testCase>
+    
+  </AddUpdatePartyRegionsTestData>
+</test>

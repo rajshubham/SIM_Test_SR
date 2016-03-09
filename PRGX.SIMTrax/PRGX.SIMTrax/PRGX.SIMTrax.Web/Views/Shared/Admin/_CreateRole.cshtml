@@ -1,0 +1,160 @@
+﻿@model PRGX.SIMTrax.ViewModel.Role
+@using PRGX.SIMTrax.Domain.Util
+@{
+    var userCulture = (Session[Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+}
+<form id="frmRole">
+    <div class="col-md-12">
+        <div class="col-md-2 required"><span>@ReadResource.GetResourceForGlobalization(Constants.ROLE_NAME, userCulture).ToString():</span></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-7">@Html.TextBoxFor(elem => Model.Name, new { @class = "form-control" })</div>
+        <div class="col-md-5 error-text" id="auditor-role-name-error" style="display: none">
+            @ReadResource.GetResourceForGlobalization(Constants.ROLE_NAME_VALIDATION, userCulture).ToString()
+        </div>
+    </div>
+    <div class="col-md-12" style="margin-top: 15px">
+        <div class="col-md-2 required"><span>@ReadResource.GetResourceForGlobalization(Constants.DESCRIPTION, userCulture).ToString():</span></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-7">@Html.TextAreaFor(elem => Model.Description, new { @class = "form-control", style = "resize:none;height:120px" })</div>
+        <div class="col-md-5 error-text" id="buyer-role-description-error" style="display: none">
+            @ReadResource.GetResourceForGlobalization(Constants.ROLE_DESCRIPTION_VALIDATION, userCulture).ToString()
+        </div>
+    </div>
+    @if (Model.NavigatePermission.Count > 0)
+    {
+        <div class="col-md-12" style="margin-top:30px">
+            <div class="col-md-12">
+                <h3>@ReadResource.GetResourceForGlobalization(Constants.NAVIGATE, userCulture).ToString()</h3>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:20px">
+            @for (int i = 0; i < Model.NavigatePermission.Count; i++)
+            {
+
+                <div class="col-md-12 padding-top">
+                    <div class="col-md-12">
+                        @Html.CheckBoxFor(elem => Model.NavigatePermission[i].IsChecked, new { id = Model.NavigatePermission[i].PermissionId })
+                        <label for="@Model.NavigatePermission[i].PermissionId" class="font-normal">@Model.NavigatePermission[i].Description</label>
+                        @Html.HiddenFor(elem => Model.NavigatePermission[i].PermissionId)
+                        @Html.HiddenFor(elem => Model.NavigatePermission[i].Id)
+                        @Html.HiddenFor(elem => Model.NavigatePermission[i].RoleId)
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.UserPermission.Count > 0)
+    {
+        <div class="col-md-12" style="margin-top:30px">
+            <div class="col-md-12">
+                <h3>@ReadResource.GetResourceForGlobalization(Constants.USERS, userCulture).ToString()</h3>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:20px">
+            @for (int i = 0; i < Model.UserPermission.Count; i++)
+            {
+
+                <div class="col-md-12 padding-top">
+                    <div class="col-md-12">
+                        @Html.CheckBoxFor(elem => Model.UserPermission[i].IsChecked, new { id = Model.UserPermission[i].PermissionId })
+                        <label for="@Model.UserPermission[i].PermissionId" class="font-normal">@Model.UserPermission[i].Description</label>
+                        @Html.HiddenFor(elem => Model.UserPermission[i].PermissionId)
+                        @Html.HiddenFor(elem => Model.UserPermission[i].Id)
+                        @Html.HiddenFor(elem => Model.UserPermission[i].RoleId)
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.QuestionnairePermission.Count > 0)
+    {
+        <div class="col-md-12" style="margin-top:30px">
+            <div class="col-md-12">
+                <h3>@ReadResource.GetResourceForGlobalization(Constants.QUESTIONNARIES, userCulture).ToString()</h3>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:20px">
+            @for (int i = 0; i < Model.QuestionnairePermission.Count; i++)
+            {
+                <div class="col-md-12  padding-top">
+                    <div class="col-md-12">
+                        @Html.CheckBoxFor(elem => Model.QuestionnairePermission[i].IsChecked, new { id = Model.QuestionnairePermission[i].PermissionId })
+                        <label for="@Model.QuestionnairePermission[i].PermissionId" class="font-normal">@Model.QuestionnairePermission[i].Description</label>
+                        @Html.HiddenFor(elem => Model.QuestionnairePermission[i].PermissionId)
+                        @Html.HiddenFor(elem => Model.QuestionnairePermission[i].RoleId)
+                        @Html.HiddenFor(elem => Model.QuestionnairePermission[i].Id)
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.SupplierPermission.Count > 0)
+    {
+        <div class="col-md-12" style="margin-top:30px">
+            <div class="col-md-12">
+                <h3>@ReadResource.GetResourceForGlobalization(Constants.SUPPLIERS, userCulture).ToString()</h3>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:20px">
+            @for (int i = 0; i < Model.SupplierPermission.Count; i++)
+            {
+                <div class="col-md-12  padding-top">
+                    <div class="col-md-12">
+                        @Html.CheckBoxFor(elem => Model.SupplierPermission[i].IsChecked, new { id = Model.SupplierPermission[i].PermissionId })
+                        <label for="@Model.SupplierPermission[i].PermissionId" class="font-normal">@Model.SupplierPermission[i].Description</label>
+                        @Html.HiddenFor(elem => Model.SupplierPermission[i].PermissionId)
+                        @Html.HiddenFor(elem => Model.SupplierPermission[i].RoleId)
+                        @Html.HiddenFor(elem => Model.SupplierPermission[i].Id)
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.BuyerPermission.Count > 0)
+    {
+        <div class="col-md-12" style="margin-top:30px">
+            <div class="col-md-12">
+                <h3>@ReadResource.GetResourceForGlobalization(Constants.BUYERS, userCulture).ToString()</h3>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:20px">
+            @for (int i = 0; i < Model.BuyerPermission.Count; i++)
+            {
+                <div class="col-md-12  padding-top">
+                    <div class="col-md-12">
+                        @Html.CheckBoxFor(elem => Model.BuyerPermission[i].IsChecked, new { id = Model.BuyerPermission[i].PermissionId })
+                        <label for="@Model.BuyerPermission[i].PermissionId" class="font-normal">@Model.BuyerPermission[i].Description</label>
+                        @Html.HiddenFor(elem => Model.BuyerPermission[i].PermissionId)
+                        @Html.HiddenFor(elem => Model.BuyerPermission[i].RoleId)
+                        @Html.HiddenFor(elem => Model.BuyerPermission[i].Id)
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @if (Model.FinancePermission.Count > 0)
+    {
+        <div class="col-md-12" style="margin-top:30px">
+            <div class="col-md-12">
+                <h3>@ReadResource.GetResourceForGlobalization(Constants.FINANCE, userCulture).ToString()</h3>
+            </div>
+        </div>
+        <div class="col-md-12" style="margin-top:20px">
+            @for (int i = 0; i < Model.FinancePermission.Count; i++)
+            {
+                <div class="col-md-12  padding-top">
+                    <div class="col-md-12">
+                        @Html.CheckBoxFor(elem => Model.FinancePermission[i].IsChecked, new { id = Model.FinancePermission[i].PermissionId })
+                        <label for="@Model.FinancePermission[i].PermissionId" class="font-normal">@Model.FinancePermission[i].Description</label>
+                        @Html.HiddenFor(elem => Model.FinancePermission[i].PermissionId)
+                        @Html.HiddenFor(elem => Model.FinancePermission[i].RoleId)
+                        @Html.HiddenFor(elem => Model.FinancePermission[i].Id)
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    @Html.HiddenFor(elem => Model.Id)
+</form>

@@ -1,0 +1,549 @@
+﻿@using PRGX.SIMTrax.Domain.Util
+@using PRGX.SIMTrax.Domain.Model
+@model PRGX.SIMTrax.ViewModel.User
+@{
+    var userType = (Session[Constants.SESSION_USER_TYPE] != null) ? (UserType)Convert.ToInt64(Session[Constants.SESSION_USER_TYPE]) : UserType.None;
+    var permissionList = new List<ItemList>();
+    if (Session[Constants.SESSION_USER] != null && userType == UserType.Auditor)
+    {
+        //var roleService = new PRGX.SIMTrax.ServiceFacade.RoleServiceFacade();
+        //var auditorId = ((PRGX.SIMTrax.Domain.Model.UserDetails)(Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER])).UserId;
+        //permissionList = roleService.GetUserPermissionBasedOnUserId(auditorId);
+
+        permissionList = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_AUDITOR_ACCESS_PERMISSIONS] != null) ? ((List<PRGX.SIMTrax.Domain.Util.ItemList>)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_AUDITOR_ACCESS_PERMISSIONS]) : new List<PRGX.SIMTrax.Domain.Util.ItemList>();
+    }
+    var userCulture = (Session[Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+}
+<div id="BuyerDashboardContainer" class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="bread-crumb" style="display:block;" id="createUserForm">
+            <a id="breadcrumbBuyerDashboard" href="/Admin/BuyerOrganisation">
+                @ReadResource.GetResourceForGlobalization(Constants.BACK_TO_ALL_BUYER_ORG, userCulture).ToString()
+            </a>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 padding-bottom-header padding-left-zero">
+            <h3 id="headingBuyerDashboard"></h3>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 padding-left-zero padding-right-zero padding-top-10px" id="buyerDetailsTable">
+            <table class="table tableGrid footable toggle-arrow" id="buyer-details-table">
+                <thead>
+                    <tr>
+                        <th class="tableGrid-header cursor-pointer text-align-left">
+                            @ReadResource.GetResourceForGlobalization(Constants.BUYER_ORGANISATION, userCulture).ToString()
+                        </th>
+                        <th class="tableGrid-header thStatusBuy text-align-left" data-hide="phone">
+                            @ReadResource.GetResourceForGlobalization(Constants.STATUS, userCulture).ToString()
+                        </th>
+                        <th class="tableGrid-header thStatusBuy text-align-left" data-hide="phone">
+                            @ReadResource.GetResourceForGlobalization(Constants.PRIMARY_CONTACT, userCulture).ToString()
+                        </th>
+                        <th class="tableGrid-header thStatusBuy text-align-left" data-hide="phone,tabletPortrait">
+                            @ReadResource.GetResourceForGlobalization(Constants.PRIMARY_EMAIL, userCulture).ToString()
+                        </th>
+                        <th class="tableGrid-header text-align-right" data-hide="phone,tablet,tabletPortrait">
+                            @ReadResource.GetResourceForGlobalization(Constants.REQUEST, userCulture).ToString()
+                        </th>
+                        <th class="tableGrid-header text-align-right" data-hide="phone,tablet,tabletPortrait">
+                            @ReadResource.GetResourceForGlobalization(Constants.TERMS_ACCEPTED, userCulture).ToString()
+                        </th>
+                        <th class="tableGrid-header text-align-right" data-hide="phone,tabletPortrait">
+                            @ReadResource.GetResourceForGlobalization(Constants.VERIFIED, userCulture).ToString()
+                        </th>
+                        <th class="tableGrid-header text-align-right" data-hide="phone,tabletPortrait">
+                            @ReadResource.GetResourceForGlobalization(Constants.ACTIVATED, userCulture).ToString()
+                        </th>
+                        <th class="tableGrid-header text-align-left">
+                            @ReadResource.GetResourceForGlobalization(Constants.ACCESS, userCulture).ToString()
+                        </th>
+                        <th class="tableGrid-header text-align-center">
+                            @ReadResource.GetResourceForGlobalization(Constants.ACTIONS, userCulture).ToString()
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="buyer-details-table-body"></tbody>
+            </table>
+        </div>
+        <div id="campaigncontainer" class="col-lg-4 col-md-6 col-sm-6 col-xs-12 padding-top-10px">
+            <div class="container-white-backgound container-height">
+                <div class="col-md-12 col-xs-12 col-sm-12 page-sub-heading-container row padding-right-zero" style="padding-bottom: 0px !important;">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-right-zero" style="padding-top:2px; padding-bottom: 12px !important;">
+                        <span class="page-sub-heading" id="campaign-heading">@ReadResource.GetResourceForGlobalization(Constants.CAMPAIGNS, userCulture).ToString()
+                        <button id="btnCreateCampaign" class="CreateCampaignDashboard btn btn-color float-right">
+                            <span><i class="fa fa-plus"></i> @ReadResource.GetResourceForGlobalization(Constants.CREATE_NEW_CAMPAIGN, userCulture).ToString()</span>
+                        </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <hr class="border-style" />
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                    <table id="CampaignTable" class="table tableGrid footable toggle-arrow">
+                        <thead class="cursor-default">
+                            <tr>
+                                <th class="tableGrid-header cursor-pointer campaignSort  text-align-left" data-sortdirection="3">
+                                    @ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_NAME, userCulture).ToString()
+                                </th>
+                                <th class="tableGrid-header text-align-left" data-hide="">
+                                    @ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_TYPE, userCulture).ToString()
+                                </th>
+                                <th class="tableGrid-header text-align-center">
+                                    @ReadResource.GetResourceForGlobalization(Constants.ACTIONS, userCulture).ToString()
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="CampaignTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="CampaignPaginator">
+                    </div>
+                </div>
+                <input type="hidden" id="hdnCampaignCurrentPage" value="1" />
+            </div>
+        </div>
+        @*<div id="supplierscontainer" class="col-lg-4 col-md-6 col-sm-6 col-xs-12 padding-top-10px">
+            <div class="container-white-backgound container-height">
+                <div class="col-md-12 col-xs-12 col-sm-12 page-sub-heading-container row padding-right-zero" style="padding-bottom: 0px !important;">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-right-zero" style="padding-top:2px; padding-bottom: 12px !important;">
+                        <span class="page-sub-heading" id="supplier-search-heading">
+                            @ReadResource.GetResourceForGlobalization(Constants.MAPPED_SUPPLIERS, userCulture).ToString()
+                            <button id="btnManageSuppliers" class="BuyerSupplierMapping btn btn-color float-right">
+                                @ReadResource.GetResourceForGlobalization(Constants.MANAGE_LIST, userCulture).ToString()
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <hr class="border-style" />
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                    <table id="SupplierTable" class="table tableGrid table footable toggle-arrow">
+                        <thead class="cursor-default">
+                            <tr>
+                                <th class="tableGrid-header cursor-pointer SupplierSort  text-align-left" data-sortdirection="3">
+                                    @ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_NAME, userCulture).ToString()
+                                </th>
+                                <th class="tableGrid-header text-align-left" data-hide="">
+                                    @ReadResource.GetResourceForGlobalization(Constants.STATUS, userCulture).ToString()
+                                </th>
+                                <th class="tableGrid-header tect-align-center">
+                                    @ReadResource.GetResourceForGlobalization(Constants.ACTIONS, userCulture).ToString()
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="SupplierTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="SuppliersPaginator">
+                    </div>
+                </div>
+                <input type="hidden" id="hdnSupplierCurrentPage" value="1" />
+            </div>
+        </div>*@
+        <div id="userscontainer" class="col-lg-4 col-md-6 col-sm-6 col-xs-12 padding-top-10px">
+            <div class="container-white-backgound container-height">
+                <div class="col-md-12 col-xs-12 col-sm-12 page-sub-heading-container row padding-right-zero" style="padding-bottom: 0px !important;">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-right-zero" style="padding-top:2px; padding-bottom: 12px !important;">
+                        <span class="page-sub-heading" id="users-search-heading">
+                            @ReadResource.GetResourceForGlobalization(Constants.USERS, userCulture).ToString()
+                            <button id="btnCreateUsers" class="btn btn-color float-right">
+                                <span><i class="fa fa-plus"></i> @ReadResource.GetResourceForGlobalization(Constants.CREATE_USER, userCulture).ToString()</span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <hr class="border-style" />
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                    <table id="UsersTable" class="table tableGrid table footable toggle-arrow">
+                        <thead class="cursor-default">
+                            <tr>
+                                <th class="tableGrid-header cursor-pointer UserNameSort  text-align-left" data-sortdirection="3">
+                                    @ReadResource.GetResourceForGlobalization(Constants.USER_NAME, userCulture).ToString()
+                                </th>
+                                <th class="tableGrid-header text-align-left" data-hide="">
+                                    @ReadResource.GetResourceForGlobalization(Constants.USER_TYPE, userCulture).ToString()
+                                </th>
+                                <th class="tableGrid-header text-align-center">
+                                    @ReadResource.GetResourceForGlobalization(Constants.ACTIONS, userCulture).ToString()
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="UsersTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="UsersPaginator">
+                    </div>
+                </div>
+                <input type="hidden" id="hdnUsersCurrentPage" value="1" />
+            </div>
+        </div>
+        @*<div id="questionsetscontainer" class="col-lg-4 col-md-6 col-sm-6 col-xs-12 padding-top-10px">
+            <div class="container-white-backgound container-height">
+                <div class="col-md-12 col-xs-12 col-sm-12 page-sub-heading-container row padding-right-zero" style="padding-bottom: 0px !important;">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-right-zero" style="padding-top:2px; padding-bottom: 12px !important;">
+                        <span class="page-sub-heading" id="questionsets-heading">
+                            @ReadResource.GetResourceForGlobalization(Constants.QUESTIONNAIRE_SECTION, userCulture).ToString()
+                            <button id="btnManageQuestionSets" class="btn btn-color float-right">
+                                @ReadResource.GetResourceForGlobalization(Constants.MANAGE_LIST, userCulture).ToString()
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <hr class="border-style" />
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                    <table id="QuestionSetsTable" class="table tableGrid table footable toggle-arrow">
+                        <thead class="cursor-default">
+                            <tr>
+                                <th class="tableGrid-header cursor-pointer QuestionsetsNameSort  text-align-left" data-sortdirection="3">
+                                    @ReadResource.GetResourceForGlobalization(Constants.QUESTIONNAIRE_SECTION, userCulture).ToString()
+                                </th>
+                                <th class="tableGrid-header text-align-left" data-hide="">
+                                    @ReadResource.GetResourceForGlobalization(Constants.STATUS, userCulture).ToString()
+                                </th>
+                                <th class="tableGrid-header tect-align-center">
+                                    @ReadResource.GetResourceForGlobalization(Constants.ACTIONS, userCulture).ToString()
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="QuestionSetsTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="QuestionSetsPaginator">
+                    </div>
+                </div>
+                <input type="hidden" id="hdnQuestionSetsCurrentPage" value="1" />
+            </div>
+        </div>*@
+        <div id="voucherscontainer" class="col-lg-4 col-md-6 col-sm-6 col-xs-12 padding-top-10px">
+            <div class="container-white-backgound container-height">
+                <div class="col-md-12 col-xs-12 col-sm-12 page-sub-heading-container row padding-right-zero" style="padding-bottom: 0px !important;">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-right-zero" style="padding-top:2px; padding-bottom: 12px !important;">
+                        <span class="page-sub-heading" id="vouchers-heading">
+                            @ReadResource.GetResourceForGlobalization(Constants.VOUCHERS, userCulture).ToString()
+                            <button id="btnCreateVoucher" class="btn CreateVoucher btn-color float-right">
+                                <span><i class="fa fa-plus"></i> @ReadResource.GetResourceForGlobalization(Constants.CREATE_NEW_VOUCHER, userCulture).ToString()</span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <hr class="border-style" />
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                    <table id="VouchersTable" class="table tableGrid table footable toggle-arrow">
+                        <thead class="cursor-default">
+                            <tr>
+                                <th class="tableGrid-header cursor-pointer VouchersNameSort  text-align-left" data-sortdirection="3">
+                                    @ReadResource.GetResourceForGlobalization(Constants.VOUCHER, userCulture).ToString()
+                                </th>
+                                <th class="tableGrid-header text-align-left" data-hide="">
+                                    @ReadResource.GetResourceForGlobalization(Constants.STATUS, userCulture).ToString()
+                                </th>
+                                <th class="tableGrid-header text-align-center editVoucherAction">
+                                    @ReadResource.GetResourceForGlobalization(Constants.ACTIONS, userCulture).ToString()
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="VouchersTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="VouchersPaginator">
+                    </div>
+                </div>
+                <input type="hidden" id="hdnVouchersCurrentPage" value="1" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-assign-product-modal-sm" data-backdrop="static" id="assignProductToBuyer" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4 id="modelHeading">@ReadResource.GetResourceForGlobalization(Constants.ASSIGN_PRODUCTS, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-12 col-sm-12 col-xs-12" id="divDefaultProducts">
+                    <table id="tblDefaultProducts" class="table tableGrid table footable toggle-arrow">
+                        <thead>
+                            <tr>
+                                <th class="tablegrid-header">
+                                    @ReadResource.GetResourceForGlobalization(Constants.PRODUCT_NAME, userCulture).ToString()
+                                    <i style="padding-left:6px;"></i>
+                                </th>
+                                <th class="tableGrid-header">@ReadResource.GetResourceForGlobalization(Constants.ASSIGN, userCulture).ToString()</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyProductsForBuyer"></tbody>
+                    </table>
+                </div>
+                <div class="col-md-12 padding-top-10px">
+                    <button type="button" class="btn btn-color float-right" id="CompleteAssignDefaultProductDashBoard" style="margin-left:10px;">
+                        @ReadResource.GetResourceForGlobalization(Constants.ASSIGN, userCulture).ToString()
+                    </button>
+                    <button type="button" class="btn btn-normal float-right" data-dismiss="modal">
+                        @ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="assignCampaignToAuditor" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                <h4 class="modal-title">@ReadResource.GetResourceForGlobalization(Constants.SELECT_AUDITOR, userCulture).ToString()</h4>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <td>@ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_NAME, userCulture).ToString()</td>
+                        <td>
+                            <label id="lblCampaignName"></label>
+                            <label id="lblCampaignId" style="display: none"></label>
+                            <label id="lblCampaignType" style="display: none"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @ReadResource.GetResourceForGlobalization(Constants.SELECT_CAMPAIGN_AUDITOR, userCulture).ToString()
+                            <span style="color: Red;">*</span>
+                        </td>
+                        <td>
+                            <select id="campaignAuditor" class="form-control"></select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnAssignAuditorToCampaign" class="btn btn-color">
+                    @ReadResource.GetResourceForGlobalization(Constants.ASSIGN, userCulture).ToString()
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    @ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-assign-product-modal-sm" data-backdrop="static" id="assignProductToSupplierDashBoard" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content col-md-10">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4 id="modelHeadingForAssignProductToSupplier">@ReadResource.GetResourceForGlobalization(Constants.ASSIGN_PRODUCTS, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row">
+                <div class="row col-md-12 col-sm-12 col-xs-12" id="divSupplierProductTable">
+                    <table id="supplierProductTableDashBoard" class="table tableGrid table footable toggle-arrow">
+                        <thead class="cursor-default">
+                            <tr>
+                                <th class="tablegrid-header">@ReadResource.GetResourceForGlobalization(Constants.PRODUCT_NAME, userCulture).ToString()</th>
+                                <th class="tableGrid-header">@ReadResource.GetResourceForGlobalization(Constants.ASSIGN, userCulture).ToString()</th>
+                            </tr>
+                        </thead>
+                        <tbody id="supplierProductTableBodyDashBoard"></tbody>
+                    </table>
+                </div>
+                <div class="col-md-12 padding-top-10px">
+                    <button type="button" class="btn btn-color float-right" id="CompleteAssignProduct" style="margin-left:10px;">
+                        @ReadResource.GetResourceForGlobalization(Constants.ASSIGN, userCulture).ToString()
+                    </button>
+                    <button type="button" class="btn btn-normal float-right" data-dismiss="modal">
+                        @ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade assign-access-modal-sm" data-backdrop="static" id="assignAccessToBuyerDashboard" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content col-md-10">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4 id="modelHeadingAccessDashboard">@ReadResource.GetResourceForGlobalization(Constants.ASSIGN_ACCESS, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-12 col-sm-12 col-xs-12" id="divAccessTypeDashboard">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-zero padding-right-zero">
+                        @ReadResource.GetResourceForGlobalization(Constants.COMPANY_NAME_DISPLAY, userCulture).ToString()
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-zero padding-right-zero" id="companyNameAccessDashboard" style="font-weight: bold;"></div>
+                    <div class="col-md-12">
+                        <input type="hidden" id="companyIdAccessDashboard" />
+                        <input type="hidden" id="AssignOrUpdateDashboard" />
+                    </div>
+                    <div class="col-md-12 padding-left-zero padding-right-zero padding-top-10px">
+                        @ReadResource.GetResourceForGlobalization(Constants.CHOOSE_ACCESS_TYPE_DISPLAY, userCulture).ToString()
+                    </div>
+                    <div class="col-md-6 padding-left-zero padding-right-zero padding-top-10px">
+                        <select id='modal-buyer-assigned-roleDashboard' class="form-control"></select>
+                    </div>
+                    <div class="col-md-12 padding-left-zero padding-right-zero padding-top-10px">
+                        <button type="button" class="btn btn-color float-right" id="CompleteActivationProcessDashboard" style="margin-left:3px;">
+                            @ReadResource.GetResourceForGlobalization(Constants.ACTIVATE, userCulture).ToString()
+                        </button>
+                        <button type="button" class="btn btn-normal float-right" data-dismiss="modal">
+                            @ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-backdrop="static" id="BuyerEditPassword" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@ReadResource.GetResourceForGlobalization(Constants.EDIT_PASSWORD, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row margin-bottom-15">
+                <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form id="buyerPasswordChange" name="buyerPasswordChange" enctype="multipart/form-data">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.LoginId, new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                @Html.TextBoxFor(m => m.LoginId, new { id = "txtloginIDEditPassword", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.Password, "Temporary Password:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                @Html.PasswordFor(m => m.Password, new { id = "txtBuyerPassword", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { id = "txtConfirmBuyerPassword", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                                @Html.HiddenFor(m => m.UserId, new { id = "hdnUserId" })
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                                <small>@ReadResource.GetResourceForGlobalization(Constants.CHANGE_PASSWORD_DISPLAY_MESSAGE, userCulture).ToString()</small>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-20px text-align-right">
+                            <div class="float-right">
+                                <button type="button" class="btn btn-normal float-left" id="btnCancelBuyerPasswrd" data-dismiss="modal">
+                                    @ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()
+                                </button>
+                                <div class="float-left" style="height: 10px; width: 14px;"></div>
+                                <button type="submit" class="btn btn-color float-left" id="ChangeBuyerPassword">
+                                    @ReadResource.GetResourceForGlobalization(Constants.SAVE_CHANGES, userCulture).ToString()
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var buyerPartyId = "@ViewBag.BuyerPartyId";
+    var CanCreateVoucher = '@(userType == UserType.AdminAuditor || permissionList.Find(a => a.Value == Convert.ToInt32(AuditorRoles.CreateVoucher)) != null)' == 'True' ? true : false;
+    var CanVerifyBuyer = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.VerifyBuyer)))' == 'True' ? true : false;
+    var CanActivateBuyer = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.ActivateBuyer)))' == 'True' ? true : false;
+    var CanAssignCampaign = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.AssignCampaign)))' == 'True' ?
+        true : false;
+    var CanModifyCampaign = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.CreateEditCampaign)))' == 'True' ? true : false;
+    var CanEditUser = '@(userType == UserType.AdminAuditor || permissionList.Any(a => a.Value == Convert.ToInt32(AuditorRoles.EditUser)))' == 'True' ? true : false;
+    var CanChangePassword = '@(userType==UserType.AdminAuditor || permissionList.Any(a => a.Value == Convert.ToInt32(AuditorRoles.ChangePassword)))' == 'True' ? true : false;
+    var CanChangeAccessType = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.ChangeBuyerAccessType)))' == 'True' ? true : false;
+    var CanMapBuyerSupplier = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.BuyerSupplierMapping)))' == 'True' ? true : false;
+    var CanAssignDefualtProduct = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.AssignDefaultProduct)))' == 'True' ? true : false;
+    var CanBuyerSupplierAssignProduct = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.BuyerSupplierAssignProduct)))' == 'True' ? true : false;
+    var CanCreateUser = '@(userType ==  UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.CreateUser)))' == 'True' ? true : false;
+    var CanMapSectionToBuyer = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.MapSectionBuyers)))' == 'True' ? true : false;
+    var CanCreateSection = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.CreateQuestionnaireSection)))' == 'True' ? true : false;
+    var CanPublishSection = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.PublishQuestionnaireSection)))' == 'True' ? true : false;
+    var CanAddQuestion = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.CreateQuestion)))' == 'True' ? true : false;
+    var dashboard = '@ReadResource.GetResourceForGlobalization(Constants.DASHBOARD, userCulture).ToString()';
+    var noneSelected = '@ReadResource.GetResourceForGlobalization(Constants.NONE_SELECTED, userCulture).ToString()';
+    var registered = '@ReadResource.GetResourceForGlobalization(Constants.REGISTERED, userCulture).ToString()';
+    var verified = '@ReadResource.GetResourceForGlobalization(Constants.VERIFIED, userCulture).ToString()';
+    var activated = '@ReadResource.GetResourceForGlobalization(Constants.ACTIVATED, userCulture).ToString()';
+    var verifyBuyer = '@ReadResource.GetResourceForGlobalization(Constants.VERIFY_BUYER, userCulture).ToString()';
+    var activateBuyer = '@ReadResource.GetResourceForGlobalization(Constants.ACTIVATE_BUYER, userCulture).ToString()';
+    var changeAccessType = '@ReadResource.GetResourceForGlobalization(Constants.CHANGE_ACCESS_TYPE, userCulture).ToString()';
+    var buyerSupplierMapping = '@ReadResource.GetResourceForGlobalization(Constants.BUYER_SUPPLIER_MAPPING, userCulture).ToString()';
+    var createCampaign = '@ReadResource.GetResourceForGlobalization(Constants.CREATE_CAMPAIGN, userCulture).ToString()';
+    var createVoucher = '@ReadResource.GetResourceForGlobalization(Constants.CREATE_VOUCHER, userCulture).ToString()';
+    var assignProduct = '@ReadResource.GetResourceForGlobalization(Constants.ASSIGN_PRODUCT, userCulture).ToString()';
+    var exportSupplierList = '@ReadResource.GetResourceForGlobalization(Constants.EXPORT_SUPPLIER_LIST, userCulture).ToString()';
+    var actionsmessage = '@ReadResource.GetResourceForGlobalization(Constants.ACTIONS, userCulture).ToString()';
+    var assignToAuditor = '@ReadResource.GetResourceForGlobalization(Constants.ASSIGN_TO_AUDITOR, userCulture).ToString()';
+    var editCampaign = '@ReadResource.GetResourceForGlobalization(Constants.EDIT_CAMPAIGN, userCulture).ToString()';
+    var viewCampaign = '@ReadResource.GetResourceForGlobalization(Constants.VIEW_CAMPAIGN, userCulture).ToString()';
+    var noRecordsFound = '@ReadResource.GetResourceForGlobalization(Constants.NO_RECORDS_FOUND, userCulture).ToString()';
+    var assignProducts = '@ReadResource.GetResourceForGlobalization(Constants.ASSIGN_PRODUCTS, userCulture).ToString()';
+    var mapToBuyer = '@ReadResource.GetResourceForGlobalization(Constants.MAP_TO_BUYER, userCulture).ToString()';
+    var unmapFromBuyer = '@ReadResource.GetResourceForGlobalization(Constants.UNMAP_FROM_BUYER, userCulture).ToString()';
+    var editUserDetails = '@ReadResource.GetResourceForGlobalization(Constants.EDIT_USER_DETAILS, userCulture).ToString()';
+    var changePassword = '@ReadResource.GetResourceForGlobalization(Constants.CHANGE_PASSWORD, userCulture).ToString()';
+    var mapQuestionnaireSection = '@ReadResource.GetResourceForGlobalization(Constants.MAP_QUESTIONNAIRE_SECTION, userCulture).ToString()';
+    var unmapQuestionnaireSection = '@ReadResource.GetResourceForGlobalization(Constants.UNMAP_QUESTIONNAIRE_SECTION, userCulture).ToString()';
+    var published = '@ReadResource.GetResourceForGlobalization(Constants.PUBLISHED, userCulture).ToString()';
+    var notPublished = '@ReadResource.GetResourceForGlobalization(Constants.NOT_PUBLISHED, userCulture).ToString()';
+    var editVoucher = '@ReadResource.GetResourceForGlobalization(Constants.EDIT_VOUCHER, userCulture).ToString()';
+    var mappedMessage = '@ReadResource.GetResourceForGlobalization(Constants.MAPPED, userCulture).ToString()';
+    var notMappedMessage = '@ReadResource.GetResourceForGlobalization(Constants.NOT_MAPPED, userCulture).ToString()';
+    var all = '@ReadResource.GetResourceForGlobalization(Constants.ALL, userCulture).ToString()';
+    var changeAccess = '@ReadResource.GetResourceForGlobalization(Constants.CHANGE_ACCESS, userCulture).ToString()';
+    var update = '@ReadResource.GetResourceForGlobalization(Constants.UPDATE, userCulture).ToString()';
+    var assignAccess = '@ReadResource.GetResourceForGlobalization(Constants.ASSIGN_ACCESS, userCulture).ToString()';
+    var pleaseSelectTheBuyerAccess = '@ReadResource.GetResourceForGlobalization(Constants.PLEASE_SELECT_BUYER_ACCESS, userCulture).ToString()';
+    var defaultProducts = '@ReadResource.GetResourceForGlobalization(Constants.DEFAULT_PRODUCTS, userCulture).ToString()';
+    var select = '@ReadResource.GetResourceForGlobalization(Constants.SELECT, userCulture).ToString()';
+    var campaignAssignedToAuditorSuccessfully = '@ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_ASSIGNED_TO_AUDITOR_SUCCESSFULLY, userCulture).ToString()';
+    var campaignCouldNotBeAssignedToAuditor = '@ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_COULD_NOT_BE_ASSIGNED_TO_AUDITOR, userCulture).ToString()';
+    var na = '@ReadResource.GetResourceForGlobalization(Constants.NA, userCulture).ToString()';
+</script>
+
+@Scripts.Render("~/bundles/BuyerDashboard")

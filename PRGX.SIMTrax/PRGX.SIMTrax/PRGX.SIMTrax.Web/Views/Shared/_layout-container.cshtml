@@ -1,0 +1,161 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-64909373-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    @{
+        var themeName = "default";
+        if (HttpContext.Current.Application[PRGX.SIMTrax.Domain.Util.Constants.ThemeName] != null)
+        {
+            themeName = HttpContext.Current.Application[PRGX.SIMTrax.Domain.Util.Constants.ThemeName] as string;
+        }
+        var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+
+    }
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Images/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @Styles.Render("~/bundles/css")
+    <link href="@Url.Content(String.Format("~/Content/Themes/{0}/Style.less", themeName))" rel="stylesheet" />
+    @Scripts.Render("~/bundles/Content/js")
+
+</head>
+
+
+<body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation" style="background: white;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand">
+                    <img id="imgLogo" width="200" src='@Url.Content("~/Content/Images/logo/siteLogo.png")' />
+                </a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a onclick="openContainerModelHelp()" class="headerFont">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HELP, userCulture).ToString()</a></li>
+                    <li>
+                        <a href="http://www.prgx.com/services/supplier-information-management/" target="_blank" class="headerFont">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ABOUT, userCulture).ToString()</a>
+
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    <section class="container-fluid" id="main-section">
+        @RenderBody()
+    </section>
+    <footer class="footer-content clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row col-md-7 col-sm-9 col-xs-12 full-width-footer"  style="padding-top: 25px;">
+                <div class="row col-md-5 col-sm-4  col-xs-12 line-height-44 footer-text-spacing left-margin-footer">&copy; @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PRGX_GLOBAL_RIGHTS, userCulture).ToString()</div>
+                <div class="col-md-2 col-sm-5 col-xs-4 line-height-44 footer-text-spacing left-margin-footer-content">
+                    <a target="TermsOfUse" href="/terms-of-use" class="cursor" style="color: white">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TERMS_OF_USE, userCulture).ToString()</a>
+                </div>
+                <div class="col-md-3 col-sm-5 col-xs-4 line-height-44 footer-text-spacing left-margin-footer-content"><a target="PrivacyPolicy" class="cursor" href="/privacy-policy" style="color: white">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PRIVACY_POLICY, userCulture).ToString()</a></div>
+                <div class="col-md-2 col-sm-2 col-xs-4 line-height-44 footer-text-spacing left-margin-footer-content">
+                    <a href="https://www.linkedin.com/company/prgx" target="_blank">
+                        <img src="~/Content/Images/logo/linkeldin.png" />
+                    </a>
+                    <a href="https://twitter.com/prgxglobal" target="_blank">
+                        <img src="~/Content/Images/logo/twitter.png" style="padding-left: 6px" />
+                    </a>
+                </div>
+            </div>
+            <div class="row col-md-5 col-sm-8 col-xs-12 left-margin-footer float-right-responsive" style="padding-top: 18px; padding-left: 0px;">
+                <div class=" float-right-responsive">
+                    <img src="~/Content/Images/logo/CIPS-Footer-Logo.jpg" style="height:75px;margin-right:20px; padding-bottom: 20px;" class="float-img-footer" />
+                    <img src="~/Content/Images/logo/footer-logo.png" style="width: 200px;padding-bottom: 20px" class="float-img-footer" />
+                </div>
+               </div>
+        </div>
+    </footer>
+</body>
+
+</html>
+<div class="modal fade bs-example-modal-sm" data-backdrop="static" id="container-modal-Help" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content col-md-9 center-modal-help">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HELP_POP_UP_HEADER, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row  margin-bottom-15">
+                <div class="row col-md-12 col-sm-12 col-xs-12">
+                    <br />
+                    <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3 fa fa-envelope fa-opacity fa-3x  col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                    </div>
+                    <div class="col-md-8 col-sm-7 col-xs-7">
+
+                        <div class="contact-panel-text-color">
+                            <b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL_US, userCulture).ToString()</b>
+                        </div>
+                        <a href="mailto:@HttpContext.Current.Application["ContactEmail"]" target="_blank">
+                            <span style="color: #7f7f7f;">@HttpContext.Current.Application["ContactEmail"]</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row col-md-12 col-sm-12 col-xs-12" style="padding-top:30px">
+                    <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3  fa fa-phone fa-3x padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity " style="padding-left:20px">
+                    </div>
+                    <div class="col-md-8 col-sm-7 col-xs-7 padding-top">
+                        <div class="contact-panel-text-color">
+                            <b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CALL_US, userCulture).ToString()</b>
+                        </div>
+                        <span>@HttpContext.Current.Application["ContactNo"]</span>
+                    </div>
+
+                </div>
+                <div class="row col-md-12 col-sm-12 col-xs-12" style="padding-top:30px">
+                    <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3   padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity ">
+                        <img style="width:42px" src="~/Content/Images/FAQ.png" />
+                    </div>
+                    <div class="col-md-8 col-sm-7 col-xs-7" style="padding-top:18px">
+                        <b><a class="contact-panel-text-color hoverLink" style="cursor: pointer;" target="FAQ" href="/FAQ">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ, userCulture).ToString()</a></b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/Content/Scripts/respond.js"></script>
+<script>
+    $(document).ready(function () {
+        setContainerFooterHeight();
+    });
+
+    function setContainerFooterHeight() {
+        var sectionMinHeight = $(window).height() - 205;
+        $("#main-section").css("min-height", sectionMinHeight);
+
+    }
+    $(window).resize(function () {
+        setContainerFooterHeight();
+    });
+    function openContainerModelHelp() {
+        $('#container-modal-Help').modal('show');
+    }
+</script>
+
+
+

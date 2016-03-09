@@ -1,0 +1,892 @@
+﻿@model PRGX.SIMTrax.ViewModel.User
+@using PRGX.SIMTrax.Domain.Util
+@using PRGX.SIMTrax.Domain.Model
+
+@{
+    var userType = (Session[Constants.SESSION_USER_TYPE] != null) ? (UserType)Convert.ToInt64(Session[Constants.SESSION_USER_TYPE]) : UserType.None;
+    var permissionList = new List<ItemList>();
+    if (Session[Constants.SESSION_USER] != null && userType == UserType.Auditor)
+    {
+        //var roleService = new PRGX.SIMTrax.ServiceFacade.RoleServiceFacade();
+        //var auditorId = ((PRGX.SIMTrax.Domain.Model.UserDetails)(Session[Constants.SESSION_USER])).UserId;
+        //permissionList = roleService.GetUserPermissionBasedOnUserId(auditorId);
+        permissionList = (Session[Constants.SESSION_AUDITOR_ACCESS_PERMISSIONS] != null) ? ((List<ItemList>)Session[Constants.SESSION_AUDITOR_ACCESS_PERMISSIONS]) : new List<ItemList>();
+    }
+    var userCulture = (Session[Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+}
+@Html.HiddenFor(m => m.OrganizationPartyId, new { id = "hdnCompanyId" })
+@*@Html.Partial("~/Views/Admin/_AddSupplierUser.cshtml", Model.User)*@
+
+<div id="companySummary" class="col-md-12 col-sm-12 col-xs-12 padding-left-zero padding-right-zero">
+    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-zero padding-right-zero">
+        <div class="bread-crumb">
+            <a id="CompanySummaryBreadCrumb" onclick="GoToSupplierOrganisations()"> 
+                < @ReadResource.GetResourceForGlobalization(Constants.BACK_TO_SUPPLIER_ORGANISATIONS, userCulture).ToString()
+            </a>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-8 padding-bottom-header padding-left-zero padding-right-zero">
+        <h3 id="CompanyName"></h3>
+    </div>
+    <div class="col-md-6 col-sm-6 col-xs-4 padding-bottom-responsive padding-left-zero padding-right-zero" style="padding-top:8px">
+        <span id="view-supplier-profile" class="font-normal buyer-action-color" data-companyid="0" style="float: right; ">
+            @ReadResource.GetResourceForGlobalization(Constants.VIEW_SIM_PROFILE, userCulture).ToString()
+        </span>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12 padding-bottom-0px padding-left-zero padding-right-zero">
+        <table class="table tableGrid footable toggle-arrow cursor-default  table padding-top-0px padding-bottom-0px container-white-backgound" id="tblPrimaryDetails">
+            <thead>
+                <tr>
+                    <th class="tableGrid-header">
+                        @ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_ID, userCulture).ToString()
+                    </th>
+                    <th class="tableGrid-header">
+                        @ReadResource.GetResourceForGlobalization(Constants.COMPANY_NAME, userCulture).ToString()
+                    </th>
+                    <th class="tableGrid-header" data-hide="tabletPortrait,phone">
+                        @ReadResource.GetResourceForGlobalization(Constants.PRIMARY_CONTACT_NAME, userCulture).ToString()
+                    </th>
+                    <th class="tableGrid-header" data-hide="tabletPortrait,phone">
+                        @ReadResource.GetResourceForGlobalization(Constants.PRIMARY_CONTACT_EMAIL, userCulture).ToString()
+                    </th>
+                    <th style="width:100px" class="tableGrid-header">
+                        @ReadResource.GetResourceForGlobalization(Constants.ACTION, userCulture).ToString()
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="supplier-primary-contact-table-rows"></tbody>
+        </table>
+    </div>
+    @*<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 padding-top-10px" id="verificationsAndChecksContainer">
+        <div class="container-white-backgound container-height">
+            <div class="col-md-12 col-xs-12 col-sm-12 page-sub-heading-container row padding-right-zero" style="padding-bottom: 0px !important;">
+                <div class="col-md-9 col-sm-9 col-xs-9 padding-right-zero" style="padding-top:2px; padding-bottom: 12px !important;">
+                    <span class="page-sub-heading" id="campaign-heading">
+                        @ReadResource.GetResourceForGlobalization(Constants.VERIFICATIONS_OR_CHECKS, userCulture).ToString()
+                    </span>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-3 float-right" style="display:none;padding-right:0px" id="btnPublish"></div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12"> <hr class="border-style" /></div>
+
+            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                <table id="suppliersVerificationListTable" class="table tableGrid">
+                    <thead class="cursor-default">
+                        <tr>
+                            <th class="tableGrid-header col-md-4 Supplier text-align-center">@ReadResource.GetResourceForGlobalization(Constants.SECTION, userCulture).ToString()</th>
+                            <th class="tableGrid-header col-md-4 Status text-align-center">@ReadResource.GetResourceForGlobalization(Constants.STATUS, userCulture).ToString()</th>
+                            <th class="tableGrid-header col-md-4 Actions text-align-center">@ReadResource.GetResourceForGlobalization(Constants.ACTIONS, userCulture).ToString()</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="supplier-verification-list-table-rows"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>*@
+    @*<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 padding-top-10px" id="buyersMappedContainer">
+        <div class="container-white-backgound container-height">
+
+            <div class="col-md-12 col-xs-12 col-sm-12 page-sub-heading-container row padding-right-zero" style="padding-bottom: 0px !important;">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-right-zero" style=" padding-top:2px; padding-bottom 12px !important;">
+                    <span class="page-sub-heading" id="campaign-heading">@ReadResource.GetResourceForGlobalization(Constants.BUYERS_MAPPED, userCulture).ToString()</span>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12"> <hr class="border-style" /></div>
+            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                <table id="buyersMappedListTable" class="table tableGrid table footable toggle-arrow">
+                    <thead class="cursor-default">
+                        <tr>
+                            <th class="tableGrid-header col-md-4 Campaigns text-align-center">@ReadResource.GetResourceForGlobalization(Constants.BUYER_ORGANISATION, userCulture).ToString()</th>
+                            <th class="tableGrid-header col-md-4 Status text-align-center">@ReadResource.GetResourceForGlobalization(Constants.STATUS, userCulture).ToString()</th>
+                            <th class="tableGrid-header col-md-4 Action text-align-center removeBuyerSupplierMapping">@ReadResource.GetResourceForGlobalization(Constants.ACTION, userCulture).ToString()</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="buyers-mapped-table-rows"></tbody>
+                </table>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="BuyersMappedPaginator">
+                </div>
+            </div>
+            <input type="hidden" id="hdnBuyersMappedCurrentPage" value="1" />
+        </div>
+    </div>*@
+
+    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 padding-top-10px" id="usersContainer">
+        <div class="container-white-backgound container-height">
+            <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12 page-sub-heading-container row padding-right-zero" style="padding-bottom: 0px !important;">
+                <div class="col-md-12 col-sm-12 col-xs-12" style="padding-top:2px; padding-bottom: 6px !important; padding-right:0px">
+                    <span class="page-sub-heading" id="campaign-heading">
+                        @ReadResource.GetResourceForGlobalization(Constants.USERS, userCulture).ToString() 
+                        <button id="btnShowAddUserForm" class="btn btn-color float-right">
+                            <i class="fa fa-plus" style="padding-right: 6px"></i>@ReadResource.GetResourceForGlobalization(Constants.CREATE_USER, userCulture).ToString()
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12"> <hr class="border-style" /></div>
+            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                <table id="suppliersUsersListTable" class="table tableGrid table footable toggle-arrow">
+                    <thead class="cursor-default">
+                        <tr>
+                            <th class="tableGrid-header col-md-4 Users text-align-center">
+                                @ReadResource.GetResourceForGlobalization(Constants.USERS, userCulture).ToString()
+                            </th>
+                            <th class="tableGrid-header col-md-4 Status text-align-center">
+                                @ReadResource.GetResourceForGlobalization(Constants.USER_TYPE, userCulture).ToString()
+                            </th>
+                            <th class="tableGrid-header col-md-4 Action text-align-center">
+                                @ReadResource.GetResourceForGlobalization(Constants.ACTION, userCulture).ToString()
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="supplier-users-table-rows"></tbody>
+                </table>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="SupplierUsersPaginator">
+                </div>
+            </div>
+            <input type="hidden" id="hdnSupplierUsersCurrentPage" value="1" />
+        </div>
+    </div>
+</div>
+
+@*<div class="col-md-12  col-sm-12 col-xs-12 panel panel-default no-border padding-left-zero padding-right-zero" style="display: none" id="tabDetailsVerify">
+    <div class="bread-crumb" style="display:block;">
+        <a id="detailsCheckBreadCrumb" onclick="NavigateBackToSupplier()"> < @ReadResource.GetResourceForGlobalization(Constants.BACK_TO_SUPPLIER, userCulture).ToString() </a>
+    </div>
+    <div class="container-white-backgound padding-bottom-0px">
+        <div class="col-md-12  col-sm-12 col-xs-12">
+            <div class="col-md-9 col-sm-8 col-xs-12  panel-heading page-sub-heading-container">
+                <span class="pull-left clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                <span class="page-sub-heading">@ReadResource.GetResourceForGlobalization(Constants.GENERAL_INFORMATION, userCulture).ToString()</span>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 padding-responsive">
+                <hr class="border-style" />
+            </div>
+        </div>
+        <div id="divVerifyDetails" class="col-md-12  col-sm-12 col-xs-12  panel-body">
+            <form id="DetailCheckSupplierForm" name="DetailCheckSupplierForm" enctype="multipart/form-data" method="post" action="/Admin/VerifyInitialCheck">
+                <div class="col-md-12 col-sm-12 col-xs-12 paddingTop">
+                    @Html.HiddenFor(m => m.CompanyId, new { @id = "companyIdDetailCheck" })
+                    @Html.HiddenFor(m => m.UserId, new { @id = "userIdDetailCheck" })
+                    <div class="padding-top-verify">
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero">
+                            <div class="col-md-12">
+                                @Html.LabelFor(m => m.OrganisationName)
+                            </div>
+                            <div class="col-md-8 col-sm-5">
+                                @Html.TextBoxFor(m => m.OrganisationName, new { @class = " form-control", @id = "organisationNameDetailCheck" })
+                            </div>
+                            <div class="col-md-8 padding-top-10px paddingError " id="OrganisationError">
+                                <span id="OrganisationErrorText"></span>
+                                @Html.ValidationMessageFor(m => m.OrganisationName)
+                            </div>
+                        </div>
+                        <div class=" padding-responsive-verify col-md-6 col-sm-12 col-xs-12">
+
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.CompanyLegalName)" data-questionid="@((Int16)ProfileQuestionIds.CompanyLegalName)" data-inputid="organisationNameDetailCheck">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="padding-top-verify">
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class=" col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.Trading)
+                            </div>
+                            <div class="col-md-8 col-sm-5 col-xs-12">
+                                @Html.TextBoxFor(m => m.Trading, new { @class = " form-control", @id = "TradingDetailCheck", maxlength = 100 })
+                            </div>
+                        </div>
+                        <div class="padding-responsive-verify col-md-6 col-sm-12 col-xs-12">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.TradingName)" data-questionid="@((Int16)ProfileQuestionIds.TradingName)"
+                                 data-inputid="TradingDetailCheck">
+                            </div>
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                    <div class="padding-top-verify">
+                        <div class=" col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.TypeOfCompany)
+                            </div>
+                            <div class="col-md-8 col-sm-5 col-xs-12">
+                                @Html.DropDownListFor(m => m.TypeOfCompany, Model.CompanyTypeList, new { @class = " form-control", @id = "TypeOfCompanyDetailCheck" })
+                            </div>
+                            <div class="col-md-8 col-sm-5 col-xs-12 paddingError padding-top-10px">
+                                @Html.ValidationMessageFor(m => m.TypeOfCompany)
+                            </div>
+                        </div>
+                        <div class="padding-responsive-verify  col-md-6 col-sm-12 col-xs-12">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.FirmsIncorporation)" data-questionid="@((Int16)ProfileQuestionIds.FirmsIncorporation)" data-inputid="TypeOfCompanyDetailCheck">
+                            </div>
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                    <div class="padding-top-verify">
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.CompanyYear)
+                            </div>
+                            <div class="col-md-8 col-sm-5 col-xs-12">
+                                <select id="CompanyYearDetailCheck" name="CompanyYear" class=" form-control"></select>
+                            </div>
+                        </div>
+                        <div class="padding-responsive-verify col-md-6 col-sm-12 col-xs-12">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.CompanyYear)" data-questionid="@((Int16)ProfileQuestionIds.CompanyYear)" data-inputid="CompanyYearDetailCheck">
+                            </div>
+
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                    <div class="padding-top-verify">
+
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.CompanyRegistrationNumber)
+                            </div>
+                            <div class="col-md-8  col-sm-5 col-xs-12 ">
+                                @Html.TextBoxFor(m => m.CompanyRegistrationNumber, new { @class = " form-control", @id = "regNumberDetailCheck", maxlength = 40 })
+                            </div>
+                        </div>
+                        <div class=" padding-responsive-verify col-md-6 col-sm-12 col-xs-12">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.CompanyRegistrationNumber)" data-questionid="@((Int16)ProfileQuestionIds.CompanyRegistrationNumber)" data-inputid="regNumberDetailCheck">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="padding-top-verify">
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.IsVAT)
+                            </div>
+
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                @Html.RadioButtonFor(m => m.IsVAT, true) <span id="IsVATTrue">@ReadResource.GetResourceForGlobalization(Constants.YES, userCulture).ToString()</span>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                @Html.RadioButtonFor(m => m.IsVAT, false, new { Checked = "checked" }) <span id="IsVATFalse">@ReadResource.GetResourceForGlobalization(Constants.NO, userCulture).ToString()</span>
+                            </div>
+                        </div>
+                        <div id="HaveVATDetailCheck" style="display: none;">
+                            <div class="padding-top-verify">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 required">
+                                        @Html.LabelFor(m => m.VATNumber)
+                                    </div>
+                                    <div class="col-md-8 col-sm-5 col-xs-12">
+                                        @Html.TextBoxFor(m => m.VATNumber, new { @class = " form-control", @id = "vatNumberDetailCheck", maxlength = 40 })
+                                    </div>
+                                    <div class="col-md-8 col-sm-5 col-xs-12 padding-top-10px paddingError error-text " id="VATNumberError" style="display: none;">
+                                        @ReadResource.GetResourceForGlobalization(Constants.VAT_NO_VALIDATION, userCulture).ToString()
+                                    </div>
+                                </div>
+                                <div class="padding-responsive-verify col-md-6 col-sm-12 col-xs-12">
+                                    <div id="details-answer-@((Int16)ProfileQuestionIds.VATNumber)" data-questionid="@((Int16)ProfileQuestionIds.VATNumber)" data-inputid="vatNumberDetailCheck">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-responsive-verify" id="DetailIsVATAnswerdiv">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.IsVATRegistered)" data-questionid="@((Int16)ProfileQuestionIds.IsVATRegistered)" data-inputid="None">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="padding-top-verify">
+
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.HaveDuns)
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                @Html.RadioButtonFor(m => m.HaveDuns, true) <span id="IsDUNSTrue">@ReadResource.GetResourceForGlobalization(Constants.YES, userCulture).ToString()</span>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                @Html.RadioButtonFor(m => m.HaveDuns, false, new { Checked = "checked" }) <span id="IsDUNSFalse">@ReadResource.GetResourceForGlobalization(Constants.NO, userCulture).ToString()</span>
+                            </div>
+                        </div>
+                        <div id="HaveDUNSDetailCheck" style="display: none;">
+                            <div class="padding-top-verify">
+
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 required">
+                                        @Html.LabelFor(m => m.DUNSNumber)
+                                    </div>
+                                    <div class="col-md-8  col-sm-5 col-xs-12">
+                                        @Html.TextBoxFor(m => m.DUNSNumber, new { @class = " form-control", @id = "DUNSNumberDetailCheck", maxlength = 40 })
+                                    </div>
+                                    <div class="col-md-8  col-sm-5 col-xs-12 paddingError padding-top-10px error-text" id="DUNSNumberError" style="display: none;">
+                                        @ReadResource.GetResourceForGlobalization(Constants.DUNS_NO_VALIDATION, userCulture).ToString()
+                                    </div>
+                                </div>
+                                <div class="padding-responsive-verify col-md-6 col-sm-12 col-xs-12">
+                                    <div id="details-answer-@((Int16)ProfileQuestionIds.DUNSNumber)" data-questionid="@((Int16)ProfileQuestionIds.DUNSNumber)" data-inputid="DUNSNumberDetailCheck">
+                                    </div>
+
+                                </div>
+                                <div class="clear-both"></div>
+                            </div>
+                        </div>
+                        <div class="padding-responsive-verify col-md-6 col-sm-12 col-xs-12" id="DetailCheckHaveDunsAnswerdiv">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.HaveDuns)" data-questionid="@((Int16)ProfileQuestionIds.HaveDuns)" data-inputid="HaveDuns">
+                            </div>
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                    <div class="padding-division-header">
+                        <div class="col-md-5" style="font-weight: bold">
+                            @ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_ADDRESS, userCulture).ToString()
+                        </div>
+                    </div>
+                    <div class="padding-top-verify">
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.FirstAddressLine1, new { @class = "required" })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12">
+                                    @Html.TextBoxFor(m => m.FirstAddressLine1, new { @class = " form-control", @id = "firstAddressLine1DetailCheck", maxlength = 100 })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12 paddingError">
+                                    @Html.ValidationMessageFor(m => m.FirstAddressLine1)
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.FirstAddressLine2)
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12">
+                                    @Html.TextBoxFor(m => m.FirstAddressLine2, new { @class = " form-control", @id = "firstAddressLine2DetailCheck", maxlength = 100 })
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.FirstAddressCity, new { @class = "required" })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12">
+                                    @Html.TextBoxFor(m => m.FirstAddressCity, new { @class = " form-control", @id = "firstAddressCityDetailCheck", maxlength = 50 })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12 padding-top-10px paddingError">
+                                    @Html.ValidationMessageFor(m => m.FirstAddressCity)
+                                </div>
+                            </div>
+                            <div class=" padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.FirstAddressState)
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12 ">
+                                    @Html.TextBoxFor(m => m.FirstAddressState, new { @class = " form-control", @id = "firstAddressStateDetailCheck", maxlength = 50 })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12 paddingError">
+                                    @Html.ValidationMessageFor(m => m.FirstAddressState)
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.FirstAddressPostalCode, new { @class = "required" })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12">
+                                    @Html.TextBoxFor(m => m.FirstAddressPostalCode, new { @class = " form-control", @id = "firstAddressPostalCodeDetailCheck", maxlength = 15 })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12 padding-top-10px paddingError">
+                                    @Html.ValidationMessageFor(m => m.FirstAddressPostalCode)
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.FirstAddressCountry)
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12">
+                                    @Html.DropDownListFor(m => m.FirstAddressCountry, Model.CountryList, new { @class = " form-control", @id = "firstAddressCountryDetailCheck" })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12 paddingError">
+                                    @Html.ValidationMessageFor(m => m.FirstAddressCountry)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-responsive-verify">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.MailingAddress)" data-questionid="@((Int16)ProfileQuestionIds.MailingAddress)" data-inputid="None">
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" padding-top-verify">
+                        <div class="col-md-8 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.sector)
+                                <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                                    @Html.ValidationMessageFor(m => m.sector)
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px">
+                                    @for (int i = 1; i <= Model.BusinessSectorList.Count / 2; i++)
+                                    {
+                                        <div class="col-md-6 col-sm-6 col-xs-12"></div>
+                                        <div class="col-md-12">
+                                            @Html.RadioButtonFor(p => Model.sector, Model.BusinessSectorList[i - 1].Value, new { @onclick = "ShowHideDescription('hide')", @name = "sectorDetailCheck" })
+                                            @Html.DisplayFor(p => Model.BusinessSectorList[i - 1].Text)
+                                            <a class="tooltip-remove" data-description="@Model.BusinessSectorList[i - 1].Description"><i class="fa fa-info-circle"></i></a>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px">
+                                    @for (int i = (Model.BusinessSectorList.Count / 2 + 1); i <= Model.BusinessSectorList.Count; i++)
+                                    {
+                                        <div class="col-md-6 col-sm-6 col-xs-12"></div>
+                                        if (Model.BusinessSectorList[i - 1].Text != "Not Sure")
+                                        {
+                                            <div class="col-md-12">
+                                                @Html.RadioButtonFor(p => Model.sector, Model.BusinessSectorList[i - 1].Value, new { @onclick = "ShowHideDescription('hide')", @name = "sectorDetailCheck" })
+                                                @Html.DisplayFor(p => Model.BusinessSectorList[i - 1].Text)
+                                                <a class="tooltip-remove" data-description="@Model.BusinessSectorList[i - 1].Description"><i class="fa fa-info-circle"></i></a>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                @for (int i = 1; i <= Model.BusinessSectorList.Count; i++)
+                                {
+                                    if (Model.BusinessSectorList[i - 1].Text == "Not Sure")
+                                    {
+                                        <div class="col-md-12">
+                                            @Html.RadioButtonFor(p => Model.sector, Model.BusinessSectorList[i - 1].Value, new { @onclick = "ShowHideDescription('show')", @id = "rdoNotSureDetail", @name = "sectorDetailCheck" })
+                                            @Html.DisplayFor(p => Model.BusinessSectorList[i - 1].Text)
+                                            <a class="tooltip-remove" data-description="@Model.BusinessSectorList[i - 1].Description"><i class="fa fa-info-circle"></i></a>
+                                        </div>
+                                        <div class="col-md-12 padding-top-10px" style="display:none" id="divsectorDescriptionDetailCheck">
+                                            <div class="col-md-12">
+                                                <label>@ReadResource.GetResourceForGlobalization(Constants.DESCRIPTION, userCulture).ToString()</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <span id="spnBusinessSectorDescriptionDetailCheck"></span>
+
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        </div>
+                        <div class=" padding-responsive-verify col-md-4 col-sm-12 col-xs-12">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.IndustrySector)" data-questionid="@((Int16)ProfileQuestionIds.IndustrySector)" data-inputid="sector">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 panel-body">
+            <div class="col-md-12 col-sm-12 col-xs-12 paddingTop">
+                <div class="row padding-top">
+                    <div class="col-md-8">
+                        <input id="btnCancelDetailCheck" value="@ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()" style="margin-left: 10px" class="col-md-2 btn btn-normal" type="button" />
+                        <input id="btnVerifyDetailCheck" value="@ReadResource.GetResourceForGlobalization(Constants.SAVE, userCulture).ToString()" class="col-md-2 btn btn-color" style=" margin-left 20px;" type="button" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>*@
+
+<div class="modal fade" data-backdrop="static" id="EditSupplierPrimaryDetailsDashboard" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@ReadResource.GetResourceForGlobalization(Constants.EDIT_PRIMARY_CONTACT_DETAILS, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row margin-bottom-15">
+                <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form id="supplierPrimaryContactDetailsDashboard" name="supplierPrimaryContactDetailsDashboard" enctype="multipart/form-data">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 padding-responsive-text padding-right-zero padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                @Html.LabelFor(m => m.LoginId, new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                @Html.TextBoxFor(m => m.LoginId, new { id = "txtloginIDDashboard", @class = "form-control", @readonly = true })
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 padding-responsive-text padding-right-zero padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                @Html.LabelFor(m => m.PrimaryEmail, new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                @Html.TextBoxFor(m => m.PrimaryEmail, new { id = "txtPrimaryEmailDashboard", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.PrimaryEmail)
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 padding-responsive-text padding-right-zero padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                @Html.LabelFor(m => m.PrimaryFirstName, new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                @Html.TextBoxFor(m => m.PrimaryFirstName, new { id = "txtPrimaryFirstNameDashboard", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.PrimaryFirstName)
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 padding-responsive-text padding-right-zero padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                @Html.LabelFor(m => m.PrimaryLastName, new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                @Html.TextBoxFor(m => m.PrimaryLastName, new { id = "txtPrimaryLastNameDashboard", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.PrimaryLastName)
+                                @Html.HiddenFor(m => m.UserId, new { id = "hdnUserIdDashboard" })
+                                @Html.HiddenFor(m => m.OrganizationPartyId, new { id = "hdnCompIDDashboard" })
+                                @Html.HiddenFor(m => m.PrimaryContactPartyId, new { id = "hdnSupplierPrimaryContactPartyIdDashboard" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 padding-responsive-text padding-right-zero padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                @Html.LabelFor(m => m.Telephone, new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                @Html.TextBoxFor(m => m.Telephone, new { id = "txtTelephoneDashboard", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Telephone)
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 padding-responsive-text padding-right-zero padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                @Html.LabelFor(m => m.JobTitle, new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                @Html.TextBoxFor(m => m.JobTitle, new { id = "txtJobTitleDashboard", @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-20px text-align-right">
+                            <div class="float-right">
+                                <button type="button" class="btn btn-normal float-left" id="btnResetSupplierPrimaryDetails">
+                                    @ReadResource.GetResourceForGlobalization(Constants.RESET, userCulture).ToString()
+                                </button>
+                                <div class="float-left" style="height: 10px; width: 14px;"></div>
+                                <button type="button" class="btn btn-normal float-left" id="btnCancelSupplierPrimaryDetails" data-dismiss="modal">
+                                    @ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()
+                                </button>
+                                <div class="float-left" style="height: 10px; width: 14px;"></div>
+                                <button type="button" class="btn btn-color float-left" id="btnSaveSupplierPrimaryDetails">
+                                    @ReadResource.GetResourceForGlobalization(Constants.SAVE_CHANGES, userCulture).ToString()
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" data-backdrop="static" id="SupplierEditProfile" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@ReadResource.GetResourceForGlobalization(Constants.EDIT_USER_PROFILE, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row margin-bottom-15">
+                <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form id="EditSupplierDetails" name="EditSupplierDetails" enctype="multipart/form-data">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                @Html.TextBoxFor(m => m.FirstName, new { id = "txtFirstName", @class = "form-control" })
+                            </div>
+                            <div class="col-md-8 col-sm-5 col-xs-12 paddingError padding-top-10px">
+                                @Html.ValidationMessageFor(m => m.FirstName)
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                @Html.TextBoxFor(m => m.LastName, new { id = "txtLastName", @class = "form-control" })
+                                @Html.HiddenFor(m => m.UserId, new { id = "hdnEditUserId" })
+                                @Html.HiddenFor(m => m.OrganizationPartyId, new { id = "hdnEditcompanyID" })
+                                @Html.HiddenFor(m => m.LoginId, new { id = "hdnEditLoginID" })
+                            </div>
+                            <div class="col-md-8 col-sm-5 col-xs-12 paddingError padding-top-10px">
+                                @Html.ValidationMessageFor(m => m.LastName)
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-20px text-align-right">
+                            <div class="float-right">
+                                <button type="reset" class="btn btn-normal float-left" id="btnResetSupplierDetails">
+                                    @ReadResource.GetResourceForGlobalization(Constants.RESET, userCulture).ToString()
+                                </button>
+                                <div class="float-left" style="height: 10px; width: 14px;"></div>
+                                <button type="button" class="btn btn-normal float-left" id="btnCancelSupplierDetails" data-dismiss="modal">
+                                    @ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()
+                                </button>
+                                <div class="float-left" style="height: 10px; width: 14px;"></div>
+                                <button type="button" class="btn btn-color float-left" id="btnSaveSupplierDetails">
+                                    @ReadResource.GetResourceForGlobalization(Constants.SAVE_CHANGES, userCulture).ToString()
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" data-backdrop="static" id="SupplierEditPassword" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@ReadResource.GetResourceForGlobalization(Constants.EDIT_PASSWORD, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row margin-bottom-15">
+                <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form id="supplierPasswordChange" name="supplierPasswordChange" enctype="multipart/form-data">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.LoginId, new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                @Html.TextBoxFor(m => m.LoginId, new { id = "txtloginIDEditPassword", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.Password, "Temporary Password:", new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                @Html.PasswordFor(m => m.Password, new { id = "txtSupplierPassword", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { id = "txtConfirmSupplierPassword", @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                                @Html.HiddenFor(m => m.UserId, new { id = "hdnEditPasswordUserId" })
+                            </div>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                                <small>@ReadResource.GetResourceForGlobalization(Constants.CHANGE_PASSWORD_DISPLAY_MESSAGE, userCulture).ToString()</small>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-20px text-align-right">
+                            <div class="float-right">
+                                <button type="button" class="btn btn-normal float-left" id="btnCancelSupplierPasswrd" data-dismiss="modal">
+                                    @ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()
+                                </button>
+                                <div class="float-left" style="height: 10px; width: 14px;"></div>
+                                <button type="button" class="btn btn-color float-left" id="ChangeSupplierPassword">
+                                    @ReadResource.GetResourceForGlobalization(Constants.SAVE_CHANGES, userCulture).ToString()
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@*<div class="modal fade bs-example-modal-sm" data-backdrop="static" id="publish-product-pop-up" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content center-modal-help">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@ReadResource.GetResourceForGlobalization(Constants.PUBLISH_PRODUCTS, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-12" id="publish-message">
+                    <div class="col-md-12 buyer-request-limit-message" style="background-color:#FFC000">
+                        <div style="padding-top:10px">@ReadResource.GetResourceForGlobalization(Constants.PUBLISH_PRODUCTS_MESSAGE, userCulture).ToString()</div>
+
+                    </div>
+                </div>
+                <div class="margin-bottom-15 col-md-12">
+                    <table class="table tableGrid padding-top-20px">
+                        <thead>
+                            <tr>
+                                <th class="tableGrid-header">@ReadResource.GetResourceForGlobalization(Constants.PRODUCT, userCulture).ToString()</th>
+                                <th class="tableGrid-header">@ReadResource.GetResourceForGlobalization(Constants.PUBLISH, userCulture).ToString()</th>
+                            </tr>
+                        </thead>
+                        <tbody id="publish-product-pop-up-body"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer no-border-top">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()</button>
+                <button type="button" class="btn btn-color" onclick="PublishAndSendReportMails()">@ReadResource.GetResourceForGlobalization(Constants.PUBLISH, userCulture).ToString()</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+@*<div class="modal fade" data-backdrop="static" id="SupplierAddReferrer" tabindex="-1" role="dialog" style="display:none" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal" onclick="companySummary()">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@ReadResource.GetResourceForGlobalization(Constants.ADD_REFERRER, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" style="overflow:auto;">
+                <form id="SearchSupplierReferrer" role="form">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-left-zero padding-right-zero">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  padding-left-zero padding-right-zero">
+                            <label for="txtBuyerName" class="control-label">@ReadResource.GetResourceForGlobalization(Constants.BUYER_NAME, userCulture).ToString()</label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4  padding-left-zero padding-right-zero">
+                            <input type="text" class="form-control" id="txtBuyerName" />
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-10px  padding-left-zero padding-right-zero">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 padding-left-zero padding-right-zero">
+                            <label for="txtCampaignName" class="control-label">@ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_NAME, userCulture).ToString()</label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 padding-left-zero padding-right-zero">
+                            <input type="text" class="form-control" id="txtCampaignName" />
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-left">
+                            <button class="btn btn-color" id="btnSearchReferrer">@ReadResource.GetResourceForGlobalization(Constants.SEARCH, userCulture).ToString()</button>
+                        </div>
+                    </div>
+                    <input type="hidden" id="hdnSupplierId" />
+                    <input type="hidden" id="hdnReferrerName" />
+                </form>
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-left-zero padding-right-zero padding-top-10px">
+                    <table id="tblSearchReferrer" class="table tableGrid table">
+                        <thead>
+                            <tr style="background-color:black;height:15px">
+                                <th class="tableGrid-header col-md-4">@ReadResource.GetResourceForGlobalization(Constants.BUYER_NAME, userCulture).ToString()</th>
+                                <th class="tableGrid-header col-md-2">@ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_NAME, userCulture).ToString()</th>
+                                <th class="tableGrid-header col-md-1">@ReadResource.GetResourceForGlobalization(Constants.ACTION, userCulture).ToString()</th>
+                            </tr>
+                        </thead>
+                        <tbody id="supplier-referrer-table"></tbody>
+                    </table>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-left-zero-phone padding-right-zero">
+                    <div class="addSupplierReferrerPaginator float-left-phone" style="float:right;">
+                    </div>
+                </div>
+                <input type="hidden" id="hdn-supplier-add-referrer-details-page" value="1" />
+            </div>
+        </div>
+    </div>
+</div>*@
+@Scripts.Render("~/bundles/SupplierDashboard")
+@{
+//var detailsFlaggedReasonList = (Model.FlaggedReasonCodeList != null && Model.FlaggedReasonCodeList.Count > 0) ? @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FlaggedReasonCodeList)) : null;
+//var detailsVerifyReasonList = (Model.VerifiedReasonCodeList != null && Model.VerifiedReasonCodeList.Count > 0) ? @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.VerifiedReasonCodeList)) : null;
+
+//var detailsVisibilityList = (Model.AuditorVisibilityList != null && Model.AuditorVisibilityList.Count > 0) ? @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.AuditorVisibilityList)) : null;
+}
+<script>
+
+    @*var detailsFlaggedReasonList = ('@detailsFlaggedReasonList' != "") ? jQuery.parseJSON('@detailsFlaggedReasonList') : "";
+    var detailsVerifyReasonList = ('@detailsVerifyReasonList' != "") ? jQuery.parseJSON('@detailsVerifyReasonList') : "";
+    var detailsVisibilityList = ('@detailsVisibilityList' != "") ? jQuery.parseJSON('@detailsVisibilityList') : "";
+    var InitialQuestionCount = parseInt('@Model.QuestionCount');*@
+
+    var supplierPartyId = "@ViewBag.SupplierPartyId";
+    var SubmittedStatus = jQuery.parseJSON('@Convert.ToInt16(CompanyStatus.Submitted)');
+    var RegisteredStatus = jQuery.parseJSON('@Convert.ToInt16(CompanyStatus.RegistrationVerified)');
+    var BusinessVerifiedStatus = jQuery.parseJSON('@Convert.ToInt16(CompanyStatus.ProfileVerified)');
+    var SanctionVerifiedStatus = jQuery.parseJSON('@Convert.ToInt16(CompanyStatus.SanctionVerified)');
+    var CanPublishSupplier = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.PublishSupplier)))' == 'True' ? true : false;
+    var CanEditUser = '@(userType == UserType.AdminAuditor || permissionList.Any(a => a.Value == Convert.ToInt32(AuditorRoles.EditUser)))' == 'True' ? true : false;
+    var CanChangePassword = '@(userType == UserType.AdminAuditor || permissionList.Any(a => a.Value == Convert.ToInt32(AuditorRoles.ChangePassword)))' == 'True' ? true : false;
+    var CanMapSupplierBuyer = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.BuyerSupplierMapping)))' == 'True' ? true : false;
+    var CanCreateUser = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.CreateUser)))' == 'True' ? true : false;
+    var CanSanctionCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.SanctionCheck)))' == 'True' ? true : false;
+    var CanDetailsCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.DetailsCheck)))' == 'True' ? true : false;
+    var CanViewDetailsCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.DetailsCheckView)))' == 'True' ? true : false;
+    var CanProfileCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.ProfileCheck)))' == 'True' ? true : false;
+    var CanViewProfileCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.ProfileCheckView)))' == 'True' ? true : false;
+    var CanFITCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.FITCheck)))' == 'True' ? true : false;
+    var CanViewFITCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.FITCheckView)))' == 'True' ? true : false;
+    var CanHSCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.HSCheck)))' == 'True' ? true : false;
+    var CanViewHSCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.HSCheckView)))' == 'True' ? true : false;
+    var CanDSCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.DSCheck)))' == 'True' ? true : false;
+    var CanViewDSCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.DSCheckView)))' == 'True' ? true : false;
+
+    var backToPayments = '@ReadResource.GetResourceForGlobalization(Constants.BACK_TO_PAYMENTS,userCulture).ToString()';
+    var backToSupplierOrg = '@ReadResource.GetResourceForGlobalization(Constants.BACK_TO_SUPPLIER_ORGANISATIONS,userCulture).ToString()';
+    var dashboardText = '@ReadResource.GetResourceForGlobalization(Constants.DASHBOARD,userCulture).ToString()';
+    var actionsButton = '@ReadResource.GetResourceForGlobalization(Constants.ACTIONS,userCulture).ToString()';
+    var editProfileButton = '@ReadResource.GetResourceForGlobalization(Constants.EDIT_PROFILE,userCulture).ToString()';
+    var removeButton = '@ReadResource.GetResourceForGlobalization(Constants.REMOVE,userCulture).ToString()';
+    var noRecordsFound = '@ReadResource.GetResourceForGlobalization(Constants.NO_RECORDS_FOUND, userCulture).ToString()';
+    var editPasswordButton = '@ReadResource.GetResourceForGlobalization(Constants.EDIT_PASSWORD, userCulture).ToString()';
+    var checkedText = '@ReadResource.GetResourceForGlobalization(Constants.CHECKED, userCulture).ToString()';
+    var publishedText = '@ReadResource.GetResourceForGlobalization(Constants.PUBLISHED, userCulture).ToString()';
+    var paidText = '@ReadResource.GetResourceForGlobalization(Constants.PAID, userCulture).ToString()';
+    var evaluationStartedText = '@ReadResource.GetResourceForGlobalization(Constants.EVALUATION_STARTED, userCulture).ToString()';
+    var evaluatedText = '@ReadResource.GetResourceForGlobalization(Constants.EVALUATED, userCulture).ToString()';
+    var checkButton = '@ReadResource.GetResourceForGlobalization(Constants.CHECK, userCulture).ToString()';
+    var detailsText = '@ReadResource.GetResourceForGlobalization(Constants.DETAILS, userCulture).ToString()';
+    var pendingText = '@ReadResource.GetResourceForGlobalization(Constants.PENDING, userCulture).ToString()';
+    var profileText = '@ReadResource.GetResourceForGlobalization(Constants.PROFILE, userCulture).ToString()';
+    var sanctionText = '@ReadResource.GetResourceForGlobalization(Constants.SANCTION, userCulture).ToString()';
+    var publishButton = '@ReadResource.GetResourceForGlobalization(Constants.PUBLISH, userCulture).ToString()';
+    var backToText = '@ReadResource.GetResourceForGlobalization(Constants.BACK_TO, userCulture).ToString()';
+    var dashboardText = '@ReadResource.GetResourceForGlobalization(Constants.DASHBOARD, userCulture).ToString()';
+    var selectYearText = '@ReadResource.GetResourceForGlobalization(Constants.SELECT_STARTED_YEAR, userCulture).ToString()';
+    var verificationStatusText = '@ReadResource.GetResourceForGlobalization(Constants.VERIFICATION_STATUS, userCulture).ToString()';
+    var reasonCodeText = '@ReadResource.GetResourceForGlobalization(Constants.REASON_CODE_SUB_STATUS, userCulture).ToString()';
+    var commentsText = '@ReadResource.GetResourceForGlobalization(Constants.COMMENTS, userCulture).ToString()';
+    var commentsVisibleToText = '@ReadResource.GetResourceForGlobalization(Constants.COMMENTS_VISIBLE_TO, userCulture).ToString()';
+    var checked = '@ReadResource.GetResourceForGlobalization(Constants.CHECKED_LOWER_CASE, userCulture).ToString()';
+    var validDataError = '@ReadResource.GetResourceForGlobalization(Constants.VALID_DATA_ERROR, userCulture).ToString()';
+    var insertionError = '@ReadResource.GetResourceForGlobalization(Constants.ERROR_WHILE_INSERTING, userCulture).ToString()';
+    var industrySectorValidation = '@ReadResource.GetResourceForGlobalization(Constants.SELECT_INDUSTRY_SECTOR, userCulture).ToString()';
+    var auditQuestionsValidation = '@ReadResource.GetResourceForGlobalization(Constants.AUDIT_QUESTIONS_VALIDATION, userCulture).ToString()';
+    var errorMessage = '@ReadResource.GetResourceForGlobalization(Constants.DEFAULT_ERROR_MESSAGE, userCulture).ToString()';
+    var publishedSuccessMessage = '@ReadResource.GetResourceForGlobalization(Constants.PUBLISHED_SUCCESSFULLY, userCulture).ToString()';
+    var publishProductsValidation = '@ReadResource.GetResourceForGlobalization(Constants.PUBLISH_PRODUCT_VALIDATION, userCulture).ToString()';
+    var vatNumberValidation = '@ReadResource.GetResourceForGlobalization(Constants.VAT_NUMBER_VALIDATION, userCulture).ToString()';
+    var editUserDetails = '@ReadResource.GetResourceForGlobalization(Constants.EDIT_USER_DETAILS, userCulture).ToString()';
+</script>

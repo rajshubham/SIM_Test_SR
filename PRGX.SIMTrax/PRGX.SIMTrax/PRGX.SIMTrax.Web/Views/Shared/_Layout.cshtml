@@ -1,0 +1,1068 @@
+﻿<!DOCTYPE html>
+<html id="mainHtml" lang="en">
+<head>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-64909373-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/Content/Themes/default/Style.less" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Images/favicon.ico" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/bundles/css")
+    @Styles.Render("~/bundles/intellisenseCss")
+    @Scripts.Render("~/bundles/Content/js")
+
+    @{
+        var ProductionEnvironment = (System.Web.Configuration.WebConfigurationManager.AppSettings["Environment"] != null && (System.Web.Configuration.WebConfigurationManager.AppSettings["Environment"] == "PROD" || System.Web.Configuration.WebConfigurationManager.AppSettings["Environment"] == "UAT")) ? true : false;
+        var themeName = "default";
+        if (HttpContext.Current.Application[PRGX.SIMTrax.Domain.Util.Constants.ThemeName] != null)
+        {
+            themeName = HttpContext.Current.Application[PRGX.SIMTrax.Domain.Util.Constants.ThemeName] as string;
+        }
+        bool IsValidUser = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER] != null) ? true : false;
+        var organization = new PRGX.SIMTrax.Domain.Model.OrganizationDetail();
+        var IsSubmittedForVerification = false;
+        long sellerPartyId = 0;
+        string name = "";
+        if (IsValidUser)
+        {
+            sellerPartyId = ((PRGX.SIMTrax.Domain.Model.OrganizationDetail)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_ORGANIZATION]).RefPartyId;
+            name = ((PRGX.SIMTrax.Domain.Model.OrganizationDetail)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_ORGANIZATION]).OrganizationName;
+            organization = (PRGX.SIMTrax.Domain.Model.OrganizationDetail)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_ORGANIZATION];
+            IsSubmittedForVerification = organization.Status >= (int)PRGX.SIMTrax.Domain.Util.CompanyStatus.Submitted ? true : false;
+        }
+        // var IsMappedWithBuyer = (company != null) ? company.IsMappedWithBuyer : false;
+        //var IsMappedWithBuyer =  false;
+        string loggedOut = IsValidUser ? "none" : "block";
+        string loggedIn = IsValidUser ? "block" : "none";
+        var userName = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER] != null)
+            ? ((PRGX.SIMTrax.Domain.Model.UserDetails)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER]).FirstName : "";
+        var UserType = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER_TYPE] != null)
+            ? (PRGX.SIMTrax.Domain.Util.UserType)Convert.ToInt64(Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER_TYPE]) : PRGX.SIMTrax.Domain.Util.UserType.None;
+        var userTypeValue = (Int16)UserType;
+        var selectedTab = "";
+        var viewName = "";
+        var controllerName = "";
+        var status = organization.Status;
+        var enablelogo = true;
+        if (!IsSubmittedForVerification)
+        {
+            enablelogo = false;
+        }
+        switch (UserType)
+        {
+            case PRGX.SIMTrax.Domain.Util.UserType.Auditor:
+            case PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor:
+                selectedTab = "AdminHomeTab";
+                viewName = "Home";
+                controllerName = "Admin";
+                enablelogo = true;
+                break;
+            case PRGX.SIMTrax.Domain.Util.UserType.Supplier:
+            case PRGX.SIMTrax.Domain.Util.UserType.AdminSupplier:
+                selectedTab = "SupplierHomeTab";
+                viewName = "Home";
+                controllerName = "Supplier";
+                break;
+            case PRGX.SIMTrax.Domain.Util.UserType.Buyer:
+            case PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer:
+                selectedTab = "BuyerIndexTab";
+                viewName = "Index";
+                controllerName = "Buyer";
+                break;
+            default:
+                viewName = "Login";
+                controllerName = "Account";
+                break;
+        }
+        var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+
+        //var companyName = (((Domain.Company)Session[PRGX.SIMTrax.Domain.Util.Constants.UserCompanyDetails]) != null) ? ((Domain.Company)Session[PRGX.SIMTrax.Domain.Util.Constants.UserCompanyDetails]).CompanyName : "";
+        //var urlName = companyName.Split(' ');
+        //if (urlName.Count() > 1)
+        //{
+        //    for (var i = 0; i < urlName.Count(); i++)
+        //    {
+        //        name += urlName[i];
+        //        if (i != (urlName.Count() - 1))
+        //        {
+        //            name += "-";
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    name = companyName;
+        //}
+        //var dateFormat = System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat.FullDateTimePattern;
+        // var companyId = (((Domain.Company)Session[PRGX.SIMTrax.Domain.Util.Constants.UserCompanyDetails]) != null) ? ((Domain.Company)Session[PRGX.SIMTrax.Domain.Util.Constants.UserCompanyDetails]).CompanyId : 0;
+
+        var permissionList = new List<PRGX.SIMTrax.Domain.Util.ItemList>();
+        if (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER] != null && UserType == PRGX.SIMTrax.Domain.Util.UserType.Auditor)
+        {
+            var roleService = new PRGX.SIMTrax.ServiceFacade.RoleServiceFacade();
+            var auditorId = ((PRGX.SIMTrax.Domain.Model.UserDetails)(Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER])).UserId;
+            permissionList = roleService.GetUserPermissionBasedOnUserId(auditorId);
+            permissionList = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_AUDITOR_ACCESS_PERMISSIONS] != null) ? ((List<PRGX.SIMTrax.Domain.Util.ItemList>)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_AUDITOR_ACCESS_PERMISSIONS]) : new List<PRGX.SIMTrax.Domain.Util.ItemList>();
+        }
+    }
+    <link href="@Url.Content(String.Format("~/Content/Themes/{0}/Style.less", themeName))" rel="stylesheet" />
+    @Styles.Render("~/Content/themes/base/css")
+</head>
+<body>
+
+    <!--[if lt IE 9]>
+       <script>
+          document.createElement('header');
+          document.createElement('nav');
+          document.createElement('section');
+          document.createElement('article');
+          document.createElement('aside');
+          document.createElement('footer');
+       </script>
+    <![endif]-->
+    <!--[if lt IE 10]>
+    <style type="text/css">
+        .navbar-left li a {
+        font-size: 16px !important;
+        height: 51px;
+        line-height: 50px !important;
+        padding: 0 10px;
+    }
+            .navbar-right li a {
+        font-size: 16px !important;
+        height: 51px;
+        line-height: 50px !important;
+        padding: 0 10px;
+    }
+            .leftpanel-height {
+        height: 625px;
+    }
+    </style>
+    <![endif]-->
+    <div id="overlay-wrapper" class="overlay-wrapper-css" style="display: none;">
+        <div id="ov-container" class="overlay-container">
+        </div>
+    </div>
+
+    <div style="background-color: #E4E0E0; display: none; padding-top: 20px; padding-left: 30px; padding-right: 38px; position: fixed; top: 0; z-index: 99;"
+         id="MessagePanel" class="slideit col-md-12">
+        <div class="col-md-8 padding-bottom">
+            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COOKIES_MESSAGE, userCulture).ToString()
+        </div>
+        <div class="col-md-4 padding-bottom align-cookie-btns">
+            <input id="btnAccept" type="button" value="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCEPT, userCulture).ToString()" class="btn btn-color cookie-btn" style="margin-right: 4px;" />@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.OR, userCulture).ToString()
+            <input id="btnReadMore" type="button" value="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.READ_MORE, userCulture).ToString()" class="btn btn-color cookie-btn" onclick="ShowReadMoreDialog()" style="margin-right: 3px;" />
+        </div>
+    </div>
+    <div style="clear: both;"></div>
+    <div id="layout-header" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background: white;">
+        <div id="layout-header-container-fluid" class="container-fluid zoom-margin-control">
+            <div class="navbar-header">
+                @if (enablelogo)
+                {
+                    <a class="navbar-brand" href="@Url.Action(viewName, controllerName)" tabindex="1">
+                        <img id="imgLogo" width="200" src='@Url.Content("~/Content/Images/logo/siteLogo.png")' onclick="setLocation('@selectedTab')" />
+                    </a>
+                }
+                else
+                {
+                    <a class="navbar-brand cursor-initial">
+                        <img id="imgLogo" width="200" src='@Url.Content("~/Content/Images/logo/siteLogo.png")' onclick="setLocation('@selectedTab')" />
+                    </a>
+                }
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                @if (IsValidUser)
+                {
+                    switch (UserType)
+                    {
+                        case PRGX.SIMTrax.Domain.Util.UserType.Auditor:
+                        case PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor:
+                            <ul class="nav navbar-nav navbar-left">
+                                <li>
+                                    <a class="headerFont bottom-border cursor" id="AdminHomeTab" href="/Admin/Home" tabindex="2">
+                                        <span><i class="fa fa-home"></i>
+                                        <span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString()</span>
+                                        </span>
+                                    </a>
+                                </li>
+                                <li class="divider-spacing"><div class="dividerline"></div></li>
+                                @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(PRGX.SIMTrax.Domain.Util.AuditorRoles.Users)))
+                                {
+                                    <li id="liTeam" class="dropdown disable-drop-down">
+                                        <a class="headerFont bottom-border-none team dropdown-toggle cursor" id="AdminTeamTab" onclick="setLocation('AdminTeamTab')" data-toggle="dropdown" tabindex="3"><span><i class="fa fa-users"></i>
+                                            <span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.USERS, userCulture).ToString()</span><b class="caret"></b></span>
+                                        </a>
+                                        <ul class="dropdown-menu full-width">
+                                            <li id="liUsers" class="dropdown-item">
+                                                <a class="headerFont" href="/Admin/ManageUsers" tabindex="4">
+                                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MANAGE_USERS, userCulture).ToString()
+                                                </a>
+                                            </li>
+                                            <li id="liUsersDivider"><div class="dividerdesktop"></div></li>
+                                            <li class="dropdown-item">
+                                                <a class="headerFont" href="/Admin/DefineAccessType" tabindex="5">
+                                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DEFINE_ACCESS_TYPES, userCulture).ToString()
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="divider-spacing"><div class="dividerline"></div></li>
+                                }
+                                @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(PRGX.SIMTrax.Domain.Util.AuditorRoles.Questionnaire)))
+                                {
+                                    @*<li id="liQuestionnaire" class="dropdown disable-drop-down">
+                                        <a class="headerFont bottom-border-none dropdown-toggle cursor" id="QuestionnairesTab" onclick="setLocation('QuestionnairesTab')" data-toggle="dropdown" tabindex="6"><span><i class="fa fa-question-circle"></i></span><span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONNARIES, userCulture).ToString()</span><span><b class="caret"></b></span></a>
+                                        <ul class="dropdown-menu full-width">
+                                            <li id="liQuestionnaireSections" class="dropdown-item"><a class="headerFont" data-viewname="QuestionnaireSections" data-action="/Admin/QuestionnaireSections" data-title="QuestionnaireSections" tabindex="7" onclick="location.href='/Admin/QuestionnaireSections'">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONNARIE_SECTIONS, userCulture).ToString()</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="divider-spacing"><div class="dividerline"></div></li>*@
+                                }
+                                @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(PRGX.SIMTrax.Domain.Util.AuditorRoles.Buyers)))
+                                {
+                                    <li id="liBuyerOrganisations" class="dropdown disable-drop-down">
+                                        <a class="headerFont bottom-border-none cursor" id="BuyerOrganisationsTab" href = '/Admin/BuyerOrganisation' tabindex="8"><span><i class="fa fa-life-ring"></i><span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BUYERS, userCulture).ToString()</span></span></a>
+                                    </li>
+                                    <li class="divider-spacing"><div class="dividerline"></div></li>
+                                }
+                                @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(PRGX.SIMTrax.Domain.Util.AuditorRoles.Suppliers)))
+                                {
+                                    <li class="dropdown disable-drop-down">
+                                        <a class="headerFont bottom-border-none cursor support" id="AdminSupportTab" href = '/Admin/SupplierOrganisations' tabindex="9">
+                                            <span><i class="fa fa-life-ring"></i><span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIERS, userCulture).ToString()</span></span>
+                                        </a>
+                                    </li>
+                                    <li class="divider-spacing"><div class="dividerline"></div></li>
+                                }
+                                @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(PRGX.SIMTrax.Domain.Util.AuditorRoles.Finance)))
+                                {
+                                    <li class="dropdown disable-drop-down">
+                                        <a class="headerFont bottom-border-none cursor dropdown-toggle finance" id="AdminFinanceTab" onclick="setLocation('AdminFinanceTab')" data-toggle="dropdown" tabindex="10"><span><i class="fa fa-line-chart"></i><span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FINANCE, userCulture).ToString()</span><b class="caret"></b></span></a>
+                                        <ul class="dropdown-menu full-width">
+                                            @*<li id="liPaymentReport" class="dropdown-item"><a class="headerFont Navigate" data-viewname="PaymentReports" data-action="/Admin/PaymentReports" data-title="Payment" tabindex="11" onclick="setLocation('AdminFinanceTab')">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PAYMENTS, userCulture).ToString()</a></li>
+                                            <li><div class="dividerdesktop"></div></li>*@
+                                            <li id="liVouchers" class="dropdown-item">
+                                                <a class="headerFont bottom-border-none cursor" href="/Admin/Voucher" data-title="Voucher" tabindex="12" onclick="setLocation('AdminFinanceTab')">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VOUCHERS, userCulture).ToString()</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="divider-spacing"><div class="dividerline"></div></li>
+                                }
+                            </ul>
+                            break;
+                        case PRGX.SIMTrax.Domain.Util.UserType.Supplier:
+                        case PRGX.SIMTrax.Domain.Util.UserType.AdminSupplier:
+                            if (organization.Status >= (int)PRGX.SIMTrax.Domain.Util.CompanyStatus.Submitted)
+                            {
+                                <ul class="nav navbar-nav navbar-left">
+                                    <li>
+                                        <a class="headerFont background-white bottom-border cursor parent" id="SupplierHomeTab" onclick="setLocation('SupplierHomeTab')" href="/supplier-home" tabindex="2"><span><i class="fa fa-home"></i><span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString()</span></span>
+                                        </a>
+                                    </li>
+                                    <li class="divider-spacing"><div class="dividerline"></div></li>
+                                    <li>
+                                        <a class="headerFont  background-white bottom-border-none cursor parent" id="SupplierProfileTab" tabindex="3" onclick="setLocation('SupplierProfileTab')" href="@String.Format("/Profile/{0}", sellerPartyId)" data-companyid=@sellerPartyId  data-companyname=@name><span><i class="fa fa-user"></i><span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PROFILE, userCulture).ToString() </span></span>
+                                        </a>
+                                    </li>
+                                    <li class="divider-spacing"><div class="dividerline"></div></li>
+                                    <li class="dropdown disable-drop-down">
+                                        <a class="headerFont background-white bottom-border-none cursor dropdown-toggle" id="SupplierQuestionnarieTab" tabindex="4" data-toggle="dropdown">
+                                            <span>
+                                                <i class="fa fa-check-circle"></i>
+                                                <span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONNARIES, userCulture).ToString()</span>
+                                                <b class="caret"></b>
+                                            </span>
+                                        </a>
+                                        <ul class="dropdown-menu full-width">
+                                            <li class="dropdown-item  background-white">
+                                                <a class="headerFont" href="/supplier/questionnaire/general-info" data-title="General Info. & Contacts" onclick="setLocation('SupplierQuestionnarieTab')">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFORMATION_CONTACTS, userCulture).ToString()
+                                                </a>
+                                            </li>
+                                            @*<li><div class="dividerdesktop"></div></li>
+                                            <li class="dropdown-item  background-white"><a class="headerFont Navigate" data-viewname="questionnaire" tabindex="6" data-action="/supplier/questionnaire/compliance-checks" data-title="Compliance Checks" onclick="setLocation('SupplierQuestionnarieTab')">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPLIANCE_CHECKS, userCulture).ToString()</a></li>*@
+                                            @*@if (IsMappedWithBuyer)
+                                            {
+                                                var buyerSupplierMappingService = new Services.BuyerSupplierMappingService();
+                                                var BuyersMappedToSupplier = buyerSupplierMappingService.GetBuyerSupplierMappingForClientChecks(company.CompanyId)
+                                                  .Where(elem => elem.BuyerCompany.BuyerQuestionSetMappings != null && elem.BuyerCompany.BuyerQuestionSetMappings.Count > 0).ToList();
+
+                                                foreach (var client in BuyersMappedToSupplier)
+                                                {
+                                                    <li><div class="dividerdesktop"></div></li>
+                                                        <li class="dropdown-item"><a class="headerFont" tabindex="7" href="@Url.Content(String.Format("/supplier/questionnaire/client-checks/?buyerId={0}", client.BuyerId))" data-title="Client Checks" onclick="setLocation('SupplierQuestionnarieTab')">@client.BuyerCompany.CompanyName @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CHECKS, userCulture).ToString()</a></li>
+                                                }
+                                            }*@
+                                        </ul>
+                                    </li>
+                                    @*<li class="divider-spacing"><div class="dividerline"></div></li>
+                                    <li class="dropdown disable-drop-down">
+                                        <a class="headerFont background-white bottom-border-none cursor dropdown-toggle" id="PaymentTab" tabindex="8" data-toggle="dropdown">
+                                            <span>
+                                                <i class="fa fa-shopping-cart"></i>
+                                                <span id="menuTextPayments" class=" background-white menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PAYMENTS, userCulture).ToString()</span>
+                                                <b class="caret"></b>
+                                            </span>
+                                            <div id="cartItemCntPayTag" class="payment-items-payment-tag" style="display: none;">
+                                            </div>
+                                            <div id="payments-tool-tip" class="hidden-xs" data-count="0" title="Pay now, or submit more sections and then pay for them all together." style="width:5px;height:1px;margin:auto;position:relative"></div>
+                                        </a>
+                                        <ul class="dropdown-menu full-width">
+                                            <li class="dropdown-item" id="licartItem">
+                                                <a class="headerFont  background-white Navigate" id="paymentTab" onclick="setLocation('PaymentTab')" tabindex="9" data-viewname="Index" data-action="/payments/awaiting-payment" data-title="Payment">
+                                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.AWAITING_PAYMENT, userCulture).ToString()
+                                                </a>
+                                                <div class="payment-items" id="cartItem">
+                                                </div>
+                                            </li>
+                                            <li id="cartItemDivider"><div class="dividerdesktop"></div></li>
+                                            <li class="dropdown-item">
+                                                <a class="headerFont  background-white Navigate" data-viewname="GetPaymentHistory" data-action="/payment/payment-history" tabindex="10" data-title="Payment" onclick="setLocation('PaymentTab')">
+                                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PAYMENT_HISTORY, userCulture).ToString()
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="divider-spacing"><div class="dividerline"></div></li>
+                                    <li>
+                                        <a class="headerFont  background-white bottom-border-none cursor Navigate" data-viewname="inbox" id="supplierInboxTab" onclick="setLocation('supplierInboxTab')" data-action="/Supplier/Inbox" tabindex="10" data-title="Inbox"><span><i class="fa fa-inbox"></i></span><span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INBOX, userCulture).ToString()</span></a>
+                                        <div id="supplier-inbox-count" class="inbox-count-tag" style="display: none;">
+                                        </div>
+                                    </li>
+                                    <li class="divider-spacing"><div class="dividerline"></div></li>*@
+                                </ul>
+                            }
+                            break;
+                        case PRGX.SIMTrax.Domain.Util.UserType.Buyer:
+                        case PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer:
+                            //var buyerPermissionList = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_BUYER_ACCESS_PERMISSIONS] != null) ? ((List<Domain.BuyerPermission>)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_BUYER_ACCESS_PERMISSIONS]) : new List<Domain.BuyerPermission>();
+                            <ul class="nav navbar-nav navbar-left">
+                                <li>
+                                    <a class="headerFont bottom-border cursor background-white" id="buyerHomeTab" onclick="setLocation('buyerHomeTab')" href="/Buyer/Home" data-title="Home" tabindex="2"><span><i class="fa fa-home"></i><span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString()</span></span>
+                                    </a>
+                                </li>
+                                <li class="divider-spacing"><div class="dividerline"></div></li>
+                                <li>
+                                    <a class="headerFont bottom-border-none cursor background-white" id="searchTab" onclick="setLocation('searchTab')"  href="/Buyer/SupplierSearch" data-title="Search" tabindex="3"><span><i class="fa fa-search"></i><span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH, userCulture).ToString()</span></span>
+                                    </a>
+                                </li>
+                                <li class="divider-spacing"><div class="dividerline"></div></li>
+                                @*@if (buyerPermissionList.Find(a => a.PermissionType == PRGX.SIMTrax.Domain.Util.BuyerPermissions.KeyQuestions) != null || buyerPermissionList.Find(a => a.PermissionType == PRGX.SIMTrax.Domain.Util.BuyerPermissions.RiskAnalysis) != null || buyerPermissionList.Find(a => a.PermissionType == PRGX.SIMTrax.Domain.Util.BuyerPermissions.SupplierOnboarding) != null)
+                                {
+                                    <li><a class="headerFont bottom-border-none cursor background-white Navigate" id="buyerReportsTab" onclick="setLocation('buyerReportsTab')" data-viewname="BuyerReports" data-action="/Buyer/Reports" data-title="Report" tabindex="4"><span><i class="fa fa-bar-chart"></i><span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REPORTS, userCulture).ToString()</span></span></a></li>
+                                        <li class="divider-spacing"><div class="dividerline"></div></li>
+                                }
+                                @if (buyerPermissionList.Find(a => a.PermissionType == PRGX.SIMTrax.Domain.Util.BuyerPermissions.Inbox) != null)
+                                {
+                                    <li>
+                                        <a class="headerFont bottom-border-none cursor background-white Navigate" id="buyer-inbox-tab" onclick="setLocation('buyer-inbox-tab')" data-viewname="buyerInbox" data-action="/Buyer/Inbox" data-title="Inbox" tabindex="5"><span><i class="fa fa-inbox"></i><span class="menuText">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INBOX, userCulture).ToString()</span></span></a>
+                                        <div id="buyer-inbox-count" class="inbox-count-tag" style="display :none;">
+                                        </div>
+                                    </li>
+                                        <li class="divider-spacing"><div class="dividerline"></div></li>
+                                }*@
+                            </ul>
+                            break;
+                    }
+                }
+
+                <ul class="nav navbar-nav navbar-right" id="loggedOut" style="display:@loggedOut">
+                    <li>
+                        <a onclick="openModelHelp()" class="headerFont">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HELP, userCulture).ToString()
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://www.prgx.com/services/supplier-information-management/" target="_blank" class="headerFont">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ABOUT, userCulture).ToString()
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right" id="loggedIn" style="display:@loggedIn">
+                    @if (!ProductionEnvironment)
+                    {
+                        @*<li class="hidden-xs hidden-sm"><a onclick="changeWidth(1)"><i class="fa  fa-desktop" style="font-size: 18px"></i></a></li>
+                            <li class="hidden-xs hidden-sm"><a onclick="changeWidth(2)"><i class="fa  fa-tablet" style="font-size: 18px"></i></a></li>
+                            <li class="hidden-xs hidden-sm"><a onclick="changeWidth(3)"><i class="fa  fa-mobile" style="font-size: 18px"></i></a></li>*@
+                    }
+                    <li id="helpicon" class="makeDisable">
+                        <a onclick="openModelHelp()" class="headerFont" tabindex="23">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HELP, userCulture).ToString()
+                        </a>
+                    </li>
+                    @if (!IsSubmittedForVerification && UserType == PRGX.SIMTrax.Domain.Util.UserType.Supplier)
+                    {
+                        <li>
+                            <a href="http://www.prgx.com/services/supplier-information-management/" target="_blank" class="headerFont">
+                                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ABOUT, userCulture).ToString()
+                            </a>
+                        </li>
+                    }
+                    <li class="dropdown makeDisable disable-drop-down">
+                        <a class="headerFont bottomBorderNone cursor background-white dropdown-toggle padding-right-zero" id="AccountTab" data-toggle="dropdown" tabindex="24">
+                            <span id="login-user-name">@userName<b class="margin-left-8px caret"></b></span>
+                        </a>
+                        <ul class="dropdown-menu full-width">
+                            <li class="dropdown-item background-white" id="changePasswordTab">
+                                <a href="/change-password" tabindex="25" onclick="setLocation('AccountTab')">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CHANGE_PASSWORD, userCulture).ToString()
+                                </a>
+                            </li>
+                            <li><div class="dividerdesktop"></div></li>
+                            <li class="dropdown-item background-white" id="logoutTab">
+                                <a tabindex="26" href='@Url.Action("Logout", "Account")'>
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LOGOUT, userCulture).ToString()
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section class="container-fluid">
+        <div id="Loading" class="loading" style="display: none;">
+            <div class="loading-image-div col-lg-offset-5 col-lg-2 col-md-offset-5 col-md-2 col-sm-offset-5 col-sm-2 col-xs-offset-5 col-xs-2" style="top: 43%;">
+                <img id="loading-image" src="~/Content/Images/loading.gif" alt="Loading..." />
+            </div>
+        </div>
+        <div id="main_Container">
+            @RenderBody()
+        </div>
+    </section>
+    <input type="hidden" id="isAjaxRequest" value="false" />
+    <footer id="defaultFooter" class="footer-content content-wrapper clearfix">
+        @if (IsValidUser && (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || UserType == PRGX.SIMTrax.Domain.Util.UserType.Auditor || IsSubmittedForVerification))
+        {
+            <div class="col-md-12 hidden-xs" style="margin-top: 16px;">
+                <div class="padding-footer-header" style="font-weight: bold;">
+                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SITE_MAP, userCulture).ToString() :
+                    <div class="col-md-2 footer-small-content cursor footer-text-align" id="back-to-top" style="float: right" tabindex="40">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_TOP, userCulture).ToString()</div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 hidden-xs">
+                <hr class="footer-border-style" style="margin-bottom: 10px;" />
+            </div>
+            <div class="col-md-12 col-sm-12 hidden-xs padding-footer-header">
+                @{
+                    var footerNavWidths = "";
+                }
+                @switch (UserType)
+                {
+                    case PRGX.SIMTrax.Domain.Util.UserType.Supplier:
+                    case PRGX.SIMTrax.Domain.Util.UserType.AdminSupplier:
+                        footerNavWidths = "width-for-supplier";
+
+                        <div class="@footerNavWidths clearfix">
+                            <div class="row col-md-12 col-sm-12 footer-big-content">
+                                <a id="SupplierHomeTab" onclick="setLocation('SupplierHomeTab')" href="/supplier-home" style="color:white;" tabindex="41">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString()</a>
+                            </div>
+                        </div>
+                        <div class="@footerNavWidths clearfix">
+                            <div class="col-md-12 col-sm-12 footer-big-content">
+                                <span class="cursor" onclick="location.href='@String.Format("/Profile/", sellerPartyId)'"  tabindex="42" data-companyid=@sellerPartyId data-companyname=@name>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PROFILE, userCulture).ToString() </span>
+                            </div>
+                        </div>
+                        <div class="@footerNavWidths clearfix">
+                            <div class="col-md-12 col-sm-12 footer-big-content" tabindex="43">
+                                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONNARIES, userCulture).ToString()
+                            </div>
+                            <div class="col-md-12 col-sm-12 footer-small-content padding-top-10px">
+                                <a class="cursor"  tabindex="44" onclick="setLocation('SupplierQuestionnarieTab')" href="/supplier/questionnaire/general-info" style="color:white;">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFORMATION_CONTACTS, userCulture).ToString()</a>
+                            </div>
+                            <div class="col-md-12 col-sm-12 footer-small-content padding-top-10px">
+                                <span class="cursor Navigate" data-viewname="questionnaire" data-action="/supplier/questionnaire/compliance-checks" data-title="Compliance Checks" tabindex="45" onclick="setLocation('SupplierQuestionnarieTab')">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPLIANCE_CHECKS, userCulture).ToString()</span>
+                            </div>
+                            @*@if (IsMappedWithBuyer)
+                            {
+                                var buyerSupplierMappingService = new Services.BuyerSupplierMappingService();
+                                var BuyersMappedToSupplier = buyerSupplierMappingService.GetBuyerSupplierMappingForClientChecks(company.CompanyId)
+                                  .Where(elem => elem.BuyerCompany.BuyerQuestionSetMappings != null && elem.BuyerCompany.BuyerQuestionSetMappings.Count > 0).ToList();
+
+                                foreach (var client in BuyersMappedToSupplier)
+                                {
+                                    <div class="col-md-12 col-sm-12 footer-small-content padding-top-10px">
+                                        <span class=" cursor Navigate" data-viewname="clientQuestions" data-action="/supplier/questionnaire/client-checks" data-title="Client Checks" onclick="setLocation('SupplierQuestionnarieTab')">@client.BuyerCompany.CompanyName @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CHECKS, userCulture).ToString()</span>
+                                    </div>
+                                }
+                            }*@
+
+                        </div>
+
+                        <div class="@footerNavWidths clearfix">
+                            <div class="col-md-12 col-sm-12 footer-big-content" tabindex="46">
+                                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PAYMENTS, userCulture).ToString()
+                            </div>
+                            <div id="awaitingPaymentFooterLink" class="col-md-12 col-sm-12 footer-small-content padding-top-10px">
+                                <span class="cursor Navigate" data-viewname="Index" data-action="/payments/awaiting-payment" data-title="Payment" tabindex="47" onclick="setLocation('PaymentTab')">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.AWAITING_PAYMENT, userCulture).ToString()</span>
+                            </div>
+                            <div class="col-md-12 col-sm-12 footer-small-content padding-top-10px">
+                                <span class="cursor Navigate" data-viewname="GetPaymentHistory" data-action="/payment/payment-history" data-title="Payment" tabindex="48" onclick="setLocation('PaymentTab')">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PAYMENT_HISTORY, userCulture).ToString()</span>
+                            </div>
+                        </div>
+                        <div class="@footerNavWidths clearfix">
+                            <div class="row col-md-12 col-sm-12 footer-big-content">
+                                <span class="cursor  Navigate" data-viewname="inbox" id="supplierInboxTab" onclick="setLocation('supplierInboxTab')" data-action="/Supplier/Inbox" data-title="Inbox" tabindex="49">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INBOX, userCulture).ToString()</span>
+                            </div>
+                        </div>
+                        break;
+                    case PRGX.SIMTrax.Domain.Util.UserType.Buyer:
+                    case PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer:
+                        footerNavWidths = "width-for-buyer";
+                        //var buyerPermissionList = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_BUYER_ACCESS_PERMISSIONS] != null) ? ((List<Domain.BuyerPermission>)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_BUYER_ACCESS_PERMISSIONS]) : new List<Domain.BuyerPermission>();
+                       
+                            <div class="@footerNavWidths clearfix">
+                                <div class="col-md-12 col-sm-12 footer-big-content">
+                                    <span class="cursor" onclick="location.href='/Buyer/Home'" data-title="Home" tabindex="41">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString()</span>
+                                </div>
+                            </div>
+                       
+                            <div class="@footerNavWidths clearfix">
+                                <div class="col-md-12 col-sm-12 footer-big-content">
+                                    <span class="cursor Navigate" onclick="location.href='/Buyer/SupplierSearch'" data-title="Search" tabindex="42">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH, userCulture).ToString()</span>
+                                </div>
+                            </div>
+                        @*if (buyerPermissionList.Find(a => a.PermissionType == PRGX.SIMTrax.Domain.Util.BuyerPermissions.KeyQuestions) != null || buyerPermissionList.Find(a => a.PermissionType == PRGX.SIMTrax.Domain.Util.BuyerPermissions.RiskAnalysis) != null || buyerPermissionList.Find(a => a.PermissionType == PRGX.SIMTrax.Domain.Util.BuyerPermissions.SupplierOnboarding) != null)
+                        {
+                            <div class="@footerNavWidths clearfix">
+                                <div class="col-md-12 col-sm-12 footer-big-content">
+                                    <span class=" cursor Navigate" onclick="setLocation('buyerReportsTab')" data-viewname="BuyerReports" data-action="/Buyer/Reports" data-title="Report" tabindex="43">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REPORTS, userCulture).ToString()</span>
+                                </div>
+                            </div>
+                        }
+                        if (buyerPermissionList.Find(a => a.PermissionType == PRGX.SIMTrax.Domain.Util.BuyerPermissions.Inbox) != null)
+                        {
+
+                            <div class="@footerNavWidths clearfix">
+                                <div class="col-md-12 col-sm-12 footer-big-content">
+                                    <span class=" cursor Navigate" onclick="setLocation('buyer-inbox-tab')" data-viewname="buyerInbox" data-action="/Buyer/Inbox" data-title="Inbox" tabindex="44">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INBOX, userCulture).ToString()</span>
+                                </div>
+                            </div>
+                        }*@
+                        break;
+                    case PRGX.SIMTrax.Domain.Util.UserType.Auditor:
+                    case PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor:
+                        footerNavWidths = "width-for-admin";
+                        <div class="@footerNavWidths clearfix">
+                            <div class="col-md-12 col-sm-12 footer-big-content">
+                                <span class=" cursor" onclick="location.href = '/Admin/Home'" data-viewname="Home" data-action="/Admin/Home" data-title="Home" tabindex="41">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString()</span>
+                            </div>
+                        </div>
+                        if (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || permissionList.Any(a => a.Value == Convert.ToInt32(PRGX.SIMTrax.Domain.Util.AuditorRoles.Users)))
+                        {
+                            <div class="@footerNavWidths clearfix">
+                                <div class="col-md-12 col-sm-12 footer-big-content" tabindex="42">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.USERS, userCulture).ToString()
+                                </div>
+                                <div class="col-md-12 col-sm-12 footer-small-content padding-top-10px">
+                                    <span class="cursor" data-viewname="manageUsers" data-action="/Admin/ManageUsers" data-title="Manage Users" tabindex="43" onclick="location.href='/Admin/ManageUsers'">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MANAGE_USERS, userCulture).ToString()</span>
+                                </div>
+                                <div class="col-md-12 col-sm-12 footer-small-content padding-top-10px">
+                                    <span class="cursor" data-viewname="buyerAndAuditorAccessRights" data-action="/Admin/DefineAccessTypes" data-title="Define Access Types" tabindex="44" onclick="location.href='/Admin/DefineAccessTypes'">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DEFINE_ACCESS_TYPES, userCulture).ToString()</span>
+                                </div>
+                            </div>
+                        }
+                        if (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || permissionList.Any(a => a.Value == Convert.ToInt32(PRGX.SIMTrax.Domain.Util.AuditorRoles.Questionnaire)))
+                        {
+                            <div class="@footerNavWidths clearfix">
+                                <div class="col-md-12 col-sm-12 footer-big-content" tabindex="45">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONNARIES, userCulture).ToString()
+                                </div>
+                                <div class="col-md-12 col-sm-12 footer-small-content padding-top-10px">
+                                    <span class="cursor" data-viewname="QuestionnaireSections" data-action="/Admin/QuestionnaireSections" data-title="QuestionnaireSections" tabindex="46" onclick="location.href = '/Admin/QuestionnaireSections'">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONNARIE_SECTIONS, userCulture).ToString()</span>
+                                </div>
+                            </div>
+                        }
+                        if (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || permissionList.Any(a => a.Value == Convert.ToInt32(PRGX.SIMTrax.Domain.Util.AuditorRoles.Buyers)))
+                        {
+                            <div class="@footerNavWidths clearfix">
+                                <div class="col-md-12 col-sm-12 footer-big-content" tabindex="47">
+                                    <div class="headerfont bottom-border-none cursor" id="BuyerOrganisationsFooterTab" onclick="location.href = '/Admin/  BuyerOrganisations'"><span><span class="menuText" style="margin-left:0px !important">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BUYERS, userCulture).ToString()</span></span></div>
+                                </div>
+                            </div>
+                        }
+                        if (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || permissionList.Any(a => a.Value == Convert.ToInt32(PRGX.SIMTrax.Domain.Util.AuditorRoles.Suppliers)))
+                        {
+                            <div class="@footerNavWidths clearfix">
+                                <div class="col-md-12 col-sm-12 footer-big-content" tabindex="48">
+                                    <div class="headerFont bottom-border-none cursor" id="AdminSupportTab" data-viewname="verifyAndAuditSuppliers" data-action="/Admin/  SupplierOrganisations" data-title="Supplier Organisations" onclick="location.href = '/Admin/SupplierOrganisations'"><span><span class="menuText" style="margin-left:0px !important">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIERS, userCulture).ToString()</span></span></div>
+                                </div>
+                            </div>
+                        }
+                        if (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(PRGX.SIMTrax.Domain.Util.AuditorRoles.Finance)))
+                        {
+                            <div class="@footerNavWidths clearfix">
+                                <div class="col-md-12 col-sm-12 footer-big-content" tabindex="49">
+                                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FINANCE, userCulture).ToString()
+                                </div>
+                                <div class="col-md-12 col-sm-12 footer-small-content padding-top-10px">
+                                    <span class="cursor Navigate" data-viewname="PaymentReports" data-action="/Admin/PaymentReports" data-title="Payment" tabindex="50" onclick="setLocation('AdminFinanceTab')">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PAYMENTS, userCulture).ToString()</span>
+                                </div>
+                                <div class="col-md-12 col-sm-12 footer-small-content padding-top-10px">
+                                    <span class="cursor Navigate" data-viewname="VoucherCreation" data-action="/Admin/Voucher" data-title="Voucher" tabindex="51" onclick="setLocation('AdminFinanceTab')">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VOUCHERS, userCulture).ToString()</span>
+                                </div>
+                            </div>
+                        }
+                        break;
+                }
+                <div class="@footerNavWidths clearfix">
+                    <div class="col-md-12 col-sm-12 cursor footer-big-content content-padding" tabindex="71">
+                        <span class="cursor" onclick="openModelHelp()">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HELP, userCulture).ToString()</span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 footer-small-content content-padding padding-top-10px cursor">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL, userCulture).ToString():
+                        <a href="mailto:@HttpContext.Current.Application["ContactEmail"]" target="_blank" style="color:white" tabindex="72">
+                            <span>@HttpContext.Current.Application["ContactEmail"]</span>
+                        </a>
+                    </div>
+                    <div class="col-md-12 col-sm-12 footer-small-content content-padding padding-top-10px" tabindex="73">
+                        <span>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PHONE, userCulture).ToString():  @HttpContext.Current.Application["ContactNo"]</span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 footer-small-content content-padding padding-top-10px" tabindex="74">
+                        <a target="FAQ" href="/FAQ" class="cursor" style="color: white">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQS, userCulture).ToString()</a>
+                    </div>
+                </div>
+
+                @*<div class="col-md-3 col-sm-4">
+                        @if (!IsSubmittedForVerification)
+                        {
+                            <div class="col-md-12 col-sm-12 cursor footer-big-content">
+                                <a href="http://www.prgx.com/services/supplier-information-management/" target="_blank" style="color: white">About</a>
+                            </div>
+                        }
+                    </div>*@
+                <div class="@footerNavWidths clearfix">
+                    <div class="col-md-12 col-sm-12 footer-big-content" tabindex="75">
+                        @userName
+                    </div>
+                    <div class="col-md-12 col-sm-12 footer-small-content padding-top-10px">
+                        <a href="/change-password" style="color:white;" tabindex="76" onclick="setLocation('AccountTab')">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CHANGE_PASSWORD, userCulture).ToString()</a>
+                    </div>
+                    <div class="col-md-12 col-sm-12 footer-small-content padding-top-10px cursor">
+                        <a href='@Url.Action("Logout", "Account")' style="color:white;" tabindex="77">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LOGOUT, userCulture).ToString()</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 hidden-xs" style="margin-top: 24px; height: 27px;">
+                <hr class="footer-border-style" />
+            </div>
+                    }
+
+        <div class="col-md-12 col-sm-12 hidden-xs">
+            <div class="row col-md-7 col-sm-9 full-width-footer" style="padding-top: 25px;">
+                <div class="row col-md-5 col-sm-4 line-height-44 footer-text-spacing left-margin-footer">&copy; @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PRGX_GLOBAL_RIGHTS, userCulture).ToString()</div>
+                <div class="col-md-2 col-sm-5 line-height-44 footer-text-spacing left-margin-footer-content">
+                    <a target="TermsOfUse" href="/terms-of-use" class="cursor" style="color: white">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TERMS_OF_USE, userCulture).ToString()</a>
+                </div>
+                <div class="col-md-3 col-sm-5 line-height-44 footer-text-spacing left-margin-footer-content"><a target="PrivacyPolicy" href="/privacy-policy" class="cursor" style="color: white">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PRIVACY_POLICY, userCulture).ToString()</a></div>
+                <div class="col-md-2 line-height-44 footer-text-spacing left-margin-footer-content">
+                    <a href="https://www.linkedin.com/company/prgx" target="_blank">
+                        <img src="~/Content/Images/logo/linkeldin.png" />
+                    </a>
+                    <a href="https://twitter.com/prgxglobal" target="_blank">
+                        <img src="~/Content/Images/logo/twitter.png" style="padding-left: 6px" />
+                    </a>
+                </div>
+            </div>
+            <div class="row col-md-5 col-sm-8 float-right-responsive" style="padding-top: 18px; padding-left: 0px;">
+                <div class=" float-right-responsive">
+                    <img src="~/Content/Images/logo/CIPS-Footer-Logo.jpg" style="height:75px;margin-right:20px; padding-bottom: 20px;" class="float-img-footer" />
+                    <img src="~/Content/Images/logo/footer-logo.png" style="width: 200px;padding-bottom: 20px" class="float-img-footer" />
+                </div>
+            </div>
+        </div>
+        <div class="hidden-md hidden-lg hidden-sm col-xs-12">
+            <div class="col-xs-12 full-width-footer" style="padding-top: 25px;">
+                <div class="row">
+                    <div class="col-xs-12 line-height-44 footer-text-spacing left-margin-footer-content">
+                        &copy; @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PRGX_GLOBAL_RIGHTS, userCulture).ToString()
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 line-height-44 footer-text-spacing left-margin-footer-content">
+                        <a class="cursor" target="TermsOfUse" href="/terms-of-use" style="color: white">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TERMS_OF_USE, userCulture).ToString()</a>
+                    </div>
+                    <div class="col-xs-2 line-height-44 footer-text-spacing left-margin-footer-content"><a target="PrivacyPolicy" href="/privacy-policy" class="cursor" style="color: white">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PRIVACY_POLICY, userCulture).ToString()</a></div>
+                    <div class="col-xs-4 line-height-44 footer-text-spacing left-margin-footer-content">
+                        <a href="https://www.linkedin.com/company/prgx" target="_blank">
+                            <img src="~/Content/Images/logo/linkeldin.png" />
+                        </a>
+                        <a href="https://twitter.com/prgxglobal" target="_blank">
+                            <img src="~/Content/Images/logo/twitter.png" style="padding-left: 6px" />
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 line-height-44 footer-text-spacing left-margin-footer-content">
+                        <img src="~/Content/Images/logo/CIPS-Footer-Logo.jpg" style="height: 85px; margin-right: 20px; padding-top: 10px; padding-bottom: 20px;" class="float-img-footer" />
+                        <img src="~/Content/Images/logo/footer-logo.png" style="width: 200px; padding-top: 10px; padding-bottom: 20px" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+<div class="modal fade bs-example-modal-sm" data-backdrop="static" id="modalHelp" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content col-md-9 center-modal-help">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HELP_POP_UP_HEADER, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row margin-bottom-15">
+                <div class="row col-md-12 col-sm-12 col-xs-12">
+                    <br />
+                    <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3 fa fa-envelope fa-opacity fa-3x  col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                    </div>
+                    <div class="col-md-8 col-sm-7 col-xs-7">
+
+                        <div class="contact-panel-text-color">
+                            <b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL_US, userCulture).ToString()</b>
+                        </div>
+                        <a href="mailto:@HttpContext.Current.Application["ContactEmail"]" target="_blank">
+                            <span>@HttpContext.Current.Application["ContactEmail"]</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row col-md-12 col-sm-12 col-xs-12" style="padding-top:30px">
+                    <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3  fa fa-phone fa-3x padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity " style="padding-left:20px">
+                    </div>
+                    <div class="col-md-8 col-sm-7 col-xs-7 padding-top">
+                        <div class="contact-panel-text-color">
+                            <b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CALL_US, userCulture).ToString()</b>
+                        </div>
+                        <span>@HttpContext.Current.Application["ContactNo"]</span>
+                    </div>
+
+                </div>
+                <div class="row col-md-12 col-sm-12 col-xs-12" style="padding-top:30px">
+                    <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3   padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity ">
+                        <img style="width:42px" src="~/Content/Images/FAQ.png" />
+                    </div>
+                    <div class="col-md-8 col-sm-7 col-xs-7" style="padding-top:18px">
+                        <b><a class="contact-panel-text-color hoverLink" style="cursor: pointer;" target="FAQ" href="/FAQ">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ, userCulture).ToString()</a></b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-sm" data-backdrop="static" id="ReadMoreModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content col-md-12">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COOKIES, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" style="overflow-y: scroll; height: 500px;">
+                <div>
+                    @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COOKIES_READ_MORE_MESSAGE, userCulture).ToString())
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/custom-intellisense")
+
+<script>
+
+    var selectedTab = "";
+    function setLocation(tab) {
+        selectedTab = tab;
+        $('.bottom-border').addClass('bottom-border-none').removeClass('bottom-border');
+        var browserWidth = $(document).width();
+        if (selectedTab != "" && browserWidth > 992) {
+            $('#' + selectedTab).removeClass('bottom-border-none').addClass('bottom-border');
+        }
+    }
+    var userTypeValue = '@userTypeValue';
+    @*var dateTimeFormat = '@dateFormat';*@
+    function disableBack() { window.history.forward() }
+
+    $(document).ready(function () {
+        if (window.onload != undefined) {
+            window.onload = disableBack();
+        }
+        if (document.cookie == "") {
+            $('#MessagePanel').show();
+            $(".slideit").slideUp(1).slideDown('slow');
+            $('body').addClass("body-no-pad-top");
+            $('section').addClass("margin-top-152");
+            $('#layout-header').addClass("top-80-layout");
+        }
+        else {
+            try {
+                if (getCookie("SIMTraxclientSideData") == "True") {
+                    $('#MessagePanel').hide();
+                    $('body').removeClass("body-no-pad-top");
+                    $('section').removeClass("margin-top-152");
+                    $('#layout-header').removeClass("top-80-layout");
+                }
+                else {
+                    $('#MessagePanel').show();
+                    $(".slideit").slideUp(1).slideDown('slow');
+                    $('body').addClass("body-no-pad-top");
+                    $('section').addClass("margin-top-152");
+                    $('#layout-header').addClass("top-80-layout");
+                }
+            }
+            catch (error) {
+                $('#MessagePanel').hide();
+                $('body').removeClass("body-no-pad-top");
+                $('section').removeClass("margin-top-152");
+                $('#layout-header').removeClass("top-80-layout");
+            }
+        }
+
+        $('#btnAccept').click(function () {
+            document.cookie = "SIMTraxclientSideData=True; expires=Thu, 31 Dec 2020 12:00:00 UTC";
+            $('#MessagePanel').hide();
+            $('body').removeClass("body-no-pad-top");
+            $('section').removeClass("margin-top-152");
+            $('#layout-header').removeClass("top-80-layout");
+            //$.ajax({
+            //    type: 'post',
+            //    url: '/Common/SetCookies',
+            //    success: function (data) {
+            //        if (data != "undefined") {
+            //            if (data == "True") {
+            //                $('#MessagePanel').hide();
+            //                $('body').removeClass("body-no-pad-top");
+            //                $('section').removeClass("margin-top-152");
+            //                $('#layout-header').removeClass("top-80-layout");
+            //            }
+            //        }
+            //    },
+            //    error: function (xhr, ajaxOptions, thrownError) {
+            //        //alert('Failed to get company status');
+            //    }
+            //});
+        });
+        setFooterHeight();
+        if (selectedTab != "") {
+            $('.bottom-border').addClass('bottom-border-none').removeClass('bottom-border');
+            $('#' + selectedTab).removeClass('bottom-border-none').addClass('bottom-border');
+            selectedTab = "";
+        }
+        if (userTypeValue == 1) {
+           // GetPaymentItemsCount(false);
+        }
+
+        if (userTypeValue == parseInt('@((Int16)PRGX.SIMTrax.Domain.Util.UserType.Supplier)') || userTypeValue == parseInt('@((Int16)PRGX.SIMTrax.Domain.Util.UserType.AdminSupplier)')
+            || userTypeValue == parseInt('@((Int16)PRGX.SIMTrax.Domain.Util.UserType.Buyer)') || userTypeValue == parseInt('@((Int16)PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer)')) {
+           // GetInboxCount();
+        }
+
+    });
+
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+
+    function GetInboxCount() {
+        $.ajax({
+            type: 'post',
+            url: '/Common/GetInboxCount',
+            success: function (data) {
+                if (data > 0) {
+                    if (userTypeValue == parseInt('@((Int16)PRGX.SIMTrax.Domain.Util.UserType.Supplier)') || userTypeValue == parseInt('@((Int16)PRGX.SIMTrax.Domain.Util.UserType.AdminSupplier)')) {
+                        $("#supplier-inbox-count").show();
+                        $("#supplier-inbox-count").html(data);
+                        $("#buyer-inbox-count").hide();
+
+                    }
+                    else {
+                        $("#buyer-inbox-count").show();
+                        $("#buyer-inbox-count").html(data);
+                        $("#supplier-inbox-count").hide();
+
+                    }
+                }
+                else {
+                    $("#supplier-inbox-count").hide();
+                    $("#buyer-inbox-count").hide();
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //alert('Failed to get company status');
+            }
+        });
+    }
+
+    function GetPaymentItemsCount(isToolTipNeeded) {
+        $.ajax({
+            type: 'post',
+            url: '/Common/GetPaymentItemsCount',
+            success: function (data) {
+
+                if (data != "undefined") {
+                    if (parseInt(data) > 0) {
+                        $("#cartItem").html(data);
+                        $("#cartItemCntPayTag").show();
+                        $("#cartItemCntPayTag").html(data);
+                        //$("#licartItem").show();
+                        $("#cartItem").show();
+                        if (isToolTipNeeded && $(window).width() > 985) {
+                            if (parseInt(data) == 1 && $('#payments-tool-tip').attr('data-count') == "0") {
+                                setTimeout(function () {
+                                    $('#payments-tool-tip').tipso('update', 'content', '<div style=\"padding-top:10px\">You have ' + parseInt(data) + ' section <a class="Navigate" data-viewname="Index" data-action="/payments/awaiting-payment" data-title="Payment" onclick="setLocation("PaymentTab")" style="color:white;text-decoration:underline"> awaiting payment</a>.</div><div style=\"padding-top:10px\">Pay now, or submit more sections and then pay for them all together.</div>');
+                                    $('#payments-tool-tip').tipso('update', 'background', '#FF9933');
+                                    $('#payments-tool-tip').tipso('update', 'width', '350px');
+                                    $('#payments-tool-tip').tipso('show');
+                                }, 500)
+
+                            }
+                            else {
+                                $('#payments-tool-tip').tipso('hide');
+                                $('#payments-tool-tip').tipso('destroy');
+                            }
+                        }
+                        else {
+                            $('#payments-tool-tip').tipso('hide');
+                            $('#payments-tool-tip').tipso('destroy');
+                        }
+                        $('#payments-tool-tip').attr('data-count', data)
+                        //$("#awaitingPaymentFooterLink").show();
+                        //$("#cartItemDivider").show();
+                    }
+                    else {
+                        //$("#licartItem").hide();
+                        $("#cartItem").hide();
+                        //$("#cartItemDivider").hide();
+                        $("#cartItemCntPayTag").hide();
+                        $('#payments-tool-tip').tipso('hide');
+                        $('#payments-tool-tip').tipso('destroy');
+                        $('#payments-tool-tip').attr('data-count', '0');
+                        //$("#awaitingPaymentFooterLink").hide();
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                //alert('Failed to get company status');
+            }
+        });
+        //GetPaymentItemsCount
+    }
+
+    function setFooterHeight() {
+        var width = $(document).width();
+        var height = 450;
+        if (userTypeValue == 3 || userTypeValue == 5) {
+            height = 192;
+        }
+        else {
+            if (width < 983 && width > 764) {
+                height = 535;
+            }
+        }
+        if (width < 764) {
+            height = 410;
+        }
+        var sectionMinHeight = $(window).height() - height;
+        $("section").css("min-height", sectionMinHeight);
+
+    }
+
+    $(window).resize(function () {
+        setFooterHeight();
+    })
+
+    function ShowReadMoreDialog() {
+        $('#ReadMoreModal').modal('show');
+    }
+
+    function changeWidth(type) {
+        $('.tipso_bubble').remove();
+        var url = window.location.pathname;
+        switch (type) {
+            case 2:
+                var src = $('#iframeDiv').attr('src');
+                if (src == "") {
+                    $('#iframeDiv').attr('src', url);
+                }
+                $('#iframeDiv').attr('style', 'width: 768px; height: 928px; margin-left: 300px; border: 1px solid #F3F3F3;');
+                $('#iframeDiv').show();
+                $('.navbar-left li').addClass('disabled');
+                $('.makeDisable').addClass('disabled');
+                $('.disable-drop-down').removeClass('dropdown');
+                $('section').hide();
+                $('footer').hide();
+                break;
+            case 3:
+                var src = $('#iframeDiv').attr('src');
+                if (src == "") {
+                    $('#iframeDiv').attr('src', url);
+                }
+                $('#iframeDiv').attr('style', 'width: 360px; height: 444px;margin-left:500px;border:1px solid #F3F3F3;');
+                $('#iframeDiv').show();
+                $('.navbar-left li').addClass('disabled');
+                $('.makeDisable').addClass('disabled');
+                $('.disable-drop-down').removeClass('dropdown');
+                $('section').hide();
+                $('footer').hide();
+                break;
+            default:
+                //$('#iframeDiv').attr('style', 'width: 100%; height: auto;');
+                //$('#iframeDiv').show();
+                $('#iframeDiv').attr('src', "");
+                $('#iframeDiv').hide();
+                $('section').show();
+                $('footer').show();
+                $('.disable-drop-down').addClass('dropdown');
+                $('.navbar-left li').removeClass('disabled');
+                $('.makeDisable').removeClass('disabled');
+                break;
+        }
+    }
+
+    $(window).resize(function () {
+        changeWidth(1);
+    });
+
+    function openModelHelp() {
+        $('#modalHelp').modal('show');
+    }
+
+    $('#back-to-top').click(function () {
+        ScrollToTop();
+    });
+    $(document).on('click', '#layout-footer-manage-campaign', function () {
+        window.location.href = "/Campaign/Index"
+    });
+
+</script>
+@Scripts.Render("~/bundles/common")
+<script src="~/Content/Scripts/respond.js"></script>

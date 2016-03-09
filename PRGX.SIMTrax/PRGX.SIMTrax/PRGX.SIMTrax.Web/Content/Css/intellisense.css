@@ -1,0 +1,51 @@
+﻿ .inelesenceLi {
+    }
+
+        .inelesenceLi:hover {
+            background-color: #55BA49;
+            color: white;
+        }
+
+    .selected {
+        background-color: #55BA49 !important;
+        color: white !important;
+    }
+
+    .intellisense-container, .multi-intellisense-container {
+        position: absolute;
+        max-height: 300px;
+        top: 33px;
+        background-color: white;
+        z-index: 999999999;
+        border: 1px solid rgb(204, 204, 204);
+        padding: 0px;
+        /*border-bottom: 5px solid rgb(144, 144, 144);*/
+    }
+
+    .intellisense-ul, .multi-intellisense-ul {
+        List-style-type: none;
+        padding-left: 0px;
+        margin-bottom: 0px;
+        overflow: auto;
+    }
+    .multi-intellisense-ul {
+                max-height: 440px;
+
+    }
+.intellisense-ul {
+    max-height: 300px;
+}
+    .intellisense-li,.multi-intellisense-li {
+        background-color: white;
+        color: black;
+        cursor: pointer;
+        height: 35px;
+        padding-left: 12px;
+        padding-top: 5px;
+        /*border-bottom: 1px solid rgb(204, 204, 204);*/
+    }
+
+        .intellisense-li:hover ,.multi-intellisense-li:hover{
+            background-color: #55BA49;
+            color: white;
+        }

@@ -1,0 +1,4451 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ABOUT" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="ABOUT_BUYER" xml:space="preserve">
+    <value>About buyer</value>
+  </data>
+  <data name="ABOUT_BUYER_BUSINESS_PROFILE" xml:space="preserve">
+    <value>About buyer business profile</value>
+  </data>
+  <data name="ABOUT_BUYER_ORGANISATION" xml:space="preserve">
+    <value>About buyer organisation</value>
+  </data>
+  <data name="ACCEPT" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="ACCEPT_ETHICAL_BUSINESS_POLICY_HERE" xml:space="preserve">
+    <value>Accept Ethical Business Policy here</value>
+  </data>
+  <data name="ACCESS" xml:space="preserve">
+    <value>Access</value>
+  </data>
+  <data name="ACCESS_CONFIGURATION" xml:space="preserve">
+    <value>Access Configuration</value>
+  </data>
+  <data name="ACCESS_CONFIGURATION_VALIDATION" xml:space="preserve">
+    <value>Select the access configurations</value>
+  </data>
+  <data name="ACCESS_TO_YOUR_ANSWERS" xml:space="preserve">
+    <value>Access to your answers</value>
+  </data>
+  <data name="ACCESS_TYPE" xml:space="preserve">
+    <value>Access Type</value>
+  </data>
+  <data name="ACCESS_TYPES" xml:space="preserve">
+    <value>Access Types</value>
+  </data>
+  <data name="ACCOUNTS_FINANCE_REMITTANCE_CONTACT" xml:space="preserve">
+    <value>Accounts/Finance/Remittance Contact</value>
+  </data>
+  <data name="ACCOUNT_CREATED_SUCCESSFULLY" xml:space="preserve">
+    <value>Account Created Successfully.</value>
+  </data>
+  <data name="ACCOUNT_LOCKED" xml:space="preserve">
+    <value>Account is locked temporarily. Please try again after sometime.</value>
+  </data>
+  <data name="ACCOUNT_NAME" xml:space="preserve">
+    <value>Account Name</value>
+  </data>
+  <data name="ACCOUNT_NAME_ERROR" xml:space="preserve">
+    <value>Enter the Account Name</value>
+  </data>
+  <data name="ACCOUNT_NO" xml:space="preserve">
+    <value>Account No</value>
+  </data>
+  <data name="ACCOUNT_NO_ERROR" xml:space="preserve">
+    <value>Enter the Account Number</value>
+  </data>
+  <data name="ACC_FIN_REMITTANCE" xml:space="preserve">
+    <value>Account/Finance/Remittance</value>
+  </data>
+  <data name="ACC_FIN_REMIT_CONTACT_INFO" xml:space="preserve">
+    <value>Accounts/Finance/Remittance  Contact Information</value>
+  </data>
+  <data name="ACTION" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="ACTIONS" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="ACTION_ON" xml:space="preserve">
+    <value>Action on</value>
+  </data>
+  <data name="ACTION_SELECTED" xml:space="preserve">
+    <value>Action on {0} selected</value>
+  </data>
+  <data name="ACTIVATE" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="ACTIVATED" xml:space="preserve">
+    <value>Activated</value>
+  </data>
+  <data name="ACTIVATE_BUYER" xml:space="preserve">
+    <value>Activate Buyer</value>
+  </data>
+  <data name="ACTIVE" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="ADD" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ADDRESS" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="ADDRESSES" xml:space="preserve">
+    <value>Addresses</value>
+  </data>
+  <data name="ADDRESSES_MESSAGE" xml:space="preserve">
+    <value>Update your key addresses, including mailing, headquarters, remittance and branches</value>
+  </data>
+  <data name="ADDRESS_ALREADY_MAPPED" xml:space="preserve">
+    <value>Address is already mapped for</value>
+  </data>
+  <data name="ADDRESS_ERROR" xml:space="preserve">
+    <value>Enter the address</value>
+  </data>
+  <data name="ADDRESS_LINE_1" xml:space="preserve">
+    <value>Address Line 1</value>
+  </data>
+  <data name="ADDRESS_LINE_1_ERROR" xml:space="preserve">
+    <value>Enter the Address</value>
+  </data>
+  <data name="ADDRESS_LINE_2" xml:space="preserve">
+    <value>Address Line 2</value>
+  </data>
+  <data name="ADDRESS_TYPE" xml:space="preserve">
+    <value>Address Type</value>
+  </data>
+  <data name="ADDRESS_TYPE_ERROR" xml:space="preserve">
+    <value>Select  the Address Type</value>
+  </data>
+  <data name="ADDRESS_VALIDATION" xml:space="preserve">
+    <value>Enter the Address</value>
+  </data>
+  <data name="ADD_ADDRESS" xml:space="preserve">
+    <value>Add Address</value>
+  </data>
+  <data name="ADD_ADDRESS_SUCCESS" xml:space="preserve">
+    <value>Address Added Successfully</value>
+  </data>
+  <data name="ADD_BANK_DETAILS" xml:space="preserve">
+    <value>Add Bank Details</value>
+  </data>
+  <data name="ADD_BANK_DETAILS_SUCCESS" xml:space="preserve">
+    <value>Bank Details Added Successfully</value>
+  </data>
+  <data name="ADD_CONTACT" xml:space="preserve">
+    <value>Add Contact</value>
+  </data>
+  <data name="ADD_CONTACT_SUCCESS" xml:space="preserve">
+    <value>Contact Added Successfully</value>
+  </data>
+  <data name="ADD_MESSAGE_OR_EDIT_ANSWERS" xml:space="preserve">
+    <value>Please add a message or edit the access to your answers</value>
+  </data>
+  <data name="ADD_MESSAGE_TO_ACCOMPANY_ACCESS" xml:space="preserve">
+    <value>Please add a message to accompany the change in access</value>
+  </data>
+  <data name="ADD_NEW_ADDRESS" xml:space="preserve">
+    <value>Add New Address</value>
+  </data>
+  <data name="ADD_OR_EDIT_REFERRER" xml:space="preserve">
+    <value>Add/Edit Referrer</value>
+  </data>
+  <data name="ADD_REFERENCES" xml:space="preserve">
+    <value>Add References</value>
+  </data>
+  <data name="ADD_REFERENCE_DETAILS" xml:space="preserve">
+    <value>Add Reference Details</value>
+  </data>
+  <data name="ADD_REFERENCE_DETAILS_SUCCESS" xml:space="preserve">
+    <value>Reference Details Added Succesfully</value>
+  </data>
+  <data name="ADD_REFERRER" xml:space="preserve">
+    <value>Add Referrer</value>
+  </data>
+  <data name="ADD_USER" xml:space="preserve">
+    <value>Add User</value>
+  </data>
+  <data name="ADMIN_HOME" xml:space="preserve">
+    <value>Auditor Home</value>
+  </data>
+  <data name="ADMIN_HOME_BUYER_METRICS_HEADING" xml:space="preserve">
+    <value>Buyer organisations to verify and activate</value>
+  </data>
+  <data name="ADMIN_HOME_CAMPAIGNS_AWAITING_METRICS_HEADING" xml:space="preserve">
+    <value>Campaigns awaiting action from others</value>
+  </data>
+  <data name="ADMIN_HOME_CAMPAIGNS_METRICS_HEADING" xml:space="preserve">
+    <value>Campaigns needing your attention</value>
+  </data>
+  <data name="ADMIN_HOME_SUPPLIER_METRICS_HEADING" xml:space="preserve">
+    <value>Supplier information to verify/audit</value>
+  </data>
+  <data name="ALL" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="ALLOW_INVOICE_OR_SKIP" xml:space="preserve">
+    <value>Allow Invoice / Skip</value>
+  </data>
+  <data name="ALL_OF_THE_SELECTED_SUPPLIERS_HAVE_ALREADY_RECEIVED_YOUR_REQUEST" xml:space="preserve">
+    <value>All of the selected suppliers have already received your request</value>
+  </data>
+  <data name="ALL_SHARED" xml:space="preserve">
+    <value>All answers shared</value>
+  </data>
+  <data name="ALREADY_MAPPED_FOR" xml:space="preserve">
+    <value>is already mapped for</value>
+  </data>
+  <data name="ALREADY_REGISTERED_LOGIN_HERE" xml:space="preserve">
+    <value>Already registered? Login here</value>
+  </data>
+  <data name="ANSWERED" xml:space="preserve">
+    <value>answered</value>
+  </data>
+  <data name="ANSWERS_LOWER_CASE" xml:space="preserve">
+    <value>answers</value>
+  </data>
+  <data name="ANSWERS_SHARED" xml:space="preserve">
+    <value>Answers shared</value>
+  </data>
+  <data name="ANSWERS_SHARED_WITH_YOU" xml:space="preserve">
+    <value>Answers shared with you</value>
+  </data>
+  <data name="ANSWERS_SUBMITTED_AND_AWAITING_PAYMENT" xml:space="preserve">
+    <value>Answers submitted and awaiting payment</value>
+  </data>
+  <data name="ANSWER_LOWER_CASE" xml:space="preserve">
+    <value>answer</value>
+  </data>
+  <data name="ANSWER_THIS_SECTION" xml:space="preserve">
+    <value>Answer this Section</value>
+  </data>
+  <data name="ANY_SHARING" xml:space="preserve">
+    <value>Any sharing status</value>
+  </data>
+  <data name="APPLY_VOUCHER" xml:space="preserve">
+    <value>Apply Voucher</value>
+  </data>
+  <data name="APPROVE" xml:space="preserve">
+    <value>Approve</value>
+  </data>
+  <data name="APPROVE_CAMPAIGN" xml:space="preserve">
+    <value>Approve Campaign</value>
+  </data>
+  <data name="ARE_YOU_SURE_YOU_WANT_TO_APPROVE_THIS_CAMPAIGN" xml:space="preserve">
+    <value>Are you sure you want to approve this campaign</value>
+  </data>
+  <data name="ARE_YOU_SURE_YOU_WANT_TO_REQUEST_ALL_ANSWERS" xml:space="preserve">
+    <value>Are you sure you want to request all answers</value>
+  </data>
+  <data name="ASSIGN" xml:space="preserve">
+    <value>Assign</value>
+  </data>
+  <data name="ASSIGNED" xml:space="preserve">
+    <value>Assigned</value>
+  </data>
+  <data name="ASSIGNED_CLIENTS" xml:space="preserve">
+    <value>Assigned Clients</value>
+  </data>
+  <data name="ASSIGNED_TO_AUDITOR" xml:space="preserve">
+    <value>Assigned To Auditor</value>
+  </data>
+  <data name="ASSIGN_ACCESS" xml:space="preserve">
+    <value>Assign Access</value>
+  </data>
+  <data name="ASSIGN_ADDRESS" xml:space="preserve">
+    <value>Assign Address</value>
+  </data>
+  <data name="ASSIGN_ADDRESS_SUCCESS" xml:space="preserve">
+    <value>Address Assigned Successfully</value>
+  </data>
+  <data name="ASSIGN_AUDITOR" xml:space="preserve">
+    <value>Assign Auditor</value>
+  </data>
+  <data name="ASSIGN_BANK_DETAILS_SUCCESS" xml:space="preserve">
+    <value>Bank Details Assigned Successfully</value>
+  </data>
+  <data name="ASSIGN_PRODUCTS" xml:space="preserve">
+    <value>Assign Products</value>
+  </data>
+  <data name="ASSIGN_REFERENCE_SUCCESS" xml:space="preserve">
+    <value>Reference Assigned Successfully</value>
+  </data>
+  <data name="ASSIGN_ROLES" xml:space="preserve">
+    <value>Assign Roles</value>
+  </data>
+  <data name="ASSIGN_TO_CLIENTS" xml:space="preserve">
+    <value>Assign To Clients</value>
+  </data>
+  <data name="AUDITED" xml:space="preserve">
+    <value>Audited</value>
+  </data>
+  <data name="AUDITOR_CREATED_SUCCESS" xml:space="preserve">
+    <value>Auditor has been created successfully</value>
+  </data>
+  <data name="AUDIT_QUESTIONS_VALIDATION" xml:space="preserve">
+    <value>Please audit all questions to approve</value>
+  </data>
+  <data name="AUTHORISATION_TRANSACTION_TYPE" xml:space="preserve">
+    <value>Authorisation(Transaction Type)</value>
+  </data>
+  <data name="AUTHORISED_INVOICES" xml:space="preserve">
+    <value>Authorised invoices</value>
+  </data>
+  <data name="AUTHORISE_TRANSACTION" xml:space="preserve">
+    <value>Authorise Transaction</value>
+  </data>
+  <data name="AWAITING_PAYMENT" xml:space="preserve">
+    <value>Awaiting Payment</value>
+  </data>
+  <data name="BACK" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="BACK_TO" xml:space="preserve">
+    <value>Back To</value>
+  </data>
+  <data name="BACK_TO_ALL_BUYER_ORG" xml:space="preserve">
+    <value>&lt; Back to all Buyer Organisations</value>
+  </data>
+  <data name="BACK_TO_ALL_QUESTIONNAIRE_SECTION" xml:space="preserve">
+    <value>&lt; Back to all Questionnaire Sections</value>
+  </data>
+  <data name="BACK_TO_ALL_QUESTIONNAIRE_SECTIONS" xml:space="preserve">
+    <value>Back to all questionnaire sections</value>
+  </data>
+  <data name="BACK_TO_HOME" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="BACK_TO_MANAGE_QUESTIONNAIRE" xml:space="preserve">
+    <value>&lt; Back To Manage Questionnaire</value>
+  </data>
+  <data name="BACK_TO_MANAGE_QUESTIONNAIRES" xml:space="preserve">
+    <value>Back to Manage Questionnaires</value>
+  </data>
+  <data name="BACK_TO_QUESTIONNAIRE_SUMMARY" xml:space="preserve">
+    <value>&lt; Back to Questionnaire Summary</value>
+  </data>
+  <data name="BACK_TO_SEARCH" xml:space="preserve">
+    <value>Back to search</value>
+  </data>
+  <data name="BACK_TO_SUPPLIER_ORGANISATIONS" xml:space="preserve">
+    <value>Back To All Supplier Organisations</value>
+  </data>
+  <data name="BACK_TO_TOP" xml:space="preserve">
+    <value>Back to top</value>
+  </data>
+  <data name="BACS_BANK_ACC_NO" xml:space="preserve">
+    <value>Account Number: 40241866</value>
+  </data>
+  <data name="BACS_BANK_DETAILS_LINE1" xml:space="preserve">
+    <value>The Royal Bank of Scotland N.V.</value>
+  </data>
+  <data name="BACS_BANK_DETAILS_LINE2" xml:space="preserve">
+    <value>250 Bishopgate, London EC2M 4AA</value>
+  </data>
+  <data name="BACS_BANK_IBAN_NO" xml:space="preserve">
+    <value>IBAN Number: GB81 ABNA 4050 3040 2418 66</value>
+  </data>
+  <data name="BACS_BANK_SORT_CODE" xml:space="preserve">
+    <value>Sort Code: 40-50-30</value>
+  </data>
+  <data name="BANK_ADDRESS" xml:space="preserve">
+    <value>Bank Address</value>
+  </data>
+  <data name="BANK_ADDRESS_ERROR" xml:space="preserve">
+    <value>Enter the Bank Address</value>
+  </data>
+  <data name="BANK_DETAILS" xml:space="preserve">
+    <value>Bank Details</value>
+  </data>
+  <data name="BANK_DETAILS_FOR_BACS_PAYMENT" xml:space="preserve">
+    <value>Bank Details For BACS Payment:</value>
+  </data>
+  <data name="BANK_DETAILS_MESSAGE" xml:space="preserve">
+    <value>Update your remittance details.
+                                    These are only shared with buying organisations of your choice.</value>
+  </data>
+  <data name="BANK_NAME" xml:space="preserve">
+    <value>Bank Name</value>
+  </data>
+  <data name="BANK_NAME_ERROR" xml:space="preserve">
+    <value>Enter the Bank Name</value>
+  </data>
+  <data name="BANK_TRANSFER" xml:space="preserve">
+    <value>Bank Transfer</value>
+  </data>
+  <data name="BEGIN_REGISTRATION" xml:space="preserve">
+    <value>Begin Registration</value>
+  </data>
+  <data name="BEGUN_REG_BUT_NOT_SUBMITTED" xml:space="preserve">
+    <value>Begun registration but not submitted</value>
+  </data>
+  <data name="BOTH" xml:space="preserve">
+    <value>Both</value>
+  </data>
+  <data name="BRANCH" xml:space="preserve">
+    <value>Branch</value>
+  </data>
+  <data name="BREAD_CRUMB_BACK_TO_HOME" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="BREAD_CRUMB_BACK_TO_INBOX" xml:space="preserve">
+    <value>Back to inbox</value>
+  </data>
+  <data name="BREAD_CRUMB_BACK_TO_KEY_QUESTIONS" xml:space="preserve">
+    <value>Back to Key Questions</value>
+  </data>
+  <data name="BREAD_CRUMB_BACK_TO_RISK_ANALYSIS" xml:space="preserve">
+    <value>Back to Risk Analaysis</value>
+  </data>
+  <data name="BRITVIC_EBP" xml:space="preserve">
+    <value>Britvic EBP</value>
+  </data>
+  <data name="BUSINESS_DESCRIPTION" xml:space="preserve">
+    <value>Business Description</value>
+  </data>
+  <data name="BUSINESS_DESC_CHAR_LIMIT" xml:space="preserve">
+    <value>/1200 characters limit)</value>
+  </data>
+  <data name="BUSINESS_DESC_VALIDATION" xml:space="preserve">
+    <value>Business description should not exceed more than 1200 characters.</value>
+  </data>
+  <data name="BUT" xml:space="preserve">
+    <value>but</value>
+  </data>
+  <data name="BUYER" xml:space="preserve">
+    <value>Buyer</value>
+  </data>
+  <data name="BUYERS" xml:space="preserve">
+    <value>Buyers</value>
+  </data>
+  <data name="BUYERS_YOU_TRADE" xml:space="preserve">
+    <value>Buyers we trade with</value>
+  </data>
+  <data name="BUYER_ACCESS_ERROR" xml:space="preserve">
+    <value>please select the buyer access</value>
+  </data>
+  <data name="BUYER_ACTIVATED_SUCCESSFULLY_SUCCESS_MESSAGE" xml:space="preserve">
+    <value>Buyer activated successfully.</value>
+  </data>
+  <data name="BUYER_HOME" xml:space="preserve">
+    <value>Buyer Home</value>
+  </data>
+  <data name="BUYER_NAME" xml:space="preserve">
+    <value>Buyer Name</value>
+  </data>
+  <data name="BUYER_ORGANISATION" xml:space="preserve">
+    <value>Buyer Organisation</value>
+  </data>
+  <data name="BUYER_ORGANISATIONS" xml:space="preserve">
+    <value>Buyer Organisations</value>
+  </data>
+  <data name="BUYER_ORG_DISPLAY" xml:space="preserve">
+    <value>Buyer Organisations:</value>
+  </data>
+  <data name="BUYER_ORG_ERROR" xml:space="preserve">
+    <value>Please select a buyer organisation.</value>
+  </data>
+  <data name="BUYER_ROLE_ADDED_SUCCESSFULLY" xml:space="preserve">
+    <value>Buyer Role added Successfully.</value>
+  </data>
+  <data name="BUYER_ROLE_UPDATED_SUCCESSFULLY" xml:space="preserve">
+    <value>Buyer Role updated Successfully.</value>
+  </data>
+  <data name="BUYER_SUPPLIER_MAPPING" xml:space="preserve">
+    <value>Buyer Supplier Mapping</value>
+  </data>
+  <data name="BUYER_UNASSIGNED_SUCCESSFULLY" xml:space="preserve">
+    <value>Buyer UnAssigned Successfully</value>
+  </data>
+  <data name="CALL_US" xml:space="preserve">
+    <value>Call Us</value>
+  </data>
+  <data name="CAMPAIGNS_ASSIGNED_TO_USER" xml:space="preserve">
+    <value>Campaign has been assigned to this auditor.</value>
+  </data>
+  <data name="CAMPAIGN_APPROVED_SUCCESS_MESSAGE" xml:space="preserve">
+    <value>Campaign has been approved successfully.</value>
+  </data>
+  <data name="CAMPAIGN_ASSIGNED_TO_AUDITOR_ERROR_MESSAGE" xml:space="preserve">
+    <value>Sorry. Campaign could not be successfully assigned to auditor.</value>
+  </data>
+  <data name="CAMPAIGN_ASSIGNED_TO_AUDITOR_SUCCESS_MESSAGE" xml:space="preserve">
+    <value>Campaign assigned to auditor successfully.</value>
+  </data>
+  <data name="CAMPAIGN_DETAILS" xml:space="preserve">
+    <value>Campaign Details</value>
+  </data>
+  <data name="CAMPAIGN_NAME" xml:space="preserve">
+    <value>Campaign Name</value>
+  </data>
+  <data name="CAMPAIGN_NAME_DISPLAY" xml:space="preserve">
+    <value>Campaign Name:</value>
+  </data>
+  <data name="CAMPAIGN_NAME_ERROR" xml:space="preserve">
+    <value>Enter Campaign Name</value>
+  </data>
+  <data name="CAMPAIGN_RELEASED_ERROR_MESSAGE" xml:space="preserve">
+    <value>Sorry. Campaign could not be successfully released.</value>
+  </data>
+  <data name="CAMPAIGN_RELEASED_SUCCESS_MESSAGE" xml:space="preserve">
+    <value>Campaign released successfully.</value>
+  </data>
+  <data name="CAMPAIGN_STATUS" xml:space="preserve">
+    <value>Campaign Status</value>
+  </data>
+  <data name="CAMPAIGN_SUBMITTED_SUCCESSFULLY" xml:space="preserve">
+    <value>Campaign submitted successfully</value>
+  </data>
+  <data name="CAMPAIGN_TEMPLATE_ERROR" xml:space="preserve">
+    <value>Please specify the campaign template type.</value>
+  </data>
+  <data name="CAMPAIGN_TYPE" xml:space="preserve">
+    <value>Campaign Type</value>
+  </data>
+  <data name="CAMPAIGN_TYPE_DISPLAY" xml:space="preserve">
+    <value>Campaign Type:</value>
+  </data>
+  <data name="CAMPAIGN_TYPE_ERROR" xml:space="preserve">
+    <value>Select campaign type</value>
+  </data>
+  <data name="CAMPAIGN_URL" xml:space="preserve">
+    <value>Campaign URL</value>
+  </data>
+  <data name="CAMPAIGN_URL_DISPLAY" xml:space="preserve">
+    <value>Campaign Url:</value>
+  </data>
+  <data name="CAMPAIGN_URL_ERROR" xml:space="preserve">
+    <value>Please specify the campaign url.</value>
+  </data>
+  <data name="CANCEL" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CANNOT_SELECT_FIRM_DIVERSITY" xml:space="preserve">
+    <value>Cannot select firm diversity status when Not appicable is selected</value>
+  </data>
+  <data name="CAN_WE_CONTACT" xml:space="preserve">
+    <value>Can We Contact?</value>
+  </data>
+  <data name="CAPABILITIES" xml:space="preserve">
+    <value>Capabilities</value>
+  </data>
+  <data name="CAPABILITIES_MESSAGE" xml:space="preserve">
+    <value>Update your capability by geography, sector,
+                                    size and experience</value>
+  </data>
+  <data name="CAPABILITY_DETAILS_SUCCESS" xml:space="preserve">
+    <value>Capablity Details Saved Successfully</value>
+  </data>
+  <data name="CARD" xml:space="preserve">
+    <value>Card</value>
+  </data>
+  <data name="CERTIFICATES_LICENCES" xml:space="preserve">
+    <value>Certificates &amp; Licences</value>
+  </data>
+  <data name="CHANGED_PASSWORD_SUCCESSFULLY" xml:space="preserve">
+    <value>Password has been successfully changed.</value>
+  </data>
+  <data name="CHANGE_ACCESS" xml:space="preserve">
+    <value>Change Access</value>
+  </data>
+  <data name="CHANGE_ACCESS_TYPE" xml:space="preserve">
+    <value>Change Access Type</value>
+  </data>
+  <data name="CHANGE_PASSWORD" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="CHANGE_PASSWORD_DISPLAY_MESSAGE" xml:space="preserve">
+    <value>The user will be asked to change their password when they next login.</value>
+  </data>
+  <data name="CHECK" xml:space="preserve">
+    <value>Check</value>
+  </data>
+  <data name="CHECKED" xml:space="preserve">
+    <value>Checked</value>
+  </data>
+  <data name="CHECKED_LOWER_CASE" xml:space="preserve">
+    <value>checked?</value>
+  </data>
+  <data name="CHECKS" xml:space="preserve">
+    <value>Checks</value>
+  </data>
+  <data name="CHOOSE_ACCESS_TYPE" xml:space="preserve">
+    <value>Choose Access Type</value>
+  </data>
+  <data name="CHOOSE_ACCESS_TYPE_DISPLAY" xml:space="preserve">
+    <value>Choose Access Type:</value>
+  </data>
+  <data name="CIPS" xml:space="preserve">
+    <value>CIPS</value>
+  </data>
+  <data name="CIPS_ONLY" xml:space="preserve">
+    <value>CIPS only</value>
+  </data>
+  <data name="CIPS_SUSTAINABILITY_INDEX" xml:space="preserve">
+    <value>CIPS Sustainability Index</value>
+  </data>
+  <data name="CIPS_SUSTAINABILITY_INDEX_MESSAGE" xml:space="preserve">
+    <value>Obtain a full sustainability review of your environmental, economic and social performance.</value>
+  </data>
+  <data name="CITY" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="CITY_ERROR" xml:space="preserve">
+    <value>Enter the City</value>
+  </data>
+  <data name="CITY_VALIDATION" xml:space="preserve">
+    <value>Enter the City</value>
+  </data>
+  <data name="CLEAR" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="CLEAR_ALL" xml:space="preserve">
+    <value>Clear all</value>
+  </data>
+  <data name="CLIENT_NAME" xml:space="preserve">
+    <value>Client Name</value>
+  </data>
+  <data name="CLIENT_NAME_ERROR" xml:space="preserve">
+    <value>Enter the Client Name</value>
+  </data>
+  <data name="CLIENT_ROLE" xml:space="preserve">
+    <value>Client Role</value>
+  </data>
+  <data name="CLIENT_ROLE_ERROR" xml:space="preserve">
+    <value>Enter the Client Role</value>
+  </data>
+  <data name="COMMENTS" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="COMMENTS_VISIBLE_TO" xml:space="preserve">
+    <value>Comments visible to</value>
+  </data>
+  <data name="COMMENTS_VISIBLE_TO_SUPPLIER" xml:space="preserve">
+    <value>Comments (visible to supplier)</value>
+  </data>
+  <data name="COMPANY_DETAILS" xml:space="preserve">
+    <value>Company Details</value>
+  </data>
+  <data name="COMPANY_DETAILS_SUCCESS" xml:space="preserve">
+    <value>Company Details Saved Successfully</value>
+  </data>
+  <data name="COMPANY_NAME" xml:space="preserve">
+    <value>Company Name</value>
+  </data>
+  <data name="COMPANY_NAME_DISPLAY" xml:space="preserve">
+    <value>Company Name:</value>
+  </data>
+  <data name="COMPANY_REGISTRATION_NUMBER" xml:space="preserve">
+    <value>Company Registration Number</value>
+  </data>
+  <data name="COMPANY_REG_NUMBER" xml:space="preserve">
+    <value>Please provide your Company Registration number</value>
+  </data>
+  <data name="COMPANY_TYPE" xml:space="preserve">
+    <value>Company Type</value>
+  </data>
+  <data name="COMPANY_TYPE_ERROR" xml:space="preserve">
+    <value>Enter the Company Type</value>
+  </data>
+  <data name="COMPANY_VERIFICATION_COMPLETE" xml:space="preserve">
+    <value>Company verification complete</value>
+  </data>
+  <data name="COMPANY_YEAR" xml:space="preserve">
+    <value>In which year was your company incorporated?</value>
+  </data>
+  <data name="COMPANY_YEAR_ERROR" xml:space="preserve">
+    <value>Select which year your company incorporated</value>
+  </data>
+  <data name="COMPARE_MASTER_VENDOR_AND_SUPP_COUNT" xml:space="preserve">
+    <value>Please enter master vendor value greater than supplier count.</value>
+  </data>
+  <data name="COMPARE_PASSWORD_AND_CONFIRM_PASSWORD_FAIL" xml:space="preserve">
+    <value>Passwords do not match</value>
+  </data>
+  <data name="COMPLETE" xml:space="preserve">
+    <value>Complete</value>
+  </data>
+  <data name="COMPLETE_TRANSACTION" xml:space="preserve">
+    <value>Complete Transaction</value>
+  </data>
+  <data name="COMPLETE_VERIFICATION" xml:space="preserve">
+    <value>Complete Verification</value>
+  </data>
+  <data name="COMPLETING_THIS_REQUEST_WILL_LEAVE_YOU" xml:space="preserve">
+    <value>Completing this request will leave you</value>
+  </data>
+  <data name="COMPLIANCE_AREA" xml:space="preserve">
+    <value>Compliance area</value>
+  </data>
+  <data name="COMPLIANCE_CHECKS" xml:space="preserve">
+    <value>Compliance Checks</value>
+  </data>
+  <data name="COMPLIANCE_CHECKS_MESSAGE" xml:space="preserve">
+    <value>Verification of third party awards, including insurance, diversity status, trade associations and quality standards.</value>
+  </data>
+  <data name="COMPLIANCE_REPORT" xml:space="preserve">
+    <value>Compliance Report</value>
+  </data>
+  <data name="CONFIRM_BILLING_DETAILS" xml:space="preserve">
+    <value>Confirm billing details</value>
+  </data>
+  <data name="CONFIRM_PASSWORD" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="CONFIRM_PASSWORD_MESSAGE" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="CONFIRM_RELEASE_CAMPAIGN" xml:space="preserve">
+    <value>Are you sure you want to release this campaign?</value>
+  </data>
+  <data name="CONTACTS" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="CONTACTS_MESSAGE" xml:space="preserve">
+    <value>Update your key contacts, including accounts, marketing, health and safety, procurement and sustainability</value>
+  </data>
+  <data name="CONTACTS_SAVED_SUCCESFULLY" xml:space="preserve">
+    <value>Contacts saved successfully</value>
+  </data>
+  <data name="CONTACT_NAME" xml:space="preserve">
+    <value>Contact Name</value>
+  </data>
+  <data name="CONTACT_NAME_ERROR" xml:space="preserve">
+    <value>Enter the Contact Name</value>
+  </data>
+  <data name="CONTACT_US" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="CONTACT_US_MESSAGE" xml:space="preserve">
+    <value>You can contact the PRGX Supplier Information Management team using any of the details below :</value>
+  </data>
+  <data name="CONTINUE" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="COOKIES" xml:space="preserve">
+    <value>Cookies</value>
+  </data>
+  <data name="COOKIES_MESSAGE" xml:space="preserve">
+    <value>This site uses cookies to provide you the best experience possible. By continuing without changing your settings, we will assume you are happy to receive cookies from our site. You can change your cookie settings at any time.</value>
+  </data>
+  <data name="COOKIES_READ_MORE_MESSAGE" xml:space="preserve">
+    <value>&lt;div&gt;Cookies may be used on some pages of our sites.   In many cases, the information we collect using cookies
+                    and other tools is only used in a non-identifiable way, without any reference to Personal Information. For
+                    example, we use information we collect about all website users to optimize our websites and to understand
+                    website traffic patterns. In some cases, we do associate the information we collect using cookies and other
+                    technology with your Personal Information. This Privacy Policy applies to the collection and use of any
+                    Personal Information that is obtained through the use of cookies and otherwise.
+                    &lt;br /&gt;
+                    &lt;br /&gt;
+                    &lt;strong&gt;What is a cookie?&lt;/strong&gt;
+                    &lt;br /&gt;
+                    &lt;br /&gt;
+                    A cookie is a text file unique to you that is related to your computer or mobile device and it can be
+                    picked up by a server, allowing the website to pick up things such as your preferences, what is in
+                    your shopping basket or allow us to recognize you when you return. This information helps us
+                    dynamically generate web content and design web functionality specifically for users of our sites and
+                    enables us to provide you with a customized experience each time that you visit.
+                    &lt;br /&gt;
+                    &lt;br /&gt;
+                    &lt;strong&gt;What types of cookie do PRGX use?&lt;/strong&gt;
+                    &lt;br /&gt;
+                    &lt;br /&gt;
+                    Most common technologies such as cookies, pixel tags, browser analysis tools, server logs and web
+                    beacons are used on most websites.
+                    &lt;br /&gt;
+                    &lt;br /&gt;
+                    We may also use Flash Cookies (also known as Local Stored Objects) and similar technologies to
+                    personalize and enhance your online experience. The Adobe Flash Player is an application that
+                    allows rapid development of dynamic content, such as video clips and animation. We use Flash
+                    cookies for security purposes and to help remember settings and preferences. We do not use Flash
+                    cookies or similar technologies for behavioral or interest-based advertising purposes. To manage
+                    Flash cookies, you may visit Adobe’s website at &lt;a href="http://kb2.adobe.com/cps/526/52697ee8.html" target="_blank"&gt;kb2.adobe.com/cps/526/52697ee8.html&lt;/a&gt; or
+                    visit &lt;a href="http://www.adobe.com/" target="_blank"&gt;www.adobe.com&lt;/a&gt;.
+                    &lt;br /&gt;
+                    &lt;br /&gt;
+                    Pixel tags and web beacons are tiny graphic images placed on website pages or in emails that allow
+                    us to determine whether you have performed a specific action. When you access these pages or open
+                    or click on an email, the pixel tags and web beacons generate a notice of that action. These tools
+                    allow us to measure response to our communications and improve our web pages and promotions.
+                    &lt;br /&gt;
+                    &lt;br /&gt;
+                    &lt;strong&gt;How do we collect information using cookies?&lt;/strong&gt;
+                    &lt;br /&gt;
+                    &lt;br /&gt;
+                    We collect many different types of information from cookies and other technologies. For example,
+                    we may collect information from the device you use to access our website, your operating system
+                    type, browser type, domain, and other system settings, as well as the language your system uses and
+                    the country and time zone where your device is located. Our server logs may also record the IP
+                    address assigned to the device you are using to connect to the Internet. An IP address is a unique
+                    number that devices use to identify and communicate with each other on the Internet. We may also
+                    collect information about the website you were
+                    you visit after you leave our site.
+                    &lt;br /&gt;
+                    &lt;br /&gt;
+                    &lt;strong&gt;Can cookies be disabled?&lt;/strong&gt;
+                    &lt;br /&gt;
+                    &lt;br /&gt;
+                    In most cases, if you prefer not to allow the use of cookies, you can manage cookie preferences and
+                    opt-out of having cookies and other data collection technologies used by adjusting the settings on
+                    your browser. All browsers are different, so please visit the “help” section of your browser to learn
+                    about the privacy settings that may be available. Please be advised that disabling cookies may result
+                    in limited functionality on our sites.&lt;/div&gt;</value>
+  </data>
+  <data name="COUNTRY" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="COUNTRY_ERROR" xml:space="preserve">
+    <value>Enter the Country</value>
+  </data>
+  <data name="COUNTRY_OR_STATE" xml:space="preserve">
+    <value>Country/State:</value>
+  </data>
+  <data name="COUNTRY_VALIDATION" xml:space="preserve">
+    <value>Select the Country</value>
+  </data>
+  <data name="COUNTY_STATE" xml:space="preserve">
+    <value>County/State</value>
+  </data>
+  <data name="COUNTY_STATE_ERROR" xml:space="preserve">
+    <value>Enter the County/State</value>
+  </data>
+  <data name="CREATE" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="CREATED_DATE" xml:space="preserve">
+    <value>Created Date</value>
+  </data>
+  <data name="CREATED_NAME" xml:space="preserve">
+    <value>Created Name</value>
+  </data>
+  <data name="CREATE_AN_ACCOUNT" xml:space="preserve">
+    <value>Create an account</value>
+  </data>
+  <data name="CREATE_AUDITOR" xml:space="preserve">
+    <value>Create Auditor</value>
+  </data>
+  <data name="CREATE_AUDITOR_ROLE" xml:space="preserve">
+    <value>Create Auditor Role</value>
+  </data>
+  <data name="CREATE_BUYER_ROLE" xml:space="preserve">
+    <value>Create Buyer Role</value>
+  </data>
+  <data name="CREATE_CAMPAIGN" xml:space="preserve">
+    <value>Create Campaign</value>
+  </data>
+  <data name="CREATE_NEW" xml:space="preserve">
+    <value>Create New</value>
+  </data>
+  <data name="CREATE_NEW_AUDITOR" xml:space="preserve">
+    <value>Create New Auditor</value>
+  </data>
+  <data name="CREATE_NEW_QUESTION" xml:space="preserve">
+    <value>Create New Question</value>
+  </data>
+  <data name="CREATE_NEW_QUESTIONNAIRE_SECTION" xml:space="preserve">
+    <value>Create New Questionnaire Section</value>
+  </data>
+  <data name="CREATE_QUESTIONNAIRE_SECTION" xml:space="preserve">
+    <value>Create Questionnaire Section</value>
+  </data>
+  <data name="CREATE_USER" xml:space="preserve">
+    <value>Create User</value>
+  </data>
+  <data name="CREDIT_ID" xml:space="preserve">
+    <value>Credit ID</value>
+  </data>
+  <data name="CREDIT_NO" xml:space="preserve">
+    <value>Credit No</value>
+  </data>
+  <data name="CREDIT_NOTE" xml:space="preserve">
+    <value>Credit Note</value>
+  </data>
+  <data name="CREDIT_NOTE_ALREADY_EXISTS" xml:space="preserve">
+    <value>Credit Note already exists for this invoice</value>
+  </data>
+  <data name="CREDIT_NOTE_SUCCESS" xml:space="preserve">
+    <value>Credit note created succesfully</value>
+  </data>
+  <data name="CSI_VERIFICATION" xml:space="preserve">
+    <value>CSI Verification</value>
+  </data>
+  <data name="CSI_VERIFICATION_COMMENTS" xml:space="preserve">
+    <value>Please enter the verification comments for CSI Verification.</value>
+  </data>
+  <data name="CURRENCY" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="CURRENT_ACCESS_TO_ANSWERS" xml:space="preserve">
+    <value>Current access to answers</value>
+  </data>
+  <data name="CUSTOMER_SECTOR_LIST" xml:space="preserve">
+    <value>Which of the following goods and services does your organisation supply? You may select up to five categories.</value>
+  </data>
+  <data name="CUSTOMER_SECTOR_VALIDATION" xml:space="preserve">
+    <value>Select at least one category</value>
+  </data>
+  <data name="DASHBOARD" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="DATA_SECURITY" xml:space="preserve">
+    <value>Data Security</value>
+  </data>
+  <data name="DATA_SOURCE" xml:space="preserve">
+    <value>Data Source</value>
+  </data>
+  <data name="DATA_SOURCE_DISPLAY" xml:space="preserve">
+    <value>Data Source:</value>
+  </data>
+  <data name="DATA_SOURCE_ERROR" xml:space="preserve">
+    <value>Please enter data source.</value>
+  </data>
+  <data name="DATE" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="DATE_OF_PAYMENT" xml:space="preserve">
+    <value>Date of payment</value>
+  </data>
+  <data name="DATE_OF_REFUND" xml:space="preserve">
+    <value>Date of Refund</value>
+  </data>
+  <data name="DATE_PAID" xml:space="preserve">
+    <value>Date Paid</value>
+  </data>
+  <data name="DATE_VALIDATION" xml:space="preserve">
+    <value>End date cannot be before start date</value>
+  </data>
+  <data name="DBA" xml:space="preserve">
+    <value>DBA</value>
+  </data>
+  <data name="DECIMAL_VALUES_VALIDATION" xml:space="preserve">
+    <value>Only decimal values allowed.</value>
+  </data>
+  <data name="DEFAULT_ERROR_MESSAGE" xml:space="preserve">
+    <value>Sorry something went wrong please refresh the page and try again.</value>
+  </data>
+  <data name="DEFAULT_PRODUCTS" xml:space="preserve">
+    <value>Default Products</value>
+  </data>
+  <data name="DEFAULT_PRODUCT_UPDATED_SUCCESSFULLY" xml:space="preserve">
+    <value>Default products successfully updated for buyer.</value>
+  </data>
+  <data name="DEFINE_ACCESS_TYPES" xml:space="preserve">
+    <value>Define Access Types</value>
+  </data>
+  <data name="DELETE" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DELETED_SUCCESSFULLY" xml:space="preserve">
+    <value>Removed referrer successfully.</value>
+  </data>
+  <data name="DELETE_ACCOUNT_CONFIRMATION" xml:space="preserve">
+    <value>Are you sure you want to delete the Account</value>
+  </data>
+  <data name="DELETE_ADDRESS_CONFIRMATION" xml:space="preserve">
+    <value>Are you sure you want to delete this address?</value>
+  </data>
+  <data name="DELETE_ADDRESS_SUCCESS" xml:space="preserve">
+    <value>Address Deleted Successfully</value>
+  </data>
+  <data name="DELETE_AUDITOR" xml:space="preserve">
+    <value>Delete Auditor</value>
+  </data>
+  <data name="DELETE_AUDITOR_ROLE" xml:space="preserve">
+    <value>Delete Auditor Role</value>
+  </data>
+  <data name="DELETE_AUDITOR_ROLE_CONFIRMATION" xml:space="preserve">
+    <value>Are you sure you want to delete this auditor role?</value>
+  </data>
+  <data name="DELETE_BUYER_ROLE" xml:space="preserve">
+    <value>Delete Buyer Role</value>
+  </data>
+  <data name="DELETE_BUYER_ROLE_CONFIRMATION" xml:space="preserve">
+    <value>Are you sure you want to delete this buyer role?</value>
+  </data>
+  <data name="DELETE_CONTACT_CONFIRMATION" xml:space="preserve">
+    <value>Are you sure you want to delete this contact?</value>
+  </data>
+  <data name="DELETE_RECORD_CONFIRMATION" xml:space="preserve">
+    <value>Are you sure you want to delete this record?</value>
+  </data>
+  <data name="DELETE_REFERENCE_CONFIRMATION" xml:space="preserve">
+    <value>Are you sure you want to delete the Reference</value>
+  </data>
+  <data name="DESCRIPTION" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DESCRIPTION_DISPLAY" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="DETAILS" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="DETAILS_CHECK" xml:space="preserve">
+    <value>Details Check</value>
+  </data>
+  <data name="DISABLED" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="DISC" xml:space="preserve">
+    <value>Disc</value>
+  </data>
+  <data name="DISCOUNT" xml:space="preserve">
+    <value>Discount</value>
+  </data>
+  <data name="DISCOUNT_NET" xml:space="preserve">
+    <value>Discount (Net)</value>
+  </data>
+  <data name="DISCOUNT_PERCENT" xml:space="preserve">
+    <value>Discount Percent</value>
+  </data>
+  <data name="DISCOUNT_PERCENT_VALIDATION" xml:space="preserve">
+    <value>Please enter discount percent</value>
+  </data>
+  <data name="DISCUSSION" xml:space="preserve">
+    <value>discussion</value>
+  </data>
+  <data name="DOCUMENT" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="DOWNLOAD" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="DOWNLOAD_RECEIPT_OR_INVOICE" xml:space="preserve">
+    <value>Download receipt or invoice</value>
+  </data>
+  <data name="DS" xml:space="preserve">
+    <value>DS</value>
+  </data>
+  <data name="DUNS" xml:space="preserve">
+    <value>DUNS</value>
+  </data>
+  <data name="DUNS_NO_VALIDATION" xml:space="preserve">
+    <value>Enter DUNS Number</value>
+  </data>
+  <data name="DUNS_NUMBER" xml:space="preserve">
+    <value>If yes, DUNS Number</value>
+  </data>
+  <data name="DUNS_NUMBER_ERROR" xml:space="preserve">
+    <value>Enter the DUNS Number</value>
+  </data>
+  <data name="EBP_DATE" xml:space="preserve">
+    <value>EBP Date</value>
+  </data>
+  <data name="EDIT" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EDIT_ADDRESS" xml:space="preserve">
+    <value>Edit Address</value>
+  </data>
+  <data name="EDIT_ASSIGNMENT" xml:space="preserve">
+    <value>Edit Assignment</value>
+  </data>
+  <data name="EDIT_AUDITOR_ROLE" xml:space="preserve">
+    <value>Edit Auditor Role</value>
+  </data>
+  <data name="EDIT_BANK_DETAILS" xml:space="preserve">
+    <value>Edit Bank Details</value>
+  </data>
+  <data name="EDIT_BUYER_ROLE" xml:space="preserve">
+    <value>Edit Buyer Role</value>
+  </data>
+  <data name="EDIT_CAMPAIGN" xml:space="preserve">
+    <value>Edit Campaign</value>
+  </data>
+  <data name="EDIT_CONTACT" xml:space="preserve">
+    <value>Edit Contact</value>
+  </data>
+  <data name="EDIT_PASSWORD" xml:space="preserve">
+    <value>Edit Password</value>
+  </data>
+  <data name="EDIT_PRIMARY_CONTACT_DETAILS" xml:space="preserve">
+    <value>Edit Primary Contact Details</value>
+  </data>
+  <data name="EDIT_PROFILE" xml:space="preserve">
+    <value>Edit Profile</value>
+  </data>
+  <data name="EDIT_QUESTIONNAIRE_SECTION" xml:space="preserve">
+    <value>Edit Questionnaire Section</value>
+  </data>
+  <data name="EDIT_REFERENCE_DETAILS" xml:space="preserve">
+    <value>Edit Reference Details</value>
+  </data>
+  <data name="EDIT_SECTION_DETAILS" xml:space="preserve">
+    <value>Edit Section Details</value>
+  </data>
+  <data name="EDIT_USER" xml:space="preserve">
+    <value>Edit User</value>
+  </data>
+  <data name="EDIT_USER_PROFILE" xml:space="preserve">
+    <value>Edit User Profile</value>
+  </data>
+  <data name="EMAIL" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="EMAIL_ADDRESS_LENGTH" xml:space="preserve">
+    <value>Email length must be within 50</value>
+  </data>
+  <data name="EMAIL_ALREADY_EXISTS" xml:space="preserve">
+    <value>Entered email is already taken please use different email address.</value>
+  </data>
+  <data name="EMAIL_CONTENT" xml:space="preserve">
+    <value>Email Content</value>
+  </data>
+  <data name="EMAIL_CONTENT_DISPLAY" xml:space="preserve">
+    <value>Email Content:</value>
+  </data>
+  <data name="EMAIL_ERROR" xml:space="preserve">
+    <value>Enter Email Address</value>
+  </data>
+  <data name="EMAIL_US" xml:space="preserve">
+    <value>Email Us</value>
+  </data>
+  <data name="EMAIL_VALIDATION" xml:space="preserve">
+    <value>Enter the Email</value>
+  </data>
+  <data name="EMPLOYEE_OF_COMPANY" xml:space="preserve">
+    <value>Are you employed by the entity you are registering?</value>
+  </data>
+  <data name="EMPLOYEE_SIZE" xml:space="preserve">
+    <value>Employee Size</value>
+  </data>
+  <data name="ENTER_ALL_DETAILS" xml:space="preserve">
+    <value>Please enter all details</value>
+  </data>
+  <data name="ENTER_CORRECT_PASSWORD" xml:space="preserve">
+    <value>Enter correct password</value>
+  </data>
+  <data name="ENTER_FIRST_NAME" xml:space="preserve">
+    <value>Enter First Name</value>
+  </data>
+  <data name="ENTER_INDUSTRY_SECTOR" xml:space="preserve">
+    <value>Please enter industry sector</value>
+  </data>
+  <data name="ENTER_PAYMENT_INFORMATION" xml:space="preserve">
+    <value>Enter payment information</value>
+  </data>
+  <data name="ENTER_VALID_EMAIL" xml:space="preserve">
+    <value>Enter Valid Email</value>
+  </data>
+  <data name="ENTER_VALID_PHONE_NO" xml:space="preserve">
+    <value>Enter Valid Telephone Number</value>
+  </data>
+  <data name="ERROR_INITIAL_SUPPLIER_CHECK" xml:space="preserve">
+    <value>Error Verifing Supplier Details.</value>
+  </data>
+  <data name="ERROR_MESSAGE" xml:space="preserve">
+    <value>Sorry. Something went wrong.</value>
+  </data>
+  <data name="ERROR_TO_LOAD" xml:space="preserve">
+    <value>Problem in loading the details.</value>
+  </data>
+  <data name="ESTABLISHED_YEAR" xml:space="preserve">
+    <value>Established Year</value>
+  </data>
+  <data name="EXPORT" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="EXPORT_ONLY_AVAILABLE" xml:space="preserve">
+    <value>Export is only available for "Favourite suppliers" or "Suppliers you trade with" (up to 10,000 results)</value>
+  </data>
+  <data name="EXPORT_SUPPLIER_LIST" xml:space="preserve">
+    <value>Export Supplier List</value>
+  </data>
+  <data name="FAO" xml:space="preserve">
+    <value>FAO</value>
+  </data>
+  <data name="FAO_ERROR" xml:space="preserve">
+    <value>Enter FAO</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>Read our FAQ’s</value>
+  </data>
+  <data name="FAQS" xml:space="preserve">
+    <value>FAQ's</value>
+  </data>
+  <data name="FAQ_ANSWER_1" xml:space="preserve">
+    <value>&lt;p&gt;PRGX Supplier Information Management (SIM), is an on-line network which captures key information from Suppliers, verifies that information and maintains the information for all registered Network participants; both Suppliers and Buyers.The PRGX SIM platform comprises of functionality for both Suppliers and their Customers (Buyers) as follows:For Suppliers:  account set-up,  questionnaire’s to capture key information, secure document management, alerts and monitoring to update information in a timely fashion, reporting of outcomes and recommendations.For Buyers:  account set-up,  secure access to their Suppliers’ information, outcomes of verifications conducted and a suite of risk based reporting&lt;/p&gt;
+                        &lt;p&gt;The PRGX SIM platform comprises of functionality for both Suppliers and their Customers (Buyers) as follows:&lt;/p&gt;
+                        &lt;p&gt;For Suppliers:  account set-up,  questionnaire’s to capture key information, secure document management, alerts and monitoring to update information in a timely fashion, reporting of outcomes and recommendations.&lt;/p&gt;
+                        &lt;p&gt;For Buyers:  account set-up,  secure access to their Suppliers’ information, outcomes of verifications conducted and a suite of risk based reporting&lt;/p&gt;</value>
+  </data>
+  <data name="FAQ_ANSWER_10" xml:space="preserve">
+    <value>&lt;p&gt;Depending upon the type of questionnaire completed, you will obtain:&lt;/p&gt;
+                        &lt;ul&gt;
+                            &lt;li&gt;A completed assessment, meeting the needs of your Customer and viewable by them through the Network&lt;/li&gt;
+                            &lt;li&gt;Your own detailed document repository and archive of submissions, which may be made available to other Buying organisations as you see fit&lt;/li&gt;
+                            &lt;li&gt;Point by point assessment with gaps identified for you to consider – these are areas which Buying organisations review in order to support purchasing decisions &lt;/li&gt;
+                            &lt;li&gt;In the case of CIPS Sustainability Index, an industry recognised certification, with guidance and material to help you publicise your rating&lt;/li&gt;
+                            &lt;li&gt;On-going support to maintain and grow your information as a valuable Sales tool&lt;/li&gt;
+                        &lt;/ul&gt;</value>
+  </data>
+  <data name="FAQ_ANSWER_11" xml:space="preserve">
+    <value>&lt;p&gt;In the first instance, a Buying organisation is required to sign our Engagement Letter which details the scope and service to be provided.&lt;/p&gt;
+                        &lt;p&gt;Once an Engagement Letter is in place, any nominated and agreed Buyer user-accounts are quickly set-up by the PRGX Support team.  You will be informed of your website landing page, typically reflecting your Organisation’s branding, together with your personal user-account and password.&lt;/p&gt;
+                        &lt;p&gt;A full service of training and adoption is available to ensure you obtain maximum value following the on-boarding of your targeted Suppliers.&lt;/p&gt;</value>
+  </data>
+  <data name="FAQ_ANSWER_2" xml:space="preserve">
+    <value>&lt;p&gt;The CIPS Sustainability Index (CSI) is a Supplier sustainability assessment, which reviews a Suppliers credentials in the areas of Economic, Environmental and Social/Ethical performance.  Sustainability is often a key purchasing criteria for large Buying organisations.&lt;/p&gt;
+                        &lt;p&gt;CSI has been developed by the Chartered Institute of Purchasing &amp; Supply (CIPS) and through a wide industry-based consultation program and research from the University of West England.  CSI is operated by PRGX and is available to access either directly via the CSI website www.CIPS-sustainanbility-index.com, or through the PRGX SIM network.&lt;/p&gt;
+                       &lt;p&gt;PRGX SIM therefore provides Buyers and their Suppliers a capability to maintain key Supplier information together with detailed sustainability credentials all in one place.&lt;/p&gt;</value>
+  </data>
+  <data name="FAQ_ANSWER_3" xml:space="preserve">
+    <value>&lt;P&gt;For Buyers it is increasingly important to understand, assess and monitor a wide range of credentials of their Suppliers.  This is driven both by regulatory requirements, the end-consumer and a greater appreciation internally of supply chain and third party risks.   As a result, buying organisations routinely ask Suppliers to complete their own detailed assessments at considerable time and effort to both parties.&lt;/P&gt;
+                        &lt;p&gt;PRGX SIM offers a single point of registration and assessment for many of the commonly asked questions from Buyers of their Suppliers; covering areas of financial risk, sustainability commitments, health &amp; safety and data security policies.&lt;/p&gt;</value>
+  </data>
+  <data name="FAQ_ANSWER_4" xml:space="preserve">
+    <value>&lt;p&gt;By registering and completing your assessments in a timely fashion, the Supplier is meeting the necessary compliance objectives of the Buyer. These objectives are a condition of business and important to the risk management of the Buyer.&lt;/p&gt;
+                        &lt;p&gt;For the Supplier time and cost is saved through a single place of registration that you may request/approve other Buying organisations to access. Also, ongoing, Suppliers are monitored and prompted to ensure documentation is kept maintained (such as expiring certificates), making the Network an invaluable tool for Suppliers to maintain their own credentials in one place for the benefit of their own internal teams.&lt;/p&gt;
+                        &lt;p&gt;Additionally, both Buyer and Supplier participants receive detailed assessments of their risk profile and where appropriate recommendations for practical improvements.  For Suppliers undertaking the CSI assessment there is the additional benefit of a CIPS based rating and certification which may be widely used to publicise your sustainability credentials.&lt;/p&gt;</value>
+  </data>
+  <data name="FAQ_ANSWER_5" xml:space="preserve">
+    <value>&lt;p&gt;Suppliers are invited to the system by a participating existing Customer (ie Buyer) or prospective Buyer who wishes to understand and verify your credentials.&lt;/p&gt;
+                        &lt;p&gt;The Supplier is sent an invitation request by the PRGX Supplier Engagement team on behalf of the Buyer.  This communication, either by letter and/or e-mail, will contain the website for access and any specific instructions for the type of information required.&lt;/p&gt;
+                        &lt;p&gt;Access is simple and straightforward.  An on-line user-account is initially created, which just takes a few minutes.  After that, the Supplier can complete their Company Registration which includes submitting summary profile data, such as Address and Contacts.   Typically the entire process takes just 15 minutes.&lt;/p&gt;</value>
+  </data>
+  <data name="FAQ_ANSWER_6" xml:space="preserve">
+    <value>&lt;p&gt;Obtaining a user-account and completing your Registration is free. You may Register and obtain the benefit of your profile being viewable by any of the Buying organisations who are registered to the PRGX Network.&lt;/p&gt;
+                        &lt;p&gt;After completing your Registration, you will be provided access to a personalised Home Page which will identify the questionnaire’s you are required to complete.  Mandatory questionnaires, requiring your immediate attention, will have a red highlight.&lt;/p&gt;
+                        &lt;p&gt;Each questionnaire is clearly labelled with an individual fee, with prices beginning from just £99.  The fee is in respect of our work in reviewing the submission, completing associated verifications and maintaining the information annually.&lt;/p&gt;</value>
+  </data>
+  <data name="FAQ_ANSWER_7" xml:space="preserve">
+    <value>&lt;p&gt;Questionnaires can be part-completed, saved and worked-on over a period of time to ensure a correct submission.&lt;/p&gt;
+                        &lt;p&gt;When you are ready to submit, simply check-out using the on-line shopping basket.  Several questionnaires may be completed together, and you can check-out at one time and make one payment.&lt;/p&gt;
+                        &lt;p&gt;Also making payment is easy.  We use a Secure third party credit/debit card processing system.  A full account history and electronic invoices are maintained for your records and can be downloaded from the system.&lt;/p&gt;</value>
+  </data>
+  <data name="FAQ_ANSWER_8" xml:space="preserve">
+    <value>&lt;p&gt;This depends upon the number and type of questionnaires you are being requested to complete.&lt;/p&gt;
+                        &lt;p&gt;The standard compliance questionnaires can be completed within 30 minutes if you have the necessary certificates to hand.  The questionnaire forms are easy to navigate and it is fast and simple to upload required documentation.&lt;/p&gt;
+                        &lt;p&gt;Completing the CIPS Sustainability Index (CSI) assessment will take slightly longer due to the greater depth and range of evidences required. However each question is accompanied by help texts to aid your progress.&lt;/p&gt;
+                        &lt;p&gt;There is a dedicated PRGX Support team to assist you at any time in the process.&lt;/p&gt;</value>
+  </data>
+  <data name="FAQ_ANSWER_9" xml:space="preserve">
+    <value>&lt;p&gt;Once you make payment for any particular questionnaire, you are able to press the Submit button and request the assessment to be completed.&lt;/p&gt;
+                        &lt;p&gt;Your completed questionnaire is then passed to the PRGX Supplier Evaluation team who will individually review each response and the evidences attached, and where possible verify the information against publically available data sources.&lt;/p&gt;
+                        &lt;p&gt;Your assessment is typically completed within 10 business days of submission and the result is made available to you and your requesting Buyer.  You may release this information to any other Buyer in the PRGX network as you require.&lt;/p&gt;</value>
+  </data>
+  <data name="FAQ_DEFINITION" xml:space="preserve">
+    <value>Frequently Asked Questions</value>
+  </data>
+  <data name="FAQ_QUESTION_1" xml:space="preserve">
+    <value>What is PRGX Supplier Information Management (SIM)?</value>
+  </data>
+  <data name="FAQ_QUESTION_10" xml:space="preserve">
+    <value>How do I use my completed assessments?</value>
+  </data>
+  <data name="FAQ_QUESTION_11" xml:space="preserve">
+    <value>I’m a Buyer.  How do I access the PRGX SIM system?</value>
+  </data>
+  <data name="FAQ_QUESTION_2" xml:space="preserve">
+    <value>What is the CIPS Sustainability Index (CSI)?</value>
+  </data>
+  <data name="FAQ_QUESTION_3" xml:space="preserve">
+    <value>Why am I required to complete this?</value>
+  </data>
+  <data name="FAQ_QUESTION_4" xml:space="preserve">
+    <value>What are the benefits of registering with PRGX SIM?</value>
+  </data>
+  <data name="FAQ_QUESTION_5" xml:space="preserve">
+    <value>I’m a Supplier.  How do I access the PRGX SIM system?</value>
+  </data>
+  <data name="FAQ_QUESTION_6" xml:space="preserve">
+    <value>How do I know what to pay?</value>
+  </data>
+  <data name="FAQ_QUESTION_7" xml:space="preserve">
+    <value>How do I make payment?</value>
+  </data>
+  <data name="FAQ_QUESTION_8" xml:space="preserve">
+    <value>After I’m Registered, how long will it take to complete?</value>
+  </data>
+  <data name="FAQ_QUESTION_9" xml:space="preserve">
+    <value>What happens after I’ve paid?</value>
+  </data>
+  <data name="FAVOURITE" xml:space="preserve">
+    <value>Favourite</value>
+  </data>
+  <data name="FAVOURITE_BUYERS" xml:space="preserve">
+    <value>Buyers who are my favorite</value>
+  </data>
+  <data name="FAVOURITE_SUPPLIER" xml:space="preserve">
+    <value>Favourite Supplier</value>
+  </data>
+  <data name="FAVOURITE_SUPPLIERS" xml:space="preserve">
+    <value>Favorite suppliers</value>
+  </data>
+  <data name="FAX" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="FAX_ERROR" xml:space="preserve">
+    <value>Enter the Fax</value>
+  </data>
+  <data name="FILE_EXTENSIONS_VALIDATION" xml:space="preserve">
+    <value>The file extension .{0}  is not allowed!&lt;br/&gt;Allowed file extensions are jpg,jpeg,bmp,png,gif.</value>
+  </data>
+  <data name="FILTERS" xml:space="preserve">
+    <value>Filters</value>
+  </data>
+  <data name="FINANCE" xml:space="preserve">
+    <value>Finance</value>
+  </data>
+  <data name="FINANCE_INSURANCE_AND_TAX" xml:space="preserve">
+    <value>Finance ,Insurance and Tax</value>
+  </data>
+  <data name="FINANCE_INSURANCE_TAX" xml:space="preserve">
+    <value>Finance, Insurance &amp; Tax</value>
+  </data>
+  <data name="FIRM_INCORPORATION" xml:space="preserve">
+    <value>Firm Incorporation</value>
+  </data>
+  <data name="FIRM_STATUS" xml:space="preserve">
+    <value>Please indicate your firm's diversity status by checking the boxes below</value>
+  </data>
+  <data name="FIRST_NAME" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="FIRST_NAME_ERROR" xml:space="preserve">
+    <value>Enter First Name</value>
+  </data>
+  <data name="FIRST_NAME_PLACEHOLDER" xml:space="preserve">
+    <value>Enter First Name</value>
+  </data>
+  <data name="FIRST_OR_LAST_NAME" xml:space="preserve">
+    <value>First Name/Last Name</value>
+  </data>
+  <data name="FIT" xml:space="preserve">
+    <value>FIT</value>
+  </data>
+  <data name="FLAGGED" xml:space="preserve">
+    <value>Flagged</value>
+  </data>
+  <data name="FLAGGED_ANSWER" xml:space="preserve">
+    <value>Flagged answer</value>
+  </data>
+  <data name="FLAGGED_ANSWERS" xml:space="preserve">
+    <value>Flagged answers</value>
+  </data>
+  <data name="FLAGGED_LOWER_CASE" xml:space="preserve">
+    <value>flagged</value>
+  </data>
+  <data name="FLAGGED_TITLE_CASE" xml:space="preserve">
+    <value>Flagged</value>
+  </data>
+  <data name="FOLDERS" xml:space="preserve">
+    <value>Folders</value>
+  </data>
+  <data name="FORGOT_PASSWORD_LINK" xml:space="preserve">
+    <value>Forgot your password?</value>
+  </data>
+  <data name="FORGOT_PASSWORD_POP_UP_HEADER" xml:space="preserve">
+    <value>Forgot Password?</value>
+  </data>
+  <data name="FORGOT_PASSWORD_POP_UP_MESSAGE" xml:space="preserve">
+    <value>An email will be sent to you from alert@sim-prgx.com 
+Please check your junk mail or firewall settings if you do not receive the email.</value>
+  </data>
+  <data name="FROM_BUYERS" xml:space="preserve">
+    <value>From Buyers</value>
+  </data>
+  <data name="FROM_DATE" xml:space="preserve">
+    <value>From Date</value>
+  </data>
+  <data name="FROM_SUPPLIERS" xml:space="preserve">
+    <value>From Suppliers</value>
+  </data>
+  <data name="GBP" xml:space="preserve">
+    <value>GBP</value>
+  </data>
+  <data name="GENERAL_INFORMATION" xml:space="preserve">
+    <value>General Information</value>
+  </data>
+  <data name="GENERAL_INFORMATION_AND_CONTACTS" xml:space="preserve">
+    <value>General Information and Contacts</value>
+  </data>
+  <data name="GENERAL_INFORMATION_AND_CONTACTS_MESSAGE" xml:space="preserve">
+    <value>Update your contacts and profile, including your capability by geography, sector, size and experience</value>
+  </data>
+  <data name="GENERAL_INFORMATION_CONTACTS" xml:space="preserve">
+    <value>General Information and Contacts</value>
+  </data>
+  <data name="GENERAL_INFORMATION_SAVED_SUCCESFULLY" xml:space="preserve">
+    <value>General information saved successfully</value>
+  </data>
+  <data name="GENERAL_INFO_AND_CONTACTS" xml:space="preserve">
+    <value>General Info. &amp; Contacts</value>
+  </data>
+  <data name="GENERATE_QUOTATION" xml:space="preserve">
+    <value>Generate Quotation</value>
+  </data>
+  <data name="GEOGRAPHIC_COVERAGE" xml:space="preserve">
+    <value>Geographic Coverage</value>
+  </data>
+  <data name="GEOGRAPHIC_SALES_LIST" xml:space="preserve">
+    <value>Does your organisation have manufacturing, sales or any trading related subsidiaries in any of the following geographic regions?</value>
+  </data>
+  <data name="GEOGRAPHIC_SUPPLIERS_LIST" xml:space="preserve">
+    <value>Does your organisation directly source goods or services in any of the following geographic regions?</value>
+  </data>
+  <data name="GEOGRAPHIC_VALIDATION" xml:space="preserve">
+    <value>Select at least one geographic region</value>
+  </data>
+  <data name="GET_PASSWORD" xml:space="preserve">
+    <value>Get Your Password</value>
+  </data>
+  <data name="GET_SUPPLIER_INFORMATION" xml:space="preserve">
+    <value>GetSupplierInformation</value>
+  </data>
+  <data name="GET_YOUR_PASSWORD" xml:space="preserve">
+    <value>Get your password</value>
+  </data>
+  <data name="GO_TO_QUESTIONNAIRE" xml:space="preserve">
+    <value>Go to Questionnaire</value>
+  </data>
+  <data name="HAVE_DUNS" xml:space="preserve">
+    <value>Do you have a DUNS Number?</value>
+  </data>
+  <data name="HEADQUARTERS" xml:space="preserve">
+    <value>HeadQuarters</value>
+  </data>
+  <data name="HEALTH_SAFETY" xml:space="preserve">
+    <value>Health &amp; Safety</value>
+  </data>
+  <data name="HELP" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="HELP_POP_UP_HEADER" xml:space="preserve">
+    <value>Need Help ? Contact Us</value>
+  </data>
+  <data name="HOME" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="HQ_ADDRESS_DIFFERENT" xml:space="preserve">
+    <value>Is your HeadQuarters Address different to the above?</value>
+  </data>
+  <data name="HS" xml:space="preserve">
+    <value>H&amp;S</value>
+  </data>
+  <data name="HS_CONTACT" xml:space="preserve">
+    <value>Health &amp; Safety Contact</value>
+  </data>
+  <data name="HS_CONTACT_INFO" xml:space="preserve">
+    <value>H&amp;S Contact Information</value>
+  </data>
+  <data name="IBAN" xml:space="preserve">
+    <value>IBAN</value>
+  </data>
+  <data name="IBAN_ERROR" xml:space="preserve">
+    <value>Enter the IBAN Code</value>
+  </data>
+  <data name="INBOX" xml:space="preserve">
+    <value>Inbox</value>
+  </data>
+  <data name="INBOX_BULK_REQUEST_LEAVE_POP_UP_HEADER" xml:space="preserve">
+    <value>Lose your current selection?</value>
+  </data>
+  <data name="INBOX_BULK_REQUEST_LEAVE_POP_UP_MESSAGE" xml:space="preserve">
+    <value>Leaving this page will lose your current selection</value>
+  </data>
+  <data name="INCORPORATION_TYPE" xml:space="preserve">
+    <value>Incorporation Type</value>
+  </data>
+  <data name="INDEX" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="INDUSTRY_SECTOR_ERROR" xml:space="preserve">
+    <value>Please enter industry sector</value>
+  </data>
+  <data name="INFO" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="INITIAL_SUPPLIER_CHECK_VERIFIED" xml:space="preserve">
+    <value>Supplier Details verified successfully.</value>
+  </data>
+  <data name="INVALID" xml:space="preserve">
+    <value>Invalid</value>
+  </data>
+  <data name="INVALID_COMMENTS" xml:space="preserve">
+    <value>Invalid Comments</value>
+  </data>
+  <data name="INVALID_EMAIL_ADDRESS" xml:space="preserve">
+    <value>Invalid Email Address</value>
+  </data>
+  <data name="INVALID_FILE_TYPE" xml:space="preserve">
+    <value>Invalid file format. Please upload file with correct format.</value>
+  </data>
+  <data name="INVALID_PASSWORD_FORMAT" xml:space="preserve">
+    <value>Invalid Password Format</value>
+  </data>
+  <data name="INVALID_TEL_NUMBER" xml:space="preserve">
+    <value>Phone Number should contain only numbers</value>
+  </data>
+  <data name="INVALID_USER_DETAILS" xml:space="preserve">
+    <value>Invalid Email Address or Password</value>
+  </data>
+  <data name="INVITED_BUT_NOT_BEGUN_REG" xml:space="preserve">
+    <value>Invited but not begun registration</value>
+  </data>
+  <data name="INVOICE" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="INVOICE_ALLOWED" xml:space="preserve">
+    <value>(Invoice allowed)</value>
+  </data>
+  <data name="INVOICE_ID" xml:space="preserve">
+    <value>Invoice ID</value>
+  </data>
+  <data name="INVOICE_PAID_SUCCESSFULLY" xml:space="preserve">
+    <value>Invoice marked as paid successfully</value>
+  </data>
+  <data name="INVOICE_REF" xml:space="preserve">
+    <value>Invoice Ref</value>
+  </data>
+  <data name="INVOICE_STATUS" xml:space="preserve">
+    <value>Invoice Status</value>
+  </data>
+  <data name="IN_SCOPE_LOWER_CASE" xml:space="preserve">
+    <value>in scope</value>
+  </data>
+  <data name="IN_YOUR" xml:space="preserve">
+    <value>in your</value>
+  </data>
+  <data name="IS_ADMIN_BUYER" xml:space="preserve">
+    <value>Is Admin Buyer?</value>
+  </data>
+  <data name="IS_AGREE_ON_TERMS" xml:space="preserve">
+    <value>I have read and agree to the &lt;a target="TermsOfUse" href="/terms-of-use"&gt;&lt;span style="cursor: pointer" class="SICCodeLink"&gt;terms and conditions&lt;/span&gt;&lt;/a&gt;</value>
+  </data>
+  <data name="IS_ASSIGNED_TO" xml:space="preserve">
+    <value>is assigned to</value>
+  </data>
+  <data name="IS_DELETED_SUCCESSFULLY" xml:space="preserve">
+    <value>is Deleted Successfully</value>
+  </data>
+  <data name="IS_EMPLOYEE_OF_COMPANY" xml:space="preserve">
+    <value>Are you employed by the entity you are registering?</value>
+  </data>
+  <data name="IS_SAVE_NEEDED_DISPLAY" xml:space="preserve">
+    <value>Is a save button needed for this questionnaire section?</value>
+  </data>
+  <data name="IS_SUBSIDIARY_STATUS" xml:space="preserve">
+    <value>Subsidiary Status</value>
+  </data>
+  <data name="IS_SUBSIDIARY_STATUS_ERROR" xml:space="preserve">
+    <value>Select Subsidiary Status</value>
+  </data>
+  <data name="IS_VAT" xml:space="preserve">
+    <value>Are you VAT registered?</value>
+  </data>
+  <data name="IS_VAT_REGISTERED" xml:space="preserve">
+    <value>VAT Registered</value>
+  </data>
+  <data name="I_HAVE_READ_AND_AGREE_TO_THE" xml:space="preserve">
+    <value>I have read and agree to the</value>
+  </data>
+  <data name="I_HAVE_READ_AND_AGREE_TO_THE_TERMS_AND_CONDITIONS" xml:space="preserve">
+    <value>I have read and agree to the &lt;a target="TermsOfUse" href="/terms-of-use"&gt;&lt;span style="cursor: pointer" class="SICCodeLink"&gt;terms and conditions&lt;/span&gt;&lt;/a&gt; .</value>
+  </data>
+  <data name="JOB_TITLE" xml:space="preserve">
+    <value>Job Title</value>
+  </data>
+  <data name="JOB_TITLE_ERROR" xml:space="preserve">
+    <value>Enter the job title</value>
+  </data>
+  <data name="JOB_TITLE_VALIDATION" xml:space="preserve">
+    <value>Enter the Job Title</value>
+  </data>
+  <data name="KEY_QUESTIONS" xml:space="preserve">
+    <value>Key Questions</value>
+  </data>
+  <data name="LAST_LOGIN" xml:space="preserve">
+    <value>Last Login</value>
+  </data>
+  <data name="LAST_MESSAGE_SENT_RECIEVED" xml:space="preserve">
+    <value>Last message sent / received</value>
+  </data>
+  <data name="LAST_NAME" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="LAST_NAME_ERROR" xml:space="preserve">
+    <value>Enter Last Name</value>
+  </data>
+  <data name="LAST_NAME_PLACEHOLDER" xml:space="preserve">
+    <value>Surname</value>
+  </data>
+  <data name="LATEST_TERMS" xml:space="preserve">
+    <value>Latest Terms</value>
+  </data>
+  <data name="LEAVING_THIS_PAGE_WILL_LOSE_YOUR_CURRENT_SELECTION" xml:space="preserve">
+    <value>Leaving this page will lose your current selection</value>
+  </data>
+  <data name="LEGAL_AND_SANCTION_VERIFICATION" xml:space="preserve">
+    <value>Legal &amp; Sanction Verification</value>
+  </data>
+  <data name="LINK_TO_CIPS_SUSTAINABILITY_INDEX" xml:space="preserve">
+    <value>Link to CIPS Sustainability Index</value>
+  </data>
+  <data name="LOGIN" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="LOGIN_ID" xml:space="preserve">
+    <value>Login Id</value>
+  </data>
+  <data name="LOGIN_ID_ALREADY_EXISTS" xml:space="preserve">
+    <value>Email Address Already Exists</value>
+  </data>
+  <data name="LOGO" xml:space="preserve">
+    <value>Upload a logo</value>
+  </data>
+  <data name="LOGOUT" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="LOSE_YOUR_CURRENT_SELECTION" xml:space="preserve">
+    <value>Lose your current selection</value>
+  </data>
+  <data name="MAILING" xml:space="preserve">
+    <value>Mailing</value>
+  </data>
+  <data name="MAILING_ADDRESS" xml:space="preserve">
+    <value>Mailing Address</value>
+  </data>
+  <data name="MAIL_VIA_SILVER_POP" xml:space="preserve">
+    <value>Mail via Silver Pop</value>
+  </data>
+  <data name="MANAGE_QUESTIONNAIRE_SECTION" xml:space="preserve">
+    <value>Manage Questionnaire Section</value>
+  </data>
+  <data name="MANAGE_USERS" xml:space="preserve">
+    <value>Manage Users</value>
+  </data>
+  <data name="MAPPED" xml:space="preserve">
+    <value>Mapped</value>
+  </data>
+  <data name="MAPPED_CONTACT_TEXT" xml:space="preserve">
+    <value>Contact. if you want</value>
+  </data>
+  <data name="MAP_AND_UNMAP" xml:space="preserve">
+    <value>to map and  unmap</value>
+  </data>
+  <data name="MAP_EXISTING_ADDRESS" xml:space="preserve">
+    <value>Address. if you want this  to map and  map Existing Address to &lt;b&gt;Third Party&lt;/b&gt;</value>
+  </data>
+  <data name="MARKETING" xml:space="preserve">
+    <value>Marketing</value>
+  </data>
+  <data name="MARKETING_DETAILS_SAVED_SUCCESSFULLY" xml:space="preserve">
+    <value>Marketing details saved succesfully</value>
+  </data>
+  <data name="MARKETING_DETAILS_SUCCESS" xml:space="preserve">
+    <value>Marketing details saved succesfully</value>
+  </data>
+  <data name="MARKETING_MESSAGE" xml:space="preserve">
+    <value>Update your business description, Facebook, Twitter, LinkedIn and website addresses</value>
+  </data>
+  <data name="MARKETING_PROFILE" xml:space="preserve">
+    <value>Marketing Profile</value>
+  </data>
+  <data name="MARK_AS_PAID" xml:space="preserve">
+    <value>Mark as paid</value>
+  </data>
+  <data name="MASTER_VENDOR" xml:space="preserve">
+    <value>Master Vendor</value>
+  </data>
+  <data name="MASTER_VENDOR_DISPLAY" xml:space="preserve">
+    <value>Master Vendor:</value>
+  </data>
+  <data name="MASTER_VENDOR_ERROR" xml:space="preserve">
+    <value>Please enter master vendor value.</value>
+  </data>
+  <data name="MAX_CONTRACT_VALUE" xml:space="preserve">
+    <value>What is the maximum contract value you would like to be considered for?</value>
+  </data>
+  <data name="MAX_CONTRACT_VALUE_ERROR" xml:space="preserve">
+    <value>Enter only numbers</value>
+  </data>
+  <data name="MESSAGE" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="MESSAGES_FROM" xml:space="preserve">
+    <value>Messages from</value>
+  </data>
+  <data name="MESSAGE_FROM_BUYERS" xml:space="preserve">
+    <value>Message from buyers</value>
+  </data>
+  <data name="MESSAGE_FROM_SUPPLIERS" xml:space="preserve">
+    <value>Message from Suppliers</value>
+  </data>
+  <data name="MESSAGE_SENT" xml:space="preserve">
+    <value>Message sent</value>
+  </data>
+  <data name="MESSAGE_SENT_SUCCESSFULLY" xml:space="preserve">
+    <value>Message sent successfully</value>
+  </data>
+  <data name="MESSAGE_TO_SUPPLIERS" xml:space="preserve">
+    <value>Message to the suppliers</value>
+  </data>
+  <data name="MESSAGE_TO_THE_SUPPLIERS" xml:space="preserve">
+    <value>Message to the suppliers</value>
+  </data>
+  <data name="MIN_CONTRACT_VALUE" xml:space="preserve">
+    <value>What is the minimum contract value you would like to be considered for?</value>
+  </data>
+  <data name="MIN_CONTRACT_VALUE_ERROR" xml:space="preserve">
+    <value>Enter only numbers</value>
+  </data>
+  <data name="MORE_REQUESTS_THIS_CALENDER_MONTH" xml:space="preserve">
+    <value>more requests this calender month</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_30" xml:space="preserve">
+    <value>Aerospace and Defence</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_32" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Crop and animal production, hunting and related service activities&lt;/li&gt;&lt;li&gt;Fishing and aquaculture&lt;/li&gt;&lt;li&gt;Forestry and logging&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_33" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Financial service activities, except insurance and pension funding &lt;/li&gt;&lt;li&gt; Insurance, reinsurance and pension funding, except compulsory social security&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_34" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Civil engineering&lt;/li&gt;&lt;li&gt;Construction of buildings &lt;/li&gt;&lt;li&gt; Specialised construction activities&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_35" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Activities of head offices; management consultancy activities &lt;/li&gt;&lt;li&gt; Architectural and engineering activities; technical testing and analysis &lt;/li&gt;&lt;li&gt;Legal and accounting activities &lt;/li&gt;&lt;li&gt;Scientific research and development &lt;/li&gt;&lt;li&gt;Veterinary activities&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_36" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Manufacture of computer, electronic and optical products&lt;/li&gt;&lt;li&gt;Manufacture of paper and paper products&lt;/li&gt;&lt;li&gt; Manufacture of tobacco products&lt;/li&gt;&lt;li&gt;Manufacture of wearing apparel&lt;/li&gt;&lt;li&gt; Printing and reproduction of recorded media&lt;/li&gt;&lt;li&gt; Manufacture of furniture, wood and cork &lt;/li&gt;&lt;li&gt; Manufacture of textiles, leather and related products &lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_37" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Electric power generation, transmission and distribution&lt;/li&gt;&lt;li&gt; Manufacture of gas; distribution of gaseous fuels through mains</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_373" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Real estate activities&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_374" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Advertising and market research &lt;/li&gt;&lt;li&gt; Motion picture, video and television programme production, sound recording and music publishing activities &lt;/li&gt;&lt;li&gt; Programming and broadcasting activities</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_375" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Extraction of crude petroleum and natural gas &lt;/li&gt;&lt;li&gt; Mining of coal and lignite &lt;/li&gt;&lt;li&gt; Mining of metal ores &lt;/li&gt;&lt;li&gt; Mining support service activities&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_376" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Retail trade, except of motor vehicles and motorcycles&lt;/li&gt;&lt;li&gt;Wholesale and retail trade and repair of motor vehicles and motorcycles &lt;/li&gt;&lt;li&gt;Wholesale trade, except of motor vehicles and motorcycles&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_377" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Child day-care activities  &lt;/li&gt;&lt;li&gt;   Residential nursing care activities  &lt;/li&gt;&lt;li&gt;  Social work activities without accommodation  &lt;/li&gt;&lt;li&gt;  Residential care activities for elderly, disabled, learning disabilities, mental health and substance abuse &lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_378" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Computer programming, consultancy and related activities &lt;br/&gt; Information service activities &lt;/li&gt;&lt;li&gt; Publishing activities &lt;/li&gt;&lt;li&gt;Repair of computers and personal and household goods&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_379" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Telecommunications&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_38" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Manufacture of electrical equipment&lt;/li&gt;&lt;li&gt;Manufacture of motor vehicles, trailers and semi-trailers &lt;/li&gt;&lt;li&gt; Repair and installation of machinery and equipment &lt;/li&gt;&lt;li&gt; Manufacture of basic metals, chemical and refined petroleum products &lt;/li&gt;&lt;li&gt; Manufacture of fabricated metal products, machinery and equipment &lt;/li&gt;&lt;li&gt; Manufacture of rubber, plastic and non-metallic mineral products</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_380" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Accommodation &lt;/li&gt;&lt;li&gt; Food and beverage service activities  &lt;/li&gt;&lt;li&gt; Travel agency, tour operator and other reservation service and related activities &lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_381" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Air transport &lt;/li&gt;&lt;li&gt; Land transport and transport via pipelines &lt;/li&gt;&lt;li&gt; Postal and courier activities &lt;/li&gt;&lt;li&gt; Warehousing and support activities for transportation &lt;/li&gt;&lt;li&gt; Water transport&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_382" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Trade of electricity&lt;/li&gt;&lt;li&gt; Trade of gas&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_383" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Remediation, clean up and decontamination (buildings, soil, surface or ground water.) &lt;/li&gt;&lt;li&gt; Sewerage&lt;/li&gt;&lt;li&gt; Waste collection, treatment and disposal activities; materials recovery &lt;/li&gt;&lt;li&gt; Water collection, treatment and supply&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_39" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Creative, arts and entertainment activities&lt;/li&gt;&lt;li&gt;Gambling and betting activities&lt;/li&gt;&lt;li&gt;Libraries, archives, museums and other cultural activities&lt;/li&gt;&lt;li&gt;Sports activities and amusement and recreation activities</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_40" xml:space="preserve">
+    <value>Events and conferences</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_41" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Employment activities &lt;/li&gt;&lt;li&gt; Office administrative, office support and other business support activities &lt;/li&gt;&lt;li&gt; Security and investigation activities &lt;/li&gt;&lt;li&gt; Services to buildings and landscape activities</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_414" xml:space="preserve">
+    <value>Public Sector - Central Government</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_415" xml:space="preserve">
+    <value>Public Sector - Local Government</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_416" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Colleges &lt;/li&gt;&lt;li&gt;  Schools &lt;/li&gt;&lt;li&gt;  Universities&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_417" xml:space="preserve">
+    <value>Public Sector - Defence</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_418" xml:space="preserve">
+    <value>Public Sector - Health</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_419" xml:space="preserve">
+    <value>Not for  profit / Charity / Third Sector</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_42" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Manufacture of beverages&lt;/li&gt;&lt;li&gt; Manufacture of food products</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_420" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Activities of membership organisations&lt;/li&gt;&lt;/ul&gt;</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_43" xml:space="preserve">
+    <value>&lt;ul style="text-align:left;margin-bottom:0px;margin-left:-18px;"&gt;&lt;li&gt;Dental practice activities&lt;/li&gt;&lt;li&gt;  General medical practice activities &lt;/li&gt;&lt;li&gt;  Hospital activities &lt;/li&gt;&lt;li&gt; Manufacture of basic pharmaceutical products and pharmaceutical preparations &lt;/li&gt;&lt;li&gt; Specialist medical practice activities</value>
+  </data>
+  <data name="MS_POP_UP_DESCRIPTION_485" xml:space="preserve">
+    <value>Not Sure</value>
+  </data>
+  <data name="NA" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="NAME" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NAME_DISPLAY" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="NAVIGATE" xml:space="preserve">
+    <value>Navigate</value>
+  </data>
+  <data name="NEEDING_ACTION" xml:space="preserve">
+    <value>needing action</value>
+  </data>
+  <data name="NEED_HELP_CONTACT_US" xml:space="preserve">
+    <value>Need help? Contact us.</value>
+  </data>
+  <data name="NEW_PASSWORD_ERROR" xml:space="preserve">
+    <value>Enter New Password</value>
+  </data>
+  <data name="NEW_PASSWORD_MESSAGE" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="NEW_PASSWORD_SENT_TO_MAIL" xml:space="preserve">
+    <value>New password sent to your mail</value>
+  </data>
+  <data name="NEXT" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="NO" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NO1" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NONE" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="NONE_SELECTED" xml:space="preserve">
+    <value>None Selected</value>
+  </data>
+  <data name="NOTE" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="NOTES_AND_DATA_SOURCE_ERROR" xml:space="preserve">
+    <value>Please enter notes and data source</value>
+  </data>
+  <data name="NOTES_ERROR" xml:space="preserve">
+    <value>Please enter notes.</value>
+  </data>
+  <data name="NOTE_DISPLAY" xml:space="preserve">
+    <value>Note:</value>
+  </data>
+  <data name="NOT_PUBLISHED" xml:space="preserve">
+    <value>Not Published</value>
+  </data>
+  <data name="NOT_REGISTERED_YET" xml:space="preserve">
+    <value>Not registered yet?</value>
+  </data>
+  <data name="NOT_SHARED" xml:space="preserve">
+    <value>Not shared</value>
+  </data>
+  <data name="NOT_SUBMITTED" xml:space="preserve">
+    <value>Not Submitted</value>
+  </data>
+  <data name="NO_INVOICE" xml:space="preserve">
+    <value>There is no Invoice with InvoiceId </value>
+  </data>
+  <data name="NO_OF_PAYMENTS" xml:space="preserve">
+    <value>Number Of payments</value>
+  </data>
+  <data name="NO_OF_SUPPLIERS" xml:space="preserve">
+    <value>No Of Suppliers</value>
+  </data>
+  <data name="NO_OF_SUPPLIERS1" xml:space="preserve">
+    <value>Number Of Suppliers</value>
+  </data>
+  <data name="NO_OF_SUPPLIERS_DISPLAY" xml:space="preserve">
+    <value>No. Of Suppliers:</value>
+  </data>
+  <data name="NO_OF_SUPPLIERS_ERROR" xml:space="preserve">
+    <value>Please enter the number of suppliers</value>
+  </data>
+  <data name="NO_PRODUCTS_FOR_PAYMENT" xml:space="preserve">
+    <value>There are no products for Payment</value>
+  </data>
+  <data name="NO_PRODUCT_SELECTED_TO_PUBLISH" xml:space="preserve">
+    <value>No product selected. Please select atleast one product to publish.</value>
+  </data>
+  <data name="NO_RECORDS_FOUND" xml:space="preserve">
+    <value>No Records Found</value>
+  </data>
+  <data name="NO_RECORDS_FOUND1" xml:space="preserve">
+    <value>No records found.</value>
+  </data>
+  <data name="NO_REQUIRED_SECTIONS_NEEDING_ACTION" xml:space="preserve">
+    <value>No required sections needing action</value>
+  </data>
+  <data name="NO_ROLE" xml:space="preserve">
+    <value>No Role</value>
+  </data>
+  <data name="NO_SECTIONS_AWAITING_PAYMENT" xml:space="preserve">
+    <value>No sections awaiting payment</value>
+  </data>
+  <data name="NO_SHARED" xml:space="preserve">
+    <value>No answers shared</value>
+  </data>
+  <data name="NUMBER_OF" xml:space="preserve">
+    <value>Number of</value>
+  </data>
+  <data name="NUMBER_OF_EMPLOYEES" xml:space="preserve">
+    <value>How many employees are there in your organisation?</value>
+  </data>
+  <data name="NUMBER_OF_EMPLOYEES_ERROR" xml:space="preserve">
+    <value>Please enter the Number Of Employees</value>
+  </data>
+  <data name="NUMBER_OF_SUPPLIERS" xml:space="preserve">
+    <value>Number Of Suppliers</value>
+  </data>
+  <data name="NUMERIC_VALUES_VALIDATION" xml:space="preserve">
+    <value>Only numeric values allowed.</value>
+  </data>
+  <data name="OK" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="OLD_PASSWORD_ERROR" xml:space="preserve">
+    <value>Enter Old Password</value>
+  </data>
+  <data name="OLD_PASSWORD_MESSAGE" xml:space="preserve">
+    <value>Old Password</value>
+  </data>
+  <data name="ONE_LOWER_CASE_LETTER" xml:space="preserve">
+    <value>One lower case letter</value>
+  </data>
+  <data name="ONE_NUMBER" xml:space="preserve">
+    <value>One number</value>
+  </data>
+  <data name="ONE_SPECIAL_CHARACTER" xml:space="preserve">
+    <value>One special character (e.g. @#$*%_!&amp;)</value>
+  </data>
+  <data name="ONE_UPPER_CASE_LETTER" xml:space="preserve">
+    <value>One upper case letter</value>
+  </data>
+  <data name="ONLINE_REFUND" xml:space="preserve">
+    <value>Online Refund</value>
+  </data>
+  <data name="OR" xml:space="preserve">
+    <value>or</value>
+  </data>
+  <data name="ORGANISATION" xml:space="preserve">
+    <value>Organisation</value>
+  </data>
+  <data name="ORGANISATION_ALREADY_EXISTS" xml:space="preserve">
+    <value>Organisation already registered. To be added as a user to this organisation please contact &lt;a href="mailto:support@sim.prgx.com" class="contact-panel-text-color"&gt;support@sim.prgx.com&lt;/a&gt;</value>
+  </data>
+  <data name="ORGANISATION_NAME" xml:space="preserve">
+    <value>Please provide your company's legal name as registered with the tax authorities in your country. Provide your personal legal name in this box if you are not registering your company but yourself personally as a Supplier</value>
+  </data>
+  <data name="ORGANISATION_NAME_ERROR" xml:space="preserve">
+    <value>Enter Company's Legal Name</value>
+  </data>
+  <data name="ORGANISATION_NAME_MESSAGE" xml:space="preserve">
+    <value>Organisation Name</value>
+  </data>
+  <data name="ORGANISATION_NAME_MESSAGE_ERROR" xml:space="preserve">
+    <value>Enter organisation name </value>
+  </data>
+  <data name="ORG_FACEBOOK_ACCOUNT" xml:space="preserve">
+    <value>Organisation Facebook account</value>
+  </data>
+  <data name="ORG_LINKEDIN_ACCOUNT" xml:space="preserve">
+    <value>Organisation LinkedIn account</value>
+  </data>
+  <data name="ORG_TWITTER_ACCOUNT" xml:space="preserve">
+    <value>Organisation Twitter account</value>
+  </data>
+  <data name="PAGE_TEMPLATE" xml:space="preserve">
+    <value>Page Template</value>
+  </data>
+  <data name="PAGE_TEMPLATE_DISPLAY" xml:space="preserve">
+    <value>Page Template:</value>
+  </data>
+  <data name="PAID" xml:space="preserve">
+    <value>Paid</value>
+  </data>
+  <data name="PAID_INVOICE" xml:space="preserve">
+    <value>Paid Invoice</value>
+  </data>
+  <data name="PARENT" xml:space="preserve">
+    <value>Parent</value>
+  </data>
+  <data name="PARENTS_DUNS_NUMBER" xml:space="preserve">
+    <value>Parent DUNS Number</value>
+  </data>
+  <data name="PARENTS_DUNS_NUMBER_ERROR" xml:space="preserve">
+    <value>Enter the  Parent DUNS Number</value>
+  </data>
+  <data name="PARENT_DUNS_NUMBER_ERROR" xml:space="preserve">
+    <value>Enter the parent DUNS number</value>
+  </data>
+  <data name="PARENT_DUNS_NUMBER_VALIDATION" xml:space="preserve">
+    <value>Enter the Parent DUNS Number</value>
+  </data>
+  <data name="PARENT_NAME_ERROR" xml:space="preserve">
+    <value>Enter the parent name</value>
+  </data>
+  <data name="PARENT_NAME_VALIDATION" xml:space="preserve">
+    <value>Enter the Parent Name</value>
+  </data>
+  <data name="PASSWORD" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PASSWORD_CHANGED_SUCCESSFULLY" xml:space="preserve">
+    <value>Password changed successfully</value>
+  </data>
+  <data name="PASSWORD_ERROR" xml:space="preserve">
+    <value>Enter Password</value>
+  </data>
+  <data name="PASSWORD_GUIDELINES" xml:space="preserve">
+    <value>Password should contain at least one upper case letter, one lower case letter, one number, one special character (e.g. @#$*%_!&amp;) ,length must be within 6-15 characters and Should not start or end with spaces</value>
+  </data>
+  <data name="PASSWORD_LENGTH" xml:space="preserve">
+    <value>Password length must be within 6 - 15</value>
+  </data>
+  <data name="PASSWORD_MESSAGE" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PASSWORD_RESET_FAIL" xml:space="preserve">
+    <value>Password reset failed</value>
+  </data>
+  <data name="PASSWORD_RESET_MESSAGE" xml:space="preserve">
+    <value>Your password has now been reset</value>
+  </data>
+  <data name="PASSWORD_RESET_URL_SENT_MESSAGE" xml:space="preserve">
+    <value>Password reset url is sent to your email</value>
+  </data>
+  <data name="PASSWORD_SHOULD_NOT_START_OR_END_WITH_SPACES" xml:space="preserve">
+    <value>Should not start or end with spaces</value>
+  </data>
+  <data name="PASSWORD_TIPSO_MESSAGE" xml:space="preserve">
+    <value>&lt;div style="padding-left:20px;text-align:left;"&gt;Password should contain at least :&lt;/div&gt; &lt;div style="padding-left:20px;text-align:left;"&gt;One upper case letter  &lt;br/&gt;  One lower case letter &lt;br/&gt;  One number &lt;br/&gt; One special character (e.g. @@#$*%_!&amp;) &lt;br/&gt; Length must be within 6-15 characters&lt;br/&gt;Should not start or end with spaces&lt;/div&gt;</value>
+  </data>
+  <data name="PAYABLE_BY" xml:space="preserve">
+    <value>Payable By:</value>
+  </data>
+  <data name="PAYABLE_TO" xml:space="preserve">
+    <value>Payable to</value>
+  </data>
+  <data name="PAYMENT" xml:space="preserve">
+    <value>Payment</value>
+  </data>
+  <data name="PAYMENTS" xml:space="preserve">
+    <value>Payments</value>
+  </data>
+  <data name="PAYMENT_AMMOUNT_NET" xml:space="preserve">
+    <value>Payment amount (net)</value>
+  </data>
+  <data name="PAYMENT_HISTORY" xml:space="preserve">
+    <value>Payment History</value>
+  </data>
+  <data name="PAYMENT_REF_SIM" xml:space="preserve">
+    <value>Payment Reference: SIM</value>
+  </data>
+  <data name="PAYMENT_STATUS" xml:space="preserve">
+    <value>Payment Status</value>
+  </data>
+  <data name="PAYMENT_TYPE" xml:space="preserve">
+    <value>Payment Type</value>
+  </data>
+  <data name="PAYMENT_TYPE_AS_INVOICE" xml:space="preserve">
+    <value>Please select only products with payment type as Invoice to continue</value>
+  </data>
+  <data name="PAYMENT_VIA" xml:space="preserve">
+    <value>Payment Via</value>
+  </data>
+  <data name="PAY_BY_CARD" xml:space="preserve">
+    <value>Pay by card</value>
+  </data>
+  <data name="PAY_BY_INVOICE" xml:space="preserve">
+    <value>Pay by invoice</value>
+  </data>
+  <data name="PDF" xml:space="preserve">
+    <value>PDF</value>
+  </data>
+  <data name="PERSON_SANCTION_ENTITY_LISTS" xml:space="preserve">
+    <value>Person/Entity Sanction Lists</value>
+  </data>
+  <data name="PHONE" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="PLEASE_ADD_A_MESSAGE" xml:space="preserve">
+    <value>Please add a message</value>
+  </data>
+  <data name="PLEASE_ADD_MESSAGE" xml:space="preserve">
+    <value>Please add a message</value>
+  </data>
+  <data name="PLEASE_AUDIT_ALL_QUESTIONS_TO_SAVE" xml:space="preserve">
+    <value>Please audit all questions to save</value>
+  </data>
+  <data name="PLEASE_ENTER_A_VOUCHER_CODE" xml:space="preserve">
+    <value>Please enter a voucher code</value>
+  </data>
+  <data name="PLEASE_ENTER_COMMENTS" xml:space="preserve">
+    <value>Please enter comments</value>
+  </data>
+  <data name="PLEASE_READ_AND_AGREE_TO_THE_TERMS_AND_CONDITIONS" xml:space="preserve">
+    <value>Please read and agree to the terms and conditions</value>
+  </data>
+  <data name="PLEASE_SELECT_A_FILE_TO_UPLOAD" xml:space="preserve">
+    <value>Please select a file to upload</value>
+  </data>
+  <data name="PLEASE_SELECT_BUYER_ACCESS" xml:space="preserve">
+    <value>Please select buyer access.</value>
+  </data>
+  <data name="POSTAL_CODE_VALIDATION" xml:space="preserve">
+    <value>Enter the Postal Code</value>
+  </data>
+  <data name="POSTAL_ZIPCODE" xml:space="preserve">
+    <value>Postal/Zip code</value>
+  </data>
+  <data name="POSTAL_ZIPCODE_ERROR" xml:space="preserve">
+    <value>Enter the Postal/ Zip code</value>
+  </data>
+  <data name="PREFERRED_MODE" xml:space="preserve">
+    <value>Prreferred Mode</value>
+  </data>
+  <data name="PREFERRED_PAYMENT_METHOD" xml:space="preserve">
+    <value>Preferred Method of Payment</value>
+  </data>
+  <data name="PREFERRED_PAYMENT_METHOD_ERROR" xml:space="preserve">
+    <value>Enter the Preferred Method of Payment</value>
+  </data>
+  <data name="PREREGISTRATION_FILE" xml:space="preserve">
+    <value>Pre Registration File</value>
+  </data>
+  <data name="PREVIOUS" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="PRE_REG_FILE_DISPLAY" xml:space="preserve">
+    <value>Pre Registration File:</value>
+  </data>
+  <data name="PRE_REG_SUPPLIER_DELETED_SUCCESSFULLY" xml:space="preserve">
+    <value>Pre reg supplier deleted successfully</value>
+  </data>
+  <data name="PRGX_ADDRESS" xml:space="preserve">
+    <value>PRGX UK Ltd, 731 Capability Green, Luton, LU1 3LU. United Kingdom</value>
+  </data>
+  <data name="PRGX_CARD_PAYMENT_PROCESS_PART1" xml:space="preserve">
+    <value>PRGX UK LIMITED will process card payments via the Secure  payment gateway. If you are unable to make payment using a credit/debit card, please contact our support team</value>
+  </data>
+  <data name="PRGX_CARD_PAYMENT_PROCESS_PART2" xml:space="preserve">
+    <value>to arrange alternative arrangements</value>
+  </data>
+  <data name="PRGX_COMPANY_REG_NO" xml:space="preserve">
+    <value>Company Registration Number: 01478123</value>
+  </data>
+  <data name="PRGX_EMAIL" xml:space="preserve">
+    <value>Email: ukinvoicing@prgx.com</value>
+  </data>
+  <data name="PRGX_GLOBAL_RIGHTS" xml:space="preserve">
+    <value>2015 PRGX Global, Inc. All Rights Reserved.</value>
+  </data>
+  <data name="PRGX_REG_ADDRESS_LINE1" xml:space="preserve">
+    <value>731 Capability Green</value>
+  </data>
+  <data name="PRGX_REG_ADDRESS_LINE2" xml:space="preserve">
+    <value>Luton</value>
+  </data>
+  <data name="PRGX_REG_ADDRESS_LINE3" xml:space="preserve">
+    <value>LU1 3LU</value>
+  </data>
+  <data name="PRGX_TELEPHONE_NO" xml:space="preserve">
+    <value>Tel: +44 (0) 1582 395 800</value>
+  </data>
+  <data name="PRGX_UK_LIMITED" xml:space="preserve">
+    <value>PRGX UK Limited</value>
+  </data>
+  <data name="PRGX_UK_LTD" xml:space="preserve">
+    <value>PRGX UK Limited</value>
+  </data>
+  <data name="PRGX_VAT_NO" xml:space="preserve">
+    <value>VAT Number: 814 3649 30</value>
+  </data>
+  <data name="PRICE" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="PRICE_NET" xml:space="preserve">
+    <value>Price (Net)</value>
+  </data>
+  <data name="PRIMARY_CONTACT" xml:space="preserve">
+    <value>Primary Contact</value>
+  </data>
+  <data name="PRIMARY_CONTACT_EMAIL" xml:space="preserve">
+    <value>Primary Contact Email</value>
+  </data>
+  <data name="PRIMARY_CONTACT_NAME" xml:space="preserve">
+    <value>Primary Contact Name</value>
+  </data>
+  <data name="PRIMARY_EMAIL" xml:space="preserve">
+    <value>Primary Email</value>
+  </data>
+  <data name="PRIMARY_EMAIL_ADDRESS_VALIDATION" xml:space="preserve">
+    <value>Please enter Primary Email Address.</value>
+  </data>
+  <data name="PRIMARY_FIRST_NAME" xml:space="preserve">
+    <value>Primary First Name</value>
+  </data>
+  <data name="PRIMARY_FIRST_NAME_VALIDATION" xml:space="preserve">
+    <value>Please enter Primary first Name.</value>
+  </data>
+  <data name="PRIMARY_LAST_NAME" xml:space="preserve">
+    <value>Primary Last Name</value>
+  </data>
+  <data name="PRIMARY_LAST_NAME_VALIDATION" xml:space="preserve">
+    <value>Please enter Primary last Name.</value>
+  </data>
+  <data name="PRIMARY_REFERRER" xml:space="preserve">
+    <value>Primary Referrer</value>
+  </data>
+  <data name="PRIVACY_POLICY" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="PROCUREMENT" xml:space="preserve">
+    <value>Procurement</value>
+  </data>
+  <data name="PROCUREMENT_CONTACT" xml:space="preserve">
+    <value>Procurement  Contact</value>
+  </data>
+  <data name="PROCUREMENT_CONTACT_INFO" xml:space="preserve">
+    <value>Procurement Contact Information</value>
+  </data>
+  <data name="PRODUCT" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="PRODUCTS" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="PRODUCTS_MARKED_OFFLINE" xml:space="preserve">
+    <value>Offline Payment for following products is allowed successfully</value>
+  </data>
+  <data name="PRODUCTS_QUOTATION" xml:space="preserve">
+    <value>Products Quotation</value>
+  </data>
+  <data name="PRODUCTS_SKIPPED_SUCCESSFULLY" xml:space="preserve">
+    <value>Payment of products is skipped succesffuly</value>
+  </data>
+  <data name="PRODUCT_DESC" xml:space="preserve">
+    <value>Product Description</value>
+  </data>
+  <data name="PRODUCT_NAME" xml:space="preserve">
+    <value>Product Name</value>
+  </data>
+  <data name="PRODUCT_SELECT" xml:space="preserve">
+    <value>Please select the products</value>
+  </data>
+  <data name="PROFILE" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="PROFILE_CHECK" xml:space="preserve">
+    <value>Profile Check</value>
+  </data>
+  <data name="PROFILE_VERIFIED" xml:space="preserve">
+    <value>Profile Verified</value>
+  </data>
+  <data name="PROFILE_VERIFIED_SENTENCE_CASE" xml:space="preserve">
+    <value>Profile verified</value>
+  </data>
+  <data name="PUBLISH" xml:space="preserve">
+    <value>Publish</value>
+  </data>
+  <data name="PUBLISHED" xml:space="preserve">
+    <value>Published</value>
+  </data>
+  <data name="PUBLISHED_SUCCESSFULLY" xml:space="preserve">
+    <value>Published successfully.</value>
+  </data>
+  <data name="PUBLISH_PRODUCTS" xml:space="preserve">
+    <value>Publish Products</value>
+  </data>
+  <data name="PUBLISH_SECTION_AND_QUESTIONS" xml:space="preserve">
+    <value>Publish section and questions</value>
+  </data>
+  <data name="QUESTION" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="QUESTIONNAIRE" xml:space="preserve">
+    <value>Questionnaire</value>
+  </data>
+  <data name="QUESTIONNAIRE_COMPLETE" xml:space="preserve">
+    <value>Questionnaire Complete</value>
+  </data>
+  <data name="QUESTIONNAIRE_DESCRIPTION_ERROR" xml:space="preserve">
+    <value>Enter Questionnaire Section description</value>
+  </data>
+  <data name="QUESTIONNAIRE_LOWER_CASE" xml:space="preserve">
+    <value>questionnaire</value>
+  </data>
+  <data name="QUESTIONNAIRE_NAME" xml:space="preserve">
+    <value>Questionnaire name</value>
+  </data>
+  <data name="QUESTIONNAIRE_NAME_ERROR" xml:space="preserve">
+    <value>Enter Questionnaire Section name</value>
+  </data>
+  <data name="QUESTIONNAIRE_PENDING" xml:space="preserve">
+    <value>Questionnaire Pending</value>
+  </data>
+  <data name="QUESTIONNAIRE_SECTION" xml:space="preserve">
+    <value>Questionnaire Section</value>
+  </data>
+  <data name="QUESTIONNAIRE_SUMMARY" xml:space="preserve">
+    <value>Questionnaire Summary</value>
+  </data>
+  <data name="QUESTIONNARIES" xml:space="preserve">
+    <value>Questionnaires</value>
+  </data>
+  <data name="QUESTIONNARIE_SECTIONS" xml:space="preserve">
+    <value>Questionnaire Sections</value>
+  </data>
+  <data name="QUESTIONS" xml:space="preserve">
+    <value>Questions</value>
+  </data>
+  <data name="QUESTIONSET_SAVED_SUCCESSFULLY" xml:space="preserve">
+    <value>Questionnaire Section saved successfully.</value>
+  </data>
+  <data name="QUESTIONS_RELATING_TO_AND_ONLY_VIEWED_BY" xml:space="preserve">
+    <value>Questions relating to, and only viewed by,</value>
+  </data>
+  <data name="QUESTION_SET_CREATED" xml:space="preserve">
+    <value>Questionnaire Section Created Successfully.</value>
+  </data>
+  <data name="QUESTION_SET_DETAILS" xml:space="preserve">
+    <value>Question Set details</value>
+  </data>
+  <data name="QUOTATION_DATE" xml:space="preserve">
+    <value>Quotation Date</value>
+  </data>
+  <data name="QUOTATION_NO" xml:space="preserve">
+    <value>Quotation No.</value>
+  </data>
+  <data name="READ_MORE" xml:space="preserve">
+    <value>Read more</value>
+  </data>
+  <data name="READ_OUR_FAQS" xml:space="preserve">
+    <value>Read our FAQ's</value>
+  </data>
+  <data name="REASON_CODE_SUB_STATUS" xml:space="preserve">
+    <value>Reason Code/Sub-Status</value>
+  </data>
+  <data name="REFERENCES" xml:space="preserve">
+    <value>References</value>
+  </data>
+  <data name="REFERENCES_MESSAGE" xml:space="preserve">
+    <value>Update your client references.
+                                    These are only shared with buying organisations of your choice.</value>
+  </data>
+  <data name="REFERENCE_DETAILS" xml:space="preserve">
+    <value>Reference Details</value>
+  </data>
+  <data name="REFERRER" xml:space="preserve">
+    <value>Referrer</value>
+  </data>
+  <data name="REFERRER_NAME" xml:space="preserve">
+    <value>Referrer Name</value>
+  </data>
+  <data name="REFERRER_NAVIGATE_VALIDATION" xml:space="preserve">
+    <value>Please save the selected values before navigating to other page,else the selected values will be discarded.</value>
+  </data>
+  <data name="REFERRER_VALIDATION" xml:space="preserve">
+    <value>Please select a referrer.</value>
+  </data>
+  <data name="REFUND_DESCRIPTION" xml:space="preserve">
+    <value>Refund description</value>
+  </data>
+  <data name="REFUND_METHOD" xml:space="preserve">
+    <value>Refund Method</value>
+  </data>
+  <data name="REFUND_NET" xml:space="preserve">
+    <value>Refund Net</value>
+  </data>
+  <data name="REGISTER" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="REGISTERED" xml:space="preserve">
+    <value>Registered</value>
+  </data>
+  <data name="REGISTERED_DATE" xml:space="preserve">
+    <value>Registered Date</value>
+  </data>
+  <data name="REGISTER_A" xml:space="preserve">
+    <value>Register a</value>
+  </data>
+  <data name="REGISTER_FAQ" xml:space="preserve">
+    <value>Why register? Read our FAQ’s</value>
+  </data>
+  <data name="REGISTRANT_DETAILS" xml:space="preserve">
+    <value>Registrant Details:</value>
+  </data>
+  <data name="REGISTRATION" xml:space="preserve">
+    <value>Registration</value>
+  </data>
+  <data name="REGISTRATION_CHECKS" xml:space="preserve">
+    <value>Registration Checks</value>
+  </data>
+  <data name="REGISTRATION_DATE" xml:space="preserve">
+    <value>Registration Date</value>
+  </data>
+  <data name="REGISTRATION_NUMBER" xml:space="preserve">
+    <value>Registration number</value>
+  </data>
+  <data name="REGISTRATION_STARTED" xml:space="preserve">
+    <value>Registration Started</value>
+  </data>
+  <data name="REGISTRATION_SUBMITTED" xml:space="preserve">
+    <value>Registration Submitted</value>
+  </data>
+  <data name="REGISTRATION_VERIFIED" xml:space="preserve">
+    <value>Registration verified</value>
+  </data>
+  <data name="REG_ADDRESS" xml:space="preserve">
+    <value>Registered Address:</value>
+  </data>
+  <data name="REG_ADDRESS_DIFFERENT" xml:space="preserve">
+    <value>Is your Registered Address different to the above?</value>
+  </data>
+  <data name="REG_A_SUPPLIER" xml:space="preserve">
+    <value>Register a supplier</value>
+  </data>
+  <data name="REG_VERIFIED" xml:space="preserve">
+    <value>Registration verified</value>
+  </data>
+  <data name="RELATIONSHIP_ROLE" xml:space="preserve">
+    <value>Relationship Role</value>
+  </data>
+  <data name="RELEASE" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="RELEASE_CAMPAIGN" xml:space="preserve">
+    <value>Release Campaign</value>
+  </data>
+  <data name="RELEASE_CAMPAIGN_SUGGESTIONS" xml:space="preserve">
+    <value>Either uncheck option to 'Send Mail Via Silver Pop' or first download 'Suppliers List' before releasing campaign.</value>
+  </data>
+  <data name="RELEASE_CAMPAIGN_WITHOUT_MAIL" xml:space="preserve">
+    <value>Are you sure you want to release campaign without triggering mail from system?</value>
+  </data>
+  <data name="REMITTANCE" xml:space="preserve">
+    <value>Remittance</value>
+  </data>
+  <data name="REMOVE" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="REMOVE_VOUCHER" xml:space="preserve">
+    <value>Remove voucher</value>
+  </data>
+  <data name="REM_ADDRESS_DIFFERENT" xml:space="preserve">
+    <value>Is your Remittance Address different to the above?</value>
+  </data>
+  <data name="REPORTS" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="REQUEST" xml:space="preserve">
+    <value>Request</value>
+  </data>
+  <data name="REQUEST_ANSWERS" xml:space="preserve">
+    <value>Request Answers</value>
+  </data>
+  <data name="REQUIRED" xml:space="preserve">
+    <value>Required</value>
+  </data>
+  <data name="REQUIRED_FIELDS_VALIDATION" xml:space="preserve">
+    <value>Please fill all required fields.</value>
+  </data>
+  <data name="REQUIRED_SECTION" xml:space="preserve">
+    <value>Required section</value>
+  </data>
+  <data name="REQUIRED_SECTIONS" xml:space="preserve">
+    <value>Required sections</value>
+  </data>
+  <data name="REQUIRED_SECTIONS_NEEDING_ACTION" xml:space="preserve">
+    <value>required sections needing actions</value>
+  </data>
+  <data name="REQUIRED_SECTION_NEEDING_ACTION" xml:space="preserve">
+    <value>required section needing actions</value>
+  </data>
+  <data name="RESET" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="RESET_PASSWORD" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="RESULTS" xml:space="preserve">
+    <value>Results</value>
+  </data>
+  <data name="RESULTS_FOR" xml:space="preserve">
+    <value>Results for</value>
+  </data>
+  <data name="RESULTS_LOWER_CASE" xml:space="preserve">
+    <value>results</value>
+  </data>
+  <data name="RESULTS_PER_PAGE" xml:space="preserve">
+    <value>Results per page</value>
+  </data>
+  <data name="RESULT_LOWER_CASE" xml:space="preserve">
+    <value>result</value>
+  </data>
+  <data name="RESULT_OF_CHECK" xml:space="preserve">
+    <value>Result Of Check</value>
+  </data>
+  <data name="RETURN_TO_LOGIN" xml:space="preserve">
+    <value>Return to login page</value>
+  </data>
+  <data name="REVERT" xml:space="preserve">
+    <value>Revert</value>
+  </data>
+  <data name="REVERT_CAMPAIGN_ERROR_MESSAGE" xml:space="preserve">
+    <value>Sorry. Campaign could not be successfully reverted back.</value>
+  </data>
+  <data name="REVERT_CAMPAIGN_SUCCESS_MESSAGE" xml:space="preserve">
+    <value>Campaign successfully reverted back.</value>
+  </data>
+  <data name="RISK_ANALYSIS" xml:space="preserve">
+    <value>Risk Analysis</value>
+  </data>
+  <data name="RISK_COUNTRY_ALERTS" xml:space="preserve">
+    <value>Risk Country Alerts</value>
+  </data>
+  <data name="ROLES" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="ROLE_CREATED" xml:space="preserve">
+    <value>Roles has been created successfully.</value>
+  </data>
+  <data name="ROLE_DELETED" xml:space="preserve">
+    <value>Role has been deleted successfully</value>
+  </data>
+  <data name="ROLE_DESCRIPTION_VALIDATION" xml:space="preserve">
+    <value>Enter the Role Description</value>
+  </data>
+  <data name="ROLE_NAME" xml:space="preserve">
+    <value>Role Name</value>
+  </data>
+  <data name="ROLE_NAME_VALIDATION" xml:space="preserve">
+    <value>Enter the Role Name</value>
+  </data>
+  <data name="SALES" xml:space="preserve">
+    <value>Sales</value>
+  </data>
+  <data name="SALES_CONTACT_PRIMARY" xml:space="preserve">
+    <value>Sales Contact (Primary)</value>
+  </data>
+  <data name="SALES_CONTACT_PRIMARY1" xml:space="preserve">
+    <value>(Primary) Sales Contact</value>
+  </data>
+  <data name="SANCTION" xml:space="preserve">
+    <value>Sanction</value>
+  </data>
+  <data name="SANCTION_AND_LEGAL_QUESTIONNAIRE" xml:space="preserve">
+    <value>Sanction &amp; Legal Questionnaire</value>
+  </data>
+  <data name="SANCTION_ANSWERS_SAVED_SUCCESSFULLY" xml:space="preserve">
+    <value>Sanction answers saved successfully</value>
+  </data>
+  <data name="SAVE" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SAVED_SUCCESSFULLY" xml:space="preserve">
+    <value>Saved Successfully</value>
+  </data>
+  <data name="SAVED_SUPPLIER_DETAILS_SUCCESSFULLY" xml:space="preserve">
+    <value>Supplier Details Saved Successfully.</value>
+  </data>
+  <data name="SAVE_ANSWERS" xml:space="preserve">
+    <value>Save Answers</value>
+  </data>
+  <data name="SAVE_CHANGES" xml:space="preserve">
+    <value>Save Changes</value>
+  </data>
+  <data name="SEARCH" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SEARCH_CATEGORY_PLACEHOLDER" xml:space="preserve">
+    <value>Search for category</value>
+  </data>
+  <data name="SEARCH_FOR_BUYER" xml:space="preserve">
+    <value>Search For Buyer</value>
+  </data>
+  <data name="SEARCH_FOR_BUYER_ORG" xml:space="preserve">
+    <value>Search for buyer organisation</value>
+  </data>
+  <data name="SEARCH_FOR_QUESTION" xml:space="preserve">
+    <value>Search For Question</value>
+  </data>
+  <data name="SEARCH_FOR_SUPPLIER" xml:space="preserve">
+    <value>Search For Supplier</value>
+  </data>
+  <data name="SEARCH_FOR_SUPPLIER_ID" xml:space="preserve">
+    <value>Search for Supplier ID</value>
+  </data>
+  <data name="SEARCH_FOR_SUPPLIER_ORG" xml:space="preserve">
+    <value>Search for Supplier Organisations</value>
+  </data>
+  <data name="SEARCH_PAGE_DATA" xml:space="preserve">
+    <value>{0}-{1} of {2} records</value>
+  </data>
+  <data name="SEARCH_RESULTS" xml:space="preserve">
+    <value>Search Results</value>
+  </data>
+  <data name="SEARCH_RESULTS_FOR" xml:space="preserve">
+    <value>Search results for</value>
+  </data>
+  <data name="SECTION" xml:space="preserve">
+    <value>section</value>
+  </data>
+  <data name="SECTIONS" xml:space="preserve">
+    <value>Sections</value>
+  </data>
+  <data name="SECTION_NAME" xml:space="preserve">
+    <value>Section name</value>
+  </data>
+  <data name="SECTOR" xml:space="preserve">
+    <value>Sector</value>
+  </data>
+  <data name="SECTOR_DESCRIPTION_ERROR" xml:space="preserve">
+    <value>Select Industry Sector</value>
+  </data>
+  <data name="SECTOR_DESCRIPTION_MESSAGE" xml:space="preserve">
+    <value>What is the main industry sector your organisation is classified as?</value>
+  </data>
+  <data name="SELECT" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SELECTED" xml:space="preserve">
+    <value>selected</value>
+  </data>
+  <data name="SELECTION_CRITERIA" xml:space="preserve">
+    <value>Selection Criteria</value>
+  </data>
+  <data name="SELECT_ADDRESS" xml:space="preserve">
+    <value>Select Address</value>
+  </data>
+  <data name="SELECT_ADDRESS_TYPE" xml:space="preserve">
+    <value>--- Select Address Type ---</value>
+  </data>
+  <data name="SELECT_ATLEAST_ONE_PRODUCT" xml:space="preserve">
+    <value>Please select at least one product to make a payment</value>
+  </data>
+  <data name="SELECT_AT_LEAST_ONE_CATEGORY" xml:space="preserve">
+    <value>Select atleast one category</value>
+  </data>
+  <data name="SELECT_AT_LEAST_ONE_GEOGRAPHIC_REGION" xml:space="preserve">
+    <value>Select at least one geographic region</value>
+  </data>
+  <data name="SELECT_AUDITOR" xml:space="preserve">
+    <value>Select Auditor</value>
+  </data>
+  <data name="SELECT_BUYERS_FOR_ACCESS" xml:space="preserve">
+    <value>Please select the Buyers to be granted access.</value>
+  </data>
+  <data name="SELECT_BUYER_OR_SUPPLIER" xml:space="preserve">
+    <value>Please Select Buyer or Supplier</value>
+  </data>
+  <data name="SELECT_BUYER_SUPPLIER" xml:space="preserve">
+    <value>Please select buyer or supplier</value>
+  </data>
+  <data name="SELECT_CAMPAIGN_AUDITOR" xml:space="preserve">
+    <value>Select Campaign Auditor</value>
+  </data>
+  <data name="SELECT_COUNTRY" xml:space="preserve">
+    <value>--- Select Country ---</value>
+  </data>
+  <data name="SELECT_DATE_PAID" xml:space="preserve">
+    <value>Please select the Date Paid</value>
+  </data>
+  <data name="SELECT_EXISTING_COMPANY" xml:space="preserve">
+    <value>Please Select the Existing Company</value>
+  </data>
+  <data name="SELECT_INDUSTRY_SECTOR" xml:space="preserve">
+    <value>Please select Industry Sector</value>
+  </data>
+  <data name="SELECT_PRODUCT" xml:space="preserve">
+    <value>Select Product</value>
+  </data>
+  <data name="SELECT_PRODUCTS_FOR_PAYMENT" xml:space="preserve">
+    <value>Select the Products for Payment</value>
+  </data>
+  <data name="SELECT_RELATIONSHIP" xml:space="preserve">
+    <value>Select  the RelationShip</value>
+  </data>
+  <data name="SELECT_ROLE" xml:space="preserve">
+    <value>Select Role</value>
+  </data>
+  <data name="SELECT_SECTIONS_TO_PAY_FOR" xml:space="preserve">
+    <value>Select sections to pay for</value>
+  </data>
+  <data name="SELECT_SIC_CODE" xml:space="preserve">
+    <value>Select SIC Code</value>
+  </data>
+  <data name="SELECT_SIC_CODE1" xml:space="preserve">
+    <value>Select SIC Code</value>
+  </data>
+  <data name="SELECT_STARTED_YEAR" xml:space="preserve">
+    <value>Select the year you started</value>
+  </data>
+  <data name="SELECT_SUPPLIERS_TO_BE_REQUESTED" xml:space="preserve">
+    <value>Please select the Suppliers to be requested</value>
+  </data>
+  <data name="SELECT_TO_CONTACT_OR_NOT" xml:space="preserve">
+    <value>Select Whether we can Contact or not</value>
+  </data>
+  <data name="SELF_DECLARED" xml:space="preserve">
+    <value>Self Declared</value>
+  </data>
+  <data name="SELF_DECLARED_LOWER_CASE" xml:space="preserve">
+    <value>self declared</value>
+  </data>
+  <data name="SELF_DECLARED_TITLE_CASE" xml:space="preserve">
+    <value>Self Declared</value>
+  </data>
+  <data name="SEND" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="SEND_APPLY" xml:space="preserve">
+    <value>Send and apply</value>
+  </data>
+  <data name="SEND_MESSAGE" xml:space="preserve">
+    <value>Send message</value>
+  </data>
+  <data name="SERVICE_PROVIDER" xml:space="preserve">
+    <value>Service Provider:</value>
+  </data>
+  <data name="SHARED" xml:space="preserve">
+    <value>Shared</value>
+  </data>
+  <data name="SHARE_ANSWERS" xml:space="preserve">
+    <value>Share answers</value>
+  </data>
+  <data name="SHOW_OLDER_MESSAGES" xml:space="preserve">
+    <value>Show older messages</value>
+  </data>
+  <data name="SHOW_RESULTS_AS" xml:space="preserve">
+    <value>Show results as</value>
+  </data>
+  <data name="SHOW_SUPPLIERS" xml:space="preserve">
+    <value>Show Suppliers</value>
+  </data>
+  <data name="SID" xml:space="preserve">
+    <value>SID</value>
+  </data>
+  <data name="SIGN_UP" xml:space="preserve">
+    <value>Sign-Up</value>
+  </data>
+  <data name="SILVER_POP_LIST" xml:space="preserve">
+    <value>Silver Pop List</value>
+  </data>
+  <data name="SIM" xml:space="preserve">
+    <value>SIM</value>
+  </data>
+  <data name="SIMR" xml:space="preserve">
+    <value>SIMR</value>
+  </data>
+  <data name="SIM_AND_CIPS" xml:space="preserve">
+    <value>SIM and CIPS</value>
+  </data>
+  <data name="SIM_ONLY" xml:space="preserve">
+    <value>SIM only</value>
+  </data>
+  <data name="SITE_MAP" xml:space="preserve">
+    <value>SITEMAP</value>
+  </data>
+  <data name="SIZE_AND_SECTOR" xml:space="preserve">
+    <value>Size and Sector</value>
+  </data>
+  <data name="SOME" xml:space="preserve">
+    <value>Some</value>
+  </data>
+  <data name="SOME_SHARED" xml:space="preserve">
+    <value>Some answers shared</value>
+  </data>
+  <data name="SORT_CODE" xml:space="preserve">
+    <value>Sort Code</value>
+  </data>
+  <data name="SORT_CODE_ERROR" xml:space="preserve">
+    <value>Enter the Sort Code</value>
+  </data>
+  <data name="SOURCE" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="STAGE" xml:space="preserve">
+    <value>Stage</value>
+  </data>
+  <data name="STANDARD_TERMS_AND_CONDITIONS" xml:space="preserve">
+    <value>standard terms and conditions</value>
+  </data>
+  <data name="STARTED_DATE" xml:space="preserve">
+    <value>Started Date</value>
+  </data>
+  <data name="START_A_DISCUSSION" xml:space="preserve">
+    <value>Start a discussion</value>
+  </data>
+  <data name="START_DISCUSSION" xml:space="preserve">
+    <value>Start a discussion</value>
+  </data>
+  <data name="STATES_ERROR" xml:space="preserve">
+    <value>Select the states</value>
+  </data>
+  <data name="STATES_SELECTED" xml:space="preserve">
+    <value>States</value>
+  </data>
+  <data name="STATUS" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="STATUS_OF_SUPPLIER_QUESTIONNAIRES" xml:space="preserve">
+    <value>Status of Supplier Questionnaires</value>
+  </data>
+  <data name="STEP_1_OF_4" xml:space="preserve">
+    <value>Step 1 of 4</value>
+  </data>
+  <data name="STEP_2_OF_4" xml:space="preserve">
+    <value>Step 2 of 4</value>
+  </data>
+  <data name="STEP_3_OF_4" xml:space="preserve">
+    <value>Step 3 of 4</value>
+  </data>
+  <data name="STEP_4_OF_4" xml:space="preserve">
+    <value>Step 4 of 4</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SUB" xml:space="preserve">
+    <value>Sub</value>
+  </data>
+  <data name="SUBMIT" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="SUBMITTED" xml:space="preserve">
+    <value>Submitted</value>
+  </data>
+  <data name="SUBMITTED_AND_BEING_AUDITED" xml:space="preserve">
+    <value>submitted and being audited</value>
+  </data>
+  <data name="SUBMITTED_REG" xml:space="preserve">
+    <value>Submitted registration</value>
+  </data>
+  <data name="SUBMITTING_OF_CAMPAIGNS_WOULD_DELETE_ALL_THE_INVALID_ENTRIES" xml:space="preserve">
+    <value>Submitting the campaign would delete all the invalid entries.</value>
+  </data>
+  <data name="SUBMIT_CAMPAIGN" xml:space="preserve">
+    <value>Submit campaign</value>
+  </data>
+  <data name="SUBMIT_REGISTRATION" xml:space="preserve">
+    <value>Submit Registration</value>
+  </data>
+  <data name="SUBSIDIARY" xml:space="preserve">
+    <value>Subsidiary</value>
+  </data>
+  <data name="SUBTOTAL_NET" xml:space="preserve">
+    <value>SubTotal (Net)</value>
+  </data>
+  <data name="SUB_STATUS" xml:space="preserve">
+    <value>Sub Status</value>
+  </data>
+  <data name="SUB_TOTAL" xml:space="preserve">
+    <value>Sub Total</value>
+  </data>
+  <data name="SUCCESSFULLY_ADDED_TO_DEFAULT_PRODUCTS" xml:space="preserve">
+    <value>Product successfully added to buyer's default products</value>
+  </data>
+  <data name="SUCCESSFULLY_REMOVED_FROM_DEFAULT_PRODUCTS" xml:space="preserve">
+    <value>Product successfully removed from buyer's default products</value>
+  </data>
+  <data name="SUMMARY" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="SUPPLIER" xml:space="preserve">
+    <value>Supplier</value>
+  </data>
+  <data name="SUPPLIERS" xml:space="preserve">
+    <value>Suppliers</value>
+  </data>
+  <data name="SUPPLIERS_IN_CAMPAIGN" xml:space="preserve">
+    <value>Suppliers in campaign</value>
+  </data>
+  <data name="SUPPLIERS_LOWER_CASE" xml:space="preserve">
+    <value>suppliers</value>
+  </data>
+  <data name="SUPPLIERS_PER_CALENDER_MONTH" xml:space="preserve">
+    <value>suppliers this calender month</value>
+  </data>
+  <data name="SUPPLIERS_REQUESTED_SUCCESFULLY" xml:space="preserve">
+    <value>Suppliers requested succesfully</value>
+  </data>
+  <data name="SUPPLIERS_REQUESTED_SUCCESSFULLY" xml:space="preserve">
+    <value>Suppliers requested successfully</value>
+  </data>
+  <data name="SUPPLIERS_THIS_CALENDER_MONTH" xml:space="preserve">
+    <value>suppliers this calender month</value>
+  </data>
+  <data name="SUPPLIERS_YOU_TRADE" xml:space="preserve">
+    <value>Suppliers you trade with</value>
+  </data>
+  <data name="SUPPLIER_ADDRESS" xml:space="preserve">
+    <value>Supplier address</value>
+  </data>
+  <data name="SUPPLIER_BULK_SHARE_POP_UP_MESSAGE_BANNER" xml:space="preserve">
+    <value>&lt;div&gt;{0} of the selected buyers already have access to your answers.&lt;/div&gt;&lt;div&gt;Any changes you make here will override their current access.&lt;/div&gt;</value>
+  </data>
+  <data name="SUPPLIER_BUSINESS_VERIFIED_SUCCESSFULLY" xml:space="preserve">
+    <value>Supplier Business Verified Successfully</value>
+  </data>
+  <data name="SUPPLIER_COUNT" xml:space="preserve">
+    <value>Supplier Count</value>
+  </data>
+  <data name="SUPPLIER_COUNT_ERROR" xml:space="preserve">
+    <value>Please enter supplier count.</value>
+  </data>
+  <data name="SUPPLIER_COUNT_EXCEEDS_MASTER_VENDOR_VALUE" xml:space="preserve">
+    <value>Supplier count exceeds Master Vendor value. Please update Master Vendor value for the campaign in order to approve it.</value>
+  </data>
+  <data name="SUPPLIER_DETAILS" xml:space="preserve">
+    <value>Supplier details</value>
+  </data>
+  <data name="SUPPLIER_DISCUSSION" xml:space="preserve">
+    <value>Supplier discussion</value>
+  </data>
+  <data name="SUPPLIER_HOME" xml:space="preserve">
+    <value>Supplier Home</value>
+  </data>
+  <data name="SUPPLIER_HOME_BANNER_1" xml:space="preserve">
+    <value>The registration process is complete and your information is being checked by the PRGX team.</value>
+  </data>
+  <data name="SUPPLIER_HOME_BANNER_2" xml:space="preserve">
+    <value>You can return to this web portal at any time using the address sim.prgx.com</value>
+  </data>
+  <data name="SUPPLIER_ID" xml:space="preserve">
+    <value>Supplier ID</value>
+  </data>
+  <data name="SUPPLIER_INFORMATION" xml:space="preserve">
+    <value>Supplier Information</value>
+  </data>
+  <data name="SUPPLIER_LOWER_CASE" xml:space="preserve">
+    <value>supplier</value>
+  </data>
+  <data name="SUPPLIER_MESSAGE_SENT_SUCCESSFULLY" xml:space="preserve">
+    <value>Message sent and/or changes have been applied</value>
+  </data>
+  <data name="SUPPLIER_NAME" xml:space="preserve">
+    <value>Supplier Name</value>
+  </data>
+  <data name="SUPPLIER_NAME_VALIDATION" xml:space="preserve">
+    <value>Please enter supplier name</value>
+  </data>
+  <data name="SUPPLIER_ONBOARDING" xml:space="preserve">
+    <value>Supplier onboarding</value>
+  </data>
+  <data name="SUPPLIER_ORGANISATIONS" xml:space="preserve">
+    <value>Supplier Organisations</value>
+  </data>
+  <data name="SUPPLIER_PORTAL" xml:space="preserve">
+    <value>Supplier Portal</value>
+  </data>
+  <data name="SUPPLIER_PUBLISHED_SUCCESSFULLY" xml:space="preserve">
+    <value>Published Successfully</value>
+  </data>
+  <data name="SUPPLIER_SEARCH" xml:space="preserve">
+    <value>Supplier Search</value>
+  </data>
+  <data name="SUPPLIER_SHARE_ALL_ANSWER_HEADER" xml:space="preserve">
+    <value>Are you sure you want to share all your answers?</value>
+  </data>
+  <data name="SUPPLIER_SHARE_ALL_ANSWER_MESSAGE" xml:space="preserve">
+    <value>Optional message to the buyers</value>
+  </data>
+  <data name="SUPPLIER_STATUS" xml:space="preserve">
+    <value>Supplier Status</value>
+  </data>
+  <data name="SUPPLIER_TYPE" xml:space="preserve">
+    <value>Supplier Type</value>
+  </data>
+  <data name="SUPPLIER_YOU_TRADE" xml:space="preserve">
+    <value>Supplier you trade with</value>
+  </data>
+  <data name="SURNAME" xml:space="preserve">
+    <value>Surname</value>
+  </data>
+  <data name="SUSTAINABILITY" xml:space="preserve">
+    <value>Sustainability</value>
+  </data>
+  <data name="SUSTAINABILITY_CONTACT" xml:space="preserve">
+    <value>Sustainability  Contact</value>
+  </data>
+  <data name="SUSTAINABILITY_CONTACT_INFO" xml:space="preserve">
+    <value>Sustainability Contact Information</value>
+  </data>
+  <data name="SWIFT_CODE" xml:space="preserve">
+    <value>SWIFT Code</value>
+  </data>
+  <data name="SWIFT_CODE_ERROR" xml:space="preserve">
+    <value>Enter the SWIFT Code</value>
+  </data>
+  <data name="TEL" xml:space="preserve">
+    <value>Tel</value>
+  </data>
+  <data name="TELEPHONE" xml:space="preserve">
+    <value>Telephone</value>
+  </data>
+  <data name="TELEPHONE_NUMBER_VALIDATION" xml:space="preserve">
+    <value>Please enter Telephone Number.</value>
+  </data>
+  <data name="TEL_NUMBER" xml:space="preserve">
+    <value>Telephone Number</value>
+  </data>
+  <data name="TEL_NUMBER_ERROR" xml:space="preserve">
+    <value>Enter Telephone Number</value>
+  </data>
+  <data name="TEL_NUMBER_LENGTH" xml:space="preserve">
+    <value>Phone Number must be within 12</value>
+  </data>
+  <data name="TERMS_ACCEPTED" xml:space="preserve">
+    <value>Terms Accepted</value>
+  </data>
+  <data name="TERMS_AND_CONDITIONS" xml:space="preserve">
+    <value>Terms and Conditions</value>
+  </data>
+  <data name="TERMS_OF_USE" xml:space="preserve">
+    <value>Terms of Use</value>
+  </data>
+  <data name="THIRD_PARTY" xml:space="preserve">
+    <value>Third Party</value>
+  </data>
+  <data name="TITLE" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="TOTAL" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="TOTAL_REQUIRED" xml:space="preserve">
+    <value>Total Required</value>
+  </data>
+  <data name="TO_DATE" xml:space="preserve">
+    <value>To Date</value>
+  </data>
+  <data name="TO_THE" xml:space="preserve">
+    <value>to the</value>
+  </data>
+  <data name="TRADING" xml:space="preserve">
+    <value>In case you are doing business under a different name, please provide your 'doing business as (DBA)' name:</value>
+  </data>
+  <data name="TRADING_WITH" xml:space="preserve">
+    <value>Trading with</value>
+  </data>
+  <data name="TRANSACTION" xml:space="preserve">
+    <value>Transaction</value>
+  </data>
+  <data name="TURNOVER" xml:space="preserve">
+    <value>Turnover</value>
+  </data>
+  <data name="TURNOVER_ERROR" xml:space="preserve">
+    <value>Please enter the turnover</value>
+  </data>
+  <data name="TURNOVER_MESSAGE" xml:space="preserve">
+    <value>What is your annual sales turnover in GBP in 2014?</value>
+  </data>
+  <data name="TYPE" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="TYPE_OF_COMPANY" xml:space="preserve">
+    <value>Please indicate your company's incorporation/form</value>
+  </data>
+  <data name="TYPE_OF_COMPANY_ERROR" xml:space="preserve">
+    <value>Select the company’s incorporation</value>
+  </data>
+  <data name="ULTIMATE_PARENT" xml:space="preserve">
+    <value>Please provide your parent company’s legal name:</value>
+  </data>
+  <data name="ULTIMATE_PARENT_ERROR" xml:space="preserve">
+    <value>Enter the  Parent Name</value>
+  </data>
+  <data name="UNABLE_TO_DELETE_PRE_REG_SUPPLIER" xml:space="preserve">
+    <value>Unable to delete Pre reg supplier</value>
+  </data>
+  <data name="UNABLE_TO_SUBMIT_CAMPAIGN" xml:space="preserve">
+    <value>Unable to submit campaign</value>
+  </data>
+  <data name="UNASSIGN_ADDRESS_SUCCESS" xml:space="preserve">
+    <value>Address Unassigned Successfully</value>
+  </data>
+  <data name="UNASSIGN_BANK_DETAILS_SUCCESS" xml:space="preserve">
+    <value>Bank Details Unassigned Successfully</value>
+  </data>
+  <data name="UNASSIGN_REFERENCE_SUCCESS" xml:space="preserve">
+    <value>Reference Unassigned Successfully</value>
+  </data>
+  <data name="UNREAD_MESSAGE" xml:space="preserve">
+    <value>Unread message</value>
+  </data>
+  <data name="UNREAD_MESSAGES" xml:space="preserve">
+    <value>Unread messages</value>
+  </data>
+  <data name="UPDATE" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UPDATE_ADDRESS_SUCCESS" xml:space="preserve">
+    <value>Address Updated Successfully</value>
+  </data>
+  <data name="UPDATE_BANK_DETAILS_SUCCESS" xml:space="preserve">
+    <value>Bank Details Updated Successfully</value>
+  </data>
+  <data name="UPDATE_CONTACT_SUCCESS" xml:space="preserve">
+    <value>Contact Updated Successfully</value>
+  </data>
+  <data name="UPDATE_MASTER_VENDOR_ERROR_MESSAGE" xml:space="preserve">
+    <value>Supplier Count is less than Master Vendor. Please update Master Vendor to approve campaign.</value>
+  </data>
+  <data name="UPDATE_MESSAGE" xml:space="preserve">
+    <value>Changes successfully saved</value>
+  </data>
+  <data name="UPDATE_REFERENCE_DETAILS_SUCCESS" xml:space="preserve">
+    <value>Reference Details Updated Successfully</value>
+  </data>
+  <data name="UPLOAD" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="UPLOAD_IMAGE_VALIDATION" xml:space="preserve">
+    <value>Please select the image to upload.</value>
+  </data>
+  <data name="USERS" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="USER_ALREADY_EXISTS" xml:space="preserve">
+    <value>User Already Exists</value>
+  </data>
+  <data name="USER_DELETED" xml:space="preserve">
+    <value>User has been deleted successfully.</value>
+  </data>
+  <data name="USER_EMAIL_NOT_EXISTS" xml:space="preserve">
+    <value>User with this email does not exist</value>
+  </data>
+  <data name="USER_NAME" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="USER_TYPE" xml:space="preserve">
+    <value>User Type</value>
+  </data>
+  <data name="VALID" xml:space="preserve">
+    <value>Valid</value>
+  </data>
+  <data name="VALIDATION_MESSAGE" xml:space="preserve">
+    <value>Please select the auditor role.</value>
+  </data>
+  <data name="VALID_PRIMARY_EMAIL" xml:space="preserve">
+    <value>Please Enter a valid Email.</value>
+  </data>
+  <data name="VALID_TELEPHONE_NUMBER" xml:space="preserve">
+    <value>Phone number should contain only numbers.</value>
+  </data>
+  <data name="VALUE" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="VALUE_GBP" xml:space="preserve">
+    <value>Value (GBP)</value>
+  </data>
+  <data name="VAT" xml:space="preserve">
+    <value>VAT</value>
+  </data>
+  <data name="VAT_AMOUNT" xml:space="preserve">
+    <value>VAT amount</value>
+  </data>
+  <data name="VAT_COUNTRY" xml:space="preserve">
+    <value>VAT country identifier</value>
+  </data>
+  <data name="VAT_COUNTRY_FOR_CSI_VERIFICATION" xml:space="preserve">
+    <value>Please select VAT Country for CSI Verification.</value>
+  </data>
+  <data name="VAT_FOR_CSI_VERIFICATION" xml:space="preserve">
+    <value>Please select VAT Registered or Not for CSI Verification.</value>
+  </data>
+  <data name="VAT_NO_VALIDATION" xml:space="preserve">
+    <value>Enter VAT Number</value>
+  </data>
+  <data name="VAT_NUMBER" xml:space="preserve">
+    <value>VAT number</value>
+  </data>
+  <data name="VAT_NUMBER_ERROR" xml:space="preserve">
+    <value>Enter VAT number </value>
+  </data>
+  <data name="VAT_NUMBER_MESSAGE" xml:space="preserve">
+    <value>If yes, please provide your VAT number here</value>
+  </data>
+  <data name="VAT_NUMBER_VALIDATION" xml:space="preserve">
+    <value>Please provide the VAT number.</value>
+  </data>
+  <data name="VERIFICATION_COMMENTS" xml:space="preserve">
+    <value>Verification comments</value>
+  </data>
+  <data name="VERIFICATION_STATUS" xml:space="preserve">
+    <value>Verification Status</value>
+  </data>
+  <data name="VERIFIED" xml:space="preserve">
+    <value>Verified</value>
+  </data>
+  <data name="VERIFIED_AND_ACTIVATED" xml:space="preserve">
+    <value>Verified and Activated</value>
+  </data>
+  <data name="VERIFIED_LOWER_CASE" xml:space="preserve">
+    <value>verified</value>
+  </data>
+  <data name="VERIFIED_REG" xml:space="preserve">
+    <value>Verified Registration</value>
+  </data>
+  <data name="VERIFIED_SUPPLIER" xml:space="preserve">
+    <value>Verified Supplier</value>
+  </data>
+  <data name="VERIFIED_SUPPLIERS" xml:space="preserve">
+    <value>Verified Suppliers</value>
+  </data>
+  <data name="VERIFIED_TITLE_CASE" xml:space="preserve">
+    <value>Verified</value>
+  </data>
+  <data name="VERIFY" xml:space="preserve">
+    <value>Verify</value>
+  </data>
+  <data name="VERIFY_BUYER" xml:space="preserve">
+    <value>Verify Buyer</value>
+  </data>
+  <data name="VERIFY_CAMPAIGN" xml:space="preserve">
+    <value>Verify campaign</value>
+  </data>
+  <data name="VERIFY_CAMPAIGN_LIST" xml:space="preserve">
+    <value>Verify campaign list</value>
+  </data>
+  <data name="VERIFY_LIST" xml:space="preserve">
+    <value>Verify List</value>
+  </data>
+  <data name="VIEW_ANSWER" xml:space="preserve">
+    <value>View Answer</value>
+  </data>
+  <data name="VIEW_ANSWER_IN_NEW_TAB" xml:space="preserve">
+    <value>View answer in new tab</value>
+  </data>
+  <data name="VIEW_DISCUSSION" xml:space="preserve">
+    <value>View Discussion</value>
+  </data>
+  <data name="VIEW_PROFILE" xml:space="preserve">
+    <value>View Profile</value>
+  </data>
+  <data name="VIEW_PROFILE_IN_NEW_TAB" xml:space="preserve">
+    <value>View profile in new tab</value>
+  </data>
+  <data name="VIEW_SUPPLIERS" xml:space="preserve">
+    <value>View Suppliers</value>
+  </data>
+  <data name="VIEW_SUPPLIER_PROFILE" xml:space="preserve">
+    <value>View supplier profile</value>
+  </data>
+  <data name="VIEW_YOUR_PROFILE" xml:space="preserve">
+    <value>View your profile</value>
+  </data>
+  <data name="VOUCHER" xml:space="preserve">
+    <value>Voucher</value>
+  </data>
+  <data name="VOUCHERS" xml:space="preserve">
+    <value>Vouchers</value>
+  </data>
+  <data name="VOUCHER_APPLIED_SUCCESSFULLY" xml:space="preserve">
+    <value>Voucher applied successfully</value>
+  </data>
+  <data name="VOUCHER_CODE" xml:space="preserve">
+    <value>Voucher Code</value>
+  </data>
+  <data name="VOUCHER_DISCOUNT" xml:space="preserve">
+    <value>Voucher Discount</value>
+  </data>
+  <data name="VOUCHER_DISPLAY" xml:space="preserve">
+    <value>Voucher:</value>
+  </data>
+  <data name="VOUCHER_ERROR" xml:space="preserve">
+    <value>Invalid voucher code</value>
+  </data>
+  <data name="VOUCHER_IS_SUBJECT_TO" xml:space="preserve">
+    <value>Voucher is subject to</value>
+  </data>
+  <data name="W9W8_FORM" xml:space="preserve">
+    <value>Please attach your W-9/W-8 form (W-8 if you are a non-US vendor)</value>
+  </data>
+  <data name="WEBSITE_LINK" xml:space="preserve">
+    <value>Please provide your company's website address</value>
+  </data>
+  <data name="WEBSITE_LINK_ERROR" xml:space="preserve">
+    <value>Weblink is not in correct format</value>
+  </data>
+  <data name="WELCOME" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="WELCOME_MESSAGE" xml:space="preserve">
+    <value>Welcome Message</value>
+  </data>
+  <data name="WELCOME_MESSAGE_DISPLAY" xml:space="preserve">
+    <value>Welcome Message:</value>
+  </data>
+  <data name="WELCOME_TO_OUR_NEW_SUPPLIER_PORTAL" xml:space="preserve">
+    <value>Welcome to our new supplier portal</value>
+  </data>
+  <data name="WHY_REGISTER" xml:space="preserve">
+    <value>Why Register</value>
+  </data>
+  <data name="WORKSHEET" xml:space="preserve">
+    <value>Worksheet</value>
+  </data>
+  <data name="WRITE_US" xml:space="preserve">
+    <value>Write to Us</value>
+  </data>
+  <data name="YES" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="YES1" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="YOU_ALREADY_REQUESTED" xml:space="preserve">
+    <value>You already requested</value>
+  </data>
+  <data name="YOU_ARE_ABLE_TO_REQUEST_ANSWERS_FROM" xml:space="preserve">
+    <value>You are able to request answers from</value>
+  </data>
+  <data name="YOU_TRADE_WITH" xml:space="preserve">
+    <value>you trade with</value>
+  </data>
+  <data name="ABOUT_YOU" xml:space="preserve">
+    <value>About you</value>
+  </data>
+  <data name="ABOUT_YOUR_ORGANISATION" xml:space="preserve">
+    <value>About your organisation</value>
+  </data>
+  <data name="ABOUT_YOUR_ORGANISATION_PROFILE" xml:space="preserve">
+    <value>About your organisation profile</value>
+  </data>
+  <data name="REGISTER_A_BUYER" xml:space="preserve">
+    <value>Register a buyer</value>
+  </data>
+  <data name="REGISTER_INTEREST" xml:space="preserve">
+    <value>Register Interest</value>
+  </data>
+  <data name="SUBMISSION_SUCCESSFUL" xml:space="preserve">
+    <value>Submission Successful</value>
+  </data>
+  <data name="YOUR_DETAILS_HAVE_BEEN_SUBMITTED_FOR_VERIFICATION" xml:space="preserve">
+    <value>Your details have been submitted for verification</value>
+  </data>
+  <data name="CREATE_VOUCHER" xml:space="preserve">
+    <value>Create Voucher</value>
+  </data>
+  <data name="ORGANISATION_NAME_BUYER" xml:space="preserve">
+    <value>Organisation Name</value>
+  </data>
+  <data name="ASSIGN_PRODUCT" xml:space="preserve">
+    <value>Assign Product</value>
+  </data>
+  <data name="ASSIGN_TO_AUDITOR" xml:space="preserve">
+    <value>Assign to auditor</value>
+  </data>
+  <data name="BUSINESS_SECTOR" xml:space="preserve">
+    <value>Business Sector</value>
+  </data>
+  <data name="CAMPAIGN_ASSIGNED_TO_AUDITOR_SUCCESSFULLY" xml:space="preserve">
+    <value>Campaign assigned to auditor successfully</value>
+  </data>
+  <data name="CAMPAIGN_COULD_NOT_BE_ASSIGNED_TO_AUDITOR" xml:space="preserve">
+    <value>Campaign could not be assigned to auditor</value>
+  </data>
+  <data name="CAN_COOKIES_BE_DISABLED" xml:space="preserve">
+    <value>Can cookies be disabled</value>
+  </data>
+  <data name="CHANGES_TO_THIS_STATEMENT" xml:space="preserve">
+    <value>Changes to this statement</value>
+  </data>
+  <data name="CHOICE_ACCESS_AND_CORRECTION" xml:space="preserve">
+    <value>Choice, Access and Corrrection</value>
+  </data>
+  <data name="COMPANY_TURNOVER" xml:space="preserve">
+    <value>Company Turnover</value>
+  </data>
+  <data name="CONFIRMATION_OF_SUBMISSION" xml:space="preserve">
+    <value>Confirmation of submission</value>
+  </data>
+  <data name="CONTACT" xml:space="preserve">
+    <value>contact</value>
+  </data>
+  <data name="CUSTOMER_SECTOR" xml:space="preserve">
+    <value>Customer Sector</value>
+  </data>
+  <data name="DOWNLOAD_RECEIPT_OR_INVOICE1" xml:space="preserve">
+    <value>Download receipt or invoice</value>
+  </data>
+  <data name="DOWNLOAD_THE" xml:space="preserve">
+    <value>Download the</value>
+  </data>
+  <data name="EDIT_USER_DETAILS" xml:space="preserve">
+    <value>Edit user details</value>
+  </data>
+  <data name="EMPLOYEE_PRIVACY_STATEMENT" xml:space="preserve">
+    <value>Employee privacy statement</value>
+  </data>
+  <data name="ENFORCEMENT_OF_THIS_STATEMENT" xml:space="preserve">
+    <value>Enforcement of this statement</value>
+  </data>
+  <data name="ENTER_PAYMENT_INFORMATION1" xml:space="preserve">
+    <value>Enter payment information</value>
+  </data>
+  <data name="ERROR" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ERROR_PAGE_LINE_1" xml:space="preserve">
+    <value>The application encountered an error. The error could be due to one of the following</value>
+  </data>
+  <data name="ERROR_PAGE_REASON_1" xml:space="preserve">
+    <value>We have been unable to locate the page that you are looking for</value>
+  </data>
+  <data name="ERROR_PAGE_REASON_2" xml:space="preserve">
+    <value>You have not logged into the application</value>
+  </data>
+  <data name="ERROR_PAGE_REASON_3" xml:space="preserve">
+    <value>Your login has expired</value>
+  </data>
+  <data name="ERROR_PAGE_REASON_4" xml:space="preserve">
+    <value>An unexpected error occurred in the application</value>
+  </data>
+  <data name="GLOBAL_PRIVACY_STATEMENT" xml:space="preserve">
+    <value>Global Privacy Statement</value>
+  </data>
+  <data name="HOW_DO_WE_COLLECT_USE_AND_DISCLOSE_PII" xml:space="preserve">
+    <value>How do we collect, use and disclose PII</value>
+  </data>
+  <data name="IF_THE_ERROR_PERSISTS_PLEASE" xml:space="preserve">
+    <value>If the error persists, please</value>
+  </data>
+  <data name="INDEX1" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="INFORMATION_ABOUT_CHILDREN" xml:space="preserve">
+    <value>Information about children</value>
+  </data>
+  <data name="INTRODUCTION" xml:space="preserve">
+    <value>Introduction</value>
+  </data>
+  <data name="INVOICE_REF1" xml:space="preserve">
+    <value>Invoice Ref</value>
+  </data>
+  <data name="MAP_QUESTIONNAIRE_SECTION" xml:space="preserve">
+    <value>Map questionnaire section</value>
+  </data>
+  <data name="MAP_TO_BUYER" xml:space="preserve">
+    <value>Map to buyer</value>
+  </data>
+  <data name="MAX_CONTRACT" xml:space="preserve">
+    <value>Maximum contract value consideration</value>
+  </data>
+  <data name="MIN_CONTRACT" xml:space="preserve">
+    <value>Minimum contract value consideration</value>
+  </data>
+  <data name="MONITOR_STATUS_OF_ORDER" xml:space="preserve">
+    <value>You can monitor the status of this order by viewing the relevant questionnaire summary page</value>
+  </data>
+  <data name="NOT_MAPPED" xml:space="preserve">
+    <value>Not mapped</value>
+  </data>
+  <data name="NO_SECTIONS_AWAITING_PAYMENT1" xml:space="preserve">
+    <value>No sections awaiting payment</value>
+  </data>
+  <data name="ORGANISATION_NAME_MESSAGE1" xml:space="preserve">
+    <value>Organisation Name</value>
+  </data>
+  <data name="ORGANISATION_NAME_MESSAGE_ERROR1" xml:space="preserve">
+    <value>Enter organisation name </value>
+  </data>
+  <data name="PASSWORD_RESET_FAILED" xml:space="preserve">
+    <value>Password reset failed</value>
+  </data>
+  <data name="PAYMENT_INFORMATION" xml:space="preserve">
+    <value>Payment information</value>
+  </data>
+  <data name="PLEASE_AUDIT_ALL_QUESTIONS_TO_APPROVE" xml:space="preserve">
+    <value>Please audit all questions to approve</value>
+  </data>
+  <data name="PLEASE_AUDIT_ALL_QUESTIONS_TO_SAVE1" xml:space="preserve">
+    <value>Please audit all questions to save</value>
+  </data>
+  <data name="PRODUCT_MAPPED_SUCCESSFULLY" xml:space="preserve">
+    <value>Product mapped successfully</value>
+  </data>
+  <data name="QUESTION_SET_DETAILS1" xml:space="preserve">
+    <value>Question Set details</value>
+  </data>
+  <data name="REASON_CODE" xml:space="preserve">
+    <value>Reason Code</value>
+  </data>
+  <data name="RECEIPT_INVOICE" xml:space="preserve">
+    <value>receipt/invoice</value>
+  </data>
+  <data name="REFUND_DESCRIPTION1" xml:space="preserve">
+    <value>Refund description</value>
+  </data>
+  <data name="REGISTERED_COUNTRY" xml:space="preserve">
+    <value>Registered country</value>
+  </data>
+  <data name="REMOVE_VOUCHER1" xml:space="preserve">
+    <value>Remove voucher</value>
+  </data>
+  <data name="RETURN_TO_HOME_PAGE" xml:space="preserve">
+    <value>Return to Home page</value>
+  </data>
+  <data name="RISK_COUNTRY_ALERTS1" xml:space="preserve">
+    <value>Risk Country Alerts</value>
+  </data>
+  <data name="SAFE_HARBOR_PRIVACY_STATEMENT" xml:space="preserve">
+    <value>Safe Harbor Privacy Statement</value>
+  </data>
+  <data name="SECURITY_AND_PROTECTION_OF_PII" xml:space="preserve">
+    <value>Security and Protection of PII</value>
+  </data>
+  <data name="SELECT_ANSWERS_TO_SUBMIT" xml:space="preserve">
+    <value>Select answers to submit</value>
+  </data>
+  <data name="SERVICE_IN" xml:space="preserve">
+    <value>Service in</value>
+  </data>
+  <data name="SOCIAL_SECURITY_NUMBER_PROTECTION_STATEMENT" xml:space="preserve">
+    <value>Social Security Number Protection Statement</value>
+  </data>
+  <data name="SORRY_YOUR_TRANSACTION_WITH_TRANSACTION_ID" xml:space="preserve">
+    <value>Sorry !! your last transaction with Transaction Id</value>
+  </data>
+  <data name="SUBSIDIARIES_IN" xml:space="preserve">
+    <value>Subsidiaries in</value>
+  </data>
+  <data name="SUPPLIER_COMMENTS" xml:space="preserve">
+    <value>Supplier comments</value>
+  </data>
+  <data name="TEL1" xml:space="preserve">
+    <value>Tel</value>
+  </data>
+  <data name="THANK_YOU_FOR_COMPLETING_THE_PAYMENT_PROCESS_FOR_THE_FOLLOWING_ANSWERS" xml:space="preserve">
+    <value>Thank you for completing the payment process for the following answers</value>
+  </data>
+  <data name="THE_ADMINISTRATOR" xml:space="preserve">
+    <value>the administrator</value>
+  </data>
+  <data name="TRADING_NAME" xml:space="preserve">
+    <value>Trading As (t/a)/ Doing Business As (DBA)</value>
+  </data>
+  <data name="TRANSACTION_FAILED" xml:space="preserve">
+    <value>Transaction failed</value>
+  </data>
+  <data name="UNMAP_FROM_BUYER" xml:space="preserve">
+    <value>Unmap from buyer</value>
+  </data>
+  <data name="UNMAP_QUESTIONNAIRE_SECTION" xml:space="preserve">
+    <value>Unmap questionnaire section</value>
+  </data>
+  <data name="USE_BY_THIRD_PARTIES" xml:space="preserve">
+    <value>Use by Third Parties</value>
+  </data>
+  <data name="VERIFY_SUPPLIER" xml:space="preserve">
+    <value>Verify Supplier</value>
+  </data>
+  <data name="VIEW_CAMPAIGN" xml:space="preserve">
+    <value>View campaign</value>
+  </data>
+  <data name="VIEW_RECEIPT" xml:space="preserve">
+    <value>View receipt</value>
+  </data>
+  <data name="WAS_FAILED_PLEASE_TRY_AGAIN" xml:space="preserve">
+    <value>was failed. Please try again.</value>
+  </data>
+  <data name="YOUR_PRIVACY_IS_IMPORANT_TO_US" xml:space="preserve">
+    <value>Your privacy is imporant to us</value>
+  </data>
+  <data name="YOUR_TRANSACTION_NUMBER_IS" xml:space="preserve">
+    <value>Your transaction number is</value>
+  </data>
+  <data name="PASSWORD_SHOULD_CONTAIN_ATLEAST" xml:space="preserve">
+    <value>Password should contain at least:</value>
+  </data>
+  <data name="ACCESS_TO_ANSWERS_REQUESTED" xml:space="preserve">
+    <value>Access to answers requested</value>
+  </data>
+  <data name="ACCIDENT_INCIDENT_TYPE" xml:space="preserve">
+    <value>Accident/Incident Type</value>
+  </data>
+  <data name="ACCOUNT" xml:space="preserve">
+    <value>Account #</value>
+  </data>
+  <data name="ADDRESS_1" xml:space="preserve">
+    <value>Address1</value>
+  </data>
+  <data name="ADDRESS_2" xml:space="preserve">
+    <value>Address2</value>
+  </data>
+  <data name="ADD_ANOTHER_ANSWER_TYPE" xml:space="preserve">
+    <value>Add another answer type</value>
+  </data>
+  <data name="ADD_ANOTHER_OPTION" xml:space="preserve">
+    <value>Add another option</value>
+  </data>
+  <data name="ADD_BUYER" xml:space="preserve">
+    <value>Add Buyer</value>
+  </data>
+  <data name="ADD_USER_SUCCESS" xml:space="preserve">
+    <value>User added Successfully</value>
+  </data>
+  <data name="AGGREGATE_COVERAGE" xml:space="preserve">
+    <value>Aggregate Coverage</value>
+  </data>
+  <data name="ALL_ANSWERS_SHARED_WITH_YOU" xml:space="preserve">
+    <value>All answers shared with you</value>
+  </data>
+  <data name="ALL_PRODUCTS_MAPPED_SUCCESSFULLY" xml:space="preserve">
+    <value>All products mapped to suppliers successfully.</value>
+  </data>
+  <data name="ALL_SUPPLIER_ARE_MAPPED_SUCCESSFULLY" xml:space="preserve">
+    <value>All suppiers are successfully mapped to selected buyer.</value>
+  </data>
+  <data name="ALL_SUPPLIER_ARE_UNMAPPED_SUCCESSFULLY" xml:space="preserve">
+    <value>All suppliers are successfully unmapped from selected buyer.</value>
+  </data>
+  <data name="ANSWERS_EVALUATED" xml:space="preserve">
+    <value>Answer has been successfully Evaluated.</value>
+  </data>
+  <data name="ANSWERS_SUBMITTED" xml:space="preserve">
+    <value>Answers Submitted</value>
+  </data>
+  <data name="ANSWERS_SUBMITTED_BUT_AWAITING_PAYMENT" xml:space="preserve">
+    <value>Your answers has been successfully submitted and are awaiting payment</value>
+  </data>
+  <data name="ANSWER_LAST_SUBMITTED" xml:space="preserve">
+    <value>Answers last submitted</value>
+  </data>
+  <data name="ANSWER_SAVED" xml:space="preserve">
+    <value>Answer Saved Successfully </value>
+  </data>
+  <data name="ANSWER_SECTION_COMPLETELY" xml:space="preserve">
+    <value>Answer this section 100% before submitting</value>
+  </data>
+  <data name="ANSWER_TEXT" xml:space="preserve">
+    <value>Answer Text</value>
+  </data>
+  <data name="ANSWER_TYPE" xml:space="preserve">
+    <value>Answer Type</value>
+  </data>
+  <data name="ANSWER_TYPE_ERROR" xml:space="preserve">
+    <value>Please Create Atleast One Answer type for this Question.</value>
+  </data>
+  <data name="ANSWER_TYPE_OPTION_ERROR" xml:space="preserve">
+    <value>You must keep atleast one option for this answer type.</value>
+  </data>
+  <data name="ANSWER_TYPE_VALIDATION" xml:space="preserve">
+    <value>Please enter an answer type.</value>
+  </data>
+  <data name="ANSWER_WILL_APPEAR_WHEN_SUBMITTED_AND_AUDITED" xml:space="preserve">
+    <value>Answers will appear when submitted and audited</value>
+  </data>
+  <data name="ASSIGN_BANK_DETAILS" xml:space="preserve">
+    <value>Assign Bank Details</value>
+  </data>
+  <data name="ASSIGN_CLIENTS" xml:space="preserve">
+    <value>Assign Clients</value>
+  </data>
+  <data name="ASSIGN_CONTACTS" xml:space="preserve">
+    <value>Assign Contacts</value>
+  </data>
+  <data name="ASSIGN_UNASSIGN" xml:space="preserve">
+    <value>Assign/UnAssign</value>
+  </data>
+  <data name="AUDITED_ON" xml:space="preserve">
+    <value>Audited  on</value>
+  </data>
+  <data name="BACK_TO_PROFILE" xml:space="preserve">
+    <value>Back To Profile</value>
+  </data>
+  <data name="BACK_TO_QUESTIONNAIRE_DETAILS" xml:space="preserve">
+    <value>&lt; Back to questionnaire details</value>
+  </data>
+  <data name="BANK_DETAILS_ERROR" xml:space="preserve">
+    <value>Enter Bank Details</value>
+  </data>
+  <data name="BIC_CODE" xml:space="preserve">
+    <value>Bic Code</value>
+  </data>
+  <data name="BROWSE_ANSWER" xml:space="preserve">
+    <value>Browse Answer</value>
+  </data>
+  <data name="BROWSE_ANSWERS" xml:space="preserve">
+    <value>Browse Answers</value>
+  </data>
+  <data name="BUSINESS_REGISTERED" xml:space="preserve">
+    <value>Business Registered</value>
+  </data>
+  <data name="BUSINESS_VERIFIED" xml:space="preserve">
+    <value>Business Verified</value>
+  </data>
+  <data name="CAMPAIGNS" xml:space="preserve">
+    <value>Campaigns</value>
+  </data>
+  <data name="CERTIFICATES" xml:space="preserve">
+    <value>Certificates</value>
+  </data>
+  <data name="CERTIFICATE_NUMBER" xml:space="preserve">
+    <value>Certificate Number</value>
+  </data>
+  <data name="CERTIFYING_AUTHORITY_NAME" xml:space="preserve">
+    <value>Name of certifying authority</value>
+  </data>
+  <data name="CHANGE_THIS_LINE" xml:space="preserve">
+    <value>Change this line</value>
+  </data>
+  <data name="CHECKBOXES" xml:space="preserve">
+    <value>Checkboxes</value>
+  </data>
+  <data name="CHECKBOX_VALIDATION" xml:space="preserve">
+    <value>Please enter the checkbox values.</value>
+  </data>
+  <data name="CHOOSE_CONTROL" xml:space="preserve">
+    <value>Choose Control</value>
+  </data>
+  <data name="CLIENT" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="CLIENT_ANSWERS_SUBMITTED" xml:space="preserve">
+    <value>Your answers have been successfully submitted</value>
+  </data>
+  <data name="CLIENT_CHECKS" xml:space="preserve">
+    <value>Client Checks</value>
+  </data>
+  <data name="CLIENT_COMPLIANCE" xml:space="preserve">
+    <value>Client Compliance</value>
+  </data>
+  <data name="CLIENT_COMPLIANCE_ALREADY_SUBMITTED" xml:space="preserve">
+    <value>You have already submitted your ClientCompliance answers. We will get back to you as soon as we complete auditing.</value>
+  </data>
+  <data name="CLIENT_DETAILS_ERROR" xml:space="preserve">
+    <value>Enter Client Details</value>
+  </data>
+  <data name="CLIENT_QUESTIONNAIRE" xml:space="preserve">
+    <value>Client Questionnaire</value>
+  </data>
+  <data name="COMPANY_SPECIFIC_QUESTIONS" xml:space="preserve">
+    <value>Company Specific Questions</value>
+  </data>
+  <data name="CONTACT_DETAILS_ERROR" xml:space="preserve">
+    <value>Enter Contact Details</value>
+  </data>
+  <data name="COVERAGE_PER_OCCURENCE" xml:space="preserve">
+    <value>Coverage per occurrence</value>
+  </data>
+  <data name="CREATE_NEW_CAMPAIGN" xml:space="preserve">
+    <value>Create New Campaign</value>
+  </data>
+  <data name="CREATE_NEW_VOUCHER" xml:space="preserve">
+    <value>Create New Voucher</value>
+  </data>
+  <data name="CREATE_QUESTION" xml:space="preserve">
+    <value>Create Question</value>
+  </data>
+  <data name="DELETED_FROM_CSQ1" xml:space="preserve">
+    <value>Deleted entry from CSQ1</value>
+  </data>
+  <data name="DELETED_FROM_CSQ2" xml:space="preserve">
+    <value>Deleted entry from CSQ2</value>
+  </data>
+  <data name="DELETED_FROM_CSQ3" xml:space="preserve">
+    <value>Deleted entry from CSQ3</value>
+  </data>
+  <data name="DOCUMENT_DELETED" xml:space="preserve">
+    <value>Document has been deleted successfully</value>
+  </data>
+  <data name="DOCUMENT_UPLOAD_VALIDATION" xml:space="preserve">
+    <value>Invalid document uploaded. Please try again.</value>
+  </data>
+  <data name="DOWNLOAD_INVOICE_FROM" xml:space="preserve">
+    <value>,you can download your receipt from the</value>
+  </data>
+  <data name="DOWNLOAD_RECEIPT" xml:space="preserve">
+    <value>Download Receipt</value>
+  </data>
+  <data name="DOWNLOAD_RECEIPT_FROM" xml:space="preserve">
+    <value>, you can download your receipt from the</value>
+  </data>
+  <data name="DOWNLOAD_REPORTS" xml:space="preserve">
+    <value>Download Reports</value>
+  </data>
+  <data name="DROPDOWN" xml:space="preserve">
+    <value>Dropdown</value>
+  </data>
+  <data name="DROPDOWN_VALIDATION" xml:space="preserve">
+    <value>Please enter the dropdown values.</value>
+  </data>
+  <data name="EDIT_BUYER_DETAILS" xml:space="preserve">
+    <value>Edit Buyer Details</value>
+  </data>
+  <data name="EDIT_CLIENT_DETAILS" xml:space="preserve">
+    <value>Edit Client Details</value>
+  </data>
+  <data name="EDIT_CONTACT_DETAILS" xml:space="preserve">
+    <value>Edit Contact Details</value>
+  </data>
+  <data name="EDIT_QUESTION" xml:space="preserve">
+    <value>Edit Question</value>
+  </data>
+  <data name="EDIT_QUESTIONS" xml:space="preserve">
+    <value>Edit Questions</value>
+  </data>
+  <data name="EMPLOYERS_LIABILITY" xml:space="preserve">
+    <value>Employers Liability</value>
+  </data>
+  <data name="ENCRYPT_PASSWORD" xml:space="preserve">
+    <value>Encrypt Password</value>
+  </data>
+  <data name="EVALUATE_CLIENT_QUESTIONNAIRE" xml:space="preserve">
+    <value>Evaluate Client Questionnaire</value>
+  </data>
+  <data name="EXPIRY_DATE" xml:space="preserve">
+    <value>Expiry Date</value>
+  </data>
+  <data name="FACEBOOK_ACCOUNT" xml:space="preserve">
+    <value>Facebook Account</value>
+  </data>
+  <data name="FILE" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="FILE_NAME" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="FILE_UPLOAD" xml:space="preserve">
+    <value>File Upload</value>
+  </data>
+  <data name="FINANCE_INSURANCE" xml:space="preserve">
+    <value>Finance, Insurance</value>
+  </data>
+  <data name="FIT5_DETAILS_MESSAGE" xml:space="preserve">
+    <value>If yes, please provide details and dates of any County Court Judgements (CCJs) or legal notices</value>
+  </data>
+  <data name="FOUND" xml:space="preserve">
+    <value>Found</value>
+  </data>
+  <data name="FY" xml:space="preserve">
+    <value>FY</value>
+  </data>
+  <data name="HASHED_PASSWORD" xml:space="preserve">
+    <value>Hashed Password</value>
+  </data>
+  <data name="HEALTH" xml:space="preserve">
+    <value>Health</value>
+  </data>
+  <data name="HQ_ADDRESS" xml:space="preserve">
+    <value>Headquarter Address</value>
+  </data>
+  <data name="HS1_A_MESSAGE" xml:space="preserve">
+    <value>Please provide details of your third party assurance/certification</value>
+  </data>
+  <data name="HS1_A_QUESTION" xml:space="preserve">
+    <value>HS1-A Please provide details of your third party assurance/certification</value>
+  </data>
+  <data name="HS1_B_MESSAGE" xml:space="preserve">
+    <value>Please provide details of your third party audit or policy statement.</value>
+  </data>
+  <data name="HS1_B_QUESTION" xml:space="preserve">
+    <value>HS1-B Please provide details of your third party audit or policy statement.</value>
+  </data>
+  <data name="HS1_CASE_A_MESSAGE" xml:space="preserve">
+    <value>Yes – we have a third party assurance assessment/certification to OHSAS 18001:2007 or equivalent</value>
+  </data>
+  <data name="HS1_CASE_B1_MESSAGE" xml:space="preserve">
+    <value>Yes – we no formal certification, but have been subject to a third party audit</value>
+  </data>
+  <data name="HS1_CASE_B2_MESSAGE" xml:space="preserve">
+    <value>Yes – we have a policy statement that has not been subject to any third party audit or certification</value>
+  </data>
+  <data name="HS1_DEFAULT_MESSAGE" xml:space="preserve">
+    <value>No –  we do not have a documented Health and Safety Management System</value>
+  </data>
+  <data name="HS4_MESSAGE" xml:space="preserve">
+    <value>If yes, please provide details</value>
+  </data>
+  <data name="HS6_DETAILS_MESSAGE" xml:space="preserve">
+    <value>please provide evidence that your organization has in place and implements, a system for monitoring H&amp;S procedures on an ongoing basis and for periodically reviewing and updating that system as necessary.</value>
+  </data>
+  <data name="HS6_MESSAGE" xml:space="preserve">
+    <value>If yes, please provide evidence that your organization has in place and implements, a system for monitoring H&amp;S procedures on an ongoing basis and for periodically reviewing and updating that system as necessary</value>
+  </data>
+  <data name="INSURANCE_COMPANY" xml:space="preserve">
+    <value>Insurance Company</value>
+  </data>
+  <data name="INVALID_SUPPLIER_NAMES" xml:space="preserve">
+    <value>invalid supplier names in the uploaded document.</value>
+  </data>
+  <data name="INVOICE_ACKNOWLEDGE" xml:space="preserve">
+    <value>Thank you, your invoice of</value>
+  </data>
+  <data name="INVOICE_GENERATED" xml:space="preserve">
+    <value>Invoice generated</value>
+  </data>
+  <data name="INVOICE_PAYMENT_MESSAGE" xml:space="preserve">
+    <value>(GBP) has been generated and is due for payment by</value>
+  </data>
+  <data name="IS_FIT5_DETAILS_MESSAGE" xml:space="preserve">
+    <value>please provide details and dates of any County Court Judgements (CCJs) or legal notices</value>
+  </data>
+  <data name="LINKEDIN_ACCOUNT" xml:space="preserve">
+    <value>LinkedIn Account</value>
+  </data>
+  <data name="MAIN_INDUSTRY_SECTOR" xml:space="preserve">
+    <value>What is the main industry sector your organisation is classified as</value>
+  </data>
+  <data name="MANAGE_BUYERS" xml:space="preserve">
+    <value>Manage Buyers</value>
+  </data>
+  <data name="MANAGE_LIST" xml:space="preserve">
+    <value>Manage list</value>
+  </data>
+  <data name="MAPPED_SUPPLIERS" xml:space="preserve">
+    <value>Mapped Suppliers</value>
+  </data>
+  <data name="MAP_SECTION_TO_BUYERS" xml:space="preserve">
+    <value>Map Section To Buyers</value>
+  </data>
+  <data name="MAX_CONTRACT_VALUE_DISPLAY" xml:space="preserve">
+    <value>Maximum contract value consideration</value>
+  </data>
+  <data name="MIN_CONTRACT_VALUE_DISPLAY" xml:space="preserve">
+    <value>Minimum contract value consideration</value>
+  </data>
+  <data name="MONITOR_ORDER_STATUS" xml:space="preserve">
+    <value>You can monitor the status of this order by viewing the relevant questionnaire summary page.</value>
+  </data>
+  <data name="NAME_ON_ACCOUNT" xml:space="preserve">
+    <value>Name On Account</value>
+  </data>
+  <data name="NOTICE_CONVICTION_DATE" xml:space="preserve">
+    <value>Date of Notice/Conviction</value>
+  </data>
+  <data name="NOTICE_TYPE_CONVICTION" xml:space="preserve">
+    <value>Notice Type/Conviction</value>
+  </data>
+  <data name="NOT_APPLICABLE" xml:space="preserve">
+    <value>Not Applicable</value>
+  </data>
+  <data name="NOT_AVAILABLE" xml:space="preserve">
+    <value>Not Available</value>
+  </data>
+  <data name="NOT_REQUIRED" xml:space="preserve">
+    <value>Not Required</value>
+  </data>
+  <data name="NO_ANSWERS_TO_SHOW" xml:space="preserve">
+    <value>Verification not started - No answers to show</value>
+  </data>
+  <data name="NO_COVER" xml:space="preserve">
+    <value>No Cover</value>
+  </data>
+  <data name="NO_DBA_NAME_PROVIDED" xml:space="preserve">
+    <value>No DBA Name Provided</value>
+  </data>
+  <data name="NO_FILES_UPLOADED" xml:space="preserve">
+    <value>No Files Uploaded</value>
+  </data>
+  <data name="NO_HQ_ADDRESS" xml:space="preserve">
+    <value>No HeadQuarters Address</value>
+  </data>
+  <data name="NO_NOTICES" xml:space="preserve">
+    <value>No Notices</value>
+  </data>
+  <data name="NO_OTHER_INSURANCE_COVERAGE" xml:space="preserve">
+    <value>No Other Insurance Coverage</value>
+  </data>
+  <data name="NO_REGISTERED_ADDRESS" xml:space="preserve">
+    <value>No Registered Address</value>
+  </data>
+  <data name="NO_REMITTANCE_ADDRESS" xml:space="preserve">
+    <value>No Remittance Address</value>
+  </data>
+  <data name="NO_WEBSITE_ADDRESS" xml:space="preserve">
+    <value>No Website Address provided</value>
+  </data>
+  <data name="PAYMENT_ACKNOWLEDGE" xml:space="preserve">
+    <value>Thank you for completing the payment process for the following answers:</value>
+  </data>
+  <data name="PAYMENT_COMPLETE" xml:space="preserve">
+    <value>Payment Complete</value>
+  </data>
+  <data name="PAYMENT_CONFIRMATION" xml:space="preserve">
+    <value>Confirmation of Payment</value>
+  </data>
+  <data name="PAYMENT_VERIFICATION" xml:space="preserve">
+    <value>The following answers will be submitted for verification once payment has been cleared:</value>
+  </data>
+  <data name="PLEASE_PROVIDE_DETAILS" xml:space="preserve">
+    <value>Please Provide Details</value>
+  </data>
+  <data name="POLICY_ACCEPTED_ON" xml:space="preserve">
+    <value>Policy accepted on</value>
+  </data>
+  <data name="POLICY_ACCEPTED_ONLINE" xml:space="preserve">
+    <value>accepted the policy  online on the behalf of</value>
+  </data>
+  <data name="POLICY_ACCEPTED_SIGNING" xml:space="preserve">
+    <value>accepted the policy  by uploading a signed copy on the behalf of</value>
+  </data>
+  <data name="POLICY_NUMBER" xml:space="preserve">
+    <value>Policy Number</value>
+  </data>
+  <data name="PRIMARY_ADDRESS" xml:space="preserve">
+    <value>Primary Address</value>
+  </data>
+  <data name="PRIMARY_SALES_CONTACT" xml:space="preserve">
+    <value>Primary Sales Contact</value>
+  </data>
+  <data name="PROFILE_LOWERCASE" xml:space="preserve">
+    <value>profile</value>
+  </data>
+  <data name="PUBLIC_LIABILITY" xml:space="preserve">
+    <value>Public Liability</value>
+  </data>
+  <data name="QUESTIONNAIRES" xml:space="preserve">
+    <value>Questionnaires</value>
+  </data>
+  <data name="QUESTIONNAIRE_SECTION_DISPLAY" xml:space="preserve">
+    <value>Questionnaire Section:</value>
+  </data>
+  <data name="QUESTIONNAIRE_SECTION_ERROR" xml:space="preserve">
+    <value>Select Questionnaire Section</value>
+  </data>
+  <data name="QUESTIONNIARE_SUBMITT_NOT_VERIFIED" xml:space="preserve">
+    <value>Questionnaire can be submitted once you are verified.</value>
+  </data>
+  <data name="QUESTIONS_ANSWERS" xml:space="preserve">
+    <value>Questions/Answers</value>
+  </data>
+  <data name="QUESTIONS_NOT_AVAILABLE" xml:space="preserve">
+    <value>Questions Not Available</value>
+  </data>
+  <data name="QUESTION_DISPLAY" xml:space="preserve">
+    <value>Question:</value>
+  </data>
+  <data name="QUESTION_ERROR" xml:space="preserve">
+    <value>Please enter Question</value>
+  </data>
+  <data name="QUESTION_NUMBER" xml:space="preserve">
+    <value>Question Number</value>
+  </data>
+  <data name="QUESTION_SAVED_SUCCESSFULLY" xml:space="preserve">
+    <value>Question saved successfully.</value>
+  </data>
+  <data name="QUESTION_SET_ERROR" xml:space="preserve">
+    <value>Please select Question Set</value>
+  </data>
+  <data name="QUESTION_TEXT" xml:space="preserve">
+    <value>Question Text</value>
+  </data>
+  <data name="RADIO_BUTTON" xml:space="preserve">
+    <value>Radio Button</value>
+  </data>
+  <data name="RADIO_BUTTON_VALIDATION" xml:space="preserve">
+    <value>Please enter the radio button values.</value>
+  </data>
+  <data name="REASON" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="REGISTERED_ACCOUNT" xml:space="preserve">
+    <value>Registered Account</value>
+  </data>
+  <data name="REG_COUNTRY" xml:space="preserve">
+    <value>Registered Country</value>
+  </data>
+  <data name="REMITTANCE_ADDRESS" xml:space="preserve">
+    <value>Remittance Address</value>
+  </data>
+  <data name="RETURN_TO_AWAITING_PAYMENT" xml:space="preserve">
+    <value>return to awaiting payment</value>
+  </data>
+  <data name="RETURN_TO_HOMEPAGE" xml:space="preserve">
+    <value>Return to Homepage</value>
+  </data>
+  <data name="SCOPE_OF_CERTIFICATION" xml:space="preserve">
+    <value>Scope Of Certification</value>
+  </data>
+  <data name="SCREEN" xml:space="preserve">
+    <value>Screen</value>
+  </data>
+  <data name="SELECT_FILE_UPLOAD" xml:space="preserve">
+    <value>Select file to upload</value>
+  </data>
+  <data name="SIC_CODE_MESSAGE" xml:space="preserve">
+    <value>Which of the following goods and services does your organisation supply</value>
+  </data>
+  <data name="SIM_TRANSACTION_NUMBER" xml:space="preserve">
+    <value>Your transaction number is SIM</value>
+  </data>
+  <data name="SUBMIT_ANSWERS" xml:space="preserve">
+    <value>Submit Answers</value>
+  </data>
+  <data name="SUBMIT_ANSWERS_WHEN_READY" xml:space="preserve">
+    <value>Submit answers when ready</value>
+  </data>
+  <data name="SUCCESSFULLY_MAPPED" xml:space="preserve">
+    <value>Supplier successfully mapped with selected buyer</value>
+  </data>
+  <data name="SUCCESS_PRODUCT_MAPPED" xml:space="preserve">
+    <value>Supplier's product mapped to Buyer Successfully.</value>
+  </data>
+  <data name="TEXT" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="TRANSACTION_FAILED1" xml:space="preserve">
+    <value>Transaction Failed</value>
+  </data>
+  <data name="TRANSACTION_FAILED_TRY_AGAIN" xml:space="preserve">
+    <value>has failed. Please try again.</value>
+  </data>
+  <data name="TRANSACTION_FAILURE_MESSAGE" xml:space="preserve">
+    <value>Sorry, your transaction ID</value>
+  </data>
+  <data name="TWITTER_ACCOUNT" xml:space="preserve">
+    <value>Twitter Account</value>
+  </data>
+  <data name="TYPE_OF_INSURANCE" xml:space="preserve">
+    <value>Type Of Insurance</value>
+  </data>
+  <data name="UPDATE_USER_SUCCESS" xml:space="preserve">
+    <value>User updated Successfully</value>
+  </data>
+  <data name="UPLOAD_FROM_FILE" xml:space="preserve">
+    <value>Upload from file</value>
+  </data>
+  <data name="VALID_FILE_EXTENSIONS" xml:space="preserve">
+    <value>Sorry, File is invalid, allowed extensions are:</value>
+  </data>
+  <data name="VIEW_QUESTIONNAIRE" xml:space="preserve">
+    <value>View Questionnaire</value>
+  </data>
+  <data name="VIEW_THIS_SECTION" xml:space="preserve">
+    <value>View this section</value>
+  </data>
+  <data name="WEBSITE_LINK_DISPLAY" xml:space="preserve">
+    <value>Website Link</value>
+  </data>
+  <data name="YOU_ALREADY_REQUEST" xml:space="preserve">
+    <value>You already Request</value>
+  </data>
+  <data name="BROWSE_AUDITED_ANSWERS" xml:space="preserve">
+    <value>Browse audited answers</value>
+  </data>
+  <data name="COMPLIANCE_STATUS" xml:space="preserve">
+    <value>Compliance Status</value>
+  </data>
+  <data name="DOWNLOAD_REPORT" xml:space="preserve">
+    <value>Download Report</value>
+  </data>
+  <data name="REQUEST_ACCESS_TO_ANSWER" xml:space="preserve">
+    <value>Request access to answers</value>
+  </data>
+  <data name="CURRENCY_CODE_HTML" xml:space="preserve">
+    <value>&amp;pound;</value>
+  </data>
+  <data name="FAVOURITE_SUPPLIER_ADDED_SUCCESSFULLY" xml:space="preserve">
+    <value>Favourite Supplier Added Successfully</value>
+  </data>
+  <data name="FAVOURITE_SUPPLIER_REMOVED_SUCCESSFULLY" xml:space="preserve">
+    <value>Favourite Supplier Removed Successfully</value>
+  </data>
+  <data name="NO_OF_EMPLOYEES" xml:space="preserve">
+    <value>No of Employees</value>
+  </data>
+  <data name="TRADING_SUPPLIER_ADDED_SUCCESSFULLY" xml:space="preserve">
+    <value>Trading supplier added successfully</value>
+  </data>
+  <data name="TRADING_SUPPLIER_REMOVED_SUCCESSFULLY" xml:space="preserve">
+    <value>Trading supplier removed successfully</value>
+  </data>
+  <data name="LAST_LOGIN_DATE" xml:space="preserve">
+    <value>Last Login Date</value>
+  </data>
+  <data name="LATEST_TERMS_ACCEPTED_DATE" xml:space="preserve">
+    <value>Terms Accepted Date</value>
+  </data>
+  <data name="LATEST_TERMS_VERSION" xml:space="preserve">
+    <value>Latest Terms Version</value>
+  </data>
+  <data name="ORIGINAL_TERMS_VERSION" xml:space="preserve">
+    <value>Original Terms Version</value>
+  </data>
+  <data name="LOGIN_ID_PLACEHOLDER" xml:space="preserve">
+    <value>Login ID</value>
+  </data>
+  <data name="IS_FAVOURITE" xml:space="preserve">
+    <value>IsFavourite</value>
+  </data>
+  <data name="IS_TRADING_WITH" xml:space="preserve">
+    <value>IsTradingWith</value>
+  </data>
+  <data name="REGISTRATION_STATUS" xml:space="preserve">
+    <value>Registration Status</value>
+  </data>
+  <data name="BUYER_ACCESSTYPE_CHANGED_SUCCESSFULLY" xml:space="preserve">
+    <value>Buyer Access Type Changed Successfully</value>
+  </data>
+  <data name="EDIT_VOUCHER" xml:space="preserve">
+    <value>Edit Voucher</value>
+  </data>
+  <data name="ERROR_WHILE_INSERTING" xml:space="preserve">
+    <value>Error while inserting.</value>
+  </data>
+  <data name="USER_ADDED_SUCCESSFULLY" xml:space="preserve">
+    <value>User Added Successfully</value>
+  </data>
+  <data name="USER_UPDATED_SUCCESSFULLY" xml:space="preserve">
+    <value>User Updated Successfully</value>
+  </data>
+  <data name="BACK_TO_PAYMENTS" xml:space="preserve">
+    <value>Back To Payments</value>
+  </data>
+  <data name="EVALUATED" xml:space="preserve">
+    <value>Evaluated</value>
+  </data>
+  <data name="EVALUATION_STARTED" xml:space="preserve">
+    <value>Evaluation Started</value>
+  </data>
+  <data name="IS_ADMIN_SUPPLIER" xml:space="preserve">
+    <value>Is Admin Supplier</value>
+  </data>
+  <data name="PENDING" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="PUBLISH_PRODUCTS_MESSAGE" xml:space="preserve">
+    <value>The “Details” section will automatically be published when you publish "Profile" section.</value>
+  </data>
+  <data name="PUBLISH_PRODUCT_VALIDATION" xml:space="preserve">
+    <value>No product selected.Please select atleast one product to publish.</value>
+  </data>
+  <data name="VALID_DATA_ERROR" xml:space="preserve">
+    <value>Please enter valid data.</value>
+  </data>
+  <data name="VIEW_SIM_PROFILE" xml:space="preserve">
+    <value>View SIM Profile</value>
+  </data>
+  <data name="DISCOUNT_PERCENTAGE" xml:space="preserve">
+    <value>Discount Percentage</value>
+  </data>
+  <data name="DISCOUNT_PERCENT_DISPLAY" xml:space="preserve">
+    <value>Discount Percent:</value>
+  </data>
+  <data name="DISCOUNT_PERCENT_RANGE" xml:space="preserve">
+    <value>The value must be greater than 0 and less than 100</value>
+  </data>
+  <data name="MAP_BUYER_DISPLAY" xml:space="preserve">
+    <value>Do you want to map buyer for this voucher:</value>
+  </data>
+  <data name="PROMOTIONAL_CODE_EXISTS" xml:space="preserve">
+    <value>Promotional Code already exists</value>
+  </data>
+  <data name="PROMOTION_CODE_DISPLAY" xml:space="preserve">
+    <value>Promotional Code:</value>
+  </data>
+  <data name="PROMOTION_CODE_VALIDATION" xml:space="preserve">
+    <value>Enter Promotional Code</value>
+  </data>
+  <data name="PROMOTION_DATE_VALIDATION" xml:space="preserve">
+    <value>Promotion End date cannot be before Promotion start date</value>
+  </data>
+  <data name="PROMOTION_END_DATE_DISPLAY" xml:space="preserve">
+    <value>Promotion End Date:</value>
+  </data>
+  <data name="PROMOTION_END_DATE_ERROR" xml:space="preserve">
+    <value>Enter Promotion End Date</value>
+  </data>
+  <data name="PROMOTION_START_DATE_DISPLAY" xml:space="preserve">
+    <value>Promotion Start Date:</value>
+  </data>
+  <data name="PROMOTION_START_DATE_ERROR" xml:space="preserve">
+    <value>Enter Promotion Start Date</value>
+  </data>
+  <data name="SELECT_BUYER_ERROR" xml:space="preserve">
+    <value>Select the Buyer</value>
+  </data>
+  <data name="VOUCHER_CREATION_SUCCESS" xml:space="preserve">
+    <value>Voucher Created Successfully.</value>
+  </data>
+  <data name="VOUCHER_UPDATE_SUCCESS" xml:space="preserve">
+    <value>Voucher Updated Successfully.</value>
+  </data>
+  <data name="PROMOTION_CODE" xml:space="preserve">
+    <value>Promotional Code</value>
+  </data>
+  <data name="PROMOTION_END_DATE" xml:space="preserve">
+    <value>Promotion End Date</value>
+  </data>
+  <data name="PROMOTION_START_DATE" xml:space="preserve">
+    <value>Promotion Start Date</value>
+  </data>
+  <data name="UPDATE_VOUCHER" xml:space="preserve">
+    <value>Update Voucher</value>
+  </data>
+  <data name="BUYER_VERIFIED_SUCCESSFULLY" xml:space="preserve">
+    <value>Buyer verified successfully</value>
+  </data>
+  <data name="CAMPAIGN_VERIFY_FILE_VALIDATION" xml:space="preserve">
+    <value>The file extension .{0}  is not allowed!&lt;br/&gt;Allowed file extensions are xls and xlsx.</value>
+  </data>
+  <data name="DUNS_NUMBER_STRING" xml:space="preserve">
+    <value>DUNS Number</value>
+  </data>
+  <data name="LANDING_PAGE_URL" xml:space="preserve">
+    <value>Landing Page URL</value>
+  </data>
+  <data name="REGISTRATION_CODE" xml:space="preserve">
+    <value>Registration Code</value>
+  </data>
+  <data name="SUPPLIER_COMPANY_NAME" xml:space="preserve">
+    <value>Supplier Company Name</value>
+  </data>
+  <data name="CAMPAIGN_ALREADY_REGISTERED_MESSAGE" xml:space="preserve">
+    <value>Already registered. From now ownwards use this page for login.</value>
+  </data>
+  <data name="CAMPAIGN_INCORRECT_REGISTRATION_CODE" xml:space="preserve">
+    <value>Incorrect Login Id or Registration code.</value>
+  </data>
+  <data name="DETAILS_VERIFIED_DATE" xml:space="preserve">
+    <value>Details{Verified Date}</value>
+  </data>
+  <data name="LANDING_PAGE_REFERRER" xml:space="preserve">
+    <value>Landing Page Referrer</value>
+  </data>
+  <data name="OTHER_REFERRER" xml:space="preserve">
+    <value>Other Referrers</value>
+  </data>
+  <data name="PROFILE_VERIFIED_DATE" xml:space="preserve">
+    <value>Profile {Verified Date}</value>
+  </data>
+  <data name="SANCTION_VERIFIED_DATE" xml:space="preserve">
+    <value>Sanction{Verified Date}</value>
+  </data>
+</root>

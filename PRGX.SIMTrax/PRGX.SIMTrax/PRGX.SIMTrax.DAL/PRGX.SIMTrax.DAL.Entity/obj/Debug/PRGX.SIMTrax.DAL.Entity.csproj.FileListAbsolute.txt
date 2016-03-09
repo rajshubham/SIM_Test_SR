@@ -1,0 +1,5 @@
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.DAL\PRGX.SIMTrax.DAL.Entity\bin\Debug\PRGX.SIMTrax.DAL.Entity.dll
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.DAL\PRGX.SIMTrax.DAL.Entity\bin\Debug\PRGX.SIMTrax.DAL.Entity.pdb
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.DAL\PRGX.SIMTrax.DAL.Entity\obj\Debug\PRGX.SIMTrax.DAL.Entity.dll
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.DAL\PRGX.SIMTrax.DAL.Entity\obj\Debug\PRGX.SIMTrax.DAL.Entity.pdb
+D:\PRGX_SIM_PM\PRGX.SIMTrax\PRGX.SIMTrax.DAL\PRGX.SIMTrax.DAL.Entity\obj\Debug\PRGX.SIMTrax.DAL.Entity.csprojResolveAssemblyReference.cache

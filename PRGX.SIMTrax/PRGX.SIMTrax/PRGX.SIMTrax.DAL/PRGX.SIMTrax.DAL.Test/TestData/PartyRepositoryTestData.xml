@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <IsOrganisationExistsTestData>
+    <testCase id="1">
+      <input orgName="Alekhya Org">
+      </input>
+      <output outObj="true">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input orgName="Test Org">
+      </input>
+      <output outObj="false">
+      </output>
+    </testCase>
+  </IsOrganisationExistsTestData>
+
+  <GetCompanyDetailsByPartyIdTestData>
+    <testCase id="1">
+      <input orgPartyId="10026">
+      </input>
+      <output Id="10026" partyName="Alekhya Org">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input orgPartyId="9">
+      </input>
+      <output Id="" partyName="">
+      </output>
+    </testCase>
+  </GetCompanyDetailsByPartyIdTestData>
+
+  <GetCapabilityDetailsByPartyIdTestData>
+    <testCase id="1">
+      <input orgPartyId="10026">
+      </input>
+      <output Id="10026" partyName="Alekhya Org">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input orgPartyId="9">
+      </input>
+      <output Id="" partyName="">
+      </output>
+    </testCase>
+  </GetCapabilityDetailsByPartyIdTestData>
+
+  <GetMarketingDetailsByPartyIdTestData>
+    <testCase id="1">
+      <input orgPartyId="10026">
+      </input>
+      <output Id="10026" partyName="Alekhya Org">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input orgPartyId="9">
+      </input>
+      <output Id="" partyName="">
+      </output>
+    </testCase>
+  </GetMarketingDetailsByPartyIdTestData>
+
+  <GetIndustryCodesByOrganisationPartyIdTestData>
+    <testCase id="1">
+      <input sellerPartyId="10026">
+      </input>
+      <output count="1">  
+        <industryCodeList industryCode="6"/>
+      </output>
+    </testCase>
+       <testCase id="2">
+      <input sellerPartyId="9">
+      </input>
+      <output count="0">  
+       
+      </output>
+    </testCase>
+  </GetIndustryCodesByOrganisationPartyIdTestData>
+
+  <GetSellerOrganizationDetailsByPartyIdTestData>
+    <testCase id="1">
+      <input orgPartyId="10026">
+      </input>
+      <output Id="10026" partyName="Alekhya Org">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input orgPartyId="9">
+      </input>
+      <output Id="" partyName="">
+      </output>
+    </testCase>
+  </GetSellerOrganizationDetailsByPartyIdTestData>
+
+  <SellerProfileDetailsTestData>
+    <testCase id="1">
+      <input sellerPartyId="9" buyerPartyId="" buyerUserPartyId="">
+      </input>
+      <output Id="">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input sellerPartyId="10026" buyerPartyId="" buyerUserPartyId="">
+      </input>
+      <output Id="10026">
+      </output>
+    </testCase>
+  </SellerProfileDetailsTestData>
+  
+</test>

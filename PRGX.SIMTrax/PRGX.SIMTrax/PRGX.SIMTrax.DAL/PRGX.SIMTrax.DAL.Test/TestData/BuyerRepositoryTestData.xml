@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <GetBuyerOrganizationTestData>
+    <testCase id="1">
+      <input  status="" buyerRole="" fromDate="01-01-2016" toDate=""  totalRecords="" pageIndex="" pageSize="" sortDirection="" sortParameter="" buyerName = "">
+        
+      </input>
+      <output total="1">
+        <buyerList buyerId="6"></buyerList>
+      </output>
+    </testCase>
+    <testCase id="1">
+      <input  status="" buyerRole="" fromDate="01-01-2017" toDate=""  totalRecords="" pageIndex="" pageSize="" sortDirection="" sortParameter="" buyerName = "">
+      </input>
+      <output total="0">
+
+      </output>
+    </testCase>
+  </GetBuyerOrganizationTestData>
+
+  <GetBuyerOrganizationDetailsByPartyIdTestData>
+    <testCase id="1">
+      <input  organisationPartyId="5">       
+      </input>
+      <output Id="">
+      </output>
+    </testCase>
+    <testCase id="1">
+      <input  organisationPartyId="6">
+      </input>
+      <output Id="6">
+      </output>
+    </testCase>
+  </GetBuyerOrganizationDetailsByPartyIdTestData>
+
+  <GetBuyerPrimaryContactPartyIdTestData>
+    <testCase id="1">
+      <input  buyerPartyId="2">       
+      </input>
+      <output buyerContactPartyId="3">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input  buyerPartyId="3">
+      </input>
+      <output buyerContactPartyId="">
+      </output>
+    </testCase>
+  </GetBuyerPrimaryContactPartyIdTestData>
+
+ <GetNotActivatedBuyerOrganizationTestData>
+    <testCase id="1">
+      <input totalRecords="5" pageIndex="1" pageSize="20" sortDirection="" sortParameter="">
+        
+      </input>
+      <output total="1">
+        <buyerList buyerId="6"></buyerList>
+      </output>
+    </testCase>
+  </GetNotActivatedBuyerOrganizationTestData>
+
+  <GetSuppliersTestData>
+    <testCase id="1">
+      <input  supplierName="abc"  totalRecords="5" pageIndex="" pageSize="20" sortDirection="" sortParameter="" pageNo = "1" companyPartyId="" userPartyId="">
+
+      </input>
+      <output total="0">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input  supplierName=""  totalRecords="5" pageIndex="" pageSize="20" sortDirection="" sortParameter="" pageNo = "1" companyPartyId="10026" userPartyId="10025">
+
+      </input>
+      <output total="2">
+        <buyerList companyId="2"></buyerList>
+        <buyerList companyId="10026"></buyerList>
+      </output>
+    </testCase>
+  </GetSuppliersTestData>
+
+  <GetVerifiedBuyerNamesTestData>
+    <testCase id="1">
+      <input buyerOrg="charan">
+
+      </input>
+      <output total="1">
+        <list buyerName="Charan"></list>
+        
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input buyerOrg="abc">
+
+      </input>
+      <output total="0">
+
+
+      </output>
+    </testCase>
+  </GetVerifiedBuyerNamesTestData>
+
+  <GetBuyerDetailsForDashboardTestData>
+    <testCase id="1">
+      <input partyId="6">
+      </input>
+      <output buyerId="6">
+      </output>
+    </testCase>
+    <testCase id="1">
+      <input partyId="3">
+      </input>
+      <output buyerId="">
+      </output>
+    </testCase>
+  </GetBuyerDetailsForDashboardTestData>
+
+ <GetBuyersListTestData>
+    <testCase id="1">
+      <input>
+      </input>
+      <output total="1">
+        <list value="6"></list>       
+      </output>
+    </testCase>
+  </GetBuyersListTestData>
+
+ <GetAllVouchersTestData>
+    <testCase id="1">
+      <input  totalRecords="5" currentPage="1" count="20" sortDirection="" sortParameter="" pageNo = "1" buyerPartyId="">
+
+      </input>
+      <output total="1">
+        <voucherList Id="1"/>
+      </output>
+    </testCase>
+  </GetAllVouchersTestData>
+
+  <GetBuyerCampaignDetailsForDashboardTestData>
+    <testCase id="1">
+      <input  totalCampaigns="5" sortDirection="1"  pageNumber = "1" partyId="6">
+      </input>
+      <output total="1">
+        <campaignList Id="1" campaignName="Charan Campaign"/>
+      </output>
+    </testCase>
+  </GetBuyerCampaignDetailsForDashboardTestData>
+</test>

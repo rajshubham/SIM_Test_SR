@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DD38AD60-B6D1-4DA0-B83D-14214EF2C64D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PRGX.SIMTrax.ViewModel</RootNamespace>
+    <AssemblyName>PRGX.SIMTrax.ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\PRGX_SIM\trunk\SimTrax\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Address.cs" />
+    <Compile Include="AuditorUser.cs" />
+    <Compile Include="BankAccount.cs" />
+    <Compile Include="BuyerRegister.cs" />
+    <Compile Include="Campaign.cs" />
+    <Compile Include="CampaignLogin.cs" />
+    <Compile Include="ChangePassword.cs" />
+    <Compile Include="ContactPerson.cs" />
+    <Compile Include="Document.cs" />
+    <Compile Include="EmailAudit.cs" />
+    <Compile Include="EmailTemplate.cs" />
+    <Compile Include="IndustryCode.cs" />
+    <Compile Include="Invitee.cs" />
+    <Compile Include="Login.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResetPassword.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="SellerRegister.cs" />
+    <Compile Include="TreeStructure.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="Voucher.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Model\PRGX.SIMTrax.Domain.Model.csproj">
+      <Project>{05b1df77-0f12-4a52-84c2-60739ad49355}</Project>
+      <Name>PRGX.SIMTrax.Domain.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Resource\PRGX.SIMTrax.Domain.Resource.csproj">
+      <Project>{3322e5e6-3029-43f6-883e-cfff6f907484}</Project>
+      <Name>PRGX.SIMTrax.Domain.Resource</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Util\PRGX.SIMTrax.Domain.Util.csproj">
+      <Project>{f4f03853-5612-4203-b643-4b55d19d6219}</Project>
+      <Name>PRGX.SIMTrax.Domain.Util</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

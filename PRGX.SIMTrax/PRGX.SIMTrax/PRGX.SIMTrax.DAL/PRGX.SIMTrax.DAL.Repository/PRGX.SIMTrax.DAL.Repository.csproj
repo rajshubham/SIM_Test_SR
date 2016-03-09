@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{26D8CD1F-771A-452E-8C37-3C44D0E796A6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PRGX.SIMTrax.DAL.Repository</RootNamespace>
+    <AssemblyName>PRGX.SIMTrax.DAL.Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.BulkInsert, Version=6.0.2.8, Culture=neutral, PublicKeyToken=630a17433349cb76, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.BulkInsert-ef6.6.0.2.8\lib\Net45\EntityFramework.BulkInsert.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.MappingAPI, Version=6.0.0.7, Culture=neutral, PublicKeyToken=7ee2e825d201459e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.MappingAPI.6.0.0.7\lib\net45\EntityFramework.MappingAPI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\AcceptedTermsOfUseMap.cs" />
+    <Compile Include="Configuration\AddressMap.cs" />
+    <Compile Include="Configuration\BankAccountMap.cs" />
+    <Compile Include="Configuration\BuyerCampaignMap.cs" />
+    <Compile Include="Configuration\BuyerMap.cs" />
+    <Compile Include="Configuration\BuyerSupplierReferenceMap.cs" />
+    <Compile Include="Configuration\CampaignInvitationMap.cs" />
+    <Compile Include="Configuration\CampaignMessageMap.cs" />
+    <Compile Include="Configuration\ContactMethodMap.cs" />
+    <Compile Include="Configuration\ContactPersonMap.cs" />
+    <Compile Include="Configuration\CredentialMap.cs" />
+    <Compile Include="Configuration\DiscountVoucherMap.cs" />
+    <Compile Include="Configuration\DiversityStatusMap.cs" />
+    <Compile Include="Configuration\DiversityStatusRegionMap.cs" />
+    <Compile Include="Configuration\DiversityStatusTypeMap.cs" />
+    <Compile Include="Configuration\DiversityStatusTypeRegionMap.cs" />
+    <Compile Include="Configuration\DocumentMap.cs" />
+    <Compile Include="Configuration\EmailAuditMap.cs" />
+    <Compile Include="Configuration\EmailMap.cs" />
+    <Compile Include="Configuration\EmailTemplateMap.cs" />
+    <Compile Include="Configuration\IndustryCodeMap.cs" />
+    <Compile Include="Configuration\IndustryCodeOrganizationLinkMap.cs" />
+    <Compile Include="Configuration\IndustryCodeSetMap.cs" />
+    <Compile Include="Configuration\IndustryCodeSetRegionLinkMap.cs" />
+    <Compile Include="Configuration\InviteeMap.cs" />
+    <Compile Include="Configuration\LegalEntityMap.cs" />
+    <Compile Include="Configuration\LegalEntityProfileMap.cs" />
+    <Compile Include="Configuration\LocaleMap.cs" />
+    <Compile Include="Configuration\MasterDataMap.cs" />
+    <Compile Include="Configuration\MasterDataTypeMap.cs" />
+    <Compile Include="Configuration\OrganizationMap.cs" />
+    <Compile Include="Configuration\PartyContactMethodLinkMap.cs" />
+    <Compile Include="Configuration\PartyIdentifierDocumentMap.cs" />
+    <Compile Include="Configuration\PartyIdentifierMap.cs" />
+    <Compile Include="Configuration\PartyIdentifierTypeMap.cs" />
+    <Compile Include="Configuration\PartyMap.cs" />
+    <Compile Include="Configuration\PartyPartyLinkMap.cs" />
+    <Compile Include="Configuration\PartyProfileMap.cs" />
+    <Compile Include="Configuration\PartyRegionLinkMap.cs" />
+    <Compile Include="Configuration\PermissionMap.cs" />
+    <Compile Include="Configuration\PersonMap.cs" />
+    <Compile Include="Configuration\PhoneMap.cs" />
+    <Compile Include="Configuration\PotentialRoleMap.cs" />
+    <Compile Include="Configuration\RegionMap.cs" />
+    <Compile Include="Configuration\Registration\OrganizationRefRegistrationMap.cs" />
+    <Compile Include="Configuration\Registration\PartyRefRegistrationMap.cs" />
+    <Compile Include="Configuration\Registration\PersonRefRegistrationMap.cs" />
+    <Compile Include="Configuration\Registration\UserRefRegistrationMap.cs" />
+    <Compile Include="Configuration\RoleMap.cs" />
+    <Compile Include="Configuration\RolePermissionLinkMap.cs" />
+    <Compile Include="Configuration\SupplierMap.cs" />
+    <Compile Include="Configuration\SupplierReferrerMap.cs" />
+    <Compile Include="Configuration\TemporaryPasswordUrlMap.cs" />
+    <Compile Include="Configuration\TermsOfUseMap.cs" />
+    <Compile Include="Configuration\UserMap.cs" />
+    <Compile Include="Configuration\UserRoleLinkMap.cs" />
+    <Compile Include="Context\BuyerContext.cs" />
+    <Compile Include="Context\CampaignContext.cs" />
+    <Compile Include="Context\EmailContext.cs" />
+    <Compile Include="Context\GenericContext.cs" />
+    <Compile Include="Context\MasterDataContext.cs" />
+    <Compile Include="Context\RoleContext.cs" />
+    <Compile Include="Context\SellerContext.cs" />
+    <Compile Include="Context\UserContext.cs" />
+    <Compile Include="Repository\AddressRepository.cs" />
+    <Compile Include="Repository\BankAccountRepository.cs" />
+    <Compile Include="Repository\BuyerCampaignRepository.cs" />
+    <Compile Include="Repository\BuyerRepository.cs" />
+    <Compile Include="Repository\CampaignInvitationRepository.cs" />
+    <Compile Include="Repository\ContactPersonRepository.cs" />
+    <Compile Include="Repository\CredentialRepository.cs" />
+    <Compile Include="Repository\EmailTemplateRepository.cs" />
+    <Compile Include="GenericRepository.cs" />
+    <Compile Include="Helper\IRepositoryProvider.cs" />
+    <Compile Include="Helper\RepositoryFactories.cs" />
+    <Compile Include="Helper\RepositoryProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IndustryCodeOrganizationLinksRepository.cs" />
+    <Compile Include="Repository\IndustryCodeRepository.cs" />
+    <Compile Include="Repository\InviteeRepository.cs" />
+    <Compile Include="Repository\MasterDataRepository.cs" />
+    <Compile Include="Repository\OrganizationRepository.cs" />
+    <Compile Include="Repository\PartyIdentifierRepository.cs" />
+    <Compile Include="Repository\PartyRegionLinkRepository.cs" />
+    <Compile Include="Repository\PartyRepository.cs" />
+    <Compile Include="Repository\PermissionRepository.cs" />
+    <Compile Include="Repository\PotentialRoleRepository.cs" />
+    <Compile Include="Repository\RoleRepository.cs" />
+    <Compile Include="Repository\SupplierRepository.cs" />
+    <Compile Include="Repository\UserRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Model\PRGX.SIMTrax.Domain.Model.csproj">
+      <Project>{05b1df77-0f12-4a52-84c2-60739ad49355}</Project>
+      <Name>PRGX.SIMTrax.Domain.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Util\PRGX.SIMTrax.Domain.Util.csproj">
+      <Project>{f4f03853-5612-4203-b643-4b55d19d6219}</Project>
+      <Name>PRGX.SIMTrax.Domain.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRGX.SIMTrax.DAL.Entity\PRGX.SIMTrax.DAL.Entity.csproj">
+      <Project>{eda9141c-231b-49f4-8168-bd91b57985f1}</Project>
+      <Name>PRGX.SIMTrax.DAL.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRGX.SIMTrax.DAL.Repository.Abstract\PRGX.SIMTrax.DAL.Repository.Abstract.csproj">
+      <Project>{87fd1b2d-91a7-442f-9b85-8c213fcabb3c}</Project>
+      <Name>PRGX.SIMTrax.DAL.Repository.Abstract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

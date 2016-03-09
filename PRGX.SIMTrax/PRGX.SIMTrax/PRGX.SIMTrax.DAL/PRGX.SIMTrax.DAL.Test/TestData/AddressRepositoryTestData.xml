@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <AddUpdateAddressTestData>
+    <testcase id="1">
+      <input Line1="No:123" Line2="" Line3=""  Zone=""   City="Eluru"   State="Andhra"    RefCountryId="111"  ZipCode="534002" AddressType="509"  RefContactMethod="" contactMethodId="10037"  />
+      <output></output>
+    </testcase>
+  </AddUpdateAddressTestData>
+
+  <GetAddressDetailsByPartyIdTestData>
+    <testcase id="1">
+      <input partyId="9">
+      </input>   
+      <output total="0">
+       </output>
+    </testcase>
+       <testcase id="2">
+      <input partyId="10026">
+      </input>   
+      <output total="1">
+        <addressList Id="10012"> </addressList>
+     
+      </output>
+    </testcase>
+  </GetAddressDetailsByPartyIdTestData>
+
+  <GetAddressDetailsByContactMethodIdTestData>
+    <testcase id="1">
+      <input contactMethodID="10037">
+      </input>
+      <output Id="10012">
+      </output>
+    </testcase>
+    <testcase id="1">
+      <input contactMethodID="11">
+      </input>
+      <output Id="">
+      </output>
+    </testcase>
+  </GetAddressDetailsByContactMethodIdTestData>
+
+  <BuyerSupplierAddressListTestData>
+    <testcase id="1">
+      <input pageNo="1" sortParameter="" sortDirection="" buyerName="" sellerPartyId="" addressId="1" totalRecords="5">
+      </input>
+      <output total="1">
+        <addressList addressId="1"> </addressList>
+      </output>
+    </testcase>
+    <testcase id="2">
+      <input pageNo="1" sortParameter="" sortDirection="" buyerName="" sellerPartyId="" addressId="4" totalRecords="5">
+      </input>
+      <output total="0">
+     
+      </output>
+    </testcase>
+  </BuyerSupplierAddressListTestData>
+</test>

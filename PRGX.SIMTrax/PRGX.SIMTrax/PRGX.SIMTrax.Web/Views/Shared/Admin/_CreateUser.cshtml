@@ -1,0 +1,242 @@
+﻿@model PRGX.SIMTrax.ViewModel.User
+@using PRGX.SIMTrax.Domain.Util
+@{
+    var userCulture = (Session[Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+}
+<div class="col-md-12 col-sm-12 col-xs-12 padding-left-zero padding-right-zero">
+    <div class="bread-crumb" style="display:block;">
+        <a id="breadcrumbcreateuser" onclick="GoToDashBoard()"></a>
+    </div>
+
+    <div class="col-md-4 col-sm-12 col-xs-12 padding-bottom-header padding-left-zero padding-right-zero">
+        <h3 id="headingUser">@ReadResource.GetResourceForGlobalization(Constants.CREATE_USER, userCulture).ToString()</h3>
+    </div>
+
+    <form id="createUserForm" name="createUserForm" enctype="multipart/form-data" method="post">
+        <div id="UserDetails" class="col-md-12 col-sm-12 col-xs-12 padding-left-zero padding-right-zero">
+            <div class="container-white-backgound">
+                @Html.HiddenFor(m => m.OrganizationPartyId)
+                @Html.HiddenFor(m => m.UserId)
+                @Html.HiddenFor(m => m.UserType)
+                <div class="col-md-12 padding-top">
+                    <div class="col-md-5">
+                        @Html.LabelFor(m => m.FirstName)
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = " form-control" })
+                    </div>
+                    <div class="col-md-5 paddingError ">
+                        @Html.ValidationMessageFor(m => m.FirstName)
+                    </div>
+                </div>
+                <div class="col-md-12 padding-top">
+                    <div class="col-md-5">
+                        @Html.LabelFor(m => m.LastName)
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = " form-control" })
+                    </div>
+                    <div class="col-md-5 paddingError">
+                        @Html.ValidationMessageFor(m => m.LastName)
+                    </div>
+                </div>
+                <div class="col-md-12 padding-top">
+                    <div class="col-md-5">
+                        @Html.LabelFor(m => m.Email)
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(m => m.Email, new { @class = " form-control" })
+                    </div>
+                    <div class="col-md-5 paddingError " id="LoginIdError">
+                            <div class="col-md-1" id="LoginIdValidationLoading" style="display: none">
+                                <img id="loading-image" src="~/Content/Images/loading-small.gif" alt="Loading..." />
+                            </div>
+                            <span id="LoginIdErrortext"></span>
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </div>
+                </div>
+                <div class="col-md-12 padding-top">
+                    <div class="col-md-5">
+                        @Html.LabelFor(m => m.Password, new { @class = "hideOnEdit" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-7">
+                        @Html.PasswordFor(m => m.Password, new { @class = " form-control" })
+                    </div>
+                    <div class="col-md-5 paddingError">
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                </div>
+                <div class="col-md-12 padding-top">
+                    <div class="col-md-5">
+                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "hideOnEdit" })
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-7">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = " form-control" })
+                    </div>
+                    <div class="col-md-5 paddingError">
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </div>
+                </div>
+                <div class="col-md-12 padding-top">
+                    <div class="col-md-12">
+                        @Html.CheckBoxFor(m => m.IsAdminUser)
+                        @{if (Model.UserType == UserType.Buyer || Model.UserType == UserType.AdminBuyer)
+                            {
+                                <label>@ReadResource.GetResourceForGlobalization(Constants.IS_ADMIN_BUYER, userCulture).ToString()</label>
+                            }
+                            else if (Model.UserType == UserType.Supplier || Model.UserType == UserType.AdminSupplier)
+                            {
+                                <label>@ReadResource.GetResourceForGlobalization(Constants.IS_ADMIN_SUPPLIER, userCulture).ToString()</label>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3  col-sm-3 col-xs-10  padding-responsive padding-top-question padding-left-zero" style="padding-top: 40px; display: block;">
+                <button type="button" id="btnCancelCreateUser" class="btn btn-normal float-left" onclick="GoToDashBoard()">
+                    @ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()
+                </button>
+                <div class="float-left" style="height: 10px; width: 14px;"></div>
+                <button class="ladda-button btn btn-color addOrEditUser" data-style="expand-right" id="btnCreateUser"><span class="ladda-label">
+                    @ReadResource.GetResourceForGlobalization(Constants.CREATE, userCulture).ToString()</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    var backToText = '@ReadResource.GetResourceForGlobalization(Constants.BACK_TO, userCulture).ToString()';
+    var dashboardText = '@ReadResource.GetResourceForGlobalization(Constants.DASHBOARD, userCulture).ToString()';
+</script>
+<script>
+    var isEmailExists = false;
+    $('#btnCreateUser').click(function () {
+        var info;
+        $.validator.unobtrusive.parse($('#createUserForm'));
+        if (!$('#createUserForm').valid()) {
+            return false;
+        }
+        if (isEmailExists) {
+            $('#Email').focus();
+            return false;
+        }
+        info = $('#createUserForm').serialize();
+        $.ajax({
+            type: 'post',
+            url: '/Admin/AddOrEditUserForParty',
+            data: info,
+            async: true,
+            success: function (response) {
+                if (typeof (response) != "undefined") {
+                    if (response) {
+                        if (response.success == true || response.success == false) {
+                            (response.success) ? showSuccessMessage(response.message) : showErrorMessage(response.message);
+                            GoToDashBoard();
+                        }
+                    }
+                    else {
+                        showErrorMessage('@ReadResource.GetResourceForGlobalization(Constants.ERROR_WHILE_INSERTING, userCulture).ToString()');
+                    }
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+        return false;
+    });
+
+    function GoToDashBoard() {
+        $("#CreateUser").hide();
+        $("#CreateUser").html("");
+        var buyerPartyId = "@ViewBag.BuyerPartyId";
+        var supplierPartyId = "@ViewBag.SupplierPartyId"
+        if (buyerPartyId != "") {
+            $.ajax({
+                type: 'post',
+                url: '/Admin/GetBuyerDashboard',
+                data: { buyerPartyId: buyerPartyId },
+                async: false,
+                success: function (response) {
+                    if (typeof (response) != "undefined") {
+                        $("#BuyerDashboard").html(response);
+                        $("#BuyerDashboard").show();
+                        ScrollToTop();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        }
+        else if (supplierPartyId != "") {
+            $.ajax({
+                type: 'post',
+                url: '/Admin/GetSupplierDashboard',
+                data: { supplierPartyId: supplierPartyId },
+                async: false,
+                success: function (response) {
+                    if (typeof (response) != "undefined") {
+                        $("#SupplierDashboard").html(response);
+                        $("#SupplierDashboard").show();
+                        ScrollToTop();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        }
+        return false;
+    }
+    $(document).ready(function () {
+        $("#breadcrumbcreateuser").html("< " + backToText + " " + localStorage.getItem("companyName") + " " + dashboardText);
+        ScrollToTop();
+        if ("@ViewBag.Objective" == "Edit") {
+            $("#headingUser").html('@ReadResource.GetResourceForGlobalization(Constants.EDIT_USER, userCulture).ToString()');
+            $(".ladda-label").html('@ReadResource.GetResourceForGlobalization(Constants.UPDATE, userCulture).ToString()');
+            $("#Email").attr("readonly", "true");
+            $(".hideOnEdit").hide();
+            $("#Password").hide();
+            $("#ConfirmPassword").hide();
+            $("#Password").val("@Model.Password");
+        }
+    });
+    $('#createUserForm [name=Email]').blur(function () {
+        var logId = $('#Email').val();
+        $.ajax({
+            type: 'post',
+            url: '/Account/IsEmailExists',
+            data: { email: logId },
+            dataType: "json",
+            async: false,
+            success: function (response) {
+                if (response.result) {
+                    isEmailExists = true;
+                    $('#LoginIdError').removeClass('available');
+                    $('#LoginIdError').addClass('error-text');
+                    $('#LoginIdErrortext').html(response.message);
+                    $('#Email').focus();
+                }
+                else {
+                    isEmailExists = false;
+                    $('#LoginIdError').removeClass('error-text');
+                    $('#LoginIdError').addClass('available');
+                    $('#LoginIdErrortext').html('');
+                }
+                $('#LoginIdValidationLoading').hide();
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+        return false;
+    });
+</script>

@@ -1,0 +1,503 @@
+﻿@using PRGX.SIMTrax.Domain.Util
+@{
+    var userCulture = (Session[Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+    ViewBag.Title = ReadResource.GetResourceForGlobalization(Constants.VOUCHER, userCulture).ToString();
+}
+
+@{
+    var UserType = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER_TYPE] != null)
+         ? (PRGX.SIMTrax.Domain.Util.UserType)Convert.ToInt64(Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER_TYPE]) : PRGX.SIMTrax.Domain.Util.UserType.None;
+    var permissionList = new List<ItemList>();
+    if (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER] != null && UserType == PRGX.SIMTrax.Domain.Util.UserType.Auditor)
+    {
+        //var roleservice = new Services.RoleService();
+        var auditorId = ((PRGX.SIMTrax.Domain.Model.UserDetails)(Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER])).UserId;
+        permissionList = null; //roleservice.GetAuditorPermissionList(auditorId);
+    }
+}
+<style>
+    .edit-delete-icons {
+        padding-left: 8px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+</style>
+
+<div id="vouchers-main-div" class="col-md-12 col-sm-12 col-xs-12 padding-left-right-zero">
+    <div class="col-md-12 padding-left-right-zero">
+        <div class="bread-crumb">
+            <div id="voucherBreadCrumb"><a href="/Admin/Home" data-title="Home">@ReadResource.GetResourceForGlobalization(Constants.HOME, userCulture).ToString()</a> >  @ReadResource.GetResourceForGlobalization(Constants.VOUCHERS, userCulture).ToString()</div>
+        </div>
+    </div>
+    <div class="col-md-12 padding-bottom-header padding-left-right-zero" id="manage-voucher-header">
+        <div class="col-md-9  col-sm-9 col-xs-12" style="padding-left:0px;">
+            <h3>@ReadResource.GetResourceForGlobalization(Constants.VOUCHERS, userCulture).ToString()</h3>
+        </div>
+        <div class="col-md-3  col-sm-3 col-xs-10 padding-responsive padding-left-right-zero">
+            <button class="btn btn-color float-right CreateVoucher" id="btnCreateVoucher"  style="width: 150px">
+                <i class="fa fa-plus" style="padding-right: 8px;"></i>  @ReadResource.GetResourceForGlobalization(Constants.CREATE_VOUCHER, userCulture).ToString()
+            </button>
+        </div>
+    </div>
+    <div class="container-white-backgound">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="voucherPaginator  float-left-phone" style="float:left;">
+            </div>
+            <div id="search-voucher-page-data" style="font-size:16px;margin-top:25px;padding-left:15px;float:left;"></div>
+        </div>
+        <div class="col-md-12 padding-top-10px" id="div-voucher-table" style="display:block">
+            <table class="table tableGrid" id="div-voucher-table-data">
+                <thead>
+                    <tr>
+                        <th class="tableGrid-header text-align-right cursor-pointer promotionCodeSort">@ReadResource.GetResourceForGlobalization(Constants.PROMOTION_CODE, userCulture).ToString()<i style="padding-left: 6px;" class="fa fa-sort"></i></th>
+                        <th class="tableGrid-header text-align-right">@ReadResource.GetResourceForGlobalization(Constants.DISCOUNT_PERCENTAGE, userCulture).ToString()</th>
+                        <th class="tableGrid-header text-align-right">@ReadResource.GetResourceForGlobalization(Constants.PROMOTION_START_DATE, userCulture).ToString()</th>
+                        <th class="tableGrid-header text-align-right">@ReadResource.GetResourceForGlobalization(Constants.PROMOTION_END_DATE, userCulture).ToString()</th>
+                        <th class="tableGrid-header text-align-left">@ReadResource.GetResourceForGlobalization(Constants.BUYER_NAME, userCulture).ToString()</th>
+                        <th class="tableGrid-header text-align-center editVoucher">@ReadResource.GetResourceForGlobalization(Constants.ACTIONS, userCulture).ToString()</th>
+                    </tr>
+                </thead>
+                <tbody id="div-voucher-table-rows"></tbody>
+            </table>
+            <input type="hidden" id="hdn-vouchers-page" value="1" />
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-md-8 col-sm-8 col-xs-12 padding-left-zero ">
+                <div class="voucherPaginator  float-left-phone">
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12 padding-left-zero-phone padding-right-zero">
+                <div class="divPageSize form-inline" style="margin-top: 20px; float: right;">
+                    <label for="pageSizeVoucherSearch">@ReadResource.GetResourceForGlobalization(Constants.RESULTS_PER_PAGE, userCulture).ToString()</label>
+                    <div class="form-group padding-left-zero-phone">
+                        <select id="pageSizeVoucherSearch" class="form-control">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                            <option value="60">60</option>
+                            <option value="70">70</option>
+                            <option value="80">80</option>
+                            <option value="90">90</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="CreateVoucher" class="display-none"></div>
+
+
+
+<script>
+    var noRecordsFound = '@ReadResource.GetResourceForGlobalization(Constants.NO_RECORDS_FOUND, userCulture).ToString()';
+    var searchPageData = '@ReadResource.GetResourceForGlobalization(Constants.SEARCH_PAGE_DATA, userCulture).ToString()';
+    var promotionDateValidation = '@ReadResource.GetResourceForGlobalization(Constants.PROMOTION_DATE_VALIDATION, userCulture).ToString()';
+    var voucherCreateSuccess = '@ReadResource.GetResourceForGlobalization(Constants.VOUCHER_CREATION_SUCCESS, userCulture).ToString()';
+    var voucherUpdateSuccess = '@ReadResource.GetResourceForGlobalization(Constants.VOUCHER_UPDATE_SUCCESS, userCulture).ToString()';
+    var errorMessage = '@ReadResource.GetResourceForGlobalization(Constants.DEFAULT_ERROR_MESSAGE, userCulture).ToString()';
+    var promotionalCodeError = '@ReadResource.GetResourceForGlobalization(Constants.PROMOTIONAL_CODE_EXISTS, userCulture).ToString()';
+    var createVoucher = '@ReadResource.GetResourceForGlobalization(Constants.CREATE_VOUCHER, userCulture).ToString()';
+    var editVoucher = '@ReadResource.GetResourceForGlobalization(Constants.EDIT_VOUCHER, userCulture).ToString()';
+</script>
+
+<script>
+    var isVoucherExists = false;
+    var CanCreateVoucher = false;
+    $(document).ready(function () {
+        CanCreateVoucher = '@(UserType==UserType.AdminAuditor || permissionList.Find(a => a.Value == Convert.ToInt32(AuditorRoles.CreateVoucher)) != null)' == 'True' ? true : false;
+        if (!CanCreateVoucher) {
+            $('#btnCreateVoucher').hide();
+        }
+        CheckPermission("Finance", function () {
+            VoucherCreation();
+            setLocation("AdminFinanceTab");
+        });
+    });
+    function StartVoucherLoading() {
+        $('#div-voucher-table,#voucher-create-edit').hide();
+        $('#manage-voucher-header,#create-voucher-header,#create-voucher-footer').hide();
+    }
+    function EndVoucherLoading(divId) {
+        $('#' + divId).show();
+    }
+    function VoucherCreation() {
+        GetVouchers(1, "", 1);
+    }
+    $('#pageSizeVoucherSearch').change(function () {
+        $('#hdn-vouchers-page').val(1);
+        GetVouchers(1, "", 1);
+    });
+
+    function GetVouchers(currPg, sortParameter, sortDirection) {
+        StartVoucherLoading();
+        $('#manage-voucher-header').show();
+        EndVoucherLoading("div-voucher-table");
+        var pageSizeVoucherSearch = parseInt($('#pageSizeVoucherSearch').val());
+
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/GetAllVouchers',
+            data: { currentPage: currPg, sortParameter: sortParameter, sortDirection: sortDirection, count: pageSizeVoucherSearch },
+            success: function (data) {
+                if (data != undefined) {
+                    var response = data.vouchersList;
+                    var tableHtml = "";
+                    if (response.length > 0) {
+                        for (var i = 0 ; i < response.length; i++) {
+                            var item = response[i];
+                            var cls = "odd";
+                            if (i % 2 == 0) {
+                                cls = "even";
+                            }
+                            tableHtml += "<tr class=\"" + cls + "\"><td class=\"text-align-right\">" + item.PromotionalCode + "</td><td class=\"text-align-right\">" + item.DiscountPercent + "</td><td class=\"text-align-right\">"
+                                + item.FormattedPromotionStartDate + "</td><td  class=\"text-align-right\">" + item.FormattedPromotionEndDate + "</td><td  class=\"text-align-left\">" + item.BuyerName + "</td><td><span class=\"edit-delete-icons\" onclick='EditVoucher(\""+ item.PromotionalCode +"\")'><i class=\"fa  fa-pencil-square-o\"></i></span></td></tr>";
+                        }
+                    }
+                    else {
+                        var tableHtml = "<tr><td col-span=\"3\">" + noRecordsFound + "</td></tr>";
+                    }
+                    $('.voucherPaginator').html(displayLinks($('#hdn-vouchers-page').val(), Math.ceil(data.total / pageSizeVoucherSearch), "", sortDirection, "GetVouchers", "#hdn-vouchers-page"));
+                    $('#div-voucher-table-rows').html("");
+                    $('#div-voucher-table-rows').html(tableHtml);
+                    if (!CanCreateVoucher) {
+                        $('.editVoucher').hide();
+                    }
+                    else {
+                        $('.editVoucher').show();
+                    }
+                    if (data.total <= pageSizeVoucherSearch) {
+                        $('.voucherPaginator').css('margin-right', '0px');
+                    }
+                    var contentHtml = "";
+                    var currentPage = parseInt($('#hdn-vouchers-page').val());
+                    var lastPage = Math.ceil(data.total / pageSizeVoucherSearch);
+                    if (response.length > 0) {
+                        if (currentPage < lastPage) {
+                            // contentHtml = "Showing " + (((currentPage - 1) * pageSizeVoucherSearch) + 1) + "-" + (pageSizeVoucherSearch * currentPage) + " of " + data.total;
+
+                            contentHtml = String.format(searchPageData, (((currentPage - 1) * pageSizeVoucherSearch) + 1), (pageSizeVoucherSearch * currentPage), data.total);
+
+
+                        }
+                        else {
+
+
+
+                            contentHtml = String.format(searchPageData, (((currentPage - 1) * pageSizeVoucherSearch) + 1), data.total, data.total);
+
+                        }
+
+                        $('#search-voucher-page-data').html(contentHtml);
+                    }
+                    ScrollToTop();
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    }
+
+    @*$(document).on('click', '.edit-voucher-icon', function () {
+        var rowNumber = $(this).attr('data-rownumber');
+        var voucherId = $(this).attr('data-voucher');
+        OpenVoucherForm(voucherId);
+        var row = $('#voucher-row-' + rowNumber);
+        var PromotionalCode = row.find("td:nth-child(1)").text();
+        var DiscountPercent = row.find("td:nth-child(2)").text();
+        var StartDate = row.find("td:nth-child(3)").attr('data-startDate');
+        var EndDate = row.find("td:nth-child(4)").attr('data-endDate');
+        var buyerId = row.find("td:nth-child(5)").attr('data-buyer');
+        $('#PromotionalCode').val(PromotionalCode);
+        $('#PromotionalCode').attr('disabled', true);
+        $('#DiscountPercent').val(DiscountPercent);
+        $('#VoucherId').val(voucherId);
+        $("#PromotionStartDate").val(StartDate);
+        $("#PromotionEndDate").val(EndDate);
+        if (buyerId == 0) {
+            $('#voucher-create-edit-form input[name=MapBuyer]').attr('disabled', true);
+            $('input[name="MapBuyer"][value="False"]').prop("checked", true);
+            $('#voucher-buyer-list').hide();
+        }
+        else {
+            $('#voucher-create-edit-form input[name=MapBuyer]').attr('disabled', true);
+            $('input[name="MapBuyer"][value="True"]').prop("checked", true);
+            $("#voucher-create-edit-form #BuyerId").val(buyerId);
+            $('#voucher-create-edit-form #BuyerId').attr('readonly', true);
+            $('#voucher-create-edit-form #BuyerId option:not(:selected)').attr('disabled', true);
+            $('#voucher-buyer-list').show();
+        }
+    });
+    function OpenVoucherForm(voucherId) {
+        StartVoucherLoading();
+        $(".divPageSize").hide();
+        $("#search-voucher-page-data").hide();
+        $(".voucherPaginator").hide();
+        $('#VoucherError').removeClass('available');
+        $('#VoucherError').removeClass('error-text');
+        $('#VoucherErrorText').html('');
+        $('.field-validation-error').html('');
+        $('.field-validation-error').addClass('field-validation-valid').removeClass('field-validation-error');
+        $("#voucher-create-edit-form #BuyerId").val(0);
+
+        $('#voucher-create-edit-form #BuyerId').removeAttr('readonly');
+        $('#voucher-create-edit-form input[name=MapBuyer]').attr('disabled', false);
+        $('#voucher-create-edit-form #BuyerId option:not(:selected)').attr('disabled', false);
+
+        $('input[name="MapBuyer"][value="False"]').prop("checked", true);
+        $('#voucher-buyer-list').hide();
+        $('#voucher-buyer-error').hide();
+        $('input[name=MapBuyer]').attr('disabled', false);
+        RemoveBorderColor('#PromotionalCode');
+        RemoveBorderColor('#DiscountPercent');
+        RemoveBorderColor('#PromotionStartDate');
+        RemoveBorderColor('#PromotionEndDate');
+        $('#PromotionalCode').attr('disabled', false);
+        $('#create-voucher-header').show();
+        $('#create-voucher-footer').show();
+        $('#PromotionalCode').val('');
+        $('#DiscountPercent').val('');
+        $('#VoucherId').val(0);
+        $("#PromotionStartDate").val('');
+        $("#PromotionEndDate").val('');
+        if (voucherId == 0) {
+            $('#create-voucher-header-text').html(createVoucher);
+            $('.bread-crumb').html('<div id="voucherBreadCrumb"><a class="Navigate" data-viewname="Home" data-action="/Admin/Home" data-title="Home">@Util.ReadResource.GetResourceForGlobalization(Util.Constants.HOME,userCulture).ToString()</a> > <a class="Navigate" data-viewname="VoucherCreation" href="@Url.Action("Voucher", "Admin")" data-title="Voucher">Vouchers</a> > @Util.ReadResource.GetResourceForGlobalization(Util.Constants.CREATE_VOUCHER,userCulture).ToString()</div></div>');
+        }
+        else {
+            $('#create-voucher-header-text').html(editVoucher);
+            $('.bread-crumb').html('<div id="voucherBreadCrumb"><a class="Navigate" data-viewname="Home" data-action="/Admin/Home" data-title="Home">@Util.ReadResource.GetResourceForGlobalization(Util.Constants.HOME,userCulture).ToString()</a> > <a class="Navigate" data-viewname="VoucherCreation" href="@Url.Action("Voucher", "Admin")" data-title="Voucher">Vouchers</a> > @Util.ReadResource.GetResourceForGlobalization(Util.Constants.EDIT_VOUCHER,userCulture).ToString()</div></div>');
+        }
+        EndVoucherLoading('voucher-create-edit');
+    }
+    function BackToVoucherList() {
+        StartVoucherLoading();
+        $('#manage-voucher-header').show();
+        $(".divPageSize").show();
+        $(".voucherPaginator").show();
+        $("#search-voucher-page-data").show();
+        EndVoucherLoading("div-voucher-table");
+    }
+    $('input[name="BuyerId"]').click(function () {
+        $('#voucher-buyer-error').hide();
+    });
+    $('input[name="MapBuyer"]').click(function () {
+        if ($(this).attr("value") == "True") {
+            $('#voucher-buyer-list').show();
+        }
+        if ($(this).attr("value") == "False") {
+            $('#voucher-buyer-list').hide();
+        }
+    });
+    function VoucherValidation() {
+        var result = true;
+        $.validator.unobtrusive.parse($('#voucher-create-edit-form'))
+        if (!$('#voucher-create-edit-form').valid()) {
+            result = false;
+        }
+        if ($('input[name=MapBuyer]:Checked').val() == "True") {
+            if (!$('#voucher-create-edit-form #BuyerName').val() == "") {
+                $('#voucher-buyer-error').show();
+                result = false;
+            }
+            else {
+                $('#voucher-buyer-error').hide();
+            }
+        }
+        return result;
+    }
+
+    function SaveVoucher() {
+        if (!VoucherValidation()) {
+            return false;
+        }
+        var startdate = new Date($('#PromotionStartDate').val());
+        var endDate = new Date($('#PromotionEndDate').val());
+        if (startdate > endDate) {
+            showErrorMessage(promotionDateValidation);
+            return false;
+        }
+        if (isVoucherExists) {
+            return false;
+        }
+
+        $(".divPageSize").show();
+        $(".voucherPaginator").show();
+        $("#search-voucher-page-data").show();
+        var VoucherId = parseInt($('#VoucherId').val());
+        var PromotionalStartDateFormat = new Date($('#PromotionStartDate').val());
+        var PromotionalEndDateFormat = new Date($('#PromotionEndDate').val());
+        var PromotionalStartDate = ((PromotionalStartDateFormat.getDate() <= 9) ? "0" + PromotionalStartDateFormat.getDate() : PromotionalStartDateFormat.getDate()) + "" + ((PromotionalStartDateFormat.getMonth() <= 8) ? "0" + (PromotionalStartDateFormat.getMonth() + 1) : (PromotionalStartDateFormat.getMonth() + 1)) + "" + PromotionalStartDateFormat.getFullYear();
+        var PromotionalEndDate = ((PromotionalEndDateFormat.getDate() <= 9) ? "0" + PromotionalEndDateFormat.getDate() : PromotionalEndDateFormat.getDate()) + "" + ((PromotionalEndDateFormat.getMonth() <= 8) ? "0" + (PromotionalEndDateFormat.getMonth() + 1) : (PromotionalEndDateFormat.getMonth() + 1)) + "" + PromotionalEndDateFormat.getFullYear();
+        var PromotionalCode = $('#PromotionalCode').val();
+        var DiscountPercent = $('#DiscountPercent').val();
+        var BuyerId = $('#BuyerId').val();
+        if (BuyerId == null) {
+            BuyerId = 0;
+        }
+        $.ajax({
+            type: 'post',
+            url: '/Admin/AddorUpdateVoucher',
+            async: false,
+            data: { VoucherId: VoucherId, PromotionalCode: PromotionalCode, DiscountPercent: DiscountPercent, PromotionalStartDate: PromotionalStartDate, PromotionalEndDate: PromotionalEndDate, BuyerId: BuyerId },
+            success: function (response) {
+                if (response) {
+                    if ($('#VoucherId').val() == 0) {
+                        showSuccessMessage(voucherCreateSuccess);
+                    }
+                    else {
+                        showSuccessMessage(voucherUpdateSuccess);
+                    }
+                }
+                else {
+                    showErrorMessage(errorMessage);
+                }
+                PagerLinkClick($('#hdn-vouchers-page').val(), "GetVouchers", "#hdn-vouchers-page", "", 1);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    }
+    $(function () {
+        $("#PromotionStartDate").datepicker({
+            defaultDate: "+0",
+            changeMonth: true,
+            changeYear: true,
+            constrainInput: false
+        });
+        $("#PromotionEndDate").datepicker({
+            defaultDate: "+0",
+            changeMonth: true,
+            changeYear: true,
+            constrainInput: false
+        });
+    });
+    //$('.datetime').datepicker({
+    //    changeYear: true,
+    //    changeMonth: true,
+    //    constrainInput: false,
+    //    defaultDate: "+0",
+
+    //}).css({ "cursor": "default" }).keydown(function () {
+    //    return false;
+    //});
+    $('#PromotionalCode').blur(function () {
+        Common.IsLoadingNeeded = false;
+        var code = $('#PromotionalCode').val();
+        if (code == "") {
+            $('#VoucherError').removeClass('available');
+            $('#VoucherError').removeClass('error-text');
+            $('#VoucherErrorText').html('');
+            return false;
+        }
+        if (code != "") {
+            $.ajax({
+                type: 'post',
+                url: '/Admin/IsVoucherAlreadyExists',
+                async: false,
+                data: { code: code },
+                success: function (response) {
+                    if (typeof (response) != "undefined") {
+                        if (response) {
+                            isVoucherExists = true;
+                            $('#VoucherError').removeClass('available');
+                            $('#VoucherError').addClass('error-text');
+                            $('#VoucherErrorText').html(promotionalCodeError);
+                            $('#PromotionalCode').focus();
+
+                        }
+                        else {
+                            isVoucherExists = false;
+                            $('#VoucherError').removeClass('error-text');
+                            $('#VoucherError').addClass('available');
+                            $('#VoucherErrorText').html('');
+                        }
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+        }
+    });*@
+
+    $(document).on('click', '.promotionCodeSort', function () {
+        var sortDirection = $(this).attr('data-sortdirection');
+        if ($(this).find('i').hasClass('fa-sort')) {
+            $(this).find('i').removeClass('fa-sort');
+        }
+        $('.fa-sort-asc').addClass('fa-sort').removeClass('fa-sort-asc');
+        $('.fa-sort-desc').addClass('fa-sort').removeClass('fa-sort-desc');
+        if (sortDirection == 1) {
+            $(this).find('i').addClass('fa-sort-asc');
+            $(this).attr('data-sortDirection', '2');
+        }
+        else if (sortDirection == 2) {
+            $(this).find('i').addClass('fa-sort');
+            $(this).attr('data-sortDirection', '3');
+        }
+        else {
+            $(this).find('i').addClass('fa-sort-desc');
+            $(this).attr('data-sortDirection', '1');
+        }
+        sortDirection = $(this).attr('data-sortdirection');
+        if (sortDirection == 3) {
+            PagerLinkClick('1', "GetVouchers", "#hdn-vouchers-page", '', sortDirection);
+        }
+        else {
+            PagerLinkClick('1', "GetVouchers", "#hdn-vouchers-page", 'promotionalCode', sortDirection);
+        }
+    });
+    $(window).scroll(function () {
+        FixedTableHeaderWithPagination('div-voucher-table-data');
+    });
+    $(window).resize(function () {
+        FixedTableHeaderWithPagination('div-voucher-table-data');
+
+    });
+
+    $(document).on('click', '.CreateVoucher', function () {
+        var BreadCrumb = "Vouchers";
+        $.ajax({
+            type: 'post',
+            url: '/Admin/CreateOrUpdateVoucherForBuyerCompany',
+            data: { BreadCrumb: BreadCrumb },
+            async: false,
+            success: function (response) {
+                if (typeof (response) != "undefined") {
+                    $("#vouchers-main-div").hide();
+                    $("#CreateVoucher").html(response);
+                    $("#CreateVoucher").show();
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    });
+
+    function EditVoucher(voucherCode) {
+        var BreadCrumb = "Vouchers";
+        $.ajax({
+            type: 'post',
+            url: '/Admin/CreateOrUpdateVoucherForBuyerCompany',
+            data: { BreadCrumb: BreadCrumb, voucherCode: voucherCode },
+            async: false,
+            success: function (response) {
+                if (typeof (response) != "undefined") {
+                    $("#vouchers-main-div").hide();
+                    $("#CreateVoucher").html(response);
+                    $("#CreateVoucher").show();
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    }
+
+</script>
+
+
+
+

@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <UpdateSellerDetailsTestData>
+    <testCase id="1">
+      <input businessDescription="" estabishedYear="1993" facebookAccount="" isSubsidiary="" linkedInAccount="" maxContractValue="2000" minContractValue="99" refCreatedBy="9" refLastUpdatedBy="9" regCountry="" tradingName="" twitterAccount="" typeOfSeller="494" ultimateParent="494" websiteLink="" partyId="10026">
+      </input >
+      <output outObj="true">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input businessDescription="" estabishedYear="1993" facebookAccount="" isSubsidiary="" linkedInAccount="" maxContractValue="2000" minContractValue="99" refCreatedBy="9" refLastUpdatedBy="9" regCountry="" tradingName="" twitterAccount="" typeOfSeller="494" ultimateParent="494" websiteLink="" partyId="9">
+      </input >
+      <output outObj="false">
+      </output>
+    </testCase>
+  </UpdateSellerDetailsTestData>
+
+  <GetSellerProfilePercentageTestData>
+    <testCase id="1">
+      <input sellerPartyId="9" sellerId="9" organisationId="9">
+      </input >
+      <output score="">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input sellerPartyId="10026" sellerId="10026" organisationId="10026">
+      </input >
+      <output score="48">
+      </output>
+    </testCase>
+  </GetSellerProfilePercentageTestData>
+
+  <GetSupplierOrganizationTestData>
+    <testCase id="1">
+      <input fromdate="" toDate="" totalRecords="5" pageIndex="1" source="" size="20" sortDirection="1" supplierId="" supplierName="" status="" referrerName="">
+      </input >
+      <output count="2">
+        <supplierList supplierUserId="10025"/>
+        <supplierList supplierUserId="1"/>
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input fromdate="01-01-2017" toDate="" totalRecords="5" pageIndex="1" source="" size="20" sortDirection="1" supplierId="" supplierName="" status="" referrerName="">
+      </input >
+      <output count="0">
+
+      </output>
+    </testCase>
+  </GetSupplierOrganizationTestData>
+
+  <GetSupplierDetailsForDashboardTestData>
+    <testCase id="1">
+      <input supplierPartyId="9">
+      </input >
+      <output supplierUserId="">
+      </output>
+    </testCase>
+      <testCase id="2">
+      <input supplierPartyId="10026">
+      </input >
+      <output supplierUserId="10025">
+      </output>
+    </testCase>
+  </GetSupplierDetailsForDashboardTestData>
+
+
+  <GetNotVerifiedSupplierNamesTestData>
+    <testCase id="1">
+      <input supplierOrg="Alekhya">
+      </input >
+      <output count="1">
+        <supplierList supplierName="Alekhya Org"/>
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input supplierOrg="test">
+      </input >
+      <output count="0">
+      
+      </output>
+    </testCase>
+  </GetNotVerifiedSupplierNamesTestData>
+
+  <GetSuppliersListForRegistrationTestData>
+    <testCase id="1">
+      <input companyName="Alekhya">
+      </input >
+      <output count="1">
+        <supplierList supplierName="Alekhya Org"/>
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input companyName="test">
+      </input >
+      <output count="0">
+      </output>
+    </testCase>
+  </GetSuppliersListForRegistrationTestData>
+
+  <GetSuppliersForVerificationTestData>
+    <testCase id="1">
+      <input totalRecords="1" pageNo="1" sourceCheck="" pageSize="20" sortDirection="1" sortParameter="" viewOptions="1" referrerName="bu">
+      </input >
+      <output count="1">
+        <supplierList supplierId="10055" supplierUserId="10054" supplierOrgName="Kishan Org"/>
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input totalRecords="0" pageNo="1" sourceCheck="520" pageSize="20" sortDirection="1" sortParameter="" viewOptions="1" referrerName="">
+      </input >
+      <output count="0">
+      </output>
+    </testCase>
+
+  </GetSuppliersForVerificationTestData>
+
+  <GetSuppliersCountBasedOnStageTestData>
+    <testCase id="1">
+      <input sourceCheck="" viewOptions="1" referrerName="">
+      </input >
+      <output>
+        <scoreList stage="Check (Needs action)" detailScore="5" profileScore="5" sanctionScore="0"/>
+        <scoreList stage="Checked" detailScore="0" profileScore="0" sanctionScore="0"/>
+        <scoreList stage="Published" detailScore="0" profileScore="0" sanctionScore="0"/>
+      </output>
+    </testCase>
+    <testCase id="1">
+      <input sourceCheck="520" viewOptions="1" referrerName="">
+      </input >
+      <output>
+        <scoreList stage="Check (Needs action)" detailScore="0" profileScore="0" sanctionScore="0"/>
+        <scoreList stage="Checked" detailScore="0" profileScore="0" sanctionScore="0"/>
+        <scoreList stage="Published" detailScore="0" profileScore="0" sanctionScore="0"/>
+      </output>
+    </testCase>
+
+  </GetSuppliersCountBasedOnStageTestData>
+  
+</test>

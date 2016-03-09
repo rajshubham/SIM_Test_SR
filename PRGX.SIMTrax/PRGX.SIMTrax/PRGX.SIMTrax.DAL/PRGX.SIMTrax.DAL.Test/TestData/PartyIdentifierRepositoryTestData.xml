@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <AddUpdateRangeTestData>
+    <testCase id="1">
+      <input>
+        <partyIdentifier Id="7" refParty="10046" refPartyIdentifierType="3" identifierNumber="REG124" refRegion="239"/>
+        <partyIdentifier Id="6" refParty="10046" refPartyIdentifierType="2" identifierNumber="VAT124" refRegion="239"/>
+        <partyIdentifier Id="" refParty="6" refPartyIdentifierType="1" identifierNumber="TEMPDATA" refRegion="239"/>
+      </input>
+      <output>
+      </output>
+    </testCase>
+  </AddUpdateRangeTestData>
+</test>

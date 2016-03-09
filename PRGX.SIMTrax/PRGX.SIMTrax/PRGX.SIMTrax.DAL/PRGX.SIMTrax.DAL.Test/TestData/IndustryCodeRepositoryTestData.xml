@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<test>
+  <GetIndustryCodesTestData>
+    <testCase id="1">
+      <input regionIdentifier="United Kingdom" parentId="" allSICCodes="true">
+      </input>
+      <output count="1028">
+        <List Id="1"/>
+        <List Id="2"/>
+        <List Id="3"/>
+      </output>
+    </testCase>
+  </GetIndustryCodesTestData>
+</test>

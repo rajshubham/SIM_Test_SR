@@ -1,0 +1,758 @@
+﻿@model PRGX.SIMTrax.ViewModel.SellerRegister
+@using PRGX.SIMTrax.Domain.Util
+@using PRGX.SIMTrax.Domain.Model
+@{
+    var userType = (Session[Constants.SESSION_USER_TYPE] != null) ? (UserType)Convert.ToInt64(Session[Constants.SESSION_USER_TYPE]) : UserType.None;
+    var permissionList = new List<ItemList>();
+    if (Session[Constants.SESSION_USER] != null && userType == UserType.Auditor)
+    {
+        //var roleService = new PRGX.SIMTrax.ServiceFacade.RoleServiceFacade();
+        //var auditorId = ((PRGX.SIMTrax.Domain.Model.UserDetails)(Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER])).UserId;
+        //permissionList = roleService.GetUserPermissionBasedOnUserId(auditorId);
+        permissionList = (Session[Constants.SESSION_AUDITOR_ACCESS_PERMISSIONS] != null) ? ((List<ItemList>)Session[Constants.SESSION_AUDITOR_ACCESS_PERMISSIONS]) : new List<ItemList>();
+    }
+    var userCulture = (Session[Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+
+    ViewBag.Title = ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_ORGANISATIONS, userCulture).ToString();
+}
+<style>
+    .ui-page {
+        -webkit-backface-visibility: hidden;
+    }
+
+    #AddReferrer {
+        -webkit-backface-visibility: hidden;
+    }
+</style>
+
+<div class="row" id="verifyAndAuditSuppliers">
+    <div class="col-md-4 col-sm-4 col-xs-12 padding-bottom-header">
+        <h3>@ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_ORGANISATIONS, userCulture).ToString()</h3>
+    </div>
+    <div class="col-md-offset-2 col-md-6 col-sm-offset-2 col-sm-6 col-xs-12 padding-bottom-responsive">
+        <div class="input-group">
+            <input type="text" id="txtSupplierVSS" class="form-control autocomplete" placeholder="@ReadResource.GetResourceForGlobalization(Constants.SEARCH_FOR_SUPPLIER_ORG, userCulture).ToString()" />
+            <span class="input-group-addon search" style="cursor:pointer" id="btnVSSSupplierSearch" onclick="SearchOnEnter();">
+                <i class="fa fa-search"></i>
+            </span>
+        </div>
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-3 col-sm-12 col-xs-12 panel-default panel no-border ">
+        <div class="container-white-backgound" style="padding-top:10px !important;">
+            <div class="col-md-8 col-sm-8 col-xs-6 page-sub-heading-container panel-heading" style="padding-top:2px; padding-bottom:12px !important; border-bottom:0px !important;">
+                <span class="page-sub-heading">@ReadResource.GetResourceForGlobalization(Constants.FILTERS, userCulture).ToString()</span>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-6  padding-top-9px">
+                <div class="SICCodeLink display-none cursor-pointer" style="float:right;" id="search-suppliers-filter-header-clear" tabindex="25">@ReadResource.GetResourceForGlobalization(Constants.CLEAR_ALL, userCulture).ToString()</div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12"> <hr class="border-style" /></div>
+            <div class="clear-both"></div>
+            <div id="supplierSearchFilters" class="panel-body" style="padding:0px">
+                <div class="col-md-12 col-sm-12  padding-top">
+                    <label>@ReadResource.GetResourceForGlobalization(Constants.SOURCE, userCulture).ToString():</label>
+                </div>
+                <div class="col-md-12 col-sm-6">
+                    <select class="form-control supplierSearchFilter" id="ddlSource">
+                        <option value="@Convert.ToInt16(ProjectSource.Both)">
+                            @ReadResource.GetResourceForGlobalization(Constants.SIM_AND_CIPS, userCulture).ToString()
+                        </option>
+                        <option value="@Convert.ToInt16(ProjectSource.SIM)">
+                            @ReadResource.GetResourceForGlobalization(Constants.SIM_ONLY, userCulture).ToString()
+                        </option>
+                        <option value="@Convert.ToInt16(ProjectSource.CIPS)">
+                            @ReadResource.GetResourceForGlobalization(Constants.CIPS_ONLY, userCulture).ToString()
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-12 col-sm-12  padding-top">
+                    <label>@ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_ID, userCulture).ToString():</label>
+                </div>
+                <div class="col-md-12 col-sm-6">
+                    <div class="input-group">
+                        <input type="text" id="txtSupplierIdVSS" class="form-control supplierSearchFilter" placeholder="@ReadResource.GetResourceForGlobalization(Constants.SEARCH_FOR_SUPPLIER_ID, userCulture).ToString()" maxlength="6" onkeypress="return isNumberKey(event);" />
+                        <span class="input-group-addon search" style="cursor:pointer" id="btnVSSSupplierIdSearch" onclick="SearchOnEnter();">
+                            <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12  padding-top">
+                    <label>@ReadResource.GetResourceForGlobalization(Constants.STATUS, userCulture).ToString():</label>
+                </div>
+                <div class="col-md-12 col-sm-6">
+                    <select class="form-control supplierSearchFilter" id="ddlSupplierStatus">
+                        <option value="@Convert.ToInt32(CompanyStatus.Started)">All</option>
+                        <option value="@Convert.ToInt32(CompanyStatus.Submitted)">@CommonMethods.Description(CompanyStatus.Submitted)</option>
+                        <option value="@Convert.ToInt32(CompanyStatus.RegistrationVerified)">@CommonMethods.Description(CompanyStatus.RegistrationVerified)</option>
+                        <option value="@Convert.ToInt32(CompanyStatus.ProfileVerified)">@CommonMethods.Description(CompanyStatus.ProfileVerified)</option>
+                        <option value="@Convert.ToInt32(CompanyStatus.SanctionVerified)">@CommonMethods.Description(CompanyStatus.SanctionVerified)</option>
+                    </select>
+                </div>
+
+                <div class="col-md-12 col-sm-12  padding-top">
+                    <label>@ReadResource.GetResourceForGlobalization(Constants.FROM_DATE, userCulture).ToString():</label>
+                </div>
+                <div class="col-md-12 col-sm-6">
+                    <div class="input-group">
+                        <input type="text" id="txtFromDate" class="form-control supplierSearchFilter" onkeypress="return keyPress(event);" />
+                        <span class="input-group-addon" onclick="$('#txtFromDate').datepicker('show')"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 padding-top">
+                    <label>@ReadResource.GetResourceForGlobalization(Constants.TO_DATE, userCulture).ToString():</label>
+                </div>
+                <div class="col-md-12 col-sm-6">
+                    <div class="input-group">
+                        <input type="text" id="txtToDate" class="form-control supplierSearchFilter" onkeypress="return keyPress(event);" />
+                        <span class="input-group-addon" onclick="$('#txtToDate').datepicker('show')"><i class="fa fa-calendar"></i></span>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12  padding-top">
+                    <label>@ReadResource.GetResourceForGlobalization(Constants.REFERRER_NAME, userCulture).ToString():</label>
+                </div>
+                <div class=" col-md-12 col-sm-6">
+                    <div class="input-group">
+                        <input type="text" id="txtReferrerName" class="form-control supplierSearchFilter" placeholder="@ReadResource.GetResourceForGlobalization(Constants.REFERRER_NAME, userCulture).ToString()" />
+                        <span class="input-group-addon search" style="cursor:pointer" id="btnReferrerNameSearch" onclick="SearchOnEnter();">
+                            <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9 col-sm-12 col-xs-12 padding-bottom padding-responsive-text">
+        <div class="container-white-backgound" style="padding-top:10px !important;">
+            <div class="col-md-12 panel-heading">
+                <span class="page-sub-heading">
+                    @ReadResource.GetResourceForGlobalization(Constants.SUPPLIERS, userCulture).ToString()
+                    <a id="btnSupplierStatusExport" class="float-right " style="font-size: 16px !important; color: rgb(51, 51, 51) !important; padding-top:6px">
+                        <i class="fa fa-download"></i> @ReadResource.GetResourceForGlobalization(Constants.EXPORT, userCulture).ToString()
+                    </a>
+                </span>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12"> <hr class="border-style" /></div>
+            <div class="col-md-12 padding-top">
+                <label>@ReadResource.GetResourceForGlobalization(Constants.NUMBER_OF_SUPPLIERS, userCulture).ToString(): <span id="spnSupCount-supplierstatus"></span></label>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-10 col-sm-10 col-xs-12 padding-left-zero   padding-right-zero">
+                    <div class="supplierStatusPaginator float-left-phone" style="float:left;">
+                    </div>
+                    <div id="search-page-data-supplierstatus" style="font-size:16px;margin-top:25px;padding-left:15px;float:left;"></div>
+                </div>
+            </div>
+            <div class="col-md-12 padding-top-10px">
+                <table class="table tableGrid footable toggle-arrow" id="tblSuppliers">
+                    <thead>
+                        <tr>
+                            <th class="tableGrid-header col-md-3 text-align-left supplierNameSort cursor-pointer" data-sortdirection="3">
+                                @ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_NAME, userCulture).ToString()
+                                <i style="padding-left: 6px;" class="fa fa-sort"></i>
+                            </th>
+                            <th class="tableGrid-header  text-align-right" data-hide="phone">
+                                @ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_ID, userCulture).ToString()
+                            </th>
+                            <th class="tableGrid-header col-md-2  text-align-center" data-hide="phone,tabletPortrait">
+                                @ReadResource.GetResourceForGlobalization(Constants.SIGN_UP, userCulture).ToString()
+                            </th>
+                            <th class="tableGrid-header text-align-right" data-hide="phone,tabletPortrait">
+                                @ReadResource.GetResourceForGlobalization(Constants.REGISTERED, userCulture).ToString()
+                            </th>
+                            <th class="tableGrid-header col-md-2  text-align-left" data-hide="phone,tabletPortrait">
+                                @ReadResource.GetResourceForGlobalization(Constants.DETAILS_CHECK, userCulture).ToString()
+                            </th>
+                            <th class="tableGrid-header col-md-2  text-align-left" data-hide="phone,tabletPortrait">
+                                @ReadResource.GetResourceForGlobalization(Constants.PROFILE_CHECK, userCulture).ToString()
+                            </th>
+                            <th class="tableGrid-header thStatusSup text-align-left" data-hide="phone,tabletPortrait">
+                                @ReadResource.GetResourceForGlobalization(Constants.STATUS, userCulture).ToString()
+                            </th>
+                            <th class="tableGrid-header  text-align-left" data-hide="phone,tabletPortrait">
+                                @ReadResource.GetResourceForGlobalization(Constants.SOURCE, userCulture).ToString()
+                            </th>
+                            <th class="tableGrid-header text-align-left" data-hide="phone,tabletPortrait">
+                                @ReadResource.GetResourceForGlobalization(Constants.REFERRER_NAME, userCulture).ToString()
+                            </th>
+                            <th class="tableGrid-header text-align-center">
+                                @ReadResource.GetResourceForGlobalization(Constants.ACTIONS, userCulture).ToString()
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblSuppliersBody"></tbody>
+                </table>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-8 col-sm-8 col-xs-12 padding-left-zero">
+                    <div class="supplierStatusPaginator float-left-phone">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 padding-left-zero padding-right-zero">
+                    <div class="divPageSize form-inline" style="margin-top: 20px;float:right">
+                        <label for="pageSizeSupplierSearch">@ReadResource.GetResourceForGlobalization(Constants.RESULTS_PER_PAGE, userCulture).ToString()</label>
+                        <div class="form-group padding-left-zero-phone">
+                            <select id="pageSizeSupplierSearch" class="form-control">
+                                <option value="10">10</option>
+                                <option value="20" selected="selected">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                                <option value="60">60</option>
+                                <option value="70">70</option>
+                                <option value="80">80</option>
+                                <option value="90">90</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="hdn-supplier-status-current-page" value="1" />
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" data-backdrop="static" id="EditSupplierPrimaryDetails" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@ReadResource.GetResourceForGlobalization(Constants.EDIT_PRIMARY_CONTACT_DETAILS, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row margin-bottom-15">
+                <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <form id="supplierPrimaryContactDetails" name="supplierPrimaryContactDetails" enctype="multipart/form-data">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-responsive-text padding-right-zero padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                <label>@ReadResource.GetResourceForGlobalization(Constants.LOGIN_ID, userCulture).ToString()</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                @Html.TextBox("txtLoginID", String.Empty, new { id = "txtLoginID", @name = "txtLoginID", @class = "form-control", @readOnly = true })
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-responsive-text padding-right-zero padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                <label>@ReadResource.GetResourceForGlobalization(Constants.PRIMARY_EMAIL, userCulture).ToString()</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                @Html.TextBox("txtPrimaryEmail", String.Empty, new { id = "txtPrimaryEmail", @name = "txtPrimaryEmail", @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-responsive-text padding-right-zero padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                <label>@ReadResource.GetResourceForGlobalization(Constants.PRIMARY_FIRST_NAME, userCulture).ToString()</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                @Html.TextBox("txtPrimaryFirstName", String.Empty, new { id = "txtPrimaryFirstName", @name = "txtPrimaryFirstName", @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-responsive-text padding-right-zero padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                <label>@ReadResource.GetResourceForGlobalization(Constants.PRIMARY_LAST_NAME, userCulture).ToString()</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                @Html.TextBox("txtPrimaryLastName", String.Empty, new { id = "txtPrimaryLastName", @name = "txtPrimaryLastName", @class = "form-control" })
+                                @Html.HiddenFor(m => m.UserPartyId, new { id = "hdnUserId" })
+                                @Html.HiddenFor(m => m.SellerPartyId, new { id = "hdnCompID" })
+                                <input type="hidden" id="txtSupplierPrimaryContactPartyId" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-responsive-text padding-right-zero padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                <label>@ReadResource.GetResourceForGlobalization(Constants.TELEPHONE, userCulture).ToString()</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                @Html.TextBox("txtTelephone", String.Empty, new { id = "txtTelephone", @name = "txtTelephone", @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-responsive-text padding-right-zero padding-top-10px">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-right-zero padding-label">
+                                <label>@ReadResource.GetResourceForGlobalization(Constants.JOB_TITLE, userCulture).ToString()</label>
+                            </div>
+                            <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                                @Html.TextBox("txtJobTitle", String.Empty, new { id = "txtJobTitle", @name = "txtJobTitle", @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-top-20px text-align-right">
+                            <div class="float-right">
+                                <button type="button" class="btn btn-normal float-left" id="btnResetSupplierPrimaryDetails">
+                                    @ReadResource.GetResourceForGlobalization(Constants.RESET, userCulture).ToString()
+                                </button>
+                                <div class="float-left" style="height: 10px; width: 14px;"></div>
+                                <button type="button" class="btn btn-normal float-left" id="btnCancelSupplierPrimaryDetails" data-dismiss="modal">
+                                    @ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()
+                                </button>
+                                <div class="float-left" style="height: 10px; width: 14px;"></div>
+                                <button type="button" class="btn btn-color float-left" id="btnSaveSupplierPrimaryDetails">
+                                    @ReadResource.GetResourceForGlobalization(Constants.SAVE_CHANGES, userCulture).ToString()
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-backdrop="static" id="AddReferrer" tabindex="-1" role="dialog" style="display:none" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@ReadResource.GetResourceForGlobalization(Constants.ADD_REFERRER, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" style="overflow:auto;">
+                <form id="SearchReferrer" role="form">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 input-group">
+                        <input type="text" id="tbBuyerName" class="form-control autocomplete" placeholder="Search For Buyer" />
+                        <span class="input-group-addon search" style="cursor:pointer" id="btnSearchReferrers">
+                            <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 input-group padding-top-10px">
+                        <input type="text" id="tbCampaignName" class="form-control autocomplete" placeholder="Search For Campaign" />
+                        <span class="input-group-addon search" style="cursor:pointer" id="btnSearchReferrers">
+                            <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                    <input type="hidden" id="hdnSupplierId" />
+                </form>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-left-zero padding-right-zero padding-top-10px">
+                    <table id="tblAddReferrer" class="table tableGrid table">
+                        <thead>
+                            <tr style="background-color:black;height:15px">
+                                <th class="tableGrid-header col-md-4">@ReadResource.GetResourceForGlobalization(Constants.BUYER_NAME, userCulture).ToString()</th>
+                                <th class="tableGrid-header col-md-2">@ReadResource.GetResourceForGlobalization(Constants.CAMPAIGN_NAME, userCulture).ToString()</th>
+                                <th class="tableGrid-header col-md-1">@ReadResource.GetResourceForGlobalization(Constants.REFERRER, userCulture).ToString()</th>
+                                <th class="tableGrid-header col-md-1">@ReadResource.GetResourceForGlobalization(Constants.PRIMARY_REFERRER, userCulture).ToString()</th>
+                            </tr>
+                        </thead>
+                        <tbody id="referrerTable-content"></tbody>
+                    </table>
+                </div>
+                <div class="col-lg-6 addReferrerPaginator float-left-phone">
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 padding-top-20px text-align-right padding-right-zero">
+                    <div class="float-right">
+                        <button type="button" class="btn btn-normal float-left" id="closeSupplierReferrerPopUp" data-dismiss="modal">
+                            @ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()
+                        </button>
+                        <div class="float-left" style="height: 10px; width: 14px;"></div>
+                        <button type="button" class="btn btn-color float-left" id="SaveReferrerDetails">
+                            @ReadResource.GetResourceForGlobalization(Constants.SAVE, userCulture).ToString()
+                        </button>
+                    </div>
+                </div>
+                <input type="hidden" id="hdn-supplier-referrer-details-page" value="1" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="col-md-12  col-sm-12 col-xs-12 panel panel-default no-border padding-left-zero padding-right-zero" style="display: none" id="tabVerifyDetails">
+    <div class="bread-crumb" id="breadCrumbHeader">
+        <a id="BackToSuppliers">< @ReadResource.GetResourceForGlobalization(Constants.BACK_TO_SUPPLIER_ORGANISATIONS, userCulture).ToString()</a>
+    </div>
+    <div class="container-white-backgound padding-bottom-0px">
+        <div class="col-md-12  col-sm-12 col-xs-12">
+            <div class="col-md-9 col-sm-8 col-xs-12  panel-heading page-sub-heading-container">
+                <span class="pull-left clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                <span class="page-sub-heading">@ReadResource.GetResourceForGlobalization(Constants.GENERAL_INFORMATION, userCulture).ToString()</span>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 padding-responsive">
+                <hr class="border-style" />
+            </div>
+        </div>
+        <div id="divVerifyDetails" class="col-md-12  col-sm-12 col-xs-12  panel-body">
+            <form id="InitialCheckSupplierForm" name="InitialCheckSupplierForm" enctype="multipart/form-data" method="post" action="/Admin/VerifyInitialCheck">
+                <div class="col-md-12 col-sm-12 col-xs-12 paddingTop">
+                    @Html.HiddenFor(m => m.SellerPartyId, new { @id = "companyIdInitialCheck" })
+                    @Html.HiddenFor(m => m.UserPartyId, new { @id = "userIdInitialCheck" })
+                    <div class="padding-top-verify">
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero">
+                            <div class="col-md-12">
+                                @Html.LabelFor(m => m.OrganisationName)
+                            </div>
+                            <div class="col-md-8 col-sm-5">
+                                @Html.TextBoxFor(m => m.OrganisationName, new { @class = " form-control", @id = "organisationNameInitialCheck" })
+                            </div>
+                            <div class="col-md-8 padding-top-10px paddingError " id="OrganisationError">
+                                <span id="OrganisationErrorText"></span>
+                                @Html.ValidationMessageFor(m => m.OrganisationName)
+                            </div>
+                        </div>
+                        <div class="padding-responsive-verify col-md-6 col-sm-12 col-xs-12">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.CompanyLegalName)" data-questionid="@((Int16)ProfileQuestionIds.CompanyLegalName)" data-inputid="organisationNameInitialCheck">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="padding-top-verify">
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.Trading)
+                            </div>
+                            <div class="col-md-8 col-sm-5 col-xs-12">
+                                @Html.TextBoxFor(m => m.Trading, new { @class = " form-control", @id = "TradingInitialCheck", maxlength = 100 })
+                            </div>
+                        </div>
+                        <div class="padding-responsive-verify col-md-6 col-sm-12 col-xs-12">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.TradingName)" data-questionid="@((Int16)ProfileQuestionIds.TradingName)"
+                                 data-inputid="TradingInitialCheck">
+                            </div>
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                    <div class="padding-top-verify">
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.TypeOfCompany)
+                            </div>
+                            <div class="col-md-8 col-sm-5 col-xs-12">
+                                @Html.DropDownListFor(m => m.TypeOfCompany, Model.CompanyTypeList, new { @class = " form-control", @id = "TypeOfCompanyInitialCheck" })
+                            </div>
+                            <div class="col-md-8 col-sm-5 col-xs-12 paddingError padding-top-10px">
+                                @Html.ValidationMessageFor(m => m.TypeOfCompany)
+                            </div>
+                        </div>
+                        <div class="padding-responsive-verify  col-md-6 col-sm-12 col-xs-12">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.FirmsIncorporation)" data-questionid="@((Int16)ProfileQuestionIds.FirmsIncorporation)" data-inputid="TypeOfCompanyInitialCheck">
+                            </div>
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                    <div class="padding-top-verify">
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.CompanyYear)
+                            </div>
+                            <div class="col-md-8 col-sm-5 col-xs-12">
+                                <select id="CompanyYearInitialCheck" name="CompanyYear" class="form-control"></select>
+                            </div>
+                        </div>
+                        <div class="padding-responsive-verify col-md-6 col-sm-12 col-xs-12">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.CompanyYear)" data-questionid="@((Int16)ProfileQuestionIds.CompanyYear)" data-inputid="CompanyYearInitialCheck">
+                            </div>
+
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                    <div class="padding-top-verify">
+
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.CompanyRegistrationNumber)
+                            </div>
+                            <div class="col-md-8  col-sm-5 col-xs-12 ">
+                                @Html.TextBoxFor(m => m.CompanyRegistrationNumber, new { @class = " form-control", @id = "regNumberInitialCheck", maxlength = 40 })
+                            </div>
+                        </div>
+                        <div class="padding-responsive-verify col-md-6 col-sm-12 col-xs-12">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.CompanyRegistrationNumber)" data-questionid="@((Int16)ProfileQuestionIds.CompanyRegistrationNumber)" data-inputid="regNumberInitialCheck">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="padding-top-verify">
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.IsVAT)
+                            </div>
+
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                @Html.RadioButtonFor(m => m.IsVAT, true) <span id="IsVATTrue">@ReadResource.GetResourceForGlobalization(Constants.YES, userCulture).ToString()</span>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                @Html.RadioButtonFor(m => m.IsVAT, false, new { Checked = "checked" }) <span id="IsVATFalse">@ReadResource.GetResourceForGlobalization(Constants.NO, userCulture).ToString()</span>
+                            </div>
+                        </div>
+                        <div id="HaveVATInitialCheck" style="display: none;">
+                            <div class="padding-top-verify">
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 required">
+                                        @Html.LabelFor(m => m.VATNumber)
+                                    </div>
+                                    <div class="col-md-8 col-sm-5 col-xs-12">
+                                        @Html.TextBoxFor(m => m.VATNumber, new { @class = " form-control", @id = "vatNumberInitialCheck", maxlength = 40 })
+                                    </div>
+                                    <div class="col-md-8 col-sm-5 col-xs-12 padding-top-10px paddingError error-text " id="VATNumberError" style="display: none;">
+                                        @ReadResource.GetResourceForGlobalization(Constants.VAT_NO_VALIDATION, userCulture).ToString()
+                                    </div>
+                                </div>
+                                <div class="padding-responsive-verify col-md-6 col-sm-12 col-xs-12">
+                                    <div id="details-answer-@((Int16)ProfileQuestionIds.VATNumber)" data-questionid="@((Int16)ProfileQuestionIds.VATNumber)" data-inputid="vatNumberInitialCheck">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-responsive-verify" id="InitialIsVATAnswerdiv">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.IsVATRegistered)" data-questionid="@((Int16)ProfileQuestionIds.IsVATRegistered)" data-inputid="None">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="padding-top-verify">
+
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.HaveDuns)
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                @Html.RadioButtonFor(m => m.HaveDuns, true) <span id="IsDUNSTrue">@ReadResource.GetResourceForGlobalization(Constants.YES, userCulture).ToString()</span>
+                            </div>
+                            <div class="col-md-2 col-sm-3 col-xs-6">
+                                @Html.RadioButtonFor(m => m.HaveDuns, false, new { Checked = "checked" }) <span id="IsDUNSFalse">@ReadResource.GetResourceForGlobalization(Constants.NO, userCulture).ToString()</span>
+                            </div>
+                        </div>
+                        <div id="HaveDUNSInitialCheck" style="display: none;">
+                            <div class="padding-top-verify">
+
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 required">
+                                        @Html.LabelFor(m => m.DUNSNumber)
+                                    </div>
+                                    <div class="col-md-8  col-sm-5 col-xs-12">
+                                        @Html.TextBoxFor(m => m.DUNSNumber, new { @class = " form-control", @id = "DUNSNumberInitialCheck", maxlength = 40 })
+                                    </div>
+                                    <div class="col-md-8  col-sm-5 col-xs-12 paddingError padding-top-10px error-text" id="DUNSNumberError" style="display: none;">
+                                        @ReadResource.GetResourceForGlobalization(Constants.DUNS_NO_VALIDATION, userCulture).ToString()
+                                    </div>
+                                </div>
+                                <div class="padding-responsive-verify col-md-6 col-sm-12 col-xs-12">
+                                    <div id="details-answer-@((Int16)ProfileQuestionIds.DUNSNumber)" data-questionid="@((Int16)ProfileQuestionIds.DUNSNumber)" data-inputid="DUNSNumberInitialCheck">
+                                    </div>
+
+                                </div>
+                                <div class="clear-both"></div>
+                            </div>
+                        </div>
+                        <div class="padding-responsive-verify col-md-6 col-sm-12 col-xs-12" id="InitialCheckHaveDunsAnswerdiv">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.HaveDuns)" data-questionid="@((Int16)ProfileQuestionIds.HaveDuns)" data-inputid="HaveDuns">
+                            </div>
+                        </div>
+                        <div class="clear-both"></div>
+                    </div>
+                    <div class="padding-division-header">
+                        <div class="col-md-5" style="font-weight: bold">
+                            @ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_ADDRESS, userCulture).ToString()
+                        </div>
+                    </div>
+                    <div class="padding-top-verify">
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.FirstAddressLine1, new { @class = "required" })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12">
+                                    @Html.TextBoxFor(m => m.FirstAddressLine1, new { @class = " form-control", @id = "firstAddressLine1InitialCheck", maxlength = 100 })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12 paddingError">
+                                    @Html.ValidationMessageFor(m => m.FirstAddressLine1)
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.FirstAddressLine2)
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12">
+                                    @Html.TextBoxFor(m => m.FirstAddressLine2, new { @class = " form-control", @id = "firstAddressLine2InitialCheck", maxlength = 100 })
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.FirstAddressCity, new { @class = "required" })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12">
+                                    @Html.TextBoxFor(m => m.FirstAddressCity, new { @class = " form-control", @id = "firstAddressCityInitialCheck", maxlength = 50 })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12 padding-top-10px paddingError">
+                                    @Html.ValidationMessageFor(m => m.FirstAddressCity)
+                                </div>
+                            </div>
+                            <div class=" padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.FirstAddressState)
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12 ">
+                                    @Html.TextBoxFor(m => m.FirstAddressState, new { @class = " form-control", @id = "firstAddressStateInitialCheck", maxlength = 50 })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12 paddingError">
+                                    @Html.ValidationMessageFor(m => m.FirstAddressState)
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.FirstAddressPostalCode, new { @class = "required" })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12">
+                                    @Html.TextBoxFor(m => m.FirstAddressPostalCode, new { @class = " form-control", @id = "firstAddressPostalCodeInitialCheck", maxlength = 15 })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12 padding-top-10px paddingError">
+                                    @Html.ValidationMessageFor(m => m.FirstAddressPostalCode)
+                                </div>
+                            </div>
+                            <div class="padding-top-question">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    @Html.LabelFor(m => m.FirstAddressCountry)
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12">
+                                    @Html.DropDownListFor(m => m.FirstAddressCountry, Model.CountryList, new { @class = " form-control", @id = "firstAddressCountryInitialCheck" })
+                                </div>
+                                <div class="col-md-8 col-sm-5 col-xs-12 paddingError">
+                                    @Html.ValidationMessageFor(m => m.FirstAddressCountry)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-xs-12 padding-responsive-verify">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.MailingAddress)" data-questionid="@((Int16)ProfileQuestionIds.MailingAddress)" data-inputid="None">
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" padding-top-verify">
+                        <div class="col-md-8 col-sm-12 col-xs-12 padding-left-zero-desktop">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @Html.LabelFor(m => m.sector)
+                                <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                                    @Html.ValidationMessageFor(m => m.sector)
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px">
+                                    @for (int i = 1; i <= Model.BusinessSectorList.Count / 2; i++)
+                                    {
+                                        <div class="col-md-6 col-sm-6 col-xs-12"></div>
+                                        <div class="col-md-12">
+                                            @Html.RadioButtonFor(p => Model.sector, Model.BusinessSectorList[i - 1].Value, new { @onclick = "ShowHideDescription('hide')", @name = "sectorInitialCheck" })
+                                            @Html.DisplayFor(p => Model.BusinessSectorList[i - 1].Text)
+                                            <a class="tooltip-remove" data-description="@Model.BusinessSectorList[i - 1].Description"><i class="fa fa-info-circle"></i></a>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px">
+                                    @for (int i = (Model.BusinessSectorList.Count / 2 + 1); i <= Model.BusinessSectorList.Count; i++)
+                                    {
+                                        <div class="col-md-6 col-sm-6 col-xs-12"></div>
+                                        if (Model.BusinessSectorList[i - 1].Text != "Not Sure")
+                                        {
+                                            <div class="col-md-12">
+                                                @Html.RadioButtonFor(p => Model.sector, Model.BusinessSectorList[i - 1].Value, new { @onclick = "ShowHideDescription('hide')", @name = "sectorInitialCheck" })
+                                                @Html.DisplayFor(p => Model.BusinessSectorList[i - 1].Text)
+                                                <a class="tooltip-remove" data-description="@Model.BusinessSectorList[i - 1].Description"><i class="fa fa-info-circle"></i></a>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                                @for (int i = 1; i <= Model.BusinessSectorList.Count; i++)
+                                {
+                                    if (Model.BusinessSectorList[i - 1].Text == "Not Sure")
+                                    {
+                                        <div class="col-md-12">
+                                            @Html.RadioButtonFor(p => Model.sector, Model.BusinessSectorList[i - 1].Value, new { @onclick = "ShowHideDescription('show')", @id = "rdoNotSureInitial", @name = "sectorInitialCheck" })
+                                            @Html.DisplayFor(p => Model.BusinessSectorList[i - 1].Text)
+                                            <a class="tooltip-remove" data-description="@Model.BusinessSectorList[i - 1].Description"><i class="fa fa-info-circle"></i></a>
+                                        </div>
+                                        <div class="col-md-12 padding-top-10px" style="display:none" id="divsectorDescriptionInitialCheck">
+                                            <div class="col-md-12">
+                                                <label>@ReadResource.GetResourceForGlobalization(Constants.DESCRIPTION, userCulture).ToString()</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <span id="spnBusinessSectorDescriptionInitialCheck"></span>
+
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        </div>
+                        <div class=" padding-responsive-verify col-md-4 col-sm-12 col-xs-12">
+                            <div id="details-answer-@((Int16)ProfileQuestionIds.IndustrySector)" data-questionid="@((Int16)ProfileQuestionIds.IndustrySector)" data-inputid="sector">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 panel-body">
+            <div class="col-md-12 col-sm-12 col-xs-12 paddingTop">
+                <div class="row padding-top">
+                    <div class="col-md-8">
+                        <input id="btnCancelInitialCheck" value="@ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()" style="margin-left: 10px" class="col-md-2 btn btn-normal" type="button" />
+                        <input id="btnApproveInitialCheck" value="Save" class="col-md-2 btn btn-color" style=" margin-left 20px;" type="button" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>*@
+<div id="SupplierDashboard"></div>
+<div id="CreateUser"></div>
+@Scripts.Render("~/bundles/SupplierOrganisations")
+
+@{
+//var detailsFlaggedReasonList = (Model.FlaggedReasonCodeList != null && Model.FlaggedReasonCodeList.Count > 0) ? @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.FlaggedReasonCodeList)) : null;
+//var detailsVerifyReasonList = (Model.VerifiedReasonCodeList != null && Model.VerifiedReasonCodeList.Count > 0) ? @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.VerifiedReasonCodeList)) : null;
+
+//var detailsVisibilityList = (Model.AuditorVisibilityList != null && Model.AuditorVisibilityList.Count > 0) ? @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.AuditorVisibilityList)) : null;
+}
+<script>
+
+    @*var detailsFlaggedReasonList = ('@detailsFlaggedReasonList' != "") ? jQuery.parseJSON('@detailsFlaggedReasonList') : "";
+    var detailsVerifyReasonList = ('@detailsVerifyReasonList' != "") ? jQuery.parseJSON('@detailsVerifyReasonList') : "";
+    var detailsVisibilityList = ('@detailsVisibilityList' != "") ? jQuery.parseJSON('@detailsVisibilityList') : "";
+    var InitialQuestionCount = parseInt('@Model.QuestionCount');*@
+
+    var StartedRegistrationStatus = jQuery.parseJSON('@Convert.ToInt16(CompanyStatus.Started)');
+    var SubmittedStatus = jQuery.parseJSON('@Convert.ToInt16(CompanyStatus.Submitted)');
+    var RegisteredStatus = jQuery.parseJSON('@Convert.ToInt16(CompanyStatus.RegistrationVerified)');
+    var BusinessVerifiedStatus = jQuery.parseJSON('@Convert.ToInt16(CompanyStatus.ProfileVerified)');
+    var SanctionVerifiedStatus = jQuery.parseJSON('@Convert.ToInt16(CompanyStatus.SanctionVerified)');
+
+    var CanEditUser = '@(userType == UserType.AdminAuditor || permissionList.Any(a => a.Value == Convert.ToInt32(AuditorRoles.EditUser)))' == 'True' ? true : false;
+    var CanManageReferrer = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.AddReferrer)))' == 'True' ? true : false;
+    var CanDetailsCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.DetailsCheck)))' == 'True' ? true : false;
+    var CanProfileCheck = '@(userType == UserType.AdminAuditor || permissionList.Any(elem => elem.Value == Convert.ToInt32(AuditorRoles.ProfileCheck)))' == 'True' ? true : false;
+    var dateValidation = '@ReadResource.GetResourceForGlobalization(Constants.DATE_VALIDATION, userCulture).ToString()';
+    var addOrEditReferrerButton = '@ReadResource.GetResourceForGlobalization(Constants.ADD_OR_EDIT_REFERRER, userCulture).ToString()';
+    var editProfileButton = '@ReadResource.GetResourceForGlobalization(Constants.EDIT_PROFILE, userCulture).ToString()';
+    var detailsCheckButton = '@ReadResource.GetResourceForGlobalization(Constants.DETAILS_CHECK, userCulture).ToString()';
+    var profileCheckButton = '@ReadResource.GetResourceForGlobalization(Constants.PROFILE_CHECK, userCulture).ToString()';
+    var noRecordsFound = '@ReadResource.GetResourceForGlobalization(Constants.NO_RECORDS_FOUND, userCulture).ToString()';
+    var searchPageData = '@ReadResource.GetResourceForGlobalization(Constants.SEARCH_PAGE_DATA, userCulture).ToString()';
+    var referrerNavigateValidation = '@ReadResource.GetResourceForGlobalization(Constants.REFERRER_NAVIGATE_VALIDATION, userCulture).ToString()';
+    var industrySectorValidation = '@ReadResource.GetResourceForGlobalization(Constants.SELECT_INDUSTRY_SECTOR, userCulture).ToString()';
+    var auditQuestionsValidation = '@ReadResource.GetResourceForGlobalization(Constants.AUDIT_QUESTIONS_VALIDATION, userCulture).ToString()';
+    var errorMessage = '@ReadResource.GetResourceForGlobalization(Constants.DEFAULT_ERROR_MESSAGE, userCulture).ToString()';
+    var vatNumberValidation = '@ReadResource.GetResourceForGlobalization(Constants.VAT_NUMBER_VALIDATION, userCulture).ToString()';
+    var referrerValidation = '@ReadResource.GetResourceForGlobalization(Constants.REFERRER_VALIDATION, userCulture).ToString()';
+    var actionButton = '@ReadResource.GetResourceForGlobalization(Constants.ACTIONS, userCulture).ToString()';
+    var verificationStatusText = '@ReadResource.GetResourceForGlobalization(Constants.VERIFICATION_STATUS, userCulture).ToString()';
+    var reasonCodeText = '@ReadResource.GetResourceForGlobalization(Constants.REASON_CODE_SUB_STATUS, userCulture).ToString()';
+    var commentsText = '@ReadResource.GetResourceForGlobalization(Constants.COMMENTS, userCulture).ToString()';
+    var commentsVisibleToText = '@ReadResource.GetResourceForGlobalization(Constants.COMMENTS_VISIBLE_TO, userCulture).ToString()';
+    var requiredFieldsMessage = '@ReadResource.GetResourceForGlobalization(Constants.REQUIRED_FIELDS_VALIDATION, userCulture).ToString()';
+    var primaryEmailValidation = '@ReadResource.GetResourceForGlobalization(Constants.PRIMARY_EMAIL_ADDRESS_VALIDATION, userCulture).ToString()';
+    var validPrimaryEmail = '@ReadResource.GetResourceForGlobalization(Constants.VALID_PRIMARY_EMAIL, userCulture).ToString()';
+    var primaryFirstNameValidation = '@ReadResource.GetResourceForGlobalization(Constants.PRIMARY_FIRST_NAME_VALIDATION, userCulture).ToString()';
+    var primaryLastNameValidation = '@ReadResource.GetResourceForGlobalization(Constants.PRIMARY_LAST_NAME_VALIDATION, userCulture).ToString()';
+    var telephoneNumberValidation = '@ReadResource.GetResourceForGlobalization(Constants.TELEPHONE_NUMBER_VALIDATION, userCulture).ToString()';
+    var validTelephoneNumber = '@ReadResource.GetResourceForGlobalization(Constants.VALID_TELEPHONE_NUMBER, userCulture).ToString()';
+    var checkedText = '@ReadResource.GetResourceForGlobalization(Constants.CHECKED_LOWER_CASE, userCulture).ToString()';
+    var selectYearText = '@ReadResource.GetResourceForGlobalization(Constants.SELECT_STARTED_YEAR, userCulture).ToString()';
+</script>

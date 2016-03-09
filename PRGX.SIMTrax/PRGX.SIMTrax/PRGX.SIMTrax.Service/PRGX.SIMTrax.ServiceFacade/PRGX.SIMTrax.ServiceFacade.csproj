@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D62E4737-5AD4-4C5B-B209-B0219912194E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PRGX.SIMTrax.ServiceFacade</RootNamespace>
+    <AssemblyName>PRGX.SIMTrax.ServiceFacade</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\PRGX_SIM\trunk\SimTrax\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BuyerServiceFacade.cs" />
+    <Compile Include="CampaignServiceFacade.cs" />
+    <Compile Include="EmailServiceFacade.cs" />
+    <Compile Include="Mapper\BuyerRegisterMapper.cs" />
+    <Compile Include="Mapper\CampaignInvitationMapper.cs" />
+    <Compile Include="Mapper\CampaignMapper.cs" />
+    <Compile Include="Mapper\RoleMapper.cs" />
+    <Compile Include="Mapper\UserMapper.cs" />
+    <Compile Include="Mapper\VoucherMapper.cs" />
+    <Compile Include="MasterDataServiceFacade.cs" />
+    <Compile Include="Mapper\SellerRegisterMapper.cs" />
+    <Compile Include="PartyServiceFacade.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleServiceFacade.cs" />
+    <Compile Include="UserServiceFacade.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.DAL\PRGX.SIMTrax.DAL.Abstract\PRGX.SIMTrax.DAL.Abstract.csproj">
+      <Project>{a0cb1f92-077e-44ad-a753-6384d6bbcd5b}</Project>
+      <Name>PRGX.SIMTrax.DAL.Abstract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.DAL\PRGX.SIMTrax.DAL.Entity\PRGX.SIMTrax.DAL.Entity.csproj">
+      <Project>{eda9141c-231b-49f4-8168-bd91b57985f1}</Project>
+      <Name>PRGX.SIMTrax.DAL.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.DAL\PRGX.SIMTrax.DAL.Repository.Abstract\PRGX.SIMTrax.DAL.Repository.Abstract.csproj">
+      <Project>{87fd1b2d-91a7-442f-9b85-8c213fcabb3c}</Project>
+      <Name>PRGX.SIMTrax.DAL.Repository.Abstract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.DAL\PRGX.SIMTrax.DAL\PRGX.SIMTrax.DAL.csproj">
+      <Project>{c2721250-c038-4354-9ae0-6b19dca5e73e}</Project>
+      <Name>PRGX.SIMTrax.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Model\PRGX.SIMTrax.Domain.Model.csproj">
+      <Project>{05b1df77-0f12-4a52-84c2-60739ad49355}</Project>
+      <Name>PRGX.SIMTrax.Domain.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Util\PRGX.SIMTrax.Domain.Util.csproj">
+      <Project>{f4f03853-5612-4203-b643-4b55d19d6219}</Project>
+      <Name>PRGX.SIMTrax.Domain.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.ViewModel\PRGX.SIMTrax.ViewModel.csproj">
+      <Project>{dd38ad60-b6d1-4da0-b83d-14214ef2c64d}</Project>
+      <Name>PRGX.SIMTrax.ViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRGX.SIMTrax.ServiceFacade.Abstract\PRGX.SIMTrax.ServiceFacade.Abstract.csproj">
+      <Project>{7e893d49-60a9-4570-974a-c718d7b7a1b7}</Project>
+      <Name>PRGX.SIMTrax.ServiceFacade.Abstract</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

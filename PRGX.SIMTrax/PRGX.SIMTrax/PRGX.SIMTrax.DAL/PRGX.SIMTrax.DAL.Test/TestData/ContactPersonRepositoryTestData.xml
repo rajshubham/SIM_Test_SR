@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+   <GetContactDetailsByPartyIdTestData>
+    <testCase id="1">
+      <input  sellerPartyId="2">        
+      </input>
+      <output count="2">
+        <contactPerson Id="3"></contactPerson>
+      <contactPerson Id="4"></contactPerson>
+      </output>
+    </testCase>
+     <testCase id="1">
+       <input  sellerPartyId="8">
+       </input>
+       <output count="0">
+
+       </output>
+     </testCase>
+  </GetContactDetailsByPartyIdTestData>
+
+   <GetContactByRoleAndPartyIdTestData>
+    <testCase id="1">
+      <input  sellerPartyId="2" contactType="515">        
+      </input>
+      <output Id="3">
+      </output>
+    </testCase>
+     <testCase id="2">
+     <input  sellerPartyId="1234" contactType="515">
+     </input>
+     <output Id="">
+     </output>
+     </testCase>
+  </GetContactByRoleAndPartyIdTestData>
+
+  <BuyerSupplierContactListTestData>
+    <testcase id="1">
+      <input pageNo="1" sortParameter="" sortDirection="" buyerName="" sellerId="" contactPartyId="10026" totalRecords="5">
+      </input>
+      <output total="1">
+        <contactList buyerId="6"> </contactList>
+      </output>
+    </testcase>
+    <testcase id="2">
+      <input pageNo="1" sortParameter="" sortDirection="" buyerName="" sellerId="" contactPartyId="123" totalRecords="5">
+      </input>
+      <output total="0">
+       
+      </output>
+    </testcase>
+  </BuyerSupplierContactListTestData>
+</test>

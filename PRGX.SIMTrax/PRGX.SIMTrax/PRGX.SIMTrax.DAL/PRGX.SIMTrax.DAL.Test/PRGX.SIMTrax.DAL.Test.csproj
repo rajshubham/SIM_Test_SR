@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3466C67E-D6C0-4EB2-AF27-C86F80FB12B2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PRGX.SIMTrax.DAL.Test</RootNamespace>
+    <AssemblyName>PRGX.SIMTrax.DAL.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="nunit.core, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnitTestAdapter.2.0.0\lib\nunit.core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.core.interfaces, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnitTestAdapter.2.0.0\lib\nunit.core.interfaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.util, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnitTestAdapter.2.0.0\lib\nunit.util.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NUnit.VisualStudio.TestAdapter, Version=2.0.0.0, Culture=neutral, PublicKeyToken=4cb40d35494691ac, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NUnitTestAdapter.2.0.0\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AddressRepositoryTest.cs" />
+    <Compile Include="Repository\BankAccountRepositoryTest.cs" />
+    <Compile Include="Repository\BuyerCampaignRepositoryTest.cs" />
+    <Compile Include="Repository\BuyerRepositoryTest.cs" />
+    <Compile Include="Repository\CampaignInvitationRepositoryTest.cs" />
+    <Compile Include="Repository\ContactPersonRepositoryTest.cs" />
+    <Compile Include="Repository\CredentialRepositoryTest.cs" />
+    <Compile Include="Repository\EmailTemplateRepositoryTest.cs" />
+    <Compile Include="Repository\IndustryCodeOrganizationLinksRepositoryTest.cs" />
+    <Compile Include="Repository\IndustryCodeRepositoryTest.cs" />
+    <Compile Include="Repository\InviteeRepositoryTest.cs" />
+    <Compile Include="Repository\MasterDataRepositoryTest.cs" />
+    <Compile Include="Repository\OrganizationRepositoryTest.cs" />
+    <Compile Include="Repository\PartyIdentifierRepositoryTest.cs" />
+    <Compile Include="Repository\PartyRegionLinkRepositoryTest.cs" />
+    <Compile Include="Repository\PartyRepositoryTest.cs" />
+    <Compile Include="Repository\PermissionRepositoryTest.cs" />
+    <Compile Include="Repository\PotentialRoleRepositoryTest.cs" />
+    <Compile Include="Repository\RoleRepositoryTest.cs" />
+    <Compile Include="Repository\SupplierRepositoryTest.cs" />
+    <Compile Include="Repository\UserRepositoryTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestData\AddressRepositoryTestData.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TestData\BankAccountRepositoryTestData.xml" />
+    <Content Include="TestData\BuyerCampaignRepositoryTestData.xml" />
+    <Content Include="TestData\BuyerRepositoryTestData.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TestData\CampaignInvitationRepositoryTestData.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TestData\ContactPersonRepositoryTestData.xml" />
+    <Content Include="TestData\CredentialRepositoryTestData.xml" />
+    <Content Include="TestData\EmailTemplateRepositoryTestData.xml" />
+    <Content Include="TestData\IndustryCodeOrganizationLinksRepositoryTestData.xml" />
+    <Content Include="TestData\IndustryCodeRepositoryTestData.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TestData\InviteeRepositoryTestData.xml" />
+    <Content Include="TestData\MasterDataRepositoryTestData.xml" />
+    <Content Include="TestData\OrganizationRepositoryTestData.xml" />
+    <Content Include="TestData\PartyIdentifierRepositoryTestData.xml" />
+    <Content Include="TestData\PartyRegionLinkRepositoryTestData.xml" />
+    <Content Include="TestData\PartyRepositoryTestData.xml" />
+    <Content Include="TestData\PermissionRepositoryTestData.xml" />
+    <Content Include="TestData\PotentialRoleRepositoryTestData.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TestData\RoleRepositoryTestData.xml" />
+    <Content Include="TestData\SupplierRepositoryTestData.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="TestData\UserRepositoryTestData.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Model\PRGX.SIMTrax.Domain.Model.csproj">
+      <Project>{05b1df77-0f12-4a52-84c2-60739ad49355}</Project>
+      <Name>PRGX.SIMTrax.Domain.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Util\PRGX.SIMTrax.Domain.Util.csproj">
+      <Project>{f4f03853-5612-4203-b643-4b55d19d6219}</Project>
+      <Name>PRGX.SIMTrax.Domain.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRGX.SIMTrax.DAL.Abstract\PRGX.SIMTrax.DAL.Abstract.csproj">
+      <Project>{a0cb1f92-077e-44ad-a753-6384d6bbcd5b}</Project>
+      <Name>PRGX.SIMTrax.DAL.Abstract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRGX.SIMTrax.DAL.Entity\PRGX.SIMTrax.DAL.Entity.csproj">
+      <Project>{eda9141c-231b-49f4-8168-bd91b57985f1}</Project>
+      <Name>PRGX.SIMTrax.DAL.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRGX.SIMTrax.DAL.Repository.Abstract\PRGX.SIMTrax.DAL.Repository.Abstract.csproj">
+      <Project>{87fd1b2d-91a7-442f-9b85-8c213fcabb3c}</Project>
+      <Name>PRGX.SIMTrax.DAL.Repository.Abstract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRGX.SIMTrax.DAL.Repository\PRGX.SIMTrax.DAL.Repository.csproj">
+      <Project>{26d8cd1f-771a-452e-8c37-3c44d0e796a6}</Project>
+      <Name>PRGX.SIMTrax.DAL.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRGX.SIMTrax.DAL\PRGX.SIMTrax.DAL.csproj">
+      <Project>{c2721250-c038-4354-9ae0-6b19dca5e73e}</Project>
+      <Name>PRGX.SIMTrax.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

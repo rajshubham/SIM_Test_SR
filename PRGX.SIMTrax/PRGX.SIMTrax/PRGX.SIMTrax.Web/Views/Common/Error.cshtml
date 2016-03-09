@@ -1,0 +1,88 @@
+﻿@{
+    var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+    ViewBag.Title = PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ERROR, userCulture).ToString();
+}
+<div class="col-md-12 padding-bottom-header">
+
+</div>
+
+
+<div id="error" class="row">
+    <div class="col-md-12">
+        <div>
+            @*<h1> @ViewBag.ErrorMessage</h1>*@
+
+
+            @if (ViewBag.displayDescription == true)
+            {
+                <div class="col-md-8  col-sm-12 col-xs-12">
+                    <div class="container-white-backgound" style="min-height: 500px;">
+                        <div class="col-md-12">
+                            <div class="col-md-12">
+                                <h1>@ViewBag.Message</h1>
+                            </div>
+                            <div class="col-md-12" style="margin-top: 20px">
+                                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ERROR_PAGE_LINE_1, userCulture).ToString():
+                                <br />
+                                <br />
+                                <ul>
+                                    <li>
+                                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ERROR_PAGE_REASON_1, userCulture).ToString().
+                                </li>
+                                <li>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ERROR_PAGE_REASON_2, userCulture).ToString().</li>
+                                <li>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ERROR_PAGE_REASON_3, userCulture).ToString().</li>
+                                <li>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ERROR_PAGE_REASON_4, userCulture).ToString().</li>
+                            </ul>
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.IF_THE_ERROR_PERSISTS_PLEASE, userCulture).ToString()
+                            <a href="Contactus.aspx">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACT, userCulture).ToString()</a> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.THE_ADMINISTRATOR, userCulture).ToString().
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="col-md-4 hidden-sm hidden-xs">
+                    <div class="container-white-backgound">
+                        <div class="cnt-us-mar-btm">
+                            <div class="col-md-12 padding-bottom">
+                                <span class="page-sub-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACT_US, userCulture).ToString()</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <hr class="border-style" />
+                        </div>
+
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <br />
+                            <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3 fa fa-envelope fa-opacity fa-3x  col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                            </div>
+                            <div class="col-md-8 col-sm-7 col-xs-7">
+
+                                <div class="contact-panel-text-color">
+                                    <b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL_US, userCulture).ToString()</b>
+                                </div>
+                                <span>@HttpContext.Current.Application["ContactEmail"]</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3  fa fa-phone fa-3x padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity">
+                            </div>
+                            <div class="col-md-8 col-sm-7 col-xs-7 padding-top">
+                                <div class="contact-panel-text-color">
+                                    <b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CALL_US, userCulture).ToString()</b>
+                                </div>
+                                <span>@HttpContext.Current.Application["ContactNo"]</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="col-md-12 container-white-backgound">
+                    <h1>@ViewBag.Message</h1>
+                </div>
+            }
+        </div>
+    </div>
+</div>

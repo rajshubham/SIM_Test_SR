@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <GetBankDetailsByOrganisationIdTestData>
+    <testCase id="1">
+      <input organisationId="2"></input>
+      <output total="1">
+        <accountDetails accountName="Charan Veera"></accountDetails>
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input organisationId="4"></input>
+      <output total="0">
+       
+      </output>
+    </testCase>
+  </GetBankDetailsByOrganisationIdTestData>
+
+  <BuyerSupplierBankListTestData>
+    <testcase id="1">
+      <input pageNo="1" sortParameter="" sortDirection="" buyerName="" organisationId="" bankId="1" totalRecords="5">
+      </input>
+      <output total="1">
+        <accountList bankId="1"> </accountList>
+      </output>
+    </testcase>
+    <testcase id="1">
+      <input pageNo="1" sortParameter="" sortDirection="" buyerName="" organisationId="" bankId="2" totalRecords="5">
+      </input>
+      <output total="0">
+       
+      </output>
+    </testcase>
+  </BuyerSupplierBankListTestData>
+</test>

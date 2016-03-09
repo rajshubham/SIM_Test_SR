@@ -1,0 +1,787 @@
+﻿@model PRGX.SIMTrax.Domain.Model.Profile
+@{
+    var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+    ViewBag.Title = PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PROFILE, userCulture).ToString();
+}
+
+@{
+    var UserType = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER_TYPE] != null)
+               ? (PRGX.SIMTrax.Domain.Util.UserType)Convert.ToInt64(Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER_TYPE]) : PRGX.SIMTrax.Domain.Util.UserType.None;
+    var buyerPermissionList = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_BUYER_ACCESS_PERMISSIONS] != null) ? ((List<PRGX.SIMTrax.Domain.Util.ItemList>)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_BUYER_ACCESS_PERMISSIONS]) : new List<PRGX.SIMTrax.Domain.Util.ItemList>();
+    var IsGeneralInformationNeeded = (buyerPermissionList.Find(a => a.Value == (long)PRGX.SIMTrax.Domain.Util.BuyerPermissions.GeneralInformation) != null) ? true : false;
+    var IsContactsNeeded = (buyerPermissionList.Find(a => a.Value == (long)PRGX.SIMTrax.Domain.Util.BuyerPermissions.Contacts) != null) ? true : false;
+    var IsAddressNeeded = (buyerPermissionList.Find(a => a.Value == (long)PRGX.SIMTrax.Domain.Util.BuyerPermissions.Addresses) != null) ? true : false;
+    var IsComplianceStatusNeeded = (buyerPermissionList.Find(a => a.Value == (long)PRGX.SIMTrax.Domain.Util.BuyerPermissions.ComplianceStatus) != null) ? true : false;
+    var IsBrowseAnswersNeeded = (buyerPermissionList.Find(a => a.Value == (long)PRGX.SIMTrax.Domain.Util.BuyerPermissions.FiltersResults) != null) ? true : false;
+    var IsInboxNeeded = (buyerPermissionList.Find(a => a.Value == (long)PRGX.SIMTrax.Domain.Util.BuyerPermissions.Inbox) != null) ? true : false;
+    var IsReferenceNeeded = (buyerPermissionList.Find(a => a.Value == (long)PRGX.SIMTrax.Domain.Util.BuyerPermissions.References) != null) ? true : false;
+    var IsBankDetailsNeeded = (buyerPermissionList.Find(a => a.Value == (long)PRGX.SIMTrax.Domain.Util.BuyerPermissions.BankDetails) != null) ? true : false;
+    var IsSearchNeededForBuyer = (buyerPermissionList.Find(a => a.Value == (long)PRGX.SIMTrax.Domain.Util.BuyerPermissions.Search) != null) ? true : false;
+}
+
+@Styles.Render("~/bundles/ChartsCss")
+@Styles.Render("~/bundles/ProfileCss")
+
+<div id="companyProfile" class="row">
+    <div class="col-md-12">
+        @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Buyer || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer)
+        {
+            <div class="bread-crumb" id="buyer-supplier-profile-bread-crumb">
+                <a href="/Buyer/Home" data-title="Home">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString()</a> > <a href="/Buyer/SupplierSearch">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH, userCulture).ToString()</a> ><span class="breadCrumbCompanyName" style="padding-left:6px;">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PROFILE, userCulture).ToString()</span>
+            </div>
+        }
+        else if (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || UserType == PRGX.SIMTrax.Domain.Util.UserType.Auditor)
+        {
+            <div class="bread-crumb" id="supplier-profile-bread-crumb">
+                <a href="/Admin/Home" data-title="Home">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString()</a> > <span class="breadCrumbCompanyName">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PROFILE, userCulture).ToString()</span>
+            </div>
+        }
+        else
+        {
+            @*<div class="bread-crumb">
+                    <a class="Navigate" data-viewname="supplierHome" data-action="/supplier-home" data-title="Home">Home</a> > <span class="breadCrumbCompanyName">Profile</span>
+                </div>*@
+        }
+    </div>
+    @Html.HiddenFor(m => m.SellerPartyId)
+    @Html.HiddenFor(m => m.Status, new { id = "profileCompanyStatus" })
+    <div class="col-md-6 col-sm-12 col-xs-12 padding-bottom-header">
+        <h3 id="profileHeader">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PROFILE, userCulture).ToString()</h3>
+    </div>
+    @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer || UserType == PRGX.SIMTrax.Domain.Util.UserType.Buyer)
+    {
+        <div class="col-md-6 col-sm-12 col-xs-12 text-align-right font-size-16px padding-top-10px" style="padding-bottom: 15px">
+            <div class="profile-action-div">
+                @if (IsSearchNeededForBuyer)
+                    {
+                        <div style="width:86px" class="profile-action-child-div">
+                            <input type="checkbox" class="supplier-type-checkbox buyer-action-color" value="1" id="markAsFavSup" />
+                            <label for="markAsFavSup" class="font-normal buyer-action-color">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAVOURITE, userCulture).ToString()</label>
+                        </div>
+                        <div style="width:109px" class="profile-action-child-div">
+                            <input type="checkbox" class="supplier-type-checkbox buyer-action-color" value="2" id="markAsTradSup" />
+                            <label for="markAsTradSup" class="font-normal buyer-action-color">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TRADING_WITH, userCulture).ToString()</label>
+                        </div>
+                    }
+                    @if (IsBrowseAnswersNeeded || IsInboxNeeded)
+                    {
+                        <div style="width:146px" class="profile-action-child-div">
+                            <a class="cursor font-normal buyer-action-color" id="viewDiscussionProfile">
+                                <span>
+                                    <i class="fa fa-envelope"></i><span id="txtViewDiscussionProfile"> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VIEW_DISCUSSION, userCulture).ToString()</span>
+                                </span>
+                            </a>
+                        </div>
+                    }
+                <div style="width:67px;margin-right:0px;" class="profile-action-child-div">
+                    <label id="downloadProfile" class="font-normal buyer-action-color" style="cursor: pointer">
+                        <i class="fa fa-download"></i><span>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EXPORT, userCulture).ToString()</span>
+                    </label>
+                </div>
+                <div class="clear-both"></div>
+            </div>
+        </div>
+    }
+    <div class="col-md-12 col-sm-12 col-xs-12 padding-left-zero padding-right-zero" style="padding-right:0px;">
+        <div class="col-md-9 col-sm-8 col-xs-12 padding-bottom-header">
+            <div class="container-white-backgound">
+                <div id="divOrganisation" class="col-md-12">
+                    <div class="col-md-2 col-sm-4 col-xs-12" style="margin: auto; max-width: 153px;">
+                        <img id="profileImgLogo" src="" height="100" style="border:1px solid #F8F8F8; max-width: 153px; margin-left: auto; margin-right: auto;" />
+                    </div>
+                    <div class="col-md-10 col-sm-8 col-xs-12 text-align-right">
+                        <a href="https://in.linkedin.com" id="lnkLinkedInProfile" target="_blank">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x" style="color: rgb(25, 115, 187)"></i>
+                                <i class="fa fa-linkedin fa-stack-1x" style="color: white"></i>
+                            </span>
+                        </a>
+                        <a href="https://twitter.com" id="lnkTwitterProfile" target="_blank">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x" style="color: rgb(39, 170, 225)"></i>
+                                <i class="fa fa-twitter fa-stack-1x" style="color: white"></i>
+                            </span>
+                        </a>
+                        <a href="https://www.facebook.com" id="lnkFacebookProfile" target="_blank">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x" style="color: rgb(42, 56, 143)"></i>
+                                <i class="fa fa-facebook fa-stack-1x" style="color: white"></i>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-md-9 col-sm-5 col-xs-12 paddingTopHeader margin-left-25" style="margin: auto;">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <span class="page-sub-heading"><strong id="CompanyName">@Html.DisplayFor(m => m.CompanyName)</strong></span>
+                        </div>
+                        <div id="BusinessDescription" class="padding-top col-md-12 col-sm-12 col-xs-12">
+                            @Html.DisplayFor(m => m.BusinessDescription)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-12 padding-bottom-header" id="divLastSubmittedDate">
+            <div class="container-white-backgound">
+                <div class="col-md-12 page-sub-heading-container">
+                    <span class="page-sub-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWER_LAST_SUBMITTED, userCulture).ToString()</span>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12"> <hr class="border-style" /></div>
+                <div class="col-md-12 col-sm-12 col-xs-12" style="padding-top: 28px">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="lastSubmittedDateProfile" style="font-size:16px; margin: auto; text-align: center;">
+                        <span id="lstSubDateMonth"></span><span id="lstSubDateYear"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Supplier || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminSupplier || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || UserType == PRGX.SIMTrax.Domain.Util.UserType.Auditor || IsComplianceStatusNeeded)
+        {
+
+            <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12 panel panel-default no-border ">
+                <div class="container-white-backgound padding-bottom-0px">
+                    <div class="col-lg-12 col-md-12  col-sm-12 col-xs-12">
+                        <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12  panel-heading page-sub-heading-container">
+                            <span class="pull-left clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                            <span class="page-sub-heading">
+                                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPLIANCE_STATUS, userCulture).ToString()
+                            </span>
+                        </div>
+                        @*@if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Supplier)
+                         {
+                            <div class="col-md-3 col-sm-4 col-xs-5  padding-responsive give-full-width">
+                                <button type="button" class="btn btn-color float-right col-md-9 col-sm-9 col-xs-12 give-mobile-width" id="download-report">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DOWNLOAD_REPORT, userCulture).ToString()</button>
+                            </div>
+                        }
+                        else if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Buyer || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer)
+                        {
+                            if (IsBrowseAnswersNeeded)
+                            {
+                                <div class="col-md-3 col-sm-4 col-xs-5  padding-responsive give-full-width">
+                                    <button class="lnkViewDiscussion btn btn-color float-right" id="btnRequestAnsFromProfile">
+                                        <span> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUEST_ACCESS_TO_ANSWER, userCulture).ToString()</span>
+                                    </button>
+                                    <label class="font-normal buyer-action-color float-right" style="margin-top: 17px; display: none" id="txtRequestAnswers">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUEST_ACCESS_TO_ANSWER, userCulture).ToString()</label>
+                                </div>
+                            }
+                        }*@
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-responsive"><hr class="border-style" /></div>
+                    </div>
+                    <div class="col-md-12  col-sm-12 col-xs-12  panel-body" id="profile-verification-div">
+                        <div class="col-md-3 col-sm-6 col-xs-12 padding-top-20px">
+                            <div class="font-20" id="profile-verification-header-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.Profile)" style="text-align:center">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTRATION, userCulture).ToString()</div>
+                            @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Buyer || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer)
+                            {
+
+                                <div id="view-require-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.Profile)" class="required-data-summary padding-top-10px">
+                                </div>
+                            }
+                            <div id="profile-verification-status-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.Profile)" class="chart" style="margin:auto;position:relative"></div>
+                            <div id="profile-verification-count-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.Profile)"></div>
+                            @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Buyer || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer)
+                            {
+                                if (IsBrowseAnswersNeeded)
+                                {
+                                    <div id="view-approved-answer-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.Profile)" class="padding-top-10px">
+                                        <div data-compliance-type="Registration">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BROWSE_AUDITED_ANSWERS, userCulture).ToString()</div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12 padding-top-20px">
+                            <div class="font-20" id="profile-verification-header-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.FinanceInsuranceTax)" style="text-align:center">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FINANCE_INSURANCE_TAX, userCulture).ToString()</div>
+                            @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Buyer || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer)
+                            {
+
+                                <div id="view-require-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.FinanceInsuranceTax)" class="required-data-summary padding-top-10px">
+                                </div>
+                            }
+                            <div id="profile-verification-status-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.FinanceInsuranceTax)" class="chart" style="margin: auto; position: relative"></div>
+                            <div id="profile-verification-count-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.FinanceInsuranceTax)"></div>
+                            @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Buyer || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer)
+                            {
+                                if (IsBrowseAnswersNeeded)
+                                {
+                                    <div id="view-approved-answer-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.FinanceInsuranceTax)" class="padding-top-10px">
+                                        <div data-compliance-type="FIT">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BROWSE_AUDITED_ANSWERS, userCulture).ToString()</div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12 padding-top-20px">
+                            <div class="font-20" id="profile-verification-header-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.HealthSafety)" style="text-align:center">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HEALTH_SAFETY, userCulture).ToString()</div>
+                            @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Buyer || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer)
+                            {
+
+                                <div id="view-require-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.HealthSafety)" class="required-data-summary padding-top-10px">
+                                </div>
+                            }
+                            <div id="profile-verification-status-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.HealthSafety)" class="chart" style="margin: auto; position: relative"></div>
+                            <div id="profile-verification-count-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.HealthSafety)"></div>
+                            @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Buyer || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer)
+                            {
+                                if (IsBrowseAnswersNeeded)
+                                {
+                                    <div id="view-approved-answer-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.HealthSafety)" class="padding-top-10px">
+                                        <div data-compliance-type="HS">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BROWSE_AUDITED_ANSWERS, userCulture).ToString()</div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12 padding-top-20px">
+                            <div class="font-20" id="profile-verification-header-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.DataSecurity)" style="text-align:center">Data Security</div>
+                            @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Buyer || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer)
+                            {
+
+                                <div id="view-require-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.DataSecurity)" class="required-data-summary padding-top-10px">
+                                </div>
+                            }
+                            <div id="profile-verification-status-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.DataSecurity)" class="chart" style="margin: auto; position: relative"></div>
+                            <div id="profile-verification-count-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.DataSecurity)"></div>
+                            @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Buyer || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer)
+                            {
+                                if (IsBrowseAnswersNeeded)
+                                {
+                                    <div id="view-approved-answer-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.DataSecurity)" class="padding-top-10px">
+                                        <div data-compliance-type="DS">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BROWSE_AUDITED_ANSWERS, userCulture).ToString()</div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Supplier || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminSupplier || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || UserType == PRGX.SIMTrax.Domain.Util.UserType.Auditor || IsGeneralInformationNeeded)
+    {
+        <div class="col-md-12  col-sm-12 col-xs-12 panel panel-default no-border container-separtor">
+            <div class="container-white-backgound padding-bottom-0px">
+                <div class="col-md-12  col-sm-12 col-xs-12" id="divOrganisationDetailsHeading">
+                    <div class="col-md-9 col-sm-8 col-xs-12  panel-heading page-sub-heading-container">
+                        <span class="pull-left clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                        <span class="page-sub-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFORMATION, userCulture).ToString()</span>
+                    </div>
+                </div>
+                <div class="col-md-12  col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-responsive"><hr class="border-style" /></div>
+                </div>
+                <div id="divOrganisationDetails" class="col-md-12  col-sm-12 col-xs-12  panel-body">
+                    <div class="col-md-12 col-sm-12 col-xs-12 paddingTop">
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.SupplierId, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="SupplierId">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.BusinessSector, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="BusinessSector">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.CompanySize, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="CompanySize">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.TurnOverSize, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="TurnOverSize">
+                            </div>
+                        </div>
+
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12 ">
+                                @Html.LabelFor(m => m.CustomerSectors, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="CustomerSectors">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.CompanyService, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="CompanyService">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.CompanySubsidiaries, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="CompanySubsidiaries">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.TradingName, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="TradingName">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.FacebookAccount, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="FacebookAccount">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.TwitterAccount, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="TwitterAccount">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.LinkeldInAccount, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="LinkeldInAccount">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.WebsiteLink, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="ProfileWebsiteLink"></div>
+                        </div>
+                        
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.EstablishedYear, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="EstablishedYear">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.MaxContractValue, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="ProfileMaxContractValue">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">
+                                @Html.LabelFor(m => m.MinContractValue, new { @class = "font-weight-normal" })
+                            </div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="ProfileMinContractValue">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Supplier || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminSupplier || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || UserType == PRGX.SIMTrax.Domain.Util.UserType.Auditor || IsContactsNeeded)
+    {
+        <div class="col-md-12 col-sm-12 col-xs-12 panel panel-default no-border container-separtor">
+            <div class="container-white-backgound margin-before-footer padding-bottom-0px">
+                <div class="col-md-12  col-sm-12 col-xs-12">
+                    <div class="col-md-9 col-sm-8 col-xs-7 panel-heading page-sub-heading-container give-full-width panel-collapsed">
+                        <span class="pull-left clickable"><i class="glyphicon glyphicon-chevron-right"></i></span>
+                        <span class="page-sub-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACTS, userCulture).ToString()</span>
+                    </div>
+                    @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Supplier)
+                    {
+                        <div class="col-md-3 col-sm-4 col-xs-5 float-right padding-responsive give-full-width" align="center">
+                            <button type="button" class="btn btn-color col-md-9 col-sm-9 col-xs-12 give-mobile-width" onclick="GoToProfileQuestionnaire('Contacts')">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GO_TO_QUESTIONNAIRE, userCulture).ToString()</button>
+                        </div>
+                    }
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-responsive"><hr class="border-style" /></div>
+                </div>
+                <div id="divContactDetails" class="col-md-12  col-sm-12 col-xs-12  panel-body" style="display:none">
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-top-question">
+                        <br />
+                        <div class="heading-block">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SALES_CONTACT_PRIMARY, userCulture).ToString()</div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NAME, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="primaryName">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="primaryEmail"></div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TELEPHONE, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="primaryTelephone"></div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.JOB_TITLE, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="primaryJob">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-top-question">
+                        <br />
+                        <div class="heading-block">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCOUNTS_FINANCE_REMITTANCE_CONTACT, userCulture).ToString()</div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NAME, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="accountsName">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="accountsEmail"></div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TELEPHONE, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="accountsTelephone"></div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.JOB_TITLE, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="accountsJob">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-top-question">
+                        <br />
+                        <div class="heading-block">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUSTAINABILITY_CONTACT, userCulture).ToString()</div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NAME, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="sustainabilityName">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="sustainabilityEmail"></div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TELEPHONE, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="sustainabilityTelephone"></div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.JOB_TITLE, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="sustainabilityJob">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-top-question">
+                        <br />
+                        <div class="heading-block">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HS_CONTACT, userCulture).ToString()</div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NAME, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="HSName">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="HSEmail"></div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TELEPHONE, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="HSTelephone"></div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.JOB_TITLE, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="HSJob">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-top-question">
+                        <br />
+                        <div class="heading-block">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PROCUREMENT_CONTACT, userCulture).ToString()</div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NAME, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="procurementName">
+                            </div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="procurementEmail"></div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TELEPHONE, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="procurementTelephone"></div>
+                        </div>
+                        <div class="row padding-top">
+                            <div class="col-md-3 col-sm-4 col-xs-12">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.JOB_TITLE, userCulture).ToString()</div>
+                            <div class="col-md-1 col-sm-1 hidden-xs">:</div>
+                            <div class="col-md-7 col-sm-7 col-xs-12" id="procurementJob">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Supplier || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminSupplier || UserType == PRGX.SIMTrax.Domain.Util.UserType.Auditor || UserType == PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor || IsAddressNeeded)
+    {
+
+        <div class="col-md-12 col-sm-12 col-xs-12 panel panel-default no-border container-separtor">
+            <div class="container-white-backgound margin-before-footer padding-bottom-0px">
+                <div class="col-md-12  col-sm-12 col-xs-12">
+                    <div class="col-md-9 col-sm-8 col-xs-7 panel-heading page-sub-heading-container give-full-width panel-collapsed">
+                        <span class="pull-left clickable"><i class="glyphicon glyphicon-chevron-right"></i></span>
+                        <span class="page-sub-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESSES, userCulture).ToString()</span>
+                    </div>
+                    @if (UserType == PRGX.SIMTrax.Domain.Util.UserType.Supplier)
+                    {
+                        <div class="col-md-3 col-sm-4 col-xs-5 float-right padding-responsive give-full-width" align="center">
+                            <button type="button" class="btn btn-color col-md-9 col-sm-9 col-xs-12 give-mobile-width" onclick="GoToProfileQuestionnaire('Address')">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GO_TO_QUESTIONNAIRE, userCulture).ToString()</button>
+                        </div>
+                    }
+
+                    <div class="col-md-12 col-sm-12 col-xs-12 padding-responsive"><hr class="border-style" /></div>
+                </div>
+                <div class="panel-body" style="display:none">
+                    <table class="tableGrid footable table toggle-arrow padding-top-20px" id="buyer-address-list-table-data">
+                        <thead class="cursor-default">
+                            <tr>
+                                <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_TYPE, userCulture).ToString()</th>
+                                <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_1, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS_2, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CITY, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTY_STATE, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tablet,tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.POSTAL_ZIPCODE, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY, userCulture).ToString()</th>
+                            </tr>
+                        </thead>
+                        <tbody id="buyer-address-list-table-rows"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+
+    @*<div class="col-md-12 col-sm-12 col-xs-12 panel panel-default no-border container-separtor" id="companyComplainceScoreBoard" style="display: none;">
+            <div class="container-white-backgound margin-before-footer padding-bottom-0px">
+                <div class="panel-heading" style="padding-bottom: 30px;">
+                    <span class="pull-left clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                    <span class="page-sub-heading">Compliance ScoreCard</span>
+                </div>
+               <div class="col-md-12 col-sm-12 col-xs-12"><hr class="border-style" /></div>
+                <div id="divcompliancescorecard" class="panel-body">
+                    <div class="col-md-3 paddingForChart">
+                        <div id="supplierDoughnutChart" class="chart"></div>
+                        <div class="chartText">Overall Compliance</div>
+                    </div>
+                    <div class="row col-md-9">
+                        <table id="compalianceScoreCard" class="tablesaw" data-tablesaw-mode="swipe" data-tablesaw-minimap>
+                            <thead>
+                                <tr>
+                                    <th class="title" data-tablesaw-priority="persist"></th>
+                                    <th data-tablesaw-sortable-default-col>Not Checked</th>
+                                    <th data-tablesaw-priority="2">Missing/Not Available</th>
+                                    <th data-tablesaw-priority="2">Not Verified</th>
+                                    <th data-tablesaw-priority="2">Verified</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ComplainceScoresRows"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    @if (IsBankDetailsNeeded)
+    {
+        <div class="col-md-12 col-sm-12 col-xs-12 panel panel-default no-border container-separtor" id="BuyerBankDetails" style="display: none;">
+            <div class="container-white-backgound margin-before-footer padding-bottom-0px">
+                <div class="col-md-12  col-sm-12 col-xs-12">
+                    <div class=" col-md-9 col-sm-8 col-xs-7 panel-heading page-sub-heading-container give-full-width panel-collapsed">
+                        <span class="pull-left clickable"><i class="glyphicon glyphicon-chevron-right"></i></span>
+                        <span class="page-sub-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BANK_DETAILS, userCulture).ToString()</span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12"><hr class="border-style" /></div>
+                </div>
+                <div class="panel-body" style="display:none">
+                    <table class="tableGrid footable table toggle-arrow padding-top-20px" id="buyer-bankdetails-list-table-data">
+                        <thead class="cursor-default">
+                            <tr>
+                                <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCOUNT_NAME, userCulture).ToString()</th>
+                                <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCOUNT_NO, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SWIFT_CODE, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BIC_CODE, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BANK_NAME, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COUNTRY, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PREFERRED_MODE, userCulture).ToString()</th>
+                            </tr>
+                        </thead>
+                        <tbody id="buyer-bankdetails-list-table-rows"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+    @if (IsReferenceNeeded)
+    {
+        <div class="col-md-12 col-sm-12 col-xs-12 panel panel-default no-border container-separtor" id="BuyerReferenceDetails" style="display: none;">
+            <div class="container-white-backgound margin-before-footer padding-bottom-0px">
+                <div class="col-md-12  col-sm-12 col-xs-12">
+                    <div class=" col-md-9 col-sm-8 col-xs-7 panel-heading page-sub-heading-container give-full-width panel-collapsed">
+                        <span class="pull-left clickable"><i class="glyphicon glyphicon-chevron-right"></i></span>
+                        <span class="page-sub-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REFERENCES, userCulture).ToString()</span>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12"><hr class="border-style" /></div>
+                </div>
+                <div class="panel-body" style="display:none;">
+                    <table class="tableGrid footable table toggle-arrow padding-top-20px" id="buyer-reference-list-table-data">
+                        <thead class="cursor-default">
+                            <tr>
+                                <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLIENT_NAME, userCulture).ToString()</th>
+                                <th class="tableGrid-header">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTACT_NAME, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.JOB_TITLE, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PHONE, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MAILING_ADDRESS, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAX, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLIENT_ROLE, userCulture).ToString()</th>
+                                <th class="tableGrid-header" data-hide="tabletPortrait,phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CAN_WE_CONTACT, userCulture).ToString()</th>
+                            </tr>
+                        </thead>
+                        <tbody id="buyer-reference-list-table-rows"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div id="complianceReportSupplierProfile" style="display: none">
+    <div class="bread-crumb">
+        <a id="backhomeSupplierProfile">< @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_PROFILE, userCulture).ToString()</a>
+    </div>
+    <div class="col-md-12 padding-bottom-header padding-left-zero padding-right-zero">
+        <div class="col-md-9 padding-left-zero padding-right-zero">
+            <h3 id="supplierProfileComplianceReportHeading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_PROFILE, userCulture).ToString()+":"+@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTRATION, userCulture).ToString()</h3>
+        </div>
+        <div class="col-md-3 text-align-right padding-left-zero">
+            <a id="exportComplianceReportSupplierProfile" style=" font-size 18px !important; color rgb(51, 51, 51) !important;"><i class="fa fa-download"></i>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EXPORT, userCulture).ToString()</a>
+        </div>
+    </div>
+    <div class="container-white-backgound min-height-responsive">
+        <div class="col-md-11 col-sm-12 col-xs-12">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.RESULT_OF_CHECK, userCulture).ToString()+":"</div>
+                <div>
+                    <select class="form-control" id="auditAnsSupplierProfile">
+                        <option value="3">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FLAGGED, userCulture).ToString()</option>
+                        <option value="2">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELF_DECLARED, userCulture).ToString()</option>
+                        <option value="4">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VERIFIED, userCulture).ToString()</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 display-none">
+                <div>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPLIANCE_AREA, userCulture).ToString()+":"</div>
+                <div>
+                    <select class="form-control" id="complianceTypeSupplierProfile">
+                        <option value="1">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTRATION, userCulture).ToString()</option>
+                        <option value="2">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FINANCE_INSURANCE_AND_TAX, userCulture).ToString()</option>
+                        <option value="3">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HEALTH_SAFETY, userCulture).ToString()</option>
+                        <option value="4">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CERTIFICATES, userCulture).ToString()</option>
+                        <option value="5">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DATA_SECURITY, userCulture).ToString()</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 padding-top-20px">
+            <table class="tableGrid table" id="complianceReportSupplierProfileTable">
+                <thead>
+                    <tr>
+                        <th class="tableGrid-header" style="text-align: left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.QUESTIONS_ANSWERS, userCulture).ToString()</th>
+                    </tr>
+                </thead>
+                <tbody id="complianceReportSupplierProfileTableBody"></tbody>
+            </table>
+            <input type="hidden" id="hdnComplianceReportSupplierProfilePageNo" value="1" />
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/Charts")
+<script>
+    var home = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString()';
+    var reports = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REPORTS, userCulture).ToString()';
+    var profile = ' @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PROFILE, userCulture).ToString()';
+    var profilelower = ' @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PROFILE_LOWERCASE, userCulture).ToString()';
+
+    var inbox = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INBOX, userCulture).ToString()';
+    var backTo = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO, userCulture).ToString()';
+    var dashboard = ' @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DASHBOARD, userCulture).ToString()';
+    var search = ' @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH, userCulture).ToString()';
+    var general = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFO_AND_CONTACTS, userCulture).ToString()';
+    var answers = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWERS_LOWER_CASE, userCulture).ToString()';
+    var answer = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWER_LOWER_CASE, userCulture).ToString()';
+    var flagged = ' @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FLAGGED_LOWER_CASE, userCulture).ToString()';
+    var selfDeclared = ' @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELF_DECLARED_LOWER_CASE, userCulture).ToString()';
+    var verify = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VERIFIED_LOWER_CASE, userCulture).ToString()';
+    var Flagged = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FLAGGED, userCulture).ToString()';
+    var SelfDeclare = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELF_DECLARED, userCulture).ToString()';
+    var verified = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VERIFIED, userCulture).ToString()';
+    var auditedOn = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.AUDITED_ON, userCulture).ToString()';
+    var noRecordFound = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO_RECORDS_FOUND, userCulture).ToString()';
+    var generalInformation = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GENERAL_INFORMATION, userCulture).ToString()';
+    var goToQuestionaire = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GO_TO_QUESTIONNAIRE, userCulture).ToString()';
+    var notRequired = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NOT_REQUIRED, userCulture).ToString()';
+    var discussion = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VIEW_DISCUSSION, userCulture).ToString()';
+    var access = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCESS_TO_ANSWERS_REQUESTED, userCulture).ToString()';
+    var allAnswer = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ALL_ANSWERS_SHARED_WITH_YOU, userCulture).ToString()';
+    var requestAnswer = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUEST_ANSWERS, userCulture).ToString()';
+    var required = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUIRED, userCulture).ToString()';
+    var alreadyRequest = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.YOU_ALREADY_REQUEST, userCulture).ToString()';
+    var supplier = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIERS_PER_CALENDER_MONTH, userCulture).ToString()';
+    var browseAnswer = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BROWSE_ANSWER, userCulture).ToString()';
+    var summary = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUMMARY, userCulture).ToString()';
+    var answerSubmitted = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWER_WILL_APPEAR_WHEN_SUBMITTED_AND_AUDITED, userCulture).ToString()';
+    var complianceReport = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPLIANCE_REPORT, userCulture).ToString()';
+    var cultureTwoLetterCode = '@userCulture.TwoLetterISOLanguageName';
+    var IsComplianceStatusNeeded = '@IsComplianceStatusNeeded';
+    var buyerProfileMaxRequestCount = parseInt('@PRGX.SIMTrax.Domain.Util.Configuration.BuyerRequestCount');
+    $(document).on('click', '#download-report', function () {
+        var companyId = parseInt($('#profileCompanyDetails').val());
+        if (companyId > 0) {
+            window.location.href = "/Common/DownloadReports?companyId=" + companyId;
+        }
+    });;
+
+    $(document).on('click', '#downloadProfile', function () {
+        var companyPartyId = parseInt($('#SellerPartyId').val());
+        if (companyPartyId > 0) {
+            window.location.href = "/Common/DownloadProfile?supplierPartyId=" + companyPartyId;
+        }
+    });
+</script>
+@Scripts.Render("~/bundles/Profile")

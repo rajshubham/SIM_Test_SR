@@ -1,0 +1,534 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-64909373-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Images/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @using System.Web.Optimization
+    @model PRGX.SIMTrax.ViewModel.Login
+    @{
+         var themeName = "default";
+         if (HttpContext.Current.Application[PRGX.SIMTrax.Domain.Util.Constants.ThemeName] != null)
+         {
+             themeName = HttpContext.Current.Application[PRGX.SIMTrax.Domain.Util.Constants.ThemeName] as string;
+         }
+         bool IsValidUser = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER] != null) ? true : false;
+         var UserType = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER_TYPE] != null) 
+            ? (PRGX.SIMTrax.Domain.Util.UserType)Convert.ToInt64(Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_USER_TYPE]) : PRGX.SIMTrax.Domain.Util.UserType.None;
+         var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) ?
+             (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+
+         var selectedTab = "";
+         var viewName = "";
+         var controllerName = "";
+         switch (UserType)
+         {
+             case PRGX.SIMTrax.Domain.Util.UserType.Auditor:
+             case PRGX.SIMTrax.Domain.Util.UserType.AdminAuditor:
+                 selectedTab = "AdminHomeTab";
+                 viewName = "Home";
+                 controllerName = "Admin";
+                 break;
+             case PRGX.SIMTrax.Domain.Util.UserType.Supplier:
+             case PRGX.SIMTrax.Domain.Util.UserType.AdminSupplier:
+                 selectedTab = "SupplierHomeTab";
+                 viewName = "Home";
+                 controllerName = "Seller";
+                 break;
+             case PRGX.SIMTrax.Domain.Util.UserType.Buyer:
+             case PRGX.SIMTrax.Domain.Util.UserType.AdminBuyer:
+                 selectedTab = "BuyerIndexTab";
+                 viewName = "Home";
+                 controllerName = "Buyer";
+                 break;
+         }
+
+         ViewBag.Title = "Login";
+         Layout = null;
+    }
+
+    @Styles.Render("~/bundles/css")
+    <link href="@Url.Content(String.Format("~/Content/Themes/{0}/Style.less", themeName))" rel="stylesheet" />
+    @Scripts.Render("~/bundles/Content/js")
+    <style>
+        body {
+            background: linear-gradient(white, white);
+                background: -webkit-linear-gradient(white, white) !important;
+            background: -o-linear-gradient(white, white);
+                background: -moz-linear-gradient(white, white);
+            }
+
+        .container-fluid {
+            margin-left: 0% !important;
+            margin-right: 0% !important;
+        }
+
+        @@media (max-width: 415px) {
+            .img-logo-login {
+                width: 195px;
+            }
+
+            #navbar-toggle-login {
+                margin-right: 0px;
+            }
+        }
+
+        a :hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="login-body">
+    <script>
+        var isOldBrowser = false;
+    </script>
+    <!--[if lt IE 9]>
+       <script>
+          document.createElement('header');
+          document.createElement('nav');
+          document.createElement('section');
+          document.createElement('article');
+          document.createElement('aside');
+          document.createElement('footer');
+       </script>
+    <![endif]-->
+    <!--[if lt IE 10]>
+    <style type="text/css">
+        .navbar-left li a {
+        font-size: 16px !important;
+        height: 51px;
+        line-height: 50px !important;
+        padding: 0 10px;
+    }
+            .navbar-right li a {
+        font-size: 16px !important;
+        height: 51px;
+        line-height: 50px !important;
+        padding: 0 10px;
+    }
+            .leftpanel-height {
+        height: 625px;
+    }
+    </style>
+    <![endif]-->
+
+    <div style="background-color: #E4E0E0; display: none; padding-top: 20px; padding-left: 10%; padding-right: 10%;" id="MessagePanel" class="slideit clearfix row">
+        <div class="col-md-9 padding-bottom">
+            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COOKIES_MESSAGE, userCulture).ToString()
+        </div>
+        <div class="col-md-3 padding-bottom align-cookie-btns" style="padding-right: 0px;">
+            <input id="btnAccept" type="button" value="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACCEPT, userCulture).ToString()"
+                   class="btn btn-color cookie-btn" style="margin-right: 4px;" />
+            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.OR, userCulture).ToString()
+            <input id="btnReadMore" type="button" value="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.READ_MORE, userCulture).ToString()"
+                   class="btn btn-color cookie-btn" onclick="ShowReadMoreDialog()" style="margin-right: 3px;" />
+        </div>
+    </div>
+
+    <div id="login-header" class="navbar navbar-default navbar-fixed-top" role="navigation" style="background: white; height: 123px;">
+        <div id="container-login-header">
+            <div class="navbar-header">
+                <a href="@Url.Action(viewName, controllerName)">
+                    <img id="imgLogo" width="260" class="img-logo-login" tabindex="1" height="31" src='@Url.Content("~/Content/Images/logo/siteLogo.png")' onclick="setLocation('@selectedTab')" />
+                </a>
+                <button type="button" class="navbar-toggle" id="navbar-toggle-login" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a onclick="openLoginModelHelp()" tabindex="2">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HELP, userCulture).ToString()
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://www.prgx.com/services/supplier-information-management/" tabindex="3" target="_blank">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ABOUT, userCulture).ToString()
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="clearBoth"></div>
+    <div class="modal fade bs-example-modal-sm" data-backdrop="static" id="modalForgotPassword" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content col-md-9 center-modal-help">
+                <div class="modal-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal" style="margin-top:7px;">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FORGOT_PASSWORD_POP_UP_HEADER, userCulture).ToString()</h4>
+                    </div>
+                </div>
+                <div class="modal-body row">
+                    <div class="col-md-10 ">
+                        <input class="form-control" style="margin-top:10px; margin-bottom:10px;" type="text" placeholder="Enter Email" id="forgotPasswordEmail" />
+                    </div>
+                    <div class="col-md-12" style="margin-top: 10px; margin-left: 2px;">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FORGOT_PASSWORD_POP_UP_MESSAGE, userCulture).ToString()
+                    </div>
+                </div>
+                <div class="modal-footer no-border-top">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()
+                    </button>
+                    <button type="button" class="btn btn-color" onclick="TriggerNewPassword()">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.GET_PASSWORD, userCulture).ToString()
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="container-login-id" class="container-fluid container-login">
+        <div class="row">
+            <div id="Loading" class="loading" style="display: none;">
+                <div class="loading-image-div col-lg-offset-5 col-lg-2 col-md-offset-5 col-md-2 col-sm-offset-5 col-sm-2 col-xs-offset-5 col-xs-2" style="top: 43%;">
+                    <img id="loading-image" src="/Content/Images/loading.gif" alt="Loading...">
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-md-9 col-sm-9 col-xs-12 padding-bottom-header padding-top-header">
+                        <h3>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LOGIN, userCulture).ToString()</h3>
+                    </div>
+                </div>
+                <form id="signinForm">
+                    <div class="row">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.LabelFor(m => m.LoginId)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.TextBoxFor(m => m.LoginId, new { @class = " form-control" })
+                        </div>
+                    </div>
+                    <div class="row col-md-9  col-sm-9 col-xs-12 paddingError ">
+                        @Html.ValidationMessageFor(m => m.LoginId)
+                    </div>
+                    <div class="row padding-top">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.LabelFor(m => m.Password)
+                        </div>
+                    </div>
+                    <div class="row padding-bottom">
+                        <div class="col-md-9 col-sm-9 col-xs-12">
+                            @Html.PasswordFor(m => m.Password, new { @class = " form-control", autocomplete = "off", autocorrect = "off", autocapitalize = "off" })
+                        </div>
+                        <div class="col-md-9 col-sm-9 col-xs-12 paddingError ">
+                            @Html.ValidationMessageFor(m => m.Password)
+                        </div>
+                    </div>
+                    <div class="row padding-bottom">
+                        <div class="col-md-3 col-sm-3 col-xs-8">
+                            <button id="submitLogin" class="col-md-12 btn btn-color">
+                                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LOGIN, userCulture).ToString()
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row color_text">
+                        <div class="col-md-9 col-sm-9 col-xs-12 SICCodeLink" onclick="ForgotPassword()" style="cursor: pointer;">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FORGOT_PASSWORD_LINK, userCulture).ToString()
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-5 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-md-9 col-sm-9 col-xs-12 padding-bottom-header padding-top-header">
+                        <h3>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NOT_REGISTERED_YET, userCulture).ToString()</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTER_A, userCulture).ToString()</label>:
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="form-control" id="registerType">
+                            <option value="">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_BUYER_SUPPLIER, userCulture).ToString()</option>
+                            <option value="1">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIER, userCulture).ToString()</option>
+                            <option value="2">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BUYER, userCulture).ToString()</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div class="row padding-bottom">
+                    <div class="col-md-6 col-sm-6 col-xs-8">
+                        <button class=" col-md-12 btn btn-color" onclick="Register()">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BEGIN_REGISTRATION, userCulture).ToString()
+                        </button>
+                    </div>
+                </div>
+                <div class="row color_text">
+                    <div class="col-md-9 col-sm-9 col-xs-12 ">
+                        <a class="SICCodeLink" style="cursor: pointer;" target="FAQ" href="/FAQ">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTER_FAQ, userCulture).ToString()
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="row footer-content-login clearfix">
+        <div class="col-md-12 col-sm-12 hidden-xs">
+            <div class="row col-md-7 col-sm-9 full-width-footer" style="padding-top: 25px;">
+                <div class="row col-md-5 col-sm-4 line-height-44 footer-text-spacing left-margin-footer">
+                    &copy; @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PRGX_GLOBAL_RIGHTS, userCulture).ToString()
+                </div>
+                <div class="col-md-2 col-sm-5 line-height-44 footer-text-spacing left-margin-footer-content">
+                    <a target="TermsOfUse" href="/terms-of-use" class="cursor" style="color: white">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TERMS_OF_USE, userCulture).ToString()
+                    </a>
+                </div>
+                <div class="col-md-3 col-sm-5 line-height-44 footer-text-spacing left-margin-footer-content">
+                    <a target="PrivacyPolicy" href="/privacy-policy" class="cursor" style="color: white">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PRIVACY_POLICY, userCulture).ToString()
+                    </a>
+                </div>
+                <div class="col-md-2 line-height-44 footer-text-spacing left-margin-footer-content">
+                    <a href="https://www.linkedin.com/company/prgx" target="_blank">
+                        <img src="~/Content/Images/logo/linkeldin.png" />
+                    </a>
+                    <a href="https://twitter.com/prgxglobal" target="_blank">
+                        <img src="~/Content/Images/logo/twitter.png" style="padding-left: 6px" />
+                    </a>
+                </div>
+            </div>
+            <div class="row col-md-5 col-sm-8" style="padding-top: 18px;padding-right:0px">
+                <div class=" float-right-responsive">
+                    <img src="~/Content/Images/logo/CIPS-Footer-Logo.jpg" style="height:75px;margin-right:20px; padding-bottom: 20px;" class="float-img-footer" />
+                    <img src="~/Content/Images/logo/footer-logo.png" style="width: 200px;padding-bottom: 20px" class="float-img-footer" />
+                </div>
+
+            </div>
+        </div>
+        <div class="hidden-md hidden-lg hidden-sm col-xs-12">
+            <div class="col-xs-12 full-width-footer" style="padding-top: 25px;">
+                <div class="row">
+                    <div class="col-xs-12 line-height-44 footer-text-spacing left-margin-footer-content">
+                        &copy; @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PRGX_GLOBAL_RIGHTS, userCulture).ToString()
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2 line-height-44 footer-text-spacing left-margin-footer-content">
+                        <a class="cursor" target="TermsOfUse" href="/terms-of-use" style="color: white">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TERMS_OF_USE, userCulture).ToString()
+                        </a>
+                    </div>
+                    <div class="col-xs-2 line-height-44 footer-text-spacing left-margin-footer-content">
+                        <a target="PrivacyPolicy" href="/privacy-policy" class="cursor" style="color: white">
+                            @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PRIVACY_POLICY, userCulture).ToString()
+                        </a>
+                    </div>
+                    <div class="col-xs-4 line-height-44 footer-text-spacing left-margin-footer-content">
+
+                        <a href="https://www.linkedin.com/company/prgx" target="_blank">
+                            <img src="~/Content/Images/logo/linkeldin.png" />
+                        </a>
+                        <a href="https://twitter.com/prgxglobal" target="_blank">
+                            <img src="~/Content/Images/logo/twitter.png" style="padding-left: 6px" />
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12 line-height-44 footer-text-spacing left-margin-footer-content">
+                        <img src="~/Content/Images/logo/CIPS-Footer-Logo.jpg" style="height: 85px; margin-right: 20px; padding-top: 10px; padding-bottom: 20px;" class="float-img-footer" />
+                        <img src="~/Content/Images/logo/footer-logo.png" style="width: 200px;padding-top:10px;padding-bottom: 20px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="clear:both"></div>
+    </footer>
+</body>
+</html>
+<div class="modal fade bs-example-modal-sm" data-backdrop="static" id="login-modal-Help" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content col-md-9 center-modal-help">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HELP_POP_UP_HEADER, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row margin-bottom-15">
+                <div class="row col-md-12 col-sm-12 col-xs-12">
+                    <br />
+                    <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3 fa fa-envelope fa-opacity fa-3x  col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                    </div>
+                    <div class="col-md-8 col-sm-7 col-xs-7">
+
+                        <div class="contact-panel-text-color">
+                            <b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMAIL_US, userCulture).ToString()</b>
+                        </div>
+                        <a href="mailto:@HttpContext.Current.Application["ContactEmail"]" target="_blank">
+                            <span style="color: #7f7f7f;">@HttpContext.Current.Application["ContactEmail"]</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row col-md-12 col-sm-12 col-xs-12" style="padding-top:30px">
+                    <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3  fa fa-phone fa-3x padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity " style="padding-left:20px">
+                    </div>
+                    <div class="col-md-8 col-sm-7 col-xs-7 padding-top">
+                        <div class="contact-panel-text-color">
+                            <b>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CALL_US, userCulture).ToString()</b>
+                        </div>
+                        <span>@HttpContext.Current.Application["ContactNo"]</span>
+                    </div>
+                </div>
+                <div class="row col-md-12 col-sm-12 col-xs-12" style="padding-top:30px">
+                    <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3   padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity ">
+                        <img style="width:42px" src="~/Content/Images/FAQ.png" />
+                    </div>
+                    <div class="col-md-8 col-sm-7 col-xs-7" style="padding-top:18px">
+                        <b>
+                            <a class="contact-panel-text-color hoverLink" style="cursor: pointer;" target="FAQ" href="/FAQ">
+                                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ, userCulture).ToString()
+                            </a>
+                        </b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-sm" data-backdrop="static" id="ReadMoreModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content col-md-12">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COOKIES, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" style="overflow-y: scroll; height: 500px;">
+                <div>
+                    @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COOKIES_READ_MORE_MESSAGE, userCulture).ToString())
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/AES")
+@Scripts.Render("~/bundles/Login")
+@Scripts.Render("~/bundles/respond")
+<script>
+    var emailNotExitsText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.USER_EMAIL_NOT_EXISTS, userCulture).ToString()';
+    var passwordUrlSentText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PASSWORD_RESET_URL_SENT_MESSAGE, userCulture).ToString()';
+    var selectBuyerOrSupplierText = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_BUYER_OR_SUPPLIER, userCulture).ToString()';
+</script>
+<script>
+    $(document).ready(function () {
+        if (document.cookie == "") {
+            $('#MessagePanel').show();
+            $(".slideit").slideUp(1).slideDown('slow');
+            $('#MessagePanel').addClass("login-cookie-panel");
+            $('#login-header').addClass("top-80");
+            $('#container-login-id').addClass("margin-top-202");
+        }
+        else {
+            try {
+                if (getCookie("SIMTraxclientSideData") == "True") {
+                    $('#MessagePanel').hide();
+                    $('#MessagePanel').removeClass("login-cookie-panel");
+                    $('#login-header').removeClass("top-80");
+                    $('#container-login-id').removeClass("margin-top-202");
+                }
+                else {
+                    $('#MessagePanel').show();
+                    $(".slideit").slideUp(1).slideDown('slow');
+                    $('#MessagePanel').addClass("login-cookie-panel");
+                    $('#login-header').addClass("top-80");
+                    $('#container-login-id').addClass("margin-top-202");
+                }
+            }
+            catch (error) {
+                $('#MessagePanel').hide();
+                $('#MessagePanel').removeClass("login-cookie-panel");
+                $('#login-header').removeClass("top-80");
+                $('#container-login-id').removeClass("margin-top-202");
+            }
+        }
+
+        $('#btnAccept').click(function () {
+            document.cookie = "SIMTraxclientSideData=True; expires=Thu, 31 Dec 2020 12:00:00 UTC";
+            $('#MessagePanel').hide();
+            $('#MessagePanel').removeClass("login-cookie-panel");
+            $('#login-header').removeClass("top-80");
+            $('#container-login-id').removeClass("margin-top-202");
+        });
+
+        setLoginFooterHeight();
+        if (isOldBrowser) {
+            showErrorMessage('Attention: This site does not support the current version of your web browser. To get the best possible experience using our website we recomend that' +
+                'you upgrade to a newer version or install another web browser', false);
+        }
+        navigator.sayswho = (function () {
+            var ua = navigator.userAgent, tem,
+            M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+            if (/trident/i.test(M[1])) {
+                tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+                return 'IE ' + (tem[1] || '');
+            }
+            if (M[1] === 'Chrome') {
+                tem = ua.match(/\bOPR\/(\d+)/);
+                if (tem != null) return 'Opera ' + tem[1];
+            }
+            M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+            if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
+            return M.join(' ');
+        })();
+
+        console.log(navigator.sayswho);
+    });
+
+    function ShowReadMoreDialog() {
+        $('#ReadMoreModal').modal('show');
+    }
+
+    function setLoginFooterHeight() {
+        var sectionMinHeight = $(window).height() - 223;
+        $(".container-login").css("min-height", sectionMinHeight);
+
+    }
+    $(window).resize(function () {
+        setLoginFooterHeight();
+    });
+    function openLoginModelHelp() {
+        $('#login-modal-Help').modal('show');
+    }
+    function showMessageForLowerBrowsers() {
+        //alert("Lower browser message");
+    }
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+</script>
+@Scripts.Render("~/bundles/common")

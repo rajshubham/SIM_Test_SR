@@ -1,0 +1,124 @@
+﻿@using PRGX.SIMTrax.Domain.Util
+@model PRGX.SIMTrax.ViewModel.AuditorUser
+
+@{
+    var userCulture = (Session[Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+}
+
+<form id="formCreateAuditor">
+    <div class="col-md-12 col-sm-12 padding-top-10px">
+        <div class="col-md-2 required"><span>@ReadResource.GetResourceForGlobalization(Constants.FIRST_NAME, userCulture).ToString():</span></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-3 col-sm-6">@Html.TextBoxFor(elem => Model.FirstName, new { @class = "form-control" })</div>
+    </div>
+    <div class="col-md-12 col-sm-12 padding-top-10px">
+        <div class="col-md-2 required"><span>@ReadResource.GetResourceForGlobalization(Constants.LAST_NAME, userCulture).ToString():</span></div>
+
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-3 col-sm-6">@Html.TextBoxFor(elem => Model.LastName, new { @class = "form-control" })</div>
+    </div>
+    <div class="col-md-12 col-sm-12 padding-top-10px">
+        <div class="col-md-2 required"><span>@ReadResource.GetResourceForGlobalization(Constants.EMAIL, userCulture).ToString():</span></div>
+
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-3 col-sm-6">@Html.TextBoxFor(elem => Model.Email, new { @class = "form-control", @id = "txtEmail" })</div>
+        <div class="col-md-3" id="divValidateEmail"><span id="spnValidationMessage"></span></div>
+    </div>
+    @if (!(Model.Id > 0))
+    {
+        <div class="col-md-12 col-sm-12 padding-top-10px">
+            <div class="col-md-2 required"><span>@ReadResource.GetResourceForGlobalization(Constants.PASSWORD, userCulture).ToString():</span></div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3 col-sm-6">@Html.TextBoxFor(elem => Model.Password, new { @class = "form-control", @type = "Password" })</div>
+        </div>
+        <div class="col-md-12 col-sm-12 padding-top-10px">
+            <div class="col-md-2 required"><span>@ReadResource.GetResourceForGlobalization(Constants.CONFIRM_PASSWORD, userCulture).ToString():</span></div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3 col-sm-6">@Html.TextBoxFor(elem => Model.ConfirmPassword, new { @class = "form-control", @type = "Password" })</div>
+        </div>
+    }
+    else
+    {
+        @Html.HiddenFor(elem => Model.Password)
+        @Html.HiddenFor(elem => Model.ConfirmPassword)
+    }
+    <div class="col-md-12 col-sm-12 padding-top-10px">
+        <div class="col-md-2"><span>@ReadResource.GetResourceForGlobalization(Constants.ROLES, userCulture).ToString():</span></div>
+
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-3 col-sm-6">
+            <select id="ddlRoles" multiple="multiple" class="form-control">
+                @for (int index = 0; index < Model.Roles.Count; index++)
+                {
+                    <option value="@Model.Roles[index].Id">@Model.Roles[index].Name</option>
+                }
+            </select>
+            @Html.HiddenFor(elem => Model.OrganizationPartyId)
+            @Html.HiddenFor(elem => Model.SelectedRoles)
+            @Html.HiddenFor(elem => Model.Id)
+            @Html.HiddenFor(elem => Model.UserType)
+            @Html.HiddenFor(elem => Model.Email, new { @id = "hdnEmail" })
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12  padding-top-10px">
+        <div class="col-md-1 col-sm-1 col-xs-2"><span>@ReadResource.GetResourceForGlobalization(Constants.ACTIVE, userCulture).ToString():</span></div>
+        <div class="col-md-1 col-sm-1 col-xs-2">@Html.CheckBoxFor(elem => Model.IsActive, new { @class = "checkbox-active" })</div>
+    </div>
+</form>
+<script>
+    $('#ddlRoles').multiselect({
+        includeSelectAllOption: true,
+        enableCaseInsensitiveFiltering: true,
+        buttonWidth: '100%',
+        maxHeight: 200
+    });
+
+    $(document).ready(function () {
+        ScrollToTop();
+        var selectedRoles = $("#SelectedRoles").val();
+        if (selectedRoles != "") {
+            $('#ddlRoles').multiselect('select', selectedRoles.split(','));
+            $('#ddlRoles').multiselect('refresh')
+        }
+    });
+
+    $(document).on('change', '#txtEmail', function (e) {
+        var email = $.trim($("#txtEmail").val());
+        if (IsValidEmail(email)) {
+            var existingEmailId = $("#hdnEmail").val();
+            if ($.trim(existingEmailId) != email) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Account/IsEmailExists",
+                    data: { email: email },
+                    success: function (response) {
+                        if (typeof (response) != "undefined") {
+                            if (response.result == false) {
+                                GV.emailIdAvailable = true;
+                                $('#divValidateEmail').addClass('available');
+                                $('#divValidateEmail').removeClass('error-text');
+                                $("#spnValidationMessage").html("");
+                            }
+                            else {
+                                GV.emailIdAvailable = false;
+                                $('#divValidateEmail').removeClass('available');
+                                $('#divValidateEmail').addClass('error-text');
+                                $("#spnValidationMessage").html(response.message);
+                            }
+                        }
+                    },
+                    error: function (response) {
+                    }
+                });
+            } else {
+                $("#spnValidationMessage").html("");
+            }
+        }
+    });
+</script>

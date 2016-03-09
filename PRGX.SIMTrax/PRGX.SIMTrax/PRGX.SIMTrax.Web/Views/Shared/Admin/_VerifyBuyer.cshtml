@@ -1,0 +1,417 @@
+﻿@model PRGX.SIMTrax.ViewModel.BuyerRegister
+@{
+    var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) 
+        ? (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+    ViewBag.Title = PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VERIFY_BUYER, userCulture).ToString();
+}
+@Styles.Render("~/bundles/TipsoCss")
+<div id="GetBuyerInformation">
+    <div class="bread-crumb">
+        <a href='/Admin/Home'>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString()</a> >
+        <a href="/Admin/BuyerOrganisation">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BUYER_ORGANISATION, userCulture).ToString()</a> >  
+        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VERIFY_BUYER, userCulture).ToString()
+    </div>
+    <div class="col-md-12 padding-bottom-header padding-left-zero">
+        <h3 id="headingVerifyBuyer">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VERIFY, userCulture).ToString()  @Model.BuyerOrganisationName</h3>
+    </div>
+    <div class="container-white-backgound ">
+        <div class="col-md-12">
+            <form id="VerifyBuyerForm" name="VerifyBuyerForm" enctype="multipart/form-data">
+                <div class="row padding-division-header" style="padding-top:0px;">
+                    <div class="col-md-5" style="font-weight:bold">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ABOUT_BUYER, userCulture).ToString()
+                    </div>
+                </div>
+                @Html.HiddenFor(m => m.BuyerPartyId)
+                @Html.HiddenFor(m => m.UserPartyId)
+                @Html.HiddenFor(m => m.ContactPersonId)
+                <div class="row">
+                    <div class="col-md-8  col-sm-12 col-xs-12">
+                        <div class="padding-top-question">
+                            <div class="col-md-12 required" style="font-weight:bold;">
+                                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NAME, userCulture).ToString():
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-5">
+                                        @Html.TextBoxFor(m => m.BuyerFirstName, new { @class = " form-control", @readonly = "readonly", placeholder = @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FIRST_NAME_PLACEHOLDER, userCulture).ToString(), maxlength = 40 })
+                                    </div>
+                                    <div class="col-md-6 col-sm-3 padding-responsive">
+                                        @Html.TextBoxFor(m => m.BuyerLastName, new { @class = " form-control", placeholder = @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LAST_NAME_PLACEHOLDER, userCulture).ToString(), maxlength = 40 })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="padding-top-question">
+                            <div class="col-md-12">
+                                @Html.LabelFor(m => m.BuyerEmail)
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                @Html.TextBoxFor(m => m.BuyerEmail, new { @class = " form-control", @readonly = "readonly", maxlength = 50 })
+                            </div>
+                            <div class="col-md-5 paddingError ">
+                                @Html.ValidationMessageFor(m => m.BuyerEmail)
+                            </div>
+                        </div>
+                        <div class="padding-top-question">
+                            <div class="col-md-12">
+                                @Html.LabelFor(m => m.BuyerTelephone)
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                @Html.TextBoxFor(m => m.BuyerTelephone, new { @class = " form-control", maxlength = 12 })
+                            </div>
+                            <div class="col-md-5 paddingError ">
+                                @Html.ValidationMessageFor(m => m.BuyerTelephone)
+                            </div>
+                        </div>
+                        <div class="padding-top-question">
+                            <div class="col-md-12">
+                                @Html.LabelFor(m => m.BuyerJobTitle)
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                @Html.TextBoxFor(m => m.BuyerJobTitle, new { @class = " form-control" })
+                            </div>
+                            <div class="col-md-5 paddingError ">
+                                @Html.ValidationMessageFor(m => m.BuyerJobTitle)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row padding-division-header">
+                    <div class="col-md-5" style="font-weight:bold">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ABOUT_BUYER_ORGANISATION, userCulture).ToString()
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+                        <div class="padding-top-question">
+                            <div class="col-md-12">
+                                @Html.LabelFor(m => m.BuyerOrganisationName)
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                @Html.TextBoxFor(m => m.BuyerOrganisationName, new { @class = " form-control", @readonly = "readonly", maxlength = 100 })
+                            </div>
+                            <div class="col-md-5 paddingError " id="OrganisationError">
+                                <span id="OrganisationErrorText"></span>
+                                @Html.ValidationMessageFor(m => m.BuyerOrganisationName)
+                            </div>
+                        </div>
+                        <div class="padding-top-question">
+                            <div class="col-md-12">
+                                @Html.LabelFor(m => m.BuyerFirstAddressLine1)
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                @Html.TextBoxFor(m => m.BuyerFirstAddressLine1, new { @class = " form-control", maxlength = 100 })
+                            </div>
+                            <div class="col-md-5 paddingError">
+                                @Html.ValidationMessageFor(m => m.BuyerFirstAddressLine1)
+                            </div>
+                        </div>
+                        <div class="padding-top-question">
+                            <div class="col-md-12">
+                                @Html.LabelFor(m => m.BuyerFirstAddressLine2)
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                @Html.TextBoxFor(m => m.BuyerFirstAddressLine2, new { @class = " form-control", maxlength = 100 })
+                            </div>
+                        </div>
+                        <div class="padding-top-question">
+                            <div class="col-md-12">
+                                @Html.LabelFor(m => m.BuyerFirstAddressCity)
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                @Html.TextBoxFor(m => m.BuyerFirstAddressCity, new { @class = " form-control", maxlength = 50 })
+                            </div>
+                            <div class="col-md-5 paddingError">
+                                @Html.ValidationMessageFor(m => m.BuyerFirstAddressCity)
+                            </div>
+                        </div>
+                        <div class="padding-top-question">
+                            <div class="col-md-12">
+                                @Html.LabelFor(m => m.BuyerFirstAddressState)
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                @Html.TextBoxFor(m => m.BuyerFirstAddressState, new { @class = " form-control", maxlength = 50 })
+                            </div>
+                            <div class="col-md-5 paddingError">
+                                @Html.ValidationMessageFor(m => m.BuyerFirstAddressState)
+                            </div>
+                        </div>
+                        <div class="padding-top-question">
+                            <div class="col-md-12">
+                                @Html.LabelFor(m => m.BuyerFirstAddressCountry)
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                @Html.DropDownListFor(m => m.BuyerFirstAddressCountry, Model.BuyerCountryList, new { @class = " form-control" })
+                            </div>
+                            <div class="col-md-5 paddingError">
+                                @Html.ValidationMessageFor(m => m.BuyerFirstAddressCountry)
+                            </div>
+                        </div>
+                        <div class="padding-top-question">
+                            <div class="col-md-12">
+                                @Html.LabelFor(m => m.BuyerFirstAddressPostalCode)
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                @Html.TextBoxFor(m => m.BuyerFirstAddressPostalCode, new { @class = " form-control", maxlength = 15 })
+                            </div>
+                            <div class="col-md-5 paddingError">
+                                @Html.ValidationMessageFor(m => m.BuyerFirstAddressPostalCode)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row padding-division-header">
+                    <div class="col-md-5" style="font-weight:bold">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ABOUT_BUYER_BUSINESS_PROFILE, userCulture).ToString()
+                    </div>
+                </div>
+                <div class="padding-top-question">
+                    <div class="col-md-12">
+                        @Html.LabelFor(m => m.BuyerNumberOfEmployees)
+                        <div> @Html.ValidationMessageFor(m => m.BuyerNumberOfEmployees)</div>
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        @for (int i = 1, j = 1; i <= Model.BuyerNoOfEmployeesList.Count; i++, j++)
+                        {
+                            if (j == 3)
+                            {
+                                <div class="col-md-12"></div>
+                                j = 1;
+                            }
+                            <div class="col-md-3">
+                                @Html.RadioButtonFor(p => Model.BuyerNumberOfEmployees, Model.BuyerNoOfEmployeesList[i - 1].Value)
+                                @Html.DisplayFor(p => Model.BuyerNoOfEmployeesList[i - 1].Text)
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="padding-top-question">
+                    <div class="col-md-12">
+                        @Html.LabelFor(m => m.BuyerTurnOver)
+                        <div>@Html.ValidationMessageFor(m => m.BuyerTurnOver)</div>
+                    </div>
+                    <div class="col-md-12 col-sm-12">
+                        @for (int i = 1, j = 1; i <= Model.BuyerTurnOverList.Count; i++, j++)
+                        {
+                            if (j == 3)
+                            {
+                                <div class="col-md-12"></div>
+                                j = 1;
+                            }
+                            <div class="col-md-5" id='BuyerTurnOver-@i'>
+                                @Html.RadioButtonFor(p => Model.BuyerTurnOver, Model.BuyerTurnOverList[i - 1].Value)
+                                @Html.DisplayTextFor(p => Model.BuyerTurnOverList[i - 1].Text)
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="padding-top-question">
+                    <div class="col-md-7">
+                        @Html.LabelFor(m => m.BuyerSector)
+                        <div>
+                            @Html.ValidationMessageFor(m => m.BuyerSector)
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px">
+                            @for (int i = 1; i <= Model.BuyerBusinessSectorList.Count / 2; i++)
+                            {
+                                <div class="col-md-6 col-sm-6 col-xs-12"></div>
+                                <div class="col-md-12">
+                                    @Html.RadioButtonFor(p => Model.BuyerSector, Model.BuyerBusinessSectorList[i - 1].Value, new { @onclick = "ShowHideBNSDescription('hide')" })
+                                    @Html.DisplayFor(p => Model.BuyerBusinessSectorList[i - 1].Text)
+                                    <a class="tooltip-remove" data-description="@Model.BuyerBusinessSectorList[i - 1].Description"><i class="fa fa-info-circle"></i></a>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12" style="padding:0px">
+                            @for (int i = (Model.BuyerBusinessSectorList.Count / 2 + 1); i <= Model.BuyerBusinessSectorList.Count; i++)
+                            {
+                                <div class="col-md-6 col-sm-6 col-xs-12"></div>
+                                if (Model.BuyerBusinessSectorList[i - 1].Text != "Not Sure")
+                                {
+                                    <div class="col-md-12">
+                                        @Html.RadioButtonFor(p => Model.BuyerSector, Model.BuyerBusinessSectorList[i - 1].Value, new { @onclick = "ShowHideBNSDescription('hide')" })
+                                        @Html.DisplayFor(p => Model.BuyerBusinessSectorList[i - 1].Text)
+                                        <a class="tooltip-remove" data-description="@Model.BuyerBusinessSectorList[i - 1].Description"><i class="fa fa-info-circle"></i></a>
+                                    </div>
+                                }
+                            }
+                        </div>
+                        @for (int i = 1; i <= Model.BuyerBusinessSectorList.Count; i++)
+                        {
+                            if (Model.BuyerBusinessSectorList[i - 1].Text == "Not Sure")
+                            {
+                                <div class="col-md-12">
+                                    @Html.RadioButtonFor(p => Model.BuyerSector, Model.BuyerBusinessSectorList[i - 1].Value, new { @onclick = "ShowHideBNSDescription('show')", @id = "rdoBuyerNotSure" })
+                                    @Html.DisplayFor(p => Model.BuyerBusinessSectorList[i - 1].Text)
+                                    <a class="tooltip-remove" data-description="@Model.BuyerBusinessSectorList[i - 1].Description"><i class="fa fa-info-circle"></i></a>
+                                </div>
+                                <div class="col-md-12 padding-top-10px" style="display:none" id="divBuyerSectorDescription">
+                                    <div class="col-md-12">
+                                        <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DESCRIPTION, userCulture).ToString()</label>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <span id="spnBuyerSectorDescription"></span>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </div>
+    <div class="padding-top-question" style="padding-top:40px;">
+        <div class="col-md-12 col-sm-12 col-xs-12 padding-left-zero">
+            <button type="button" class="btn btn-normal" id="backToBuyerOrganisations" onclick="location.href='/Admin/BuyerOrganisation'">
+                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()
+            </button>
+            <button class="btn btn-color" id="BuyerVerify">
+                @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VERIFY, userCulture).ToString()
+            </button>
+        </div>
+    </div>
+</div>
+<script>
+    var industrySectorError = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INDUSTRY_SECTOR_ERROR, userCulture).ToString()';
+    var verifyBuyer = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VERIFY_BUYER, userCulture).ToString()';
+    var home = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HOME, userCulture).ToString()';
+    var TurnOverListCount = parseInt('@Model.BuyerTurnOverList.Count');
+</script>
+@Scripts.Render("~/bundles/Tipso")
+<script>
+
+    $(".tooltip-remove").hover(
+     function () {
+         var desc = $(this).attr("data-description");
+         $(this).tipso('update', 'content', desc);
+         $(this).tipso('update', 'background', 'rgb(226, 226, 226)');
+         $(this).tipso('update', 'color', 'rgb(0, 0, 0)');
+         $(this).tipso('show');
+     }, function () {
+         $(this).tipso('hide');
+         $(this).tipso('remove');
+         $(this).tipso('destroy');
+     }
+   );
+
+    function ShowHideBNSDescription(command) {
+        if (command == "show") {
+            $("#divBuyerSectorDescription").show();
+        }
+        else {
+            $("#divBuyerSectorDescription").hide();
+        }
+    }
+
+    @*function GetBuyerInformationByCompanyId() {
+        var companyId = parseInt("@Model.BuyerPartyId");
+        $.ajax({
+            type: 'post',
+            url: '/Admin/GetBuyerInformationByCompanyId',
+            data: { companyId: companyId },
+            async: false,
+            success: function (response) {
+                if (typeof (response) != "undefined") {
+                    FillBuyerData(response);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+    }
+
+    function FillBuyerData(data) {
+        $('#BuyerCompanyId').val(data.BuyerCompanyId);
+        $('#BuyerUserId').val(data.BuyerUserId);
+        $('#BuyerFirstName').attr('readonly', false);
+        $('#BuyerEmail').attr('readonly', false);
+        $('#BuyerOrganisationName').attr('readonly', false);
+        $('#BuyerFirstName').val(data.BuyerFirstName);
+        $('#BuyerLastName').val(data.BuyerLastName);
+        $('#BuyerEmail').val(data.BuyerEmail);
+        $('#BuyerTelephone').val(data.BuyerTelephone);
+        $('#BuyerJobTitle').val(data.BuyerJobTitle);
+        $('#BuyerOrganisationName').val(data.BuyerOrganisationName);
+        $("#headingVerifyBuyer").html(verify + " " + data.BuyerOrganisationName);
+        $('#BuyerFirstAddressLine1').val(data.BuyerFirstAddressLine1);
+        $('#BuyerFirstAddressLine2').val(data.BuyerFirstAddressLine2);
+        $('#BuyerFirstAddressCity').val(data.BuyerFirstAddressCity);
+        $('#BuyerFirstAddressState').val(data.BuyerFirstAddressState);
+        $('#BuyerFirstAddressCountry').val(data.BuyerFirstAddressCountry);
+        $('#BuyerFirstAddressPostalCode').val(data.BuyerFirstAddressPostalCode);
+        $("input[name=BuyerTurnOver][value='" + data.BuyerTurnOver + "']").prop("checked", true);
+        $("input[name=BuyerNumberOfEmployees][value='" + data.BuyerNumberOfEmployees + "']").prop("checked", true);
+        $("input[name=BuyerSector][value='" + data.BuyerSector + "']").prop("checked", true);
+        //For Not Sure
+        if (data.BuyerSector == 485) {
+            $("#spnBuyerSectorDescription").html(data.BusinessSectorDescription)
+            $("#divBuyerSectorDescription").show();
+        }
+        $('#BuyerFirstName').attr('readonly', true);
+        $('#BuyerEmail').attr('readonly', true);
+        $('#BuyerOrganisationName').attr('readonly', true);
+    }*@
+
+    $(document).on('click', '#BuyerVerify,#SaveBuyer', function () {
+        $.validator.unobtrusive.parse($('#VerifyBuyerForm'))
+        var notSure = $("#rdoBuyerNotSure").prop('checked');
+        if (notSure == true) {
+            showErrorMessage(industrySectorError);
+            return false;
+        }
+        if (!$('#VerifyBuyerForm').valid()) {
+            var els = document.querySelector('.input-validation-error');
+            if (els != null) {
+                els.focus();
+            }
+            return false;
+        }
+        //$('#IsSave').val("true");
+        $.ajax({
+            type: 'post',
+            url: '/Admin/CompleteBuyerVerification',
+            data: $('#VerifyBuyerForm').serialize(),
+            async: true,
+            success: function (response) {
+                if (typeof (response) != "undefined") {
+                    if (response) {
+                        if (response.result) {
+                            showSuccessMessage(response.message);
+                            if ("@ViewBag.BreadCrumb" == "Home") {
+                                window.location.href = '/Admin/Home';
+                            }
+                            else {
+                                window.location.href = '/Admin/BuyerOrganisation';
+                            }
+                        }
+                        else
+                            showErrorMessage(response.message);
+                    }
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+        return false;
+    });
+
+
+    $(document).ready(function () {
+        ScrollToTop();
+        //GetBuyerInformationByCompanyId();
+        if ("@ViewBag.BreadCrumb" == "Home") {
+            $(".bread-crumb").html("<a href='/Admin/Home'>" + home + "</a> > " + verifyBuyer);
+            $("#backToBuyerOrganisations").attr("onclick", "location.href='/Admin/Home'");
+        }
+        for (var i = 1; i <= TurnOverListCount; i++) {
+            var html = $('#BuyerTurnOver-' + i).html();
+            html = html.replace(/&amp;pound;/g, "&pound;");
+            html = html.replace(/&amp;euro;/g, "&euro;");
+            $('#BuyerTurnOver-' + i).html(html);
+        }
+    });
+</script>

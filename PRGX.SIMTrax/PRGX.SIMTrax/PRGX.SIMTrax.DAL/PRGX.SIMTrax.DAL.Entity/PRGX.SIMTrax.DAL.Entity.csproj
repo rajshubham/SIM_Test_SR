@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EDA9141C-231B-49F4-8168-BD91B57985F1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PRGX.SIMTrax.DAL.Entity</RootNamespace>
+    <AssemblyName>PRGX.SIMTrax.DAL.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AcceptedTermsOfUse.cs" />
+    <Compile Include="Address.cs" />
+    <Compile Include="AuditModel\AuditableEntity.cs" />
+    <Compile Include="AuditModel\BaseEntity.cs" />
+    <Compile Include="AuditModel\IAuditableEntity.cs" />
+    <Compile Include="AuditModel\IIdEntity.cs" />
+    <Compile Include="BankAccount.cs" />
+    <Compile Include="Buyer.cs" />
+    <Compile Include="BuyerCampaign.cs" />
+    <Compile Include="BuyerSupplierReference.cs" />
+    <Compile Include="CampaignInvitation.cs" />
+    <Compile Include="CampaignMessage.cs" />
+    <Compile Include="ContactMethod.cs" />
+    <Compile Include="ContactPerson.cs" />
+    <Compile Include="Credential.cs" />
+    <Compile Include="DiscountVoucher.cs" />
+    <Compile Include="DiversityStatus.cs" />
+    <Compile Include="DiversityStatusRegion.cs" />
+    <Compile Include="DiversityStatusType.cs" />
+    <Compile Include="DiversityStatusTypeRegion.cs" />
+    <Compile Include="Document.cs" />
+    <Compile Include="Email.cs" />
+    <Compile Include="EmailAudit.cs" />
+    <Compile Include="EmailTemplate.cs" />
+    <Compile Include="IndustryCode.cs" />
+    <Compile Include="IndustryCodeOrganizationLink.cs" />
+    <Compile Include="IndustryCodeSet.cs" />
+    <Compile Include="IndustryCodeSetRegionLink.cs" />
+    <Compile Include="Invitee.cs" />
+    <Compile Include="LegalEntity.cs" />
+    <Compile Include="LegalEntityProfile.cs" />
+    <Compile Include="Locale.cs" />
+    <Compile Include="MasterData.cs" />
+    <Compile Include="MasterDataType.cs" />
+    <Compile Include="Organization.cs" />
+    <Compile Include="Party.cs" />
+    <Compile Include="PartyContactMethodLink.cs" />
+    <Compile Include="PartyIdentifier.cs" />
+    <Compile Include="PartyIdentifierDocument.cs" />
+    <Compile Include="PartyIdentifierType.cs" />
+    <Compile Include="PartyPartyLink.cs" />
+    <Compile Include="PartyProfile.cs" />
+    <Compile Include="PartyRegionLink.cs" />
+    <Compile Include="Permission.cs" />
+    <Compile Include="Person.cs" />
+    <Compile Include="Phone.cs" />
+    <Compile Include="PotentialRole.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Region.cs" />
+    <Compile Include="Registration\PartyRefRegistration.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="RolePermissionLink.cs" />
+    <Compile Include="Supplier.cs" />
+    <Compile Include="Registration\OrganizationRefRegistration.cs" />
+    <Compile Include="Registration\PersonRefRegistration.cs" />
+    <Compile Include="Registration\UserRefRegistration.cs" />
+    <Compile Include="SupplierReferrer.cs" />
+    <Compile Include="TemporaryPasswordUrl.cs" />
+    <Compile Include="TermsOfUse.cs" />
+    <Compile Include="User.cs" />
+    <Compile Include="UserRoleLink.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

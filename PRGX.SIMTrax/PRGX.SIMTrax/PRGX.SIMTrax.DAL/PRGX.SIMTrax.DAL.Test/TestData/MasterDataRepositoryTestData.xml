@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <GetMasterDataValuesForSellerRegistrationTestData>
+    <testCase id="1">
+      <input  regionCode="Mainland Europe">
+      </input>
+      <output refRegionId="1">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input  regionCode="Test">
+      </input>
+      <output refRegionId="">
+      </output>
+    </testCase>
+  </GetMasterDataValuesForSellerRegistrationTestData>
+
+  <GetMasterDataValuesForBuyerRegistrationTestData>
+    <testCase id="1">
+      <input  regionCode="Mainland Europe">
+      </input>
+      <output employeeNumberList="7">
+      </output>
+    </testCase>
+  </GetMasterDataValuesForBuyerRegistrationTestData>
+
+
+  <GetMasterValuesForSearchFiltersTestData>
+    <testCase id="1">
+      <input sortParameter="" sortDirection="" pageNo="1" pageSize="20">
+        <turnOver value="375"/>
+      </input>
+      <output sectorText="Natural resources, mining and aggregates">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input sortParameter="" sortDirection="" pageNo="1" pageSize="20">
+        <turnOver value="0000"/>
+      </input>
+      <output sectorText="">
+      </output>
+    </testCase>
+  </GetMasterValuesForSearchFiltersTestData>
+</test>

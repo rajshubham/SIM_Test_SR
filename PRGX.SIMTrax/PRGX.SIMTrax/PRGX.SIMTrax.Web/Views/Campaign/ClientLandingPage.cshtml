@@ -1,0 +1,635 @@
+﻿@{
+    Layout = null;
+}
+@model PRGX.SIMTrax.ViewModel.Login
+@using PRGX.SIMTrax.Domain.Util
+<!DOCTYPE html>
+<html>
+<head>
+
+    @Styles.Render("~/bundles/css")
+    @{
+        var themeName = "default";
+        if (HttpContext.Current.Application[Constants.ThemeName] != null)
+        {
+            themeName = HttpContext.Current.Application[Constants.ThemeName] as string;
+        }
+        bool IsValidUser = (Session[Constants.SESSION_USER] != null) ? true : false;
+        var userType = (Session[Constants.SESSION_USER_TYPE] != null) ? (UserType)Session[Constants.SESSION_USER_TYPE] : UserType.None;
+        var userTypeValue = (Int16)userType;
+        var userCulture = (Session[Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+
+        <link href="@Url.Content(String.Format("~/Content/Themes/{0}/Style.less", themeName))" rel="stylesheet" />
+        var welcomeMessage = TempData["WelcomeMessage"];
+
+        ViewBag.Title = ReadResource.GetResourceForGlobalization(Constants.LOGIN, userCulture).ToString();
+        Layout = null;
+    }
+    <title>@ViewBag.Title</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Content/Images/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .footer-content {
+            margin-top: 0px;
+        }
+
+        body {
+            background: -webkit-linear-gradient(white, white);
+            background: -o-linear-gradient(white, white);
+            background: -moz-linear-gradient(white, white);
+            /*background: #fff;*/
+        }
+
+        .container-login {
+            min-height: 480px !important;
+            padding-left: 7% !important;
+            padding-right: 7% !important;
+        }
+
+
+        .logoText {
+            font-size: 16px;
+            color: grey;
+        }
+
+        .buyerMessage {
+            padding-left: 20px;
+        }
+
+        .britwik, .britwik:hover, .britwik:active, .britwik:focus {
+            background-color: #CC6600 !important;
+            color: white;
+        }
+
+        .linkText, .linkText:hover {
+            color: green;
+        }
+
+        pre {
+            margin-top: 10px;
+            font-size: 14px;
+            /*background-color: #fff;*/
+            background-color: inherit;
+            border: none;
+            font-family: inherit;
+            margin-left: -8px;
+            white-space: pre-wrap !important; /* CSS 3 */
+            white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+            white-space: -pre-wrap; /* Opera 4-6 */
+            white-space: -o-pre-wrap; /* Opera 7 */
+            word-wrap: break-word;
+            word-break: normal;
+        }
+
+        .marginTop {
+            margin-top: 30px;
+        }
+
+        .give-max-width {
+        }
+
+        .no_float {
+        }
+
+        @@media (max-width: 630px) {
+            .give-max-width {
+                width: 100% !important;
+            }
+
+            .no_float {
+                float: none !important;
+            }
+            /*these work*/
+        }
+
+        .landing-footer-text-spacing {
+            width: initial;
+            margin-right: 30px;
+        }
+
+        @@media (max-width: 1000px) {
+            .left-margin-footer-content {
+                margin-left: 17px;
+            }
+
+            .landing-left-margin-footer-content {
+                margin-left: 25px;
+            }
+        }
+
+        @@media (min-width: 671px) and (max-width: 768px) {
+            .footer-content-login {
+                padding-left: 4%;
+            }
+        }
+
+        @@media (min-width: 476px) and (max-width: 670px) {
+            .footer-content-login {
+                padding-left: 6%;
+            }
+        }
+
+        @@media (max-width: 670px) {
+            .padding-bottom-responsive {
+                padding-bottom: 20px;
+            }
+        }
+
+        .client-landing-logo {
+            max-width: 390px;
+            max-height: 70px;
+        }
+
+        @@media(min-width:986px) {
+            .client-left-pannel-padding {
+                padding-left: 60px;
+                padding-right: 0px;
+            }
+
+            .client-landing-tick {
+                margin-top: 10px;
+            }
+        }
+
+        .footer-client-landing-login {
+            padding-left: 5.5%;
+            font-size: 12px;
+            padding-top: 5px;
+            min-height: 25px;
+            position: relative;
+            border-top: 1px solid #e2e2e2;
+            background-color: #333333;
+            color: white;
+        }
+
+        @@media(max-width:630px) {
+            .client-landing-logo {
+                max-width: 300px;
+                max-height: 60px;
+            }
+        }
+
+        @@media(max-width:410px) {
+            .client-landing-logo {
+                max-width: 200px;
+                max-height: 50px;
+            }
+        }
+
+        @@media (max-width: 989px) {
+            .float-right-responsive {
+                margin-left: 31px !important;
+            }
+        }
+    </style>
+    @Scripts.Render("~/bundles/Content/js")
+</head>
+<body class="login-body">
+    <!--[if lt IE 9]>
+       <script>
+          document.createElement('header');
+          document.createElement('nav');
+          document.createElement('section');
+          document.createElement('article');
+          document.createElement('aside');
+          document.createElement('footer');
+       </script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <style type="text/css">
+        .navbar-left li a {
+        font-size: 16px !important;
+        height: 51px;
+        line-height: 50px !important;
+        padding: 0 10px;
+    }
+            .navbar-right li a {
+        font-size: 16px !important;
+        height: 51px;
+        line-height: 50px !important;
+        padding: 0 10px;
+    }
+            .leftpanel-height {
+        height: 625px;
+    }
+    </style>
+    <![endif]-->
+
+    <div style="background-color: #E4E0E0; display: none; margin-bottom: 20px; padding-top: 20px;"
+         id="MessagePanel" class="slideit col-md-12">
+        <div class="col-md-8 padding-bottom">
+            @ReadResource.GetResourceForGlobalization(Constants.COOKIES_MESSAGE, userCulture).ToString()
+        </div>
+        <div class="col-md-4 padding-bottom">
+            <input id="btnAccept" type="button" value="@ReadResource.GetResourceForGlobalization(Constants.ACCEPT, userCulture).ToString()" class="btn btn-color" />
+            &nbsp;&nbsp; @ReadResource.GetResourceForGlobalization(Constants.OR, userCulture).ToString() &nbsp;&nbsp;
+            <input id="btnReadMore" type="button" value="@ReadResource.GetResourceForGlobalization(Constants.READ_MORE, userCulture).ToString()" class="btn btn-color" onclick="ShowReadMoreDialog()" />
+        </div>
+    </div>
+    <div id="container-landing-page-header" class="navbar navbar-default margin-bottom-zero" role="navigation" style="background: white; height: 124px;">
+        <div id="container-login-header" role="navigation" style="margin-left: 7% !important; margin-right: 7% !important">
+            <div class="col-md-12 col-sm-12 col-xs-12 navbar-header" style="padding-left: 0px; padding-right: 0px">
+                <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left: 0px; padding-right: 0px">
+                    @if (TempData["CampaignLogo"].ToString() != "")
+                    {
+                        <img src="@TempData["CampaignLogo"]" class="client-landing-logo" id="imgCampaignLogoHeader" />
+                    }
+                </div>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <img id="imgLogo" class="img-logo-login hidden-sm hidden-xs" width="200" style="margin-left: 10px; margin-right: 10px;" src='@Url.Content("~/Content/Images/logo/siteLogo.png")' />
+                        </li>
+                        <li><a onclick="openLandingModelHelp()">@ReadResource.GetResourceForGlobalization(Constants.HELP, userCulture).ToString()</a></li>
+                        <li>
+                            <a href="http://www.prgx.com/services/supplier-information-management/" target="_blank">
+                                @ReadResource.GetResourceForGlobalization(Constants.ABOUT, userCulture).ToString()
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="clearBoth"></div>
+    <div id="main_container" class="container-login margin-top-zero">
+        <div class="row">
+            <div id="Loading" class="loading" style="display: none;">
+                <div class="loading-image-div col-lg-offset-5 col-lg-2 col-md-offset-5 col-md-2 col-sm-offset-5 col-sm-2 col-xs-offset-5 col-xs-2" style="top: 43%;">
+                    <img id="loading-image" src="/Content/Images/loading.gif" alt="Loading...">
+                </div>
+            </div>
+            <div class="row col-md-12 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
+                <div class="col-md-7 col-sm-12 col-xs-12" style="margin-top:20px">
+                    <div class="container-white-backgound">
+                        <div class="col-md-12 col-sm-12 col-xs-12 page-sub-heading">
+                            @ReadResource.GetResourceForGlobalization(Constants.WELCOME, userCulture).ToString() 
+                            @ReadResource.GetResourceForGlobalization(Constants.TO_THE, userCulture).ToString() 
+                            @TempData["BuyerOrganisation"] 
+                            @ReadResource.GetResourceForGlobalization(Constants.SUPPLIER_PORTAL, userCulture).ToString()
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-bottom-header" style="padding-top: 0px">
+                            <pre style="width: 100%">@Html.Raw(TempData["WelcomeMessage"])</pre>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <button class="btn btn-color" id="ClientRegistrationLink">
+                                @ReadResource.GetResourceForGlobalization(Constants.BEGIN_REGISTRATION, userCulture).ToString()
+                            </button>
+                            <span style="padding-left: 10px">
+                                <a class="SICCodeLink padding-responsive" style="cursor: pointer;" target="FAQ" href="/FAQ">
+                                    @ReadResource.GetResourceForGlobalization(Constants.WHY_REGISTER, userCulture).ToString()? 
+                                    @ReadResource.GetResourceForGlobalization(Constants.READ_OUR_FAQS, userCulture).ToString()
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-12 col-xs-12 client-left-pannel-padding" style="margin-top: 20px">
+                    <div class="col-md-12 col-sm-12 col-xs-12 panel no-border padding-top-header">
+                        <div>
+                            <h3>@ReadResource.GetResourceForGlobalization(Constants.ALREADY_REGISTERED_LOGIN_HERE, userCulture).ToString()</h3>
+                        </div>
+                        <div id="divClientOrganisationDetails" class="col-md-12 panel-body">
+                            <form id="ClientSigninForm">
+                                <div class="row">
+                                    <div class="row col-md-12 col-sm-12">
+                                        @Html.LabelFor(m => m.LoginId, new { @class = "font-weight-normal" })
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="row col-md-12 col-sm-12">
+                                        @Html.TextBoxFor(m => m.LoginId, new { @class = " form-control" })
+                                    </div>
+                                </div>
+                                <div class="row padding-top">
+                                    <div class="row col-md-12 col-sm-12">
+                                        @Html.LabelFor(m => m.Password, new { @class = "font-weight-normal" })
+                                    </div>
+                                </div>
+                                <div class="row padding-bottom">
+                                    <div class="row col-md-12 col-sm-12">
+                                        @Html.PasswordFor(m => m.Password, new { @class = " form-control" })
+                                    </div>
+                                </div>
+                                <div class="row padding-bottom">
+                                    <div class="row col-md-5 col-sm-8">
+                                        <button id="submitClientLogin" class="col-md-12 btn btn-color">Login</button>
+                                    </div>
+                                </div>
+                                <div class="row color_text">
+                                    <div class="row col-md-7 col-sm-12 col-xs-12 SICCodeLink" onclick="ForgotPasswordForClientLanding()" style="cursor: pointer;">
+                                        @ReadResource.GetResourceForGlobalization(Constants.FORGOT_PASSWORD_LINK, userCulture).ToString()
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-sm" data-backdrop="static" id="ReadMoreModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content col-md-12">
+                <div class="modal-header">
+                    <div class="bootstrap-dialog-header">
+                        <div class="bootstrap-dialog-close-button" style="display: block;">
+                            <button class="close" data-dismiss="modal">×</button>
+                        </div>
+                        <div class="bootstrap-dialog-title">
+                            <h4>@ReadResource.GetResourceForGlobalization(Constants.COOKIES, userCulture).ToString()</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body" style="overflow-y: scroll; height: 500px;">
+                    <div>
+                        @Html.Raw(ReadResource.GetResourceForGlobalization(Constants.COOKIES_READ_MORE_MESSAGE, userCulture).ToString())
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="row footer-client-landing-login  clearfix">
+        <div class="col-md-7 col-sm-9 col-xs-12 full-width-footer" style="padding-top: 25px;">
+            <div class="col-md-5 col-sm-4 col-xs-12 line-height-44 landing-footer-text-spacing left-margin-footer">
+                &copy; @ReadResource.GetResourceForGlobalization(Constants.PRGX_GLOBAL_RIGHTS, userCulture).ToString()
+            </div>
+            <div class="col-md-2 col-sm-5 col-xs-4 line-height-44 footer-text-spacing left-margin-footer-content">
+                <a target="TermsOfUse" href="/terms-of-use" class="cursor" style="color: white">
+                    @ReadResource.GetResourceForGlobalization(Constants.TERMS_OF_USE, userCulture).ToString()
+                </a>
+            </div>
+            <div class="col-md-3 col-sm-5 col-xs-4 line-height-44 footer-text-spacing left-margin-footer-content">
+                <a target="PrivacyPolicy" href="/privacy-policy" class="cursor" style="color: white">
+                    @ReadResource.GetResourceForGlobalization(Constants.PRIVACY_POLICY, userCulture).ToString()
+                </a>
+            </div>
+            <div class="col-md-2 col-xs-4 line-height-44 footer-text-spacing left-margin-footer-content">
+                <a href="https://www.linkedin.com/company/prgx" target="_blank">
+                    <img src="~/Content/Images/logo/linkeldin.png" />
+                </a>
+                <a href="https://twitter.com/prgxglobal" target="_blank">
+                    <img src="~/Content/Images/logo/twitter.png" style="padding-left: 6px" />
+                </a>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-8 col-xs-12" style="padding-top: 18px; padding-left: 6px;">
+            <div class="float-right-responsive">
+                <img src="~/Content/Images/logo/CIPS-Footer-Logo.jpg" style="height:75px;margin-right:20px; padding-bottom: 20px;" class="float-img-footer" />
+                <img src="~/Content/Images/logo/footer-logo.png" style="width: 200px;padding-bottom: 20px" class="float-img-footer" />
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+<div class="modal fade bs-example-modal-sm" data-backdrop="static" id="landing-modal-Help" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content col-md-9">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-header">
+                    <div class="bootstrap-dialog-close-button" style="display: block;">
+                        <button class="close" data-dismiss="modal">×</button>
+                    </div>
+                    <div class="bootstrap-dialog-title">
+                        <h4>@ReadResource.GetResourceForGlobalization(Constants.HELP_POP_UP_HEADER, userCulture).ToString()</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body row">
+                <div class="row col-md-12 col-sm-12 col-xs-12">
+                    <br />
+                    <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3 fa fa-envelope fa-opacity fa-3x  col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                    </div>
+                    <div class="col-md-8 col-sm-7 col-xs-7">
+
+                        <div class="contact-panel-text-color">
+                            <b>@ReadResource.GetResourceForGlobalization(Constants.EMAIL_US, userCulture).ToString()</b>
+                        </div>
+                        <a href="mailto:@HttpContext.Current.Application["ContactEmail"]" target="_blank">
+                            <span style="color: #7f7f7f;">@HttpContext.Current.Application["ContactEmail"]</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="row col-md-12 col-sm-12 col-xs-12" style="padding-top:30px">
+                    <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3 fa fa-phone fa-3x padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity" style="padding-left:20px">
+                    </div>
+                    <div class="col-md-8 col-sm-7 col-xs-7 padding-top">
+                        <div class="contact-panel-text-color">
+                            <b>@ReadResource.GetResourceForGlobalization(Constants.CALL_US, userCulture).ToString()</b>
+                        </div>
+                        <span>@HttpContext.Current.Application["ContactNo"]</span>
+                    </div>
+
+                </div>
+                <div class="row col-md-12 col-sm-12 col-xs-12" style="padding-top:30px">
+                    <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3   padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity ">
+                        <img style="width:42px" src="~/Content/Images/FAQ.png" />
+                    </div>
+                    <div class="col-md-8 col-sm-7 col-xs-7" style="padding-top:18px">
+                        <b><a class="contact-panel-text-color hoverLink" style="cursor: pointer;" target="FAQ" href="/FAQ">@ReadResource.GetResourceForGlobalization(Constants.FAQ, userCulture).ToString()</a></b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-sm" data-backdrop="static" id="client-landing-forgot-password-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content col-md-9 center-modal-help">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-close-button" style="display: block;">
+                    <button class="close" data-dismiss="modal" style="margin-top:7px;">×</button>
+                </div>
+                <div class="bootstrap-dialog-title">
+                    <h4>@ReadResource.GetResourceForGlobalization(Constants.FORGOT_PASSWORD_POP_UP_HEADER, userCulture).ToString()</h4>
+                </div>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-10 ">
+                    <input class="form-control" style="margin-top: 10px; margin-bottom: 10px;" type="text" placeholder="Enter Email" id="clientForgotPasswordEmail" />
+                </div>
+                <div class="col-md-12" style="margin-top: 10px; margin-left: 2px;">
+                    @ReadResource.GetResourceForGlobalization(Constants.FORGOT_PASSWORD_POP_UP_MESSAGE, userCulture).ToString()
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@ReadResource.GetResourceForGlobalization(Constants.CANCEL, userCulture).ToString()</button>
+                <button type="button" class="btn btn-color" onclick="TriggerClientNewPassword()">@ReadResource.GetResourceForGlobalization(Constants.GET_PASSWORD, userCulture).ToString()</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var userTypeValue = 65;
+</script>
+@Scripts.Render("~/bundles/respond")
+@Scripts.Render("~/bundles/common")
+@Scripts.Render("~/bundles/AES")
+<script>
+
+    var userEmailDoesntExist = '@ReadResource.GetResourceForGlobalization(Constants.USER_EMAIL_NOT_EXISTS, userCulture).ToString()';
+    var newPasswordSentToMail = '@ReadResource.GetResourceForGlobalization(Constants.NEW_PASSWORD_SENT_TO_MAIL, userCulture).ToString()';
+    var enterValidEmail = '@ReadResource.GetResourceForGlobalization(Constants.VALID_PRIMARY_EMAIL, userCulture).ToString()';
+
+    $(document).ready(function () {
+
+        if (document.cookie == "") {
+            $('#MessagePanel').show();
+            $(".slideit").slideUp(1).slideDown('slow');
+            $('#MessagePanel').addClass("login-cookie-panel");
+            $('#container-landing-page-header').addClass("top-80");
+            $('#main_container').addClass("margin-top-80");
+        }
+        else {
+            try {
+                if (getCookie("SIMTraxclientSideData") == "True") {
+                    $('#MessagePanel').hide();
+                    $('#container-landing-page-header').removeClass("top-80");
+                    $('#main_container').removeClass("margin-top-80");
+                }
+                else {
+                    $('#MessagePanel').show();
+                    $(".slideit").slideUp(1).slideDown('slow');
+                    $('#MessagePanel').addClass("login-cookie-panel");
+                    $('#container-landing-page-header').addClass("top-80");
+                    $('#main_container').addClass("margin-top-80");
+                }
+            }
+            catch (error) {
+                $('#MessagePanel').hide();
+                $('#container-landing-page-header').removeClass("top-80");
+                $('#main_container').removeClass("margin-top-80");
+            }
+        }
+
+        $('#btnAccept').click(function () {
+            document.cookie = "SIMTraxclientSideData=True; expires=Thu, 31 Dec 2020 12:00:00 UTC";
+            $('#MessagePanel').hide();
+            $('#container-landing-page-header').removeClass("top-80");
+            $('#main_container').removeClass("margin-top-80");
+        });
+
+        var welcomeMessage = $('pre').html();
+        $('pre').html($.trim(welcomeMessage));
+        setFooterHeight();
+    });
+    function getCookie(name) {
+        var value = "; " + document.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+
+    function ShowReadMoreDialog() {
+        $('#ReadMoreModal').modal('show');
+    }
+    function setFooterHeight() {
+        var sectionMinHeight = "min-height: ";
+        sectionMinHeight += $(window).height() - 224;
+        sectionMinHeight += "px !important";
+        $('#main_container').attr('style', sectionMinHeight);
+    }
+    $(window).resize(function () {
+        setFooterHeight();
+    });
+    $(document).on('click', '#ClientRegistrationLink', function () {
+        window.location.href = '/Supplier/Register';
+    });
+    $(document).on('click', '#submitClientLogin', function (e) {
+        $('#Loading').show();
+        if (!$('#ClientSigninForm').valid()) {
+            $('#Loading').hide();
+            return false;
+        }
+        var key = CryptoJS.enc.Utf8.parse('8080808080808080');
+        var iv = CryptoJS.enc.Utf8.parse('8080808080808080');
+        var password = $('#Password').val();
+        var encryptedPassword = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(password), key,
+            {
+                keySize: 128 / 8,
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
+        $('#Password').val(encryptedPassword);
+
+        var test = $('#ClientSigninForm').serialize();
+        $.ajax({
+            type: 'post',
+            url: '/Account/Login',
+            data: $('#ClientSigninForm').serialize(),
+            async: true,
+            success: function (response) {
+                if (typeof (response) != "undefined") {
+                    if (!response.valid) {
+                        $('#Loading').hide();
+                        showErrorMessage(response.message);
+                        $('#LoginId').val('');
+                        $('#Password').val('');
+                    }
+                    else {
+                        $('#Loading').hide();
+                        window.location.href = response.redirectUrl;
+                    }
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+        return false;
+    });
+
+    function openLandingModelHelp() {
+        $('#landing-modal-Help').modal('show');
+    }
+
+    function ForgotPasswordForClientLanding() {
+        $('#clientForgotPasswordEmail').val('');
+        $('#client-landing-forgot-password-modal').modal('show');
+        RemoveBorderColor('#clientForgotPasswordEmail');
+    }
+
+    function TriggerClientNewPassword() {
+        var email = $('#clientForgotPasswordEmail').val();
+        if (!ValidateEmail(email)) {
+            showErrorMessage(enterValidEmail);
+            SetBorderColor('#clientForgotPasswordEmail', 'red');
+            return false;
+        }
+        RemoveBorderColor('#clientForgotPasswordEmail');
+        $.ajax({
+            type: 'post',
+            url: '/Account/TriggerNewPassword',
+            data: { email: email },
+            async: true,
+            success: function (response) {
+                if (typeof (response) != "undefined") {
+                    if (!response.EmailExists) {
+                        showErrorMessage(userEmailDoesntExist);
+                    }
+                    if (response.IsSent) {
+                        showSuccessMessage(newPasswordSentToMail);
+                    }
+                    $('#client-landing-forgot-password-modal').modal('hide');
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+            }
+        });
+        return false;
+    }
+
+    function ValidateEmail(email) {
+        var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+        if (email == "" || !emailReg.test(email)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>

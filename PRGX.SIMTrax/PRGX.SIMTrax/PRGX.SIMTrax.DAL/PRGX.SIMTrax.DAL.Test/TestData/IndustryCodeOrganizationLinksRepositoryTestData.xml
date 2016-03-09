@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <AddUpdateIndustryCodeOrganisationLinksTestData>
+    <testCase id="1">
+      <input  organisationId="2">
+        <industryCodeList  refOrganisation="" refIndustryCode="3"/>
+        <industryCodeList  refOrganisation="2" refIndustryCode="5"/>
+      </input>
+      <output outObj="true">
+      </output>
+    </testCase>
+  </AddUpdateIndustryCodeOrganisationLinksTestData>
+</test>

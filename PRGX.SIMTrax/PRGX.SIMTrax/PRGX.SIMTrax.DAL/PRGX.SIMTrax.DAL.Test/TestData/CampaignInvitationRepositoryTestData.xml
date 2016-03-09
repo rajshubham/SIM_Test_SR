@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <InsertListOfPreRegSupplierTestData>
+    <testCase id="1">
+      <input>
+        <CampaignInvitation  AddressLine1="Add1"  AddressLine2 ="Add2" City ="Siwan" CreatedOn ="" EmailAddress ="add.campaign@gmail.com" FirstName ="abc" Identifier1 ="" Identifier2 ="" Identifier3 ="" IdentifierType1 ="" IdentifierType2 ="" IdentifierType3 ="" InvalidComments ="Data is Invalid" IsRegistered = "" IsSubsidary ="" IsValid ="" JobTitle ="" LastName ="xyz" LastUpdatedOn ="" RefCampaign ="1" RefCountry ="11" RefCreatedBy ="" RefLastUpdatedBy ="" RefSupplier ="2" RegistrationCode ="" State ="" SupplierCompanyName="" Telephone ="1111111111" UltimateParent ="" ZipCode ="999999999"/>      
+      </input>
+      <output outData="True">
+      </output>
+    </testCase>
+  </InsertListOfPreRegSupplierTestData>
+
+  <GetPreRegSupplierInCampaignTestData>
+    <testCase id="1">
+      <input campaignId="1" filterCriteria="" total="10" pageIndex="1" size="10" >
+      </input>
+      <output  outTotal="2">
+        <CampaignInvitation RefCampaign="5" EmailAddress="add.campaign@gmail.com"></CampaignInvitation>
+        <CampaignInvitation RefCampaign="6" EmailAddress="add.campaign@gmail.com"></CampaignInvitation>
+      </output>
+    </testCase>
+  </GetPreRegSupplierInCampaignTestData>
+
+  <GetPreRegSupplierListwithPasswordStringTestData>
+    <testCase id="1">
+      <input campaignId="1" >
+      </input>
+      <output  >
+        <CampaignInvitation RefCampaign="5" EmailAddress="add.campaign@gmail.com"></CampaignInvitation>
+        <CampaignInvitation RefCampaign="6" EmailAddress="add.campaign@gmail.com"></CampaignInvitation>
+      </output>
+    </testCase>
+  </GetPreRegSupplierListwithPasswordStringTestData>
+
+  <UpdateListOfPreRegSupplierTestData>
+    <testCase id="1">
+      <input>
+        <CampaignInvitation  AddressLine1="Add1"  AddressLine2 ="Add2" City ="Siwan" CreatedOn ="" EmailAddress ="add.campaign@gmail.com" FirstName ="abc" Identifier1 ="" Identifier2 ="" Identifier3 ="" IdentifierType1 ="" IdentifierType2 ="" IdentifierType3 ="" InvalidComments ="Data is Invalid" IsRegistered = "" IsSubsidary ="" IsValid ="" JobTitle ="" LastName ="xyz" LastUpdatedOn ="" RefCampaign ="1" RefCountry ="11" RefCreatedBy ="" RefLastUpdatedBy ="" RefSupplier ="2" RegistrationCode ="" State ="" SupplierCompanyName="" Telephone ="1111111111" UltimateParent ="" ZipCode ="999999999"/>
+      </input>
+      <output outData="True" >
+      </output>
+    </testCase>
+  </UpdateListOfPreRegSupplierTestData>
+
+  <GetCampaignInvitationRecordTestData>
+    <testCase id="1">
+      <input id="1" >
+      </input>
+      <output RefCampaign="1" EmailAddress="add.campaign@gmail.com" >        
+      </output>
+    </testCase>
+  </GetCampaignInvitationRecordTestData>
+
+
+</test>

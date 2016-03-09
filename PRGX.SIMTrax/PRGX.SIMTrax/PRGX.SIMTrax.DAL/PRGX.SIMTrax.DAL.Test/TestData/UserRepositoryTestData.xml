@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <IsEmailExistsTestData>
+    <testCase id="1">
+      <input email="alekhya@supplier.com"></input>
+      <output outObj="true"></output>
+    </testCase>
+    <testCase id="2">
+      <input email="alekhya@supplier1.com"></input>
+      <output outObj="false"></output>
+    </testCase>
+  </IsEmailExistsTestData>
+
+  <GetUserDetailsByOrganisationPartyIdTestData>
+    <testCase id="1">
+      <input orgPartyId="10026"></input>
+      <output loginId="alekhya@supplier.com"></output>
+    </testCase>
+        <testCase id="2">
+      <input orgPartyId="9"></input>
+      <output loginId=""></output>
+    </testCase>
+  </GetUserDetailsByOrganisationPartyIdTestData>
+
+  <GetUserDetailByUserIdTestData>
+    <testCase id="1">
+      <input userId="10025"></input>
+      <output loginId="alekhya@supplier.com"></output>
+    </testCase>
+    <testCase id="2">
+      <input userId="8"></input>
+      <output loginId=""></output>
+    </testCase>
+  </GetUserDetailByUserIdTestData>
+
+  <GetPartyUserTestData>
+    <testCase id="1">
+      <input orgPartyId="9"></input>
+      <output count="0">
+
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input orgPartyId="10026"></input>
+      <output count="1">
+        <list Id="10025"></list>
+      </output>
+    </testCase>
+  </GetPartyUserTestData>
+
+  <GetAllUsersTestData>
+    <testCase id="1">
+      <input loginId="" userName="" userType="" status="" source="" totalRecords="5" pageIndex="1" pageSize="20" sortDirection="1"></input>
+      <output count="3">
+        <list userId="10025"></list>
+        <list userId="1"></list>
+        <list userId="5"></list>
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input loginId="abc@test.com" userName="" userType="" status="" source="" totalRecords="5" pageIndex="1" pageSize="20" sortDirection="1"></input>
+      <output count="0">
+      </output>
+    </testCase>
+  </GetAllUsersTestData>
+
+
+  <GetUserNameTestData>
+    <testCase id="1">
+      <input userName="ale" ></input>
+      <output count="1">
+        <list userName="Alekhya Supplier"></list>      
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input userName="aaa" ></input>
+      <output count="0">     
+      </output>
+    </testCase>
+  </GetUserNameTestData>
+
+  <GetUserDetailsForDashboardTestData>
+    <testCase id="1">
+      <input  totalRecords="5" pageNumber="1" buyerPartyId="9" sortDirection="1"></input>
+      <output count="0">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input  totalRecords="5" pageNumber="1" buyerPartyId="10026" sortDirection="1"></input>
+      <output count="1">
+        <list userId="10025"></list>
+      </output>
+    </testCase>
+  </GetUserDetailsForDashboardTestData>
+  
+</test>

@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{87FD1B2D-91A7-442F-9B85-8C213FCABB3C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PRGX.SIMTrax.DAL.Repository.Abstract</RootNamespace>
+    <AssemblyName>PRGX.SIMTrax.DAL.Repository.Abstract</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IAddressRepository.cs" />
+    <Compile Include="IBankAccountRepository.cs" />
+    <Compile Include="IBuyerCampaignRepository.cs" />
+    <Compile Include="IBuyerRepository.cs" />
+    <Compile Include="ICampaignInvitationRepository.cs" />
+    <Compile Include="IContactPersonRepository.cs" />
+    <Compile Include="ICredentialRepository.cs" />
+    <Compile Include="IEmailTemplateRepository.cs" />
+    <Compile Include="IGenericRepository.cs" />
+    <Compile Include="IIndustryCodeOrganizationLinksRepository.cs" />
+    <Compile Include="IIndustryCodeRepository.cs" />
+    <Compile Include="IInviteeRepository.cs" />
+    <Compile Include="IMasterDataRepository.cs" />
+    <Compile Include="IOrganizationRepository.cs" />
+    <Compile Include="IPartyIdentifierRepository.cs" />
+    <Compile Include="IPartyRegionLinkRepository.cs" />
+    <Compile Include="IPartyRepository.cs" />
+    <Compile Include="IPermissionRepository.cs" />
+    <Compile Include="IPotentialRoleRepository.cs" />
+    <Compile Include="IRoleRepository.cs" />
+    <Compile Include="ISupplierRepository.cs" />
+    <Compile Include="IUserRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Model\PRGX.SIMTrax.Domain.Model.csproj">
+      <Project>{05b1df77-0f12-4a52-84c2-60739ad49355}</Project>
+      <Name>PRGX.SIMTrax.Domain.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\PRGX.SIMTrax.Domain\PRGX.SIMTrax.Domain.Util\PRGX.SIMTrax.Domain.Util.csproj">
+      <Project>{f4f03853-5612-4203-b643-4b55d19d6219}</Project>
+      <Name>PRGX.SIMTrax.Domain.Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRGX.SIMTrax.DAL.Entity\PRGX.SIMTrax.DAL.Entity.csproj">
+      <Project>{eda9141c-231b-49f4-8168-bd91b57985f1}</Project>
+      <Name>PRGX.SIMTrax.DAL.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Contact Us";
+    Layout = "~/Views/Shared/_layout-container.cshtml";
+    var userCulture = (Session[Util.Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[Util.Constants.USER_PREFERENCE_CULTURE] : SimTrax.Controllers.BaseController.ResolveCulture();
+
+}
+
+   <div class="row">
+            <div class="col-md-12 padding-bottom-header">
+                <h3>@Util.ReadResource.GetResourceForGlobalization(Util.Constants.CONTACT_US, userCulture).ToString()</h3>
+            </div>
+                <div class="container-white-backgound padding-bottom-0px">
+                    <div class="row margin-bottom-15">
+                        <div class="col-md-12" style="margin-left: 22px;">
+@Util.ReadResource.GetResourceForGlobalization(Util.Constants.CONTACT_US_MESSAGE, userCulture).ToString()                           </div>
+                        <div class="row col-md-12 col-sm-12 col-xs-12 padding-bottom">
+                            <br />
+                            <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3 fa fa-envelope fa-opacity fa-3x text-align-center">
+                            </div>
+                            <div class="col-md-8 col-sm-7 col-xs-7">
+
+                                <div class="contact-panel-text-color">
+                                    <b>@Util.ReadResource.GetResourceForGlobalization(Util.Constants.EMAIL_US, userCulture).ToString()</b>
+                                </div>
+                                <a href="mailto:@HttpContext.Current.Application["ContactEmail"]" target="_blank">
+                                    <span class="contact-us-email">@HttpContext.Current.Application["ContactEmail"]</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row col-md-12 col-sm-12 col-xs-12 padding-bottom">
+                            <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3  fa fa-phone fa-3x padding-top fa-opacity text-align-center">
+                            </div>
+                            <div class="col-md-8 col-sm-7 col-xs-7 padding-top">
+                                <div class="contact-panel-text-color">
+                                    <b>@Util.ReadResource.GetResourceForGlobalization(Util.Constants.CALL_US, userCulture).ToString()</b>
+                                </div>
+                                <span>@HttpContext.Current.Application["ContactNo"]</span>
+                            </div>
+
+                        </div>
+                        <div class="row col-md-12 col-sm-12 col-xs-12 padding-bottom">
+                            <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3 text-align-center">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x" style="color: #D8D8D8; font-size: 47px;"></i>
+                                    <i class="fa fa-file-text-o fa-stack-1x fa-inverse" style="font-size: 24px; position: relative; left: 2px; top: 3px;"></i>
+                                </span>
+                            </div>
+                            <div class="col-md-8 col-sm-7 col-xs-7 padding-top">
+                                <div class="contact-panel-text-color">
+                                    <b>@Util.ReadResource.GetResourceForGlobalization(Util.Constants.WRITE_US, userCulture).ToString()</b>
+                                </div>
+                                <span>@Util.ReadResource.GetResourceForGlobalization(Util.Constants.PRGX_ADDRESS, userCulture).ToString()</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+   

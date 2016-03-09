@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <GetEmailTemplateTestData>
+    <testCase id="1">
+      <input mnemonic="USER_ACCOUNT_DETAILS" refLocaleId="0">
+      </input>
+      <output Id="1">
+      </output>
+    </testCase>
+    <testCase id="2">
+      <input mnemonic="TEST_DATA" refLocaleId="0">
+      </input>
+      <output Id="">
+      </output>
+    </testCase>
+  </GetEmailTemplateTestData>
+</test>

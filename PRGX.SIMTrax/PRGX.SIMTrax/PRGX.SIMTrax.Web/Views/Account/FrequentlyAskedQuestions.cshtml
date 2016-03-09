@@ -1,0 +1,206 @@
+﻿@{
+    Layout = "~/Views/Shared/_layout-container.cshtml";
+    var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+    ViewBag.Title = PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQS, userCulture).ToString();
+ }
+<style>
+    .faq-question-text {
+        width: 100%;
+        float: left;
+        color: #54b948;
+        font-size:14px;
+        cursor:pointer;
+    }
+    .faq-question-text:hover{
+        text-decoration:underline;
+    }
+    .faq-question-answer-container
+    {
+        width:100%;
+        float:left;
+    }
+    .faq-question-container {
+        width: 100%;
+        float: left;
+        font-size: 18px;
+        padding-top: 20px;
+    }
+    .faq-answer-container {
+        width: 100%;
+        float: left;
+        padding-top:20px;
+    }
+    .back-to-top
+    {
+        padding-left:6px;
+        font-size:14px;
+        cursor:pointer;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 padding-bottom-header">
+        <h3>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_DEFINITION, userCulture).ToString()</h3>
+    </div>
+    <div class="col-md-8  col-sm-12 col-xs-12">
+        <div class="container-white-backgound">
+            <div class="cnt-us-mar-btm">
+                <div class="col-md-12 col-sm-12 col-xs-12 padding-bottom">
+                    <span class="page-sub-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQS, userCulture).ToString()</span>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <hr class="border-style" />
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-20px">
+               <div  class="faq-question-text"  data-questionId="FAQ-1">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_1, userCulture).ToString()</div>
+                <div class="faq-question-text"  data-questionId="FAQ-2">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_2, userCulture).ToString()</div>
+                <div class="faq-question-text"  data-questionId="FAQ-3">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_3, userCulture).ToString()</div>
+                <div class="faq-question-text"  data-questionId="FAQ-4">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_4, userCulture).ToString()</div>
+                <div class="faq-question-text"  data-questionId="FAQ-5">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_5, userCulture).ToString()</div>
+                <div class="faq-question-text"  data-questionId="FAQ-6">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_6, userCulture).ToString()</div>
+                <div class="faq-question-text"  data-questionId="FAQ-7">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_7, userCulture).ToString()</div>
+                <div class="faq-question-text"  data-questionId="FAQ-8">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_8, userCulture).ToString()</div>
+                <div class="faq-question-text"  data-questionId="FAQ-9">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_9, userCulture).ToString()</div>
+                <div class="faq-question-text"  data-questionId="FAQ-10">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_10, userCulture).ToString()</div>
+                <div class="faq-question-text"  data-questionId="FAQ-11">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_11, userCulture).ToString()</div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <hr />
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="faq-question-answer-container" id="FAQ-1">
+                    <div class="faq-question-container">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_1, userCulture).ToString()<span class="SICCodeLink back-to-top">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_TOP, userCulture).ToString()</span>
+                    </div>
+                    <div class="faq-answer-container">
+                        @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_ANSWER_1, userCulture).ToString())    </div>
+                </div>
+                <div class="faq-question-answer-container" id="FAQ-2">
+                    <div class="faq-question-container">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_2, userCulture).ToString()<span class="SICCodeLink back-to-top">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_TOP, userCulture).ToString()</span>
+                    </div>
+                    <div class="faq-answer-container">
+                        @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_ANSWER_2, userCulture).ToString()) </div>
+                </div>
+                <div class="faq-question-answer-container" id="FAQ-3">
+                    <div class="faq-question-container">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_3, userCulture).ToString()<span class="SICCodeLink back-to-top">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_TOP, userCulture).ToString()</span>
+                    </div>
+                    <div class="faq-answer-container">
+                        @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_ANSWER_3, userCulture).ToString())     </div>
+                </div>
+                <div class="faq-question-answer-container" id="FAQ-4">
+                    <div class="faq-question-container">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_4, userCulture).ToString()<span class="SICCodeLink back-to-top">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_TOP, userCulture).ToString()</span>
+                    </div>
+                    <div class="faq-answer-container">
+                        @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_ANSWER_4, userCulture).ToString())</div>
+                </div>
+                <div class="faq-question-answer-container" id="FAQ-5">
+                    <div class="faq-question-container">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_5, userCulture).ToString()<span class="SICCodeLink back-to-top">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_TOP, userCulture).ToString()</span>
+                    </div>
+                    <div class="faq-answer-container">
+                        @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_ANSWER_5, userCulture).ToString())</div>
+                </div>
+                <div class="faq-question-answer-container" id="FAQ-6">
+                    <div class="faq-question-container">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_6, userCulture).ToString()<span class="SICCodeLink back-to-top">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_TOP, userCulture).ToString()</span>
+                    </div>
+                    <div class="faq-answer-container">
+                        @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_ANSWER_6, userCulture).ToString())   </div>
+                </div>
+                <div class="faq-question-answer-container" id="FAQ-7">
+                    <div class="faq-question-container">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_7, userCulture).ToString()<span class="SICCodeLink back-to-top">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_TOP, userCulture).ToString()</span>
+                    </div>
+                    <div class="faq-answer-container">
+                        @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_ANSWER_7, userCulture).ToString())  </div>
+                </div>
+                <div class="faq-question-answer-container" id="FAQ-8">
+                    <div class="faq-question-container">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_8, userCulture).ToString()<span class="SICCodeLink back-to-top">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_TOP, userCulture).ToString()</span>
+                    </div>
+                    <div class="faq-answer-container">
+                        @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_ANSWER_8, userCulture).ToString())   </div>
+                </div>
+                <div class="faq-question-answer-container" id="FAQ-9">
+                    <div class="faq-question-container">
+                        @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_9, userCulture).ToString()<span class="SICCodeLink back-to-top">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_TOP, userCulture).ToString()</span>
+                    </div>
+                    <div class="faq-answer-container">
+                        @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_ANSWER_9, userCulture).ToString())  </div>
+                </div>
+                <div class="faq-question-answer-container" id="FAQ-10">
+                    <div class="faq-question-container">
+                      @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_10, userCulture).ToString()<span class="SICCodeLink back-to-top">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_TOP, userCulture).ToString()</span>
+                    </div>
+                    <div class="faq-answer-container">
+                       @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_ANSWER_10, userCulture).ToString())
+                    </div>
+                </div>
+                <div class="faq-question-answer-container" id="FAQ-11">
+                    <div class="faq-question-container">
+                      @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_QUESTION_11, userCulture).ToString()<span class="SICCodeLink back-to-top">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_TOP, userCulture).ToString()</span>
+                    </div>
+                    <div class="faq-answer-container">
+                      @Html.Raw(PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAQ_ANSWER_11, userCulture).ToString())
+                       </div>
+                </div>
+
+
+                </div>
+            </div>
+    </div>
+    <div class="col-md-4 hidden-sm hidden-xs ">
+        <div class="container-white-backgound">
+            <div class="cnt-us-mar-btm">
+                <div class="col-md-12 padding-bottom">
+                    <span class="page-sub-heading">Need Help? Contact Us</span>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <hr class="border-style" />
+            </div>
+
+            <div class="row col-md-12">
+                <br />
+                <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3 fa fa-envelope fa-opacity fa-3x  col-md-offset-1 col-sm-offset-1 col-xs-offset-1">
+                </div>
+                <div class="col-md-8 col-sm-7 col-xs-7">
+
+                    <div class="contact-panel-text-color">
+                        <b>Email Us</b>
+                    </div>
+                    <a href="mailto:@HttpContext.Current.Application["ContactEmail"]" target="_blank">
+                        <span>@HttpContext.Current.Application["ContactEmail"]</span>
+                    </a>
+                </div>
+            </div>
+            <div class="row col-md-12">
+                <div class="contact-panel-font-icons col-md-2 col-sm-3 col-xs-3  fa fa-phone fa-3x padding-top col-md-offset-1 col-sm-offset-1 col-xs-offset-1 fa-opacity">
+                </div>
+                <div class="col-md-8 col-sm-7 col-xs-7 padding-top">
+                    <div class="contact-panel-text-color">
+                        <b>Call Us</b>
+                    </div>
+                    <span>@HttpContext.Current.Application["ContactNo"]</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).on('click','.faq-question-text',function () {
+        var divID = '#'+ $(this).attr('data-questionId');
+        $('html, body').animate({
+            scrollTop: $(divID).offset().top - 50
+        }, 200);
+    });
+    $(document).on('click', '.back-to-top', function () {
+        $('html, body').animate({
+            scrollTop:0
+        }, 200);
+    });
+</script>

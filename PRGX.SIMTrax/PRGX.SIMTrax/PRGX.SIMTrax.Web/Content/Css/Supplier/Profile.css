@@ -1,0 +1,186 @@
+﻿.subHeadingText {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.width20 {
+    width: 16%;
+    text-align: center;
+}
+
+.borderGreen {
+    border-bottom: 5px solid #6F9B6B;
+}
+
+.borderYellow {
+    border-bottom: 5px solid #FFFF4D;
+}
+
+.txtcolor {
+    color: #8C7F7F;
+}
+
+.borderOrange {
+    border-bottom: 5px solid #FBC071;
+}
+
+.borderRed {
+    border-bottom: 5px solid #D34D4D;
+}
+
+.borderSilver {
+    border-bottom: 5px solid #C0C0C0;
+}
+
+.borderleft {
+    border-left: 1px solid #C0C0C0;
+}
+
+.textAlignment {
+    text-align: center;
+    color: #8C7F7F;
+}
+
+
+.textAlignmentCategory {
+    text-align: left;
+}
+
+.rowHeight {
+    height: 35px;
+}
+
+.doughnutSummary {
+    left: 46% !important;
+}
+
+.paddingLeft {
+    padding-left: 50px;
+    padding-bottom: 15px;
+}
+
+#compalianceScoreCard thead {
+    background-image: none;
+    color: black;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.margin-left-25 {
+    margin-left: 25px !important;
+}
+
+.give-full-width {
+}
+
+.give-mobile-width {
+    float: right;
+}
+
+@media (max-width: 495px) {
+    .give-full-width {
+        width: 100% !important;
+        padding-top: 0px;
+    }
+
+    .give-mobile-width {
+        width: 50%;
+        float: left;
+    }
+    /*these work*/
+}
+ .profile-action-child-div
+    {
+       margin-left:10px;
+       margin-right:10px;
+       float:left;
+    }
+    .profile-action-div
+    {
+        float:right;
+    }
+    @media (max-width: 768px) {
+    .profile-action-child-div, .profile-action-div
+    { 
+      float:none !important;
+    }
+    .profile-action-child-div
+    {
+        margin-left:0px !important;
+    }
+}
+
+@media (max-width: 385px) {
+    .give-mobile-width {
+        width: 65%;
+        float: left;
+    }
+}
+
+@media (max-width: 385px) {
+    .give-mobile-width {
+        width: 70%;
+        float: left;
+    }
+}
+
+@media (min-width: 275px) and (max-width: 385px) {
+    .give-mobile-width {
+        width: 85%;
+        float: left;
+    }
+}
+
+.chart-date-summary {
+    font-size: 14px !important;
+    width: 82px !important;
+    top: 76px !important;
+    margin-left: 60px !important;
+    text-align: center !important;
+}
+.not-started-summary
+{
+    font-size: 14px !important;
+    width: 82px !important;
+    top: 84px !important;
+    margin-left: 60px !important;
+    text-align: center !important;
+}
+.required-data-summary
+{
+    text-align:center;
+    font-size:12px;
+}
+.font-size-16px {
+    font-size: 16px;
+}
+
+.viewAnswerBuyer-Active
+{
+    color:#54b948;
+    font-size: 14px;
+    cursor:pointer;
+    text-align:center;
+}
+.viewAnswerBuyer-Active:hover{
+    text-decoration:underline;
+}
+.viewAnswerBuyer-InActive
+{
+    color:#A6A6A6;
+    text-align:center;
+    font-size: 14px;
+    cursor:default;
+   
+}
+.supplier-type-checkbox {
+    margin-top: -2px !important;
+    display: inline-block;
+    vertical-align: middle;
+}

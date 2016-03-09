@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test>
+  <GetAllPermissionsTestData>
+    <testCase id="1">
+      <input roleId="">
+      </input>
+      <output count="3">
+        <list desc="Dashboard – Compliance"/>
+        <list desc="Dashboard - Onboarding"/>
+        <list desc="Search Page"/>
+
+      </output>
+    </testCase>
+  </GetAllPermissionsTestData>
+</test>

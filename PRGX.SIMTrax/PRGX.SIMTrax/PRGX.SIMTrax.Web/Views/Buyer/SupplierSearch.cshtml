@@ -1,0 +1,395 @@
+﻿@{
+    var buyerPermissionList = (Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_BUYER_ACCESS_PERMISSIONS] != null) ? ((List<PRGX.SIMTrax.Domain.Util.ItemList>)Session[PRGX.SIMTrax.Domain.Util.Constants.SESSION_BUYER_ACCESS_PERMISSIONS]) : new List<PRGX.SIMTrax.Domain.Util.ItemList>();
+    var HasPermissionForAnswers = (buyerPermissionList.Find(a => a.Value == (long)PRGX.SIMTrax.Domain.Util.BuyerPermissions.FiltersResults) != null) ? true : false;
+    var userCulture = (Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] != null) ? (System.Globalization.CultureInfo)Session[PRGX.SIMTrax.Domain.Util.Constants.USER_PREFERENCE_CULTURE] : PRGX.SIMTrax.Web.Controllers.BaseController.ResolveCulture();
+}
+@{
+    ViewBag.Title = @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIER_SEARCH, userCulture).ToString();
+}
+<style>
+    .search-filter-icons {
+        font: normal normal normal 14px/1 FontAwesome;
+        opacity: 0.5;
+        font-size: 18px;
+        vertical-align: middle;
+    }
+
+    .search-filter-open:before {
+        content: "\f0d7";
+    }
+
+    .search-filter-close:before {
+        content: "\f0da";
+        padding-right: 4px;
+    }
+
+    .search-filter-header, .search-filter-header label {
+        cursor: pointer;
+    }
+
+        .search-filter-header label {
+            margin-left: 3px;
+            margin-bottom: 0px;
+        }
+
+    .search-filter-child {
+        padding-top: 10px;
+    }
+</style>
+<div id="search" class="row">
+    @*<div class="col-md-12">
+            <div class="bread-crumb">
+                <a class="Navigate" data-viewname="buyerHome" data-action="/Buyer/Index">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADMIN_HOME, userCulture).ToString() </a> > @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIER_SEARCH, userCulture).ToString()
+            </div>
+        </div>*@
+    <div class="col-md-4 col-sm-4 col-xs-12 padding-bottom-header">
+        <h3>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIER_SEARCH, userCulture).ToString()</h3>
+    </div>
+    <div class="col-md-offset-2 col-md-6 col-sm-offset-2 col-sm-6 col-xs-12 padding-bottom-responsive">
+        <form id="formSearchOptions">
+            <div class="input-group">
+                <input type="text"  class="form-control autocomplete" name="supplierName" placeholder="@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH_FOR_SUPPLIER, userCulture).ToString()" id="supplierName" tabindex="24" />
+                <span class="input-group-btn">
+                    <button class="btn btn-normal" type="submit" id="btnSearch"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-12"></div>
+    <div class="col-md-3 col-sm-12 col-xs-12  panel-default panel no-border " id="supplier-search-filter-panel" data-toggle="1">
+        <div class="container-white-backgound padding-bottom-0px filter-panel-button" style="padding-top:10px !important;" id="container-for-filter">
+            <div id="Filter-container">
+                <div class="col-md-8 col-sm-8 col-xs-6 page-sub-heading-container panel-heading" style="padding-top:2px; padding-bottom:12px !important; border-bottom:0px !important;">
+                    <span class="pull-left clickable panel-collapsed"><i class="glyphicon glyphicon-chevron-down" id="supplier-search-filter-icon"></i></span>
+                    <span class="page-sub-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FILTERS, userCulture).ToString()</span>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-6  padding-top-9px">
+                    <div class="SICCodeLink display-none cursor-pointer" style="float:right;" id="search-filter-header-clear" tabindex="25">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLEAR_ALL, userCulture).ToString()</div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12"> <hr class="border-style" /></div>
+                <div class="clear-both"></div>
+                <div class="panel-body" style="padding:0px;padding-bottom:20px;">
+                    <div id="panel-body-div">
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px search-filter-header" id="search-filter-header-1" data-child="1">
+                            <span class="search-filter-icons search-filter-close"></span>
+                            <label style="margin-left:0px">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIER_STATUS, userCulture).ToString()</label>
+                            <span class="SICCodeLink search-filter-child-clear float-right display-none" data-child="1">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLEAR, userCulture).ToString()</span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 search-filter-child display-none" id="search-filter-child-1" data-parent="1">
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px search-filter-header" id="search-filter-header-2" data-child="2">
+                            <span class="search-filter-icons search-filter-close"></span><label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIER_TYPE, userCulture).ToString()</label>
+                            <span class="SICCodeLink search-filter-child-clear float-right display-none" data-child="2">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLEAR, userCulture).ToString()</span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 search-filter-child display-none" id="search-filter-child-2" data-parent="2">
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px search-filter-header" id="search-filter-header-3" data-child="3">
+                            <span class="search-filter-icons search-filter-close"></span><label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SECTOR, userCulture).ToString()</label>
+                            <span class="SICCodeLink search-filter-child-clear float-right display-none" data-child="3">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLEAR, userCulture).ToString()</span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 search-filter-child display-none" id="search-filter-child-3" data-parent="3">
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px search-filter-header" id="search-filter-header-4" data-child="4">
+                            <span class="search-filter-icons search-filter-close"></span><label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EMPLOYEE_SIZE, userCulture).ToString()</label>
+                            <span class="SICCodeLink search-filter-child-clear float-right display-none" data-child="4">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLEAR, userCulture).ToString()</span>
+
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 search-filter-child display-none" id="search-filter-child-4" data-parent="4">
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px search-filter-header" id="search-filter-header-5" data-child="5">
+                            <span class="search-filter-icons search-filter-close"></span><label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TURNOVER, userCulture).ToString()</label>
+                            <span class="SICCodeLink search-filter-child-clear float-right display-none" data-child="5">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLEAR, userCulture).ToString()</span>
+
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 search-filter-child display-none" id="search-filter-child-5" data-parent="5">
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px search-filter-header" id="search-filter-header-9" data-child="9">
+                            <span class="search-filter-icons search-filter-close"></span><label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.INCORPORATION_TYPE, userCulture).ToString()</label>
+                            <span class="SICCodeLink search-filter-child-clear float-right display-none" data-child="9">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLEAR, userCulture).ToString()</span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 search-filter-child display-none" id="search-filter-child-9" data-parent="9">
+                        </div>
+                        @*<div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px search-filter-header" id="search-filter-header-6" data-child="6">
+                            <span class="search-filter-icons search-filter-close"></span><label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FINANCE_INSURANCE_TAX, userCulture).ToString()</label>
+                            <span class="SICCodeLink search-filter-child-clear float-right display-none" data-child="6">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLEAR, userCulture).ToString()</span>
+
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 search-filter-child display-none" id="search-filter-child-6" data-parent="6">
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px search-filter-header" id="search-filter-header-7" data-child="7">
+                            <span class="search-filter-icons search-filter-close"></span><label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HEALTH_SAFETY, userCulture).ToString()</label>
+                            <span class="SICCodeLink search-filter-child-clear float-right display-none" data-child="7">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLEAR, userCulture).ToString()</span>
+
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 search-filter-child display-none" id="search-filter-child-7" data-parent="7">
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px search-filter-header" id="search-filter-header-8" data-child="8">
+                            <span class="search-filter-icons search-filter-close"></span><label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DATA_SECURITY, userCulture).ToString()</label>
+                            <span class="SICCodeLink search-filter-child-clear float-right display-none" data-child="8">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLEAR, userCulture).ToString()</span>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 search-filter-child display-none" id="search-filter-child-8" data-parent="8">
+                        </div>*@
+                        <input type="hidden" id="navigationFromBuyerHome" value="false" />
+                    </div>
+                </div>
+            </div>
+            <div id="vertical-panel-heading" class="vertical-text page-sub-heading" style="display: none;">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FILTERS, userCulture).ToString()</div>
+        </div>
+        <div id="button-toggle-filter" class="hidden-sm hidden-xs">
+            <i class="fa fa-caret-right" style="padding-left:5px;"></i>
+            <i class="fa fa-caret-left" style="padding-left:5px;"></i>
+        </div>
+    </div>
+    <div id="container" class="col-md-9 col-sm-12 col-xs-12 padding-bottom padding-responsive-text">
+        <div class="container-white-backgound" style="padding-top:10px !important;">
+            <div class="col-md-12 col-xs-12 col-sm-12 page-sub-heading-container row" style="padding-bottom: 0px !important; padding-right: 0px !important;">
+                <div class="col-md-8 col-sm-8 col-xs-12 " style="padding-top:2px; padding-bottom 12px !important;">
+                    <span class="page-sub-heading" id="buyer-search-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH_RESULTS, userCulture).ToString()</span>
+                </div>
+
+                <div class="col-md-4 col-sm-4 col-xs-12  padding-responsive" style="padding-right:0px;">
+                    <a id="export-supplier-search-result" style="float:right; font-size: 16px !important; color: rgb(51, 51, 51) !important;padding-top:7px;"><i class="fa fa-download"></i> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EXPORT, userCulture).ToString()</a>
+
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12"> <hr class="border-style" /></div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-10 col-sm-10 col-xs-12 padding-left-zero   padding-right-zero">
+                    <div class="supplierSearchPaginator float-left-phone" style="float:left;">
+                    </div>
+                    <div id="search-page-data" class="show-results-styling"></div>
+                </div>
+
+                <div class="col-md-2 col-sm-2 col-xs-12 padding-top-20px" style="padding-right:0px;">
+                    <button id="search-bulk-button" type="button" class="btn btn-color dropdown-toggle display-none" style="width: 162px; float: right;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACTION, userCulture).ToString() <span class="caret"></span></button>
+                    <ul class="dropdown-menu" style="width:162px;left:-6px"><li id="go-search-bulk-requests"><a>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUEST_ANSWERS, userCulture).ToString()</a></li></ul>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-10px">
+                <table class="table tableGrid footable toggle-arrow" id="suppSearchTable">
+                    <thead>
+                        <tr>
+                            <th class="tableGrid-header width-54px">
+                                <input type="checkbox" class="check-color margin-left-22px" id="search-request-answer-all" tabindex="32" />
+                                @*<label for="search-request-answer-all" style="padding-left: 12px;"></label>*@
+                            </th>
+                            <th class="tableGrid-header cursor-pointer sort-True" data-sortparameter="CompanyName" data-sortdirection="2" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIER_NAME, userCulture).ToString() <i class="fa fa-sort-desc"></i></th>
+                            <th class="tableGrid-header  cursor-pointer sort-True text-left" data-sortparameter="Status" data-sortdirection="1" data-hide="phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.STATUS, userCulture).ToString() <i class="fa fa-sort"></i></th>
+                            <th class="tableGrid-header text-center" data-hide="phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FAVOURITE, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-center" data-hide="phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.TRADING_WITH, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ANSWERS_SHARED, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.STARTED_DATE, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTERED_DATE, userCulture).ToString()</th>
+                            @*<th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUIRED, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FIT, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.STATUS, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FIT, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SHARED, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FIT, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUIRED, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HS, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.STATUS, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HS, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SHARED, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HS, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUIRED, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DS, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.STATUS, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DS, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SHARED, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DS, userCulture).ToString()</th>
+                            
+
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUBMIT, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FIT, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PAID, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FIT, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VERIFIED, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.FIT, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUBMIT, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HS, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PAID, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HS, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VERIFIED, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.HS, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUBMIT, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DS, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PAID, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DS, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-left" data-hide="desktop,tablet,tabletPortrait,phone" style="text-align:left">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VERIFIED, userCulture).ToString(): @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DS, userCulture).ToString()</th>
+                            <th class="tableGrid-header text-center" data-hide="phone">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACTIONS, userCulture).ToString()</th>*@
+                        </tr>
+                    </thead>
+                    <tbody id="supplier-search-table-body"></tbody>
+                </table>
+                <div id="divNoRecordMsg" style="display: none">
+                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO_RECORDS_FOUND, userCulture).ToString()
+                </div>
+                <input type="hidden" id="hdnCurrentPage" value="1" />
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="col-md-8 col-sm-8 col-xs-12 padding-left-zero ">
+                    <div class="supplierSearchPaginator  float-left-phone">
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 padding-left-zero-phone padding-right-zero">
+                    <div class="divPageSize form-inline" style="margin-top: 20px; float: right;">
+                        <label for="pageSizeSupplierSearch">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.RESULTS_PER_PAGE, userCulture).ToString()</label>
+                        <div class="form-group padding-left-zero-phone">
+                            <select id="pageSizeSupplierSearch" class="form-control">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="40">40</option>
+                                <option value="50">50</option>
+                                <option value="60">60</option>
+                                <option value="70">70</option>
+                                <option value="80">80</option>
+                                <option value="90">90</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<div id="search-view-discussion" class="row display-none">
+    <div class="col-md-12">
+        <div class="bread-crumb">
+            <a class="Navigate" data-viewname="search" data-action="/Buyer/SupplierSearch" data-title="Search"> < @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.BACK_TO_SEARCH, userCulture).ToString()</a>
+        </div>
+    </div>
+    <div class="col-md-9 col-sm-9 col-xs-12 padding-bottom-header">
+        <h3 id="view-discussion-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIER_DISCUSSION, userCulture).ToString()</h3>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12 padding-bottom-header" style="padding-top:8px">
+        <span id="view-search-supplier-profile" class="font-normal buyer-action-color" data-companyid="0" style="float: right; ">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VIEW_SUPPLIER_PROFILE, userCulture).ToString()</span>
+    </div>
+    <div class="col-md-9 col-sm-9 col-xs-12">
+        <div class="container-white-backgound">
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <textarea class="form-control" style="resize:none;min-height:60px" placeholder="Add a new message" id="search-discussion-message"></textarea>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 padding-top-20px" id="buyer-discussion-table" style="height: 250px;overflow:hidden;">
+            </div>   `
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="hyperlink" id="search-discussion-show-all">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SHOW_OLDER_MESSAGES, userCulture).ToString()</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-3 col-xs-12 padding-bottom-responsive">
+        <div class="container-white-backgound" id="search-request-access-container">
+            <div class="col-md-12 page-sub-heading-container">
+                <span class="page-sub-heading">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CURRENT_ACCESS_TO_ANSWERS, userCulture).ToString()</span>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12"> <hr class="border-style" /></div>
+            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-20px">
+                <input type="checkbox" class="check-color" value="@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.Profile)" id="search-access-answer-type-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.Profile)" />
+                <label @*for="search-access-answer-type-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.Profile)"*@>@PRGX.SIMTrax.Domain.Util.CommonMethods.Description(PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.Profile)</label>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-20px">
+                <input type="checkbox" class="check-color" value="@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.FinanceInsuranceTax)" id="search-access-answer-type-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.FinanceInsuranceTax)" />
+                <label @*for="search-access-answer-type-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.FinanceInsuranceTax)"*@>@PRGX.SIMTrax.Domain.Util.CommonMethods.Description(PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.FinanceInsuranceTax)</label>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-20px">
+                <input type="checkbox" class="check-color" value="@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.HealthSafety)" id="search-access-answer-type-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.HealthSafety)" />
+                <label @*for="search-access-answer-type-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.HealthSafety)"*@>@PRGX.SIMTrax.Domain.Util.CommonMethods.Description(PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.HealthSafety)</label>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 padding-top-20px">
+                <input type="checkbox" class="check-color" value="@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.DataSecurity)" id="search-access-answer-type-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.DataSecurity)" />
+                <label @*for="search-access-answer-type-@((Int16)PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.DataSecurity)"*@>@PRGX.SIMTrax.Domain.Util.CommonMethods.Description(PRGX.SIMTrax.Domain.Util.ComplianceScoreCategory.DataSecurity)</label>
+            </div>
+        </div>
+    </div>
+    <div class="padding-top-question" style="padding-top:40px !important;">
+        <div class="col-md-2 col-sm-2 col-xs-6">
+            <button class="col-md-12  col-sm-12 col-xs-12 btn btn-normal" id="back-to-search-results">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-6 padding-left-zero">
+            <button class="col-md-12 col-sm-12 col-xs-12 btn btn-color" id="send-search-discussion" data-buyerid="0" data-supplierid="0">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEND, userCulture).ToString()</button>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-sm" data-backdrop="static" id="modal-search-bulk-request-message" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content center-modal-help">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-close-button" style="display: block;">
+                    <button class="close" data-dismiss="modal" style="margin-top:7px;">×</button>
+                </div>
+                <div class="bootstrap-dialog-title">
+                    <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ARE_YOU_SURE_YOU_WANT_TO_REQUEST_ALL_ANSWERS, userCulture).ToString()?</h4>
+                </div>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-12">
+                    <div class="col-md-12 buyer-request-limit-message" style="background-color:#FFC000;padding:10px 10px;">
+                        <div>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.YOU_ARE_ABLE_TO_REQUEST_ANSWERS_FROM, userCulture).ToString()  @PRGX.SIMTrax.Domain.Util.Configuration.BuyerRequestCount  @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIERS_PER_CALENDER_MONTH, userCulture).ToString().</div>
+                        <div>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.COMPLETING_THIS_REQUEST_WILL_LEAVE_YOU, userCulture).ToString() <span id="request-remaining-count"></span> @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MORE_REQUESTS_THIS_CALENDER_MONTH, userCulture).ToString().</div>
+                    </div>
+                </div>
+                <div class="col-md-12 padding-top-20px">
+                    <label>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MESSAGE_TO_THE_SUPPLIERS, userCulture).ToString():</label>
+                </div>
+                <div class="col-md-12">
+                    <textarea class="form-control" style="margin-bottom:10px;resize:none;height:80px;" id="search-bulk-request-message"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer no-border-top">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+                <button type="button" class="btn btn-color" id="request-send-button" data-bulk="true" onclick="GoForRequestInSearch()">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEND, userCulture).ToString()</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-sm" data-backdrop="static" id="modal-search-bulk-request-leave-page" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content col-md-9 center-modal-help">
+            <div class="modal-header">
+                <div class="bootstrap-dialog-close-button" style="display: block;">
+                    <button class="close" data-dismiss="modal" style="margin-top:7px;">×</button>
+                </div>
+                <div class="bootstrap-dialog-title">
+                    <h4>@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LOSE_YOUR_CURRENT_SELECTION, userCulture).ToString()?</h4>
+                </div>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-12">
+                    @PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.LEAVING_THIS_PAGE_WILL_LOSE_YOUR_CURRENT_SELECTION, userCulture).ToString()
+                </div>
+            </div>
+            <div class="modal-footer no-border-top">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CANCEL, userCulture).ToString()</button>
+                <button type="button" class="btn btn-color" onclick="DoPaginationForSearch()">@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CONTINUE, userCulture).ToString()</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*<script src="~/Content/Plugins/floatThead/jquery.floatThead.js"></script>*@
+<script>
+    var buyerMaxRequestCount = parseInt('@PRGX.SIMTrax.Domain.Util.Configuration.BuyerRequestCount');
+    var HasPermissionForAnswers = '@HasPermissionForAnswers';
+    var required = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUIRED, userCulture).ToString()';
+    var status = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.STATUS, userCulture).ToString()';
+    var shared = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SHARED, userCulture).ToString()';
+    var searchResults = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH_RESULTS, userCulture).ToString()';
+    var searchResultsFor = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH_RESULTS_FOR, userCulture).ToString()';
+    var notShared = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NOT_SHARED, userCulture).ToString()';
+    var requestAnswers = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REQUEST_ANSWERS, userCulture).ToString()';
+    var viewDiscussion = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VIEW_DISCUSSION, userCulture).ToString()';
+    var noRecordsFound = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.NO_RECORDS_FOUND, userCulture).ToString()';
+    var clear = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.CLEAR, userCulture).ToString()';
+    var save = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SAVE, userCulture).ToString()';
+    var resultsFor = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.RESULTS_FOR, userCulture).ToString()';
+    var searchPageData = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SEARCH_PAGE_DATA, userCulture).ToString()';
+    var startADiscussion = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.START_A_DISCUSSION, userCulture).ToString()';
+    var pleaseEnterComments = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PLEASE_ENTER_COMMENTS, userCulture).ToString()';
+    var alreadyReceived = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ALL_OF_THE_SELECTED_SUPPLIERS_HAVE_ALREADY_RECEIVED_YOUR_REQUEST, userCulture).ToString()';
+    var actionOn = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ACTION_ON, userCulture).ToString()';
+    var selected = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECTED, userCulture).ToString()';
+    var youAlreadyRequested = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.YOU_ALREADY_REQUESTED, userCulture).ToString()';
+    var suppliersThisCalenderMonth = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIERS_THIS_CALENDER_MONTH, userCulture).ToString()';
+    var suppliersRequestedSuccessfully = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIERS_REQUESTED_SUCCESSFULLY, userCulture).ToString()';
+    var pleaseAddAMessage = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.PLEASE_ADD_A_MESSAGE, userCulture).ToString()';
+    var messageSent = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.MESSAGE_SENT, userCulture).ToString()';
+    var somethingWentWrong = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DEFAULT_ERROR_MESSAGE, userCulture).ToString()';
+    var exportOnlyAvailable = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.EXPORT_ONLY_AVAILABLE, userCulture).ToString()';
+    var VATNumber = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.VAT_NUMBER, userCulture).ToString()';
+    var regNumber = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.REGISTRATION_NUMBER, userCulture).ToString()';
+    var address = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.ADDRESS, userCulture).ToString()';
+    @*var youOnlyHave = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.YOU_ONLY_HAVE, userCulture).ToString()';
+    var suppliersAlreadyReceivedRequest = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SUPPLIERS_ALREADY_RECEIVED_REQUEST, userCulture).ToString()';
+    var deselectAndTryAgain = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.DESELECT_SUPPLIERS_AND_TRY_AGAIN, userCulture).ToString()';*@
+    var selectSuppliersToBeRequested = '@PRGX.SIMTrax.Domain.Util.ReadResource.GetResourceForGlobalization(PRGX.SIMTrax.Domain.Util.Constants.SELECT_SUPPLIERS_TO_BE_REQUESTED, userCulture).ToString()';
+
+</script>
+@Scripts.Render("~/bundles/SupplierSearch")

@@ -1,0 +1,251 @@
+﻿
+.chart {
+    width: 200px;
+}
+
+.doughnutTip {
+    position: absolute;
+    min-width: 30px;
+    max-width: 300px;
+    padding: 5px 15px;
+    border-radius: 1px;
+    background: rgba(0,0,0,.8);
+    color: #ddd;
+    font-size: 12px;
+    text-shadow: 0 1px 0 #000;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.3;
+    letter-spacing: .06em;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    pointer-events: none;
+}
+
+    .doughnutTip ::after {
+        position: absolute;
+        left: 50%;
+        bottom: -6px;
+        content: "";
+        height: 0;
+        margin: 0 0 0 -6px;
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
+        border-top: 6px solid rgba(0,0,0,.7);
+        line-height: 0;
+    }
+
+
+.doughnutSummaryNumber {
+    position: absolute;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+    top: 55px;
+}
+
+
+
+#homeDoughnutChart .doughnutSummaryNumber, #FITDoughnutChart .doughnutSummaryNumber, #DSDoughnutChart .doughnutSummaryNumber, #CLDoughnutChart .doughnutSummaryNumber, #HSDoughnutChart .doughnutSummaryNumber{
+    top: 65px !important;    
+      width: 115px;
+    left: 42px;
+}
+
+
+#doughnutChart .doughnutSummaryNumber {
+    top: 85px;
+    left: 0px;
+}
+
+#supplierDoughnutChart .doughnutSummaryNumber {
+    top: 80px;
+    left: 100px;
+}
+
+#SupplierprogressChart .doughnutSummaryNumber {
+      top: 91px;
+    /*left: 5px;*/
+    width:30px;
+    left:80px;
+    text-align:center;
+}
+
+#NotStartedChart .doughnutSummaryNumber {
+      top: 91px;
+    /*left: 5px;*/
+    width:30px;
+    left:80px;
+    text-align:center;
+}
+
+/*#homeDoughnutChart .doughnutSummaryNumber {
+    top: 94px;
+}*/
+
+#pillarChart .doughnutSummaryNumber {
+    top: 85px;
+    left: 0px;
+}
+
+.chartText {
+    font-size: 16px;
+    font-weight: bold;
+    color: #8C7F7F;
+    padding-left: 32px;
+    width: 210px;
+}
+
+.paddingForChart {
+    padding-top: 0px;
+}
+
+#profileSummaryChart .doughnutSummaryNumber
+{
+    top:66px;
+}
+
+#clientQuestionarrieSummaryChart .doughnutSummaryNumber
+{
+     top:67px;
+}
+
+#RiskQuestionarrieSummaryChart .doughnutSummaryNumber
+{
+     top:74px;
+}
+
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+
+    /*#homeDoughnutChart .doughnutSummaryNumber, #SupplierprogressChart .doughnutSummaryNumber {
+        left: 100px !important;
+    }*/
+
+    /*#NotStartedChart .doughnutSummaryNumber {
+        left: 300px !important;
+    }*/
+}
+
+@media (min-width: 671px) and (max-width: 768px) {
+    .paddingForChart {
+        /*padding-top:50px !important;*/
+        width: 671px;
+    }
+
+    .chart {
+        margin: auto;
+    }
+
+    .chartText {
+        padding-bottom: 20px;
+        margin: auto;
+    }
+
+    /*#homeDoughnutChart .doughnutSummaryNumber {
+        top: 100px !important;
+        left: 100px !important;
+    }
+
+    #SupplierprogressChart .doughnutSummaryNumber {
+        left: 222px !important;
+    }
+
+    #NotStartedChart .doughnutSummaryNumber {
+        left: 420px !important;
+    }*/
+
+    #pillarChart .doughnutSummaryNumber, #doughnutChart .doughnutSummaryNumber {
+        left: 310px !important;
+    }
+
+    #supplierDoughnutChart .doughnutSummaryNumber {
+        left: 326px !important;
+    }
+}
+
+
+@media (min-width: 476px) and (max-width: 670px) {
+    .paddingForChart {
+        width: 476px !important;
+    }
+
+    .chart {
+        margin: auto;
+    }
+
+    .chartText {
+        padding-bottom: 20px !important;
+        margin: auto;
+    }
+
+    #doughnutChart .doughnutSummaryNumber, #pillarChart .doughnutSummaryNumber {
+        left: 215px !important;
+    }
+
+    #supplierDoughnutChart .doughnutSummaryNumber {
+        left: 220px !important;
+    }
+    /*#homeDoughnutChart .doughnutSummaryNumber {
+        left: 220px !important;
+    }
+
+    #SupplierprogressChart .doughnutSummaryNumber {
+        left: 126px !important;
+    }
+
+    #NotStartedChart .doughnutSummaryNumber {
+        left: 326px !important;
+    }*/
+}
+
+
+@media (max-width: 475px) {
+    .paddingForChart {
+        width: 325px !important;
+    }
+
+    .chart {
+        margin: auto;
+    }
+
+    .chartText {
+        padding-bottom: 20px !important;
+        margin: auto;
+    }
+
+    .chartDiv {
+        width: 200px !important;
+    }
+
+    #supplierDoughnutChart .doughnutSummaryNumber {
+        left: 150px !important;
+    }
+
+    #pillarChart .doughnutSummaryNumber {
+        left: 108px !important;
+    }
+
+    #doughnutChart .doughnutSummaryNumber {
+        left: 108px !important;
+    }
+
+    /*#SupplierprogressChart .doughnutSummaryNumber {
+        left: 116px !important;
+    }
+
+    #homeDoughnutChart .doughnutSummaryNumber {
+        left: 115px !important;
+    }
+
+    #NotStartedChart .doughnutSummaryNumber {
+        top: 300px !important;
+        left: 115px !important;
+    }*/
+}
+.key-check-chart-summary {
+        width: 66px !important;
+        top: 68px !important;
+        left:68px ;
+        text-align: center;
+    }
